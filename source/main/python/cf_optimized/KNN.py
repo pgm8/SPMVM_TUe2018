@@ -54,7 +54,7 @@ class KNN(object):
         else: # inverse distance weighted average of k nearest neighbors
             prediction = sum(map(lambda (x, y): y / float(x), zip(distances, responses))) / \
                          sum(map(lambda x: 1 / float(x), distances))
-        print(prediction)
+        return prediction
 
 
 
