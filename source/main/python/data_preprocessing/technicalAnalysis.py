@@ -1,6 +1,7 @@
 # Imports
 import numpy as np
 import pandas as pd
+import sys
 from pandas_datareader import data
 import datetime as dt
 from pandas import read_csv
@@ -31,7 +32,7 @@ print(spx.tail())
 """
 
 # Load SP500 data from csv file downloaded from finance.yahoo
-filename = 'GSPC.csv'
+filename = filename = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), 'resources/GSPC.csv')
 spx = pd.read_csv(filename)
 spx = spx.drop('Adj Close', axis=1)
 column_names = ['Open', 'High', 'Low', 'Close', 'Volume']

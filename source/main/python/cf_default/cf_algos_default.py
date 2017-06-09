@@ -21,6 +21,7 @@ from subprocess import call
 import pandas as pd
 import numpy as np
 import time
+import os.path
 from sklearn.model_selection import KFold
 from sklearn.model_selection import cross_val_score
 from sklearn.ensemble import RandomForestRegressor
@@ -32,7 +33,7 @@ from sklearn.ensemble import GradientBoostingRegressor
 np.random.seed(42) # 42:The answer to life, the universe and everything.
 
 # Load normalized data into dataframe
-filename = 'SP500_data_Norm.csv'
+filename = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), 'resources/SP500_data_Norm.csv')
 spx = pd.read_csv(filename)
 spx = spx.drop('Unnamed: 0', axis=1)
 
