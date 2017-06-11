@@ -61,6 +61,7 @@ max_features = np.linspace(0.2, 1, 5)
 # Import libraries
 import pandas as pd
 import time
+import os
 from sklearn.model_selection import GridSearchCV, cross_val_score, KFold
 import numpy as np
 from sklearn.ensemble import RandomForestRegressor
@@ -69,7 +70,7 @@ from sklearn.ensemble import RandomForestRegressor
 np.random.seed(42) # 42:The answer to life, the universe and everything.
 
 # Load normalized data into dataframe
-filename = 'Data/SP500_data_Norm.csv'
+filename = filename = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), 'resources/SP500_data_Norm.csv')
 spx = pd.read_csv(filename)
 spx = spx.drop('Unnamed: 0', axis=1)
 
