@@ -8,9 +8,10 @@ from pandas import read_csv
 
 import talib as ta
 import matplotlib.pyplot as plt
+import os
 
 
-# ^GSPC: S&P500 Index (large cap stock market index)
+# ^GSPC: S&P500 Index (large cap stock market index) but SPY is ETF that follows the index.
 # ^RUT : Russell 2000 Index (small cap stock market index) It is the most widely quoted measure of the overall performance of the small-cap to mid-cap company shares
 #  EEM : iShares MSCI Emerging Markets ETF
 # ^SPGSCI: S&P GS commodity index (but unfortunately does not work)
@@ -20,7 +21,7 @@ import matplotlib.pyplot as plt
 """
 start = dt.datetime(1992, 1, 1)
 end = dt.datetime(2016, 12, 31)
-spx = data.DataReader('^GSPC', 'yahoo', start, end)
+spx = data.DataReader('SPY', 'yahoo', start, end)
 
 # Delete Adjusted Close Price column
 df = spx.drop('Adj Close', axis=1) # Wont use Adjusted Close Price as feature
@@ -32,15 +33,20 @@ print(spx.tail())
 """
 
 # Load SP500 data from csv file downloaded from finance.yahoo
-filename = filename = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), 'resources/GSPC.csv')
+filename = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), 'resources/SPY.csv')
 spx = pd.read_csv(filename)
 spx = spx.drop('Adj Close', axis=1)
 column_names = ['Open', 'High', 'Low', 'Close', 'Volume']
 for name in column_names:
     spx[name] = pd.to_numeric(spx[name], errors='coerce')
 
+# Basic Data preprocessing operations
+# 1) Scan dataset on NaN values
+pd.isnull(spx).any(1).nonzero()[0] # No rows with missing values.
 
 
+
+# 2) Feature Engineering
 ################### Lagging Technical Indicators #######################
 
 # Simple Moving Average SMA(5):
@@ -122,12 +128,15 @@ for i in range(len(spx['Close'])-1):
     spx.loc[i, 'response'] = np.asarray(spx['Close'])[i+1]
 
 
-# 329 rows with NaN values.
+# 200 rows with NaN values (as expected: consequence from feature engineering)
 sum([True for idx, row in spx.iterrows() if any(row.isnull())])
+#print(pd.isnull(spx).any(1).nonzero()[0])
+
 
 # Drop rows with NaN values
 spx = spx.dropna()
-sum([True for idx, row in spx.iterrows() if any(row.isnull())])
+#sum([True for idx, row in spx.iterrows() if any(row.isnull())])
 
 # Write data into CSV file
-# spx.to_csv('/Users/pmelkert/Documents/Python/PycharmProjects/tryOuts/SP500_data.csv')
+spx.to_csv(os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), 'resources/SP500_data.csv'))
+

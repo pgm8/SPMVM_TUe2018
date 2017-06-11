@@ -17,7 +17,6 @@ Execution time: 86.443708
 """
 
 # Import libraries
-from subprocess import call
 import pandas as pd
 import numpy as np
 import time
@@ -75,7 +74,6 @@ for name, model in models:
 print("%s: %f" % ('Execution time', (time.time() - start_time)))
 
 
-call(["halt"])
 
 
 
