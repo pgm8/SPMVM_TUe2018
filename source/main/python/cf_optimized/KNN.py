@@ -5,7 +5,7 @@ from operator import itemgetter
 class KNN(object):
     """k-nearest neighbor class."""
 
-    def __init__(self, trainingSet, testInstance, k):
+    def __init__(self, trainingSet, testInstance, k, p):
         """Returns a new KNN object.
         :param trainingSet: set representing the training data.
         :param testinstance: vector of float numbers representing features of response variable.
@@ -13,21 +13,22 @@ class KNN(object):
         self.trainingSet = trainingSet
         self.testInstance = testInstance
         self.k = k
-        self.getNearestNeighbors(trainingSet, testInstance, k)
+        self.p = p
+        self.getNearestNeighbors(trainingSet, testInstance, k, p)
 
 
-    def euclidianDistance(self, instance1, instance2, dimension):
+    def euclidianDistance(self, instance1, instance2, dimension, p):
         """ Returns the euclidian distance between two data instances.
         :param instance1: training data instance
         :param instance2: unseen sample instance
         :param dimension: feature dimension"""
         distance = 0
         for x in range(dimension): # length is dimension of feature
-            distance += pow((instance1[x] - instance2[x]), 2)
+            distance += p[x] * pow((instance1[x] - instance2[x]), 2)
         return math.sqrt(distance)
 
 
-    def getNearestNeighbors(self, trainingSet, testInstance, k):
+    def getNearestNeighbors(self, trainingSet, testInstance, k, p):
         """ Returns the k nearest neighbors of an unseen sample instance.
         @:param trainingSet: training set
         @:param testInstance: unseen sample instance
@@ -35,7 +36,7 @@ class KNN(object):
         distances = []
         dimension = len(testInstance) # dimension of features, last column is response variable
         for x in range(len(trainingSet)):
-            dist = self.euclidianDistance(testInstance, trainingSet[x], dimension)
+            dist = self.euclidianDistance(testInstance, trainingSet[x], dimension, p)
             distances.append((trainingSet[x][dimension], dist))
         distances.sort(key=itemgetter(1)) # sorts distances in O(nlogn). (Replace with randomized quickselect)
         neighbors = distances[:k]
