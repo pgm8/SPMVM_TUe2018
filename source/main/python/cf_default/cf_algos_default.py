@@ -6,13 +6,14 @@ No optimization of hyperparameter(s), therefore repeated simple cross validation
 answer to the research hypothesis.
 
 RESULT:
-KNN(mse): 344.351417 (3.268540)
-KNN(rmse): 18.556708 (1.807910)
-RF(mse): 220.690670 (2.627905)
-RF(rmse): 14.855661 (1.621082)
-XGB(mse): 211.245536 (1.764457) // GB(mse): 212.485820 (1.589273)
-XGB(rmse): 14.534288 (1.328329) // GB(rmse): 14.576893 (1.260664)
-Execution time: 86.443708
+KNN(mse): 2.526722 (0.025008)
+KNN(rmse): 1.589566 (0.158140)
+RF(mse): 2.391499 (0.023045)
+RF(rmse): 1.546447 (0.151804)
+XGB(mse): 2.255897 (0.020640)
+XGB(rmse): 1.501965 (0.143665)
+Execution time: approximately 96.647723 seconds
+
 
 """
 
@@ -21,20 +22,21 @@ import pandas as pd
 import numpy as np
 import time
 import os.path
+from pickle import load
 from sklearn.model_selection import KFold
 from sklearn.model_selection import cross_val_score
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.neighbors import KNeighborsRegressor
-from sklearn.ensemble import GradientBoostingRegressor
-# from xgboost import XGBRegressor
+from xgboost import XGBRegressor
+
 
 #  Set seed for pseudorandom number generator. This allows us to reproduce the results from our script.
 np.random.seed(42) # 42:The answer to life, the universe and everything.
 
 # Load normalized data into dataframe
-filename = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), 'resources/SP500_data_Norm.csv')
-spx = pd.read_csv(filename)
-spx = spx.drop('Unnamed: 0', axis=1)
+filename = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))),
+                        'resources/Data/SP500_data_Norm.sav')
+spx = load(open(filename, 'rb'))
 
 # Separate spx data into feature and response components
 X = spx.iloc[:, 1:-1] # feature matrix
@@ -42,10 +44,9 @@ y = spx.iloc[:, -1]   # response vector
 
 # Prepare models
 models = []
-models.append(('KNN', KNeighborsRegressor()))
+models.append(('KNN', KNeighborsRegressor(weights='distance', algorithm='brute')))
 models.append(('RF', RandomForestRegressor()))
-models.append(('GB', GradientBoostingRegressor()))
-#models.append(('XGB', XGBRegressor()))
+models.append(('XGB', XGBRegressor()))
 
 # Evaluate each model in turn
 names = []

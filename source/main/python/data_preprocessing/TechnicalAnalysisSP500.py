@@ -1,14 +1,16 @@
 # Imports
-import numpy as np
-import pandas as pd
 import sys
 from pandas_datareader import data
 import datetime as dt
 from pandas import read_csv
 
+import numpy as np
+import pandas as pd
 import talib as ta
 import matplotlib.pyplot as plt
 import os
+
+from pickle import dump
 
 
 # ^GSPC: S&P500 Index (large cap stock market index) but SPY is ETF that follows the index.
@@ -33,7 +35,7 @@ print(spx.tail())
 """
 
 # Load SP500 data from csv file downloaded from finance.yahoo
-filename = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), 'resources/SPY.csv')
+filename = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), 'resources/Data/SPY.csv')
 spx = pd.read_csv(filename)
 spx = spx.drop('Adj Close', axis=1)
 column_names = ['Open', 'High', 'Low', 'Close', 'Volume']
@@ -130,13 +132,16 @@ for i in range(len(spx['Close'])-1):
 
 # 200 rows with NaN values (as expected: consequence from feature engineering)
 sum([True for idx, row in spx.iterrows() if any(row.isnull())])
-#print(pd.isnull(spx).any(1).nonzero()[0])
-
 
 # Drop rows with NaN values
 spx = spx.dropna()
-#sum([True for idx, row in spx.iterrows() if any(row.isnull())])
+
+# Reset row indices starting at zero
+spx = spx.reset_index(drop=True)
+
+# Save dataframe with pickle
+picklename = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), 'resources/Data/SP500_data.sav')
+dump(spx, open(picklename,  'wb'))
 
 # Write data into CSV file
-spx.to_csv(os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), 'resources/SP500_data.csv'))
-
+#spx.to_csv(os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), 'resources/Data/SP500_data.csv'))
