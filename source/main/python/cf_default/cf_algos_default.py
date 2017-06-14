@@ -12,7 +12,7 @@ RF(mse): 2.391499 (0.023045)
 RF(rmse): 1.546447 (0.151804)
 XGB(mse): 2.255897 (0.020640)
 XGB(rmse): 1.501965 (0.143665)
-Execution time: 96.647723
+Execution time: approximately 96.647723 seconds
 
 
 """
@@ -22,19 +22,21 @@ import pandas as pd
 import numpy as np
 import time
 import os.path
+from pickle import load
 from sklearn.model_selection import KFold
 from sklearn.model_selection import cross_val_score
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.neighbors import KNeighborsRegressor
 from xgboost import XGBRegressor
 
+
 #  Set seed for pseudorandom number generator. This allows us to reproduce the results from our script.
 np.random.seed(42) # 42:The answer to life, the universe and everything.
 
 # Load normalized data into dataframe
-filename = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), 'resources/SP500_data_Norm.csv')
-spx = pd.read_csv(filename)
-spx = spx.drop('Unnamed: 0', axis=1)
+filename = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))),
+                        'resources/Data/SP500_data_Norm.sav')
+spx = load(open(filename, 'rb'))
 
 # Separate spx data into feature and response components
 X = spx.iloc[:, 1:-1] # feature matrix

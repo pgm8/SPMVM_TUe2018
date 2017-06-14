@@ -40,7 +40,6 @@ MSE: 208.763430 (1.431418)
 RMSE: 14.448648 (1.196419)
 Execution time: 756.761370
 
-
 RESULT 2:
 n_estimators = [10, 100, 400, 800, 1000]
 max_features = np.linspace(0.2, 1, 5)
@@ -48,9 +47,18 @@ MSE: 197.772358 (0.000000)
 RMSE: 14.063156 (0.000000)
 Execution time: 5897.95219
 
-RESULT 3:
+#############################################################
+RESULT 3: nested 10-fold cross validation (10x) | 10 fold outer-cv, 3 fold inner-cv
+OS: Linux Ubuntu 16.04 LTS
+AMI ID: ami-a8d2d7ce
+Instance Type: c3.8xlarge
+Availability zone: eu-west-1b
 n_estimators = range(100, 600, 100)
 max_features = np.linspace(0.2, 1, 5)
+MSE: 198.728652 (0.912246)
+RMSE: 14.097115 (0.955115)
+Execution time: 8884.653687
+################################################################
 
 
 
@@ -65,14 +73,15 @@ import os
 from sklearn.model_selection import GridSearchCV, cross_val_score, KFold
 import numpy as np
 from sklearn.ensemble import RandomForestRegressor
+from pickle import load
 
 #  Set seed for pseudorandom number generator. This allows us to reproduce the results from our script.
 np.random.seed(42) # 42:The answer to life, the universe and everything.
 
 # Load normalized data into dataframe
-filename = filename = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), 'resources/SP500_data_Norm.csv')
-spx = pd.read_csv(filename)
-spx = spx.drop('Unnamed: 0', axis=1)
+filename = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))),
+                        'resources/Data/SP500_data_Norm.sav')
+spx = load(open(filename, 'rb'))
 
 # Separate spx data into feature and response components
 X = spx.iloc[:, 1:-1] # feature matrix
@@ -84,7 +93,7 @@ nested_scores = np.zeros(n_trials)
 
 # Random forest model
 model = RandomForestRegressor()
-#n_trees = range(100, 1100, 100)
+n_trees = range(100, 1100, 100)
 n_estimators = range(100, 600, 100)
 max_features = np.linspace(0.2, 1, 5)
 param_grid = dict(max_features=max_features, n_estimators=n_estimators)
