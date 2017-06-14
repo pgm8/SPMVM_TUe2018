@@ -59,11 +59,14 @@ plt.title("Feature Importance Weights")
 plt.bar(range(X.shape[1]), w_features[indices], color="r", yerr=std[indices], align="center")
 plt.xticks(range(X.shape[1]), indices)
 plt.xlim([-1, X.shape[1]])
-plt.show()
+#plt.show()
 
 
 
-
+# Save vector with feature importance weights using pickle
+picklename = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))),
+                          'resources/Data/w_featuresSP500.sav')
+dump(w_features, open(picklename, 'wb'))
 
 
 
