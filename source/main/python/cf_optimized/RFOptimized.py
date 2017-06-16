@@ -67,7 +67,6 @@ Execution time: 8884.653687
 """
 
 # Import libraries
-import pandas as pd
 import time
 import os
 from sklearn.model_selection import GridSearchCV, cross_val_score, KFold
@@ -107,9 +106,6 @@ for i in range(n_trials):
     outer_cv = KFold(n_splits=10, shuffle=True) # Preferably 10 outer folds
     # Inner cross validation with hyperparameter optimization
     gsearch = GridSearchCV(estimator=model, param_grid=param_grid, n_jobs=1, cv=inner_cv)
-    # Fit the cross validated grid search on the data (gscv.fit(X, y))
-    # Show best estimator
-    #print(gsearch.best_params_)
     # Outer cross validation (use multiple runs of 10-fold cross validation with statistical significance tests for
     # meaningful comparison of different algorithms).
     nested_score = cross_val_score(gsearch, X, y, cv=outer_cv, scoring='neg_mean_squared_error', n_jobs=-1)
