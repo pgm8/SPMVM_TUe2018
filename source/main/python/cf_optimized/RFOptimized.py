@@ -95,7 +95,7 @@ nested_score_MSE = np.zeros(n_trials)
 
 # Random forest model
 model = RandomForestRegressor()
-n_estimators = range(100, 600, 100)
+n_estimators = range(100, 1100, 100)
 max_features = np.linspace(0.2, 1, 5)
 param_grid = dict(max_features=max_features, n_estimators=n_estimators)
 
