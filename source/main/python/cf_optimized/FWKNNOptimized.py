@@ -19,13 +19,13 @@ Common practice: smaller number of folds for the internal cross-validation (e.g.
 
 # Import libraries
 import time
-import os.path, sys
+import os
+from pickle import load
+import numpy as np
 from sklearn.model_selection import GridSearchCV, cross_val_score, KFold
 from sklearn.neighbors import KNeighborsRegressor
-import numpy as np
-from pickle import load
-
-
+from sklearn.metrics import mean_absolute_error, mean_squared_error
+from MultiScorer import MultiScorer
 
 #  Set seed for pseudorandom number generator. This allows us to reproduce the results from our script.
 np.random.seed(42) # 42:The answer to life, the universe and everything.
@@ -44,44 +44,37 @@ X = spx.iloc[:, 1:-1] # feature matrix
 y = spx.iloc[:, -1]   # response vector
 
 # Number of random trials
-n_trials = 2
-nested_scores = np.zeros(n_trials)
+n_trials = 10
+nested_score_MAE = np.zeros(n_trials)
+nested_score_MSE = np.zeros(n_trials)
 
 # FWKNN model
 model = KNeighborsRegressor(weights='distance', algorithm='brute', metric='wminkowski', p=2, metric_params={'w': w})
-n_neighbors = range(1, 2, 1)
+n_neighbors = range(1, 51, 1)
 param_grid = dict(n_neighbors=n_neighbors)
-"""
+
 # Loop for each trial
 # Note: for each trial one obtains a model with optimal hyperparameters. These may be different for each trial as
 # each random split is different.
 start_time = time.time()
 for i in range(n_trials):
+    scoring = MultiScorer({
+        'MAE': (mean_absolute_error, {}),
+        'MSE': (mean_squared_error, {})
+    })
     inner_cv = KFold(n_splits=2, shuffle=True) # Common practice: smaller num. of folds for inner cross validation
-    outer_cv = KFold(n_splits=2, shuffle=True) # Preferably 10 outer folds
+    outer_cv = KFold(n_splits=10, shuffle=True) # Preferably 10 outer folds
     # Inner cross validation with hyperparameter optimization
     gsearch = GridSearchCV(estimator=model, param_grid=param_grid, n_jobs=1, cv=inner_cv)
     # Outer cross validation (use multiple runs of 10-fold cross validation with statistical significance tests for
     # meaningful comparison of different algorithms).
-    nested_score = cross_val_score(gsearch, X, y, cv=outer_cv, scoring='neg_mean_squared_error', n_jobs=-1)
-    nested_scores[i] = nested_score.mean()
+    nested_score = cross_val_score(gsearch, X, y, cv=outer_cv, scoring=scoring, n_jobs=1)
+    nested_score_MAE[i] = np.average(scoring.get_results('MAE'))
+    nested_score_MSE[i] = np.average(scoring.get_results('MSE'))
 
-# Calculate scores MSE, RMSE
-mse_mean = -nested_scores.mean()  # fixed sign of MSE scores
-mse_std = nested_scores.std()
-mse_scores = "%s: %4f (%4f)" % ('MSE', mse_mean, mse_std)
-# Convert from MSE to RMSE
-rmse_mean = np.sqrt(mse_mean)
-rmse_std = np.sqrt(mse_std)
-rmse_scores = "%s: %4f (%4f)" % ('RMSE', rmse_mean, rmse_std)
-# Print scores MSE, RMSE, execution time
-print(mse_scores)
-print(rmse_scores)
+# Calculate scores MAE, MSE
+print("%s: %4f (%4f)" % ('MAE', np.average(nested_score_MAE), np.std(nested_score_MAE)))
+print("%s: %4f (%4f)" % ('MSE', np.average(nested_score_MSE), np.std(nested_score_MSE)))
 t_elapsed = "%s: %f" % ('Execution time', (time.time() - start_time))
 print(t_elapsed)
 
-
-# neg_mean_squared_error
-# neg_mean_absolute_error
-
-"""
