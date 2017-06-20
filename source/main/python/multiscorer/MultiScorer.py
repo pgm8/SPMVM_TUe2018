@@ -1,12 +1,12 @@
 # Retrieved from https://github.com/StKyr/multiscorer/
+"""Use this class to encapsulate and/or aggregate multiple scoring functions so that it can be passed as an
+argument for scoring in scikit's cross_val_score function. Instances of this class are also callables, with
+signature as needed by cross_val_score."""
 
 
-class MultiScorer(object):
-	"""Use this class to encapsulate and/or aggregate multiple scoring functions so that it can be passed as an
-	argument for scoring in scikit's cross_val_score function. Instances of this class are also callables, with
-	signature as needed by cross_val_score."""
+class MultiScorer():
 
-	def __init__(self, metrics):
+    def __init__(self, metrics):
 		"""Create a new instance of MultiScorer.
 		Parameters
 		----------
@@ -23,7 +23,7 @@ class MultiScorer(object):
 		for metric in metrics.keys():
 			self.results[metric] = []
 
-	def __call__(self, estimator, X, y):
+        def __call__(self, estimator, X, y):
 		""" To be called by for evaluation from sklearn's GridSearchCV or cross_val_score.
 		Parameters are as they are defined in the respective documentation.
 		Returns

@@ -69,10 +69,12 @@ Execution time: 8884.653687
 # Import libraries
 import time
 import os
-from sklearn.model_selection import GridSearchCV, cross_val_score, KFold
-import numpy as np
-from sklearn.ensemble import RandomForestRegressor
 from pickle import load
+import numpy as np
+from sklearn.model_selection import GridSearchCV, cross_val_score, KFold
+from sklearn.ensemble import RandomForestRegressor
+from sklearn.metrics import mean_absolute_error, mean_squared_error
+from MultiScorer import MultiScorer
 
 #  Set seed for pseudorandom number generator. This allows us to reproduce the results from our script.
 np.random.seed(42) # 42:The answer to life, the universe and everything.
@@ -88,11 +90,11 @@ y = spx.iloc[:, -1]   # response vector
 
 # Number of random trials
 n_trials = 10
-nested_scores = np.zeros(n_trials)
+nested_score_MAE = np.zeros(n_trials)
+nested_score_MSE = np.zeros(n_trials)
 
 # Random forest model
 model = RandomForestRegressor()
-n_trees = range(100, 1100, 100)
 n_estimators = range(100, 600, 100)
 max_features = np.linspace(0.2, 1, 5)
 param_grid = dict(max_features=max_features, n_estimators=n_estimators)
@@ -102,26 +104,23 @@ param_grid = dict(max_features=max_features, n_estimators=n_estimators)
 # each random split is different.
 start_time = time.time()
 for i in range(n_trials):
+    scoring = MultiScorer({
+        'MAE': (mean_absolute_error, {}),
+        'MSE': (mean_squared_error, {})
+    })
     inner_cv = KFold(n_splits=3, shuffle=True) # Common practice: smaller num. of folds for inner cross validation
     outer_cv = KFold(n_splits=10, shuffle=True) # Preferably 10 outer folds
     # Inner cross validation with hyperparameter optimization
     gsearch = GridSearchCV(estimator=model, param_grid=param_grid, n_jobs=1, cv=inner_cv)
     # Outer cross validation (use multiple runs of 10-fold cross validation with statistical significance tests for
     # meaningful comparison of different algorithms).
-    nested_score = cross_val_score(gsearch, X, y, cv=outer_cv, scoring='neg_mean_squared_error', n_jobs=-1)
-    nested_scores[i] = nested_score.mean()
+    nested_score = cross_val_score(gsearch, X, y, cv=outer_cv, scoring=scoring, n_jobs=1)
+    nested_score_MAE[i] = np.average(scoring.get_results('MAE'))
+    nested_score_MSE[i] = np.average(scoring.get_results('MSE'))
 
-# Calculate scores MSE, RMSE
-mse_mean = -nested_scores.mean()  # fixed sign of MSE scores
-mse_std = nested_scores.std()
-mse_scores = "%s: %f (%f)" % ('MSE', mse_mean, mse_std)
-# Convert from MSE to RMSE
-rmse_mean = np.sqrt(mse_mean)
-rmse_std = np.sqrt(mse_std)
-rmse_scores = "%s: %f (%f)" % ('RMSE', rmse_mean, rmse_std)
-# Print scores MSE, RMSE, execution time
-print(mse_scores)
-print(rmse_scores)
+# Calculate scores MAE, MSE
+print("%s: %4f (%4f)" % ('MAE', np.average(nested_score_MAE), np.std(nested_score_MAE)))
+print("%s: %4f (%4f)" % ('MSE', np.average(nested_score_MSE), np.std(nested_score_MSE)))
 t_elapsed = "%s: %f" % ('Execution time', (time.time() - start_time))
 print(t_elapsed)
 
