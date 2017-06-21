@@ -13,7 +13,8 @@ from sklearn.ensemble import RandomForestRegressor
 np.random.seed(42) # 42:The answer to life, the universe and everything.
 
 # Load SPX dataframe
-picklename = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), 'resources/Data/SP500_data_Norm.sav')
+picklename = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))),
+                          'resources/Data/SP500_data_Norm.pkl')
 spx = load(open(picklename, 'rb'))
 
 
@@ -65,7 +66,7 @@ plt.xlim([-1, X.shape[1]])
 
 # Save vector with feature importance weights using pickle
 picklename = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))),
-                          'resources/Data/w_featuresSP500.sav')
+                          'resources/Data/w_featuresSP500.pkl')
 dump(w_features, open(picklename, 'wb'))
 
 
