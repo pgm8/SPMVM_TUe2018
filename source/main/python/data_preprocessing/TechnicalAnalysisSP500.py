@@ -35,7 +35,8 @@ print(spx.tail())
 """
 
 # Load SP500 data from csv file downloaded from finance.yahoo
-filename = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), 'resources/Data/SPY.csv')
+filename = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))),
+                        'resources/Data/SPY.csv')
 spx = pd.read_csv(filename)
 spx = spx.drop('Adj Close', axis=1)
 column_names = ['Open', 'High', 'Low', 'Close', 'Volume']
@@ -140,7 +141,8 @@ spx = spx.dropna()
 spx = spx.reset_index(drop=True)
 
 # Save dataframe with pickle
-picklename = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), 'resources/Data/SP500_data.sav')
+picklename = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))),
+                          'resources/Data/SP500_data.pkl')
 dump(spx, open(picklename,  'wb'))
 
 # Write data into CSV file
