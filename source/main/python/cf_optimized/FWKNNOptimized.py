@@ -44,13 +44,15 @@ X = spx.iloc[:, 1:-1] # feature matrix
 y = spx.iloc[:, -1]   # response vector
 
 # Number of random trials
-n_trials = 10
+n_trials = 2
 nested_score_MAE = np.zeros(n_trials)
 nested_score_MSE = np.zeros(n_trials)
 
 # FWKNN model
 model = KNeighborsRegressor(weights='distance', algorithm='brute', metric='wminkowski', p=2, metric_params={'w': w})
-n_neighbors = range(1, 51, 1)
+#n_neighbors = range(1, 51, 1)
+n_neighbors = range(1, 3, 1)
+
 param_grid = dict(n_neighbors=n_neighbors)
 
 # Loop for each trial
@@ -62,10 +64,10 @@ for i in range(n_trials):
         'MAE': (mean_absolute_error, {}),
         'MSE': (mean_squared_error, {})
     })
-    inner_cv = KFold(n_splits=2, shuffle=True) # Common practice: smaller num. of folds for inner cross validation
-    outer_cv = KFold(n_splits=10, shuffle=True) # Preferably 10 outer folds
+    inner_cv = KFold(n_splits=2, shuffle=True)  # Common practice: smaller num. of folds for inner cross validation
+    outer_cv = KFold(n_splits=3, shuffle=True)  # Preferably 10 outer folds
     # Inner cross validation with hyperparameter optimization
-    gsearch = GridSearchCV(estimator=model, param_grid=param_grid, n_jobs=1, cv=inner_cv)
+    gsearch = GridSearchCV(estimator=model, param_grid=param_grid, n_jobs=-1, cv=inner_cv)
     # Outer cross validation (use multiple runs of 10-fold cross validation with statistical significance tests for
     # meaningful comparison of different algorithms).
     nested_score = cross_val_score(gsearch, X, y, cv=outer_cv, scoring=scoring, n_jobs=1)
@@ -74,7 +76,8 @@ for i in range(n_trials):
 
 # Calculate scores MAE, MSE
 print("%s: %4f (%4f)" % ('MAE', np.average(nested_score_MAE), np.std(nested_score_MAE)))
-print("%s: %4f (%4f)" % ('MSE', np.average(nested_score_MSE), np.std(nested_score_MSE)))
+print("%s: %4f (%4f)" % ('RMSE', np.average(np.sqrt(nested_score_MSE)),
+                         np.std(np.sqrt(nested_score_MSE))))
 t_elapsed = "%s: %f" % ('Execution time', (time.time() - start_time))
 print(t_elapsed)
 
