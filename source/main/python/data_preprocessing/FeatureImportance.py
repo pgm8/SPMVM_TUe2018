@@ -8,9 +8,8 @@ import matplotlib.pyplot as plt
 from sklearn.ensemble import RandomForestRegressor
 
 
-
 #  Set seed for pseudorandom number generator. This allows us to reproduce the results from our script.
-np.random.seed(42) # 42:The answer to life, the universe and everything.
+np.random.seed(42)  # 42:The answer to life, the universe and everything.
 
 # Load SPX dataframe
 picklename = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))),
@@ -19,8 +18,8 @@ spx = load(open(picklename, 'rb'))
 
 
 # Separate spx data into feature matrix and response vector
-X = spx.iloc[:, 1:-1] # feature matrix
-y = spx.iloc[:, -1]   # response vector
+X = spx.iloc[:, 1:-1]  # feature matrix
+y = spx.iloc[:, -1]    # response vector
 
 w_features = np.zeros(X.shape[1])  # vector with feature importance weights
 
