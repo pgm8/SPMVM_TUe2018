@@ -22,13 +22,14 @@ spx = load(open(picklename, 'rb'))
 X = spx.iloc[:, 1:-1] # feature matrix
 y = spx.iloc[:, -1]   # response vector
 
-w_features = np.zeros(X.shape[1]) # vector with feature importance weights
+w_features = np.zeros(X.shape[1])  # vector with feature importance weights
 
 rf = RandomForestRegressor()
 rf.fit(X, y)
 w_features = rf.feature_importances_
 std = np.std([tree.feature_importances_ for tree in rf.estimators_], axis=0)
-indices = np.argsort(w_features)[::-1] # Sort feature indices in decreasing feature importance weight
+indices = np.argsort(w_features)[::-1]  # Sort feature indices in decreasing feature importance weight
+
 
 # Mean decrease impurity
 """ Every node in the decision trees is a condition on a single feature, designed to split
@@ -41,12 +42,9 @@ are ranked according to this measure.
 """
 
 print("Feature Importance Ranking:")
-total = 0.00
 feature_names = map(lambda x: x, spx)[1:-1]
-
 for i in range(X.shape[1]):
     print("%d. %s (%f)" % (i + 1, feature_names[indices[i]], w_features[indices[i]]))
-
 
 """ Verify sum of feature importance weights add up to one: Displayed are the relative importance
 of each feature, hence the sum of all feature importance weights should be equal to one."""
@@ -58,10 +56,9 @@ of each feature, hence the sum of all feature importance weights should be equal
 plt.figure()
 plt.title("Feature Importance Weights")
 plt.bar(range(X.shape[1]), w_features[indices], color="r", yerr=std[indices], align="center")
-plt.xticks(range(X.shape[1]), indices)
+plt.xticks(range(X.shape[1]), np.array(feature_names)[indices], rotation=60, ha='right')
 plt.xlim([-1, X.shape[1]])
-#plt.show()
-
+plt.show()
 
 
 # Save vector with feature importance weights using pickle
