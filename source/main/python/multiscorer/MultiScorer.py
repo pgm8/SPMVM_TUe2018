@@ -33,7 +33,7 @@ class MultiScorer(object):
         yPred = estimator.predict(X)
         for key in self.metrics.keys():
             metric, kwargs = self.metrics[key]
-            self.results[key].append(np.average(metric(y, yPred, **kwargs)))
+            self.results[key].append(metric(y, yPred, **kwargs))
         self._called = True
         return 0.5
 

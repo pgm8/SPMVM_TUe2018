@@ -2,6 +2,7 @@
 import math
 from operator import itemgetter
 
+
 class KNN(object):
     """k-nearest neighbor class."""
 
@@ -16,7 +17,6 @@ class KNN(object):
         self.p = p
         self.getNearestNeighbors(trainingSet, testInstance, k, p)
 
-
     def euclidianDistance(self, instance1, instance2, dimension, p):
         """ Returns the euclidian distance between two data instances.
         :param instance1: training data instance
@@ -26,7 +26,6 @@ class KNN(object):
         for x in range(dimension): # length is dimension of feature
             distance += p[x] * pow((instance1[x] - instance2[x]), 2)
         return math.sqrt(distance)
-
 
     def getNearestNeighbors(self, trainingSet, testInstance, k, p):
         """ Returns the k nearest neighbors of an unseen sample instance.
@@ -42,7 +41,6 @@ class KNN(object):
         neighbors = distances[:k]
         self.getPrediction(neighbors)
         return neighbors
-
 
     def getPrediction(self, neighbors):
         """" Returns prediction of response variable (inverse distance weighting).
