@@ -1,7 +1,5 @@
 import numpy as np
 import talib as ta
-import os
-from pickle import dump
 
 
 class TechnicalAnalyzer(object):
@@ -12,6 +10,7 @@ class TechnicalAnalyzer(object):
         """Initializer TechnicalAnalyzer object.
         :param data: dataset containing historical price and volume information."""
         self.data = data
+        self.dailyReturn(data)
         """If statement to decide whether or not extensive feature engineering or
         only computation of response variable."""
         if full is True:
@@ -27,6 +26,16 @@ class TechnicalAnalyzer(object):
             self.williamsR(data)
             self.onBalanceVolume(data)
         self.responseVariable(data)
+
+    def dailyReturn(self, data):
+        """Method for computing daily asset return.
+        :param data:
+        :return:
+        """
+        for i in range(len(data['Close'])-1):
+            data.loc[i+1, 'Return'] = ((np.asarray(data['Close'])[i+1]) - (np.asarray(data['Close'])[i])) / \
+                                      np.asarray(data['Close'])[i]
+        return data
 
     def simpleMovingAverage(self, data):
         """Method for computing simple moving average technical indicator.
@@ -135,21 +144,13 @@ class TechnicalAnalyzer(object):
         return data
 
     def responseVariable(self, data):
-        """Method for computing the response variable: next day's closing price.
+        """Method for computing the response variable: next day's percentage asset return.
         :param data:
         :return:
         """
-        for i in range(len(data['Close']) - 1):
-            data.loc[i, 'response'] = np.asarray(data['Close'])[i + 1]
+        for i in range(len(data['Close'])-1):
+            data.loc[i, 'response'] = np.asarray(data['Return'])[i+1]
         return data
-
-    def saveFeatureSpace(self, data, filename):
-        """Method for writing feature space to resource directory.
-        :param data: feature engineered data set
-        :param filename: name of object containing feature space."""
-        path = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), ('resources/Data/%s'
-                                                                                          % filename))
-        dump(data, open(path, 'wb'))
 
 
 """    
