@@ -1,13 +1,13 @@
 import os
 from pickle import dump
 from pickle import load
+from pandas import read_csv
 
 
 class ModuleManager(object):
-    """ModuleManager class. The responsibility of the ModuleManager class is to load and
-    save files from and to a specified disk location. If a filename is passed,
-    then this file will be used to save or load a pickled object (i.e. model or dataset) to or from,
-    respectively, a provided disk location.
+    """ModuleManager class. The responsibility of the ModuleManager class is to load, transform and
+    save files. If a filename is passed, then this file will be used to load, transform and/or save a
+    pickled object (i.e. model or dataset).
     """
 
     def __init__(self, filename=None):
@@ -18,7 +18,7 @@ class ModuleManager(object):
         :param filename: filename containing the pickled dataset
         :return: pickled data set"""
         with open(os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))),
-                        'resources/Data/%s' % filename),'rb') as f:
+                               'resources/Data/%s' % filename), 'rb') as f:
             return load(f)
 
     def load_model(self, filename):
@@ -26,7 +26,7 @@ class ModuleManager(object):
         :param filename: filename containing the pickled model
         :return: learner model"""
         with open(os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))),
-                        'resources/Models/%s' % filename),'rb') as f:
+                               'resources/Models/%s' % filename), 'rb') as f:
             return load(f)
 
     def save_data(self, filename, data):
@@ -45,5 +45,9 @@ class ModuleManager(object):
                             ('resources/Models/%s' % filename))
         dump(model, open(path, 'wb'))
 
-
-
+    def transform_csv_to_pickle(self, csv_filename):
+        """Method to load csv file and save pickled csv file."""
+        csv_file = read_csv(os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))),
+                                         ('resources/Data/%s' % csv_filename)))
+        self.save_data(csv_filename[:-3]+'pkl', csv_file)
+    
