@@ -6,36 +6,35 @@ class TechnicalAnalyzer(object):
     """Technical analysis class. This class has the responsibility to engineer the feature space.
     It does so by the computation of several technical indicators."""
 
-    def __init__(self, data, full=True):
-        """Initializer TechnicalAnalyzer object.
-        :param data: dataset containing historical price and volume information."""
-        self.data = data
-        self.dailyReturn(data)
-        """If statement to decide whether or not extensive feature engineering or
-        only computation of response variable."""
-        if full is True:
-            self.simpleMovingAverage(data)
-            self.exponentialMovingAverage(data)
-            self.bollingerBands(data)
-            self.movingAverageConvergenceDivergence(data)
-            self.averageDirectionalMovementIndex(data)
-            self.commodityChannelIndex(data)
-            self.rateOfChange(data)
-            self.relativeStrengthIndex(data)
-            self.stochasticOscillatorFull(data)
-            self.williamsR(data)
-            self.onBalanceVolume(data)
-        self.responseVariable(data)
+    def __init__(self):
+        """Initializer TechnicalAnalyzer object."""
 
-    def dailyReturn(self, data):
-        """Method for computing daily asset return.
-        :param data:
-        :return:
-        """
-        for i in range(len(data['Close'])-1):
-            data.loc[i+1, 'Return'] = ((np.asarray(data['Close'])[i+1]) - (np.asarray(data['Close'])[i])) / \
-                                      np.asarray(data['Close'])[i]
-        return data
+    def ta_base(self, data):
+        """Method with responsibility to call methods assigned to computation of returns and response variable.
+        :param data: data set used for technical analysis
+        :return: dataset after execution of short technical analysis."""
+        self.dailyReturn(data)
+        self.responseVariable(data)
+        return self.get_data(data)
+
+    def ta_full(self, data):
+        """Method with responsibility to call methods assigned to computation of full feature space.
+        :param data: data set used for technical analysis
+        :return: dataset after execution of full technical analysis."""
+        self.simpleMovingAverage(data)
+        self.exponentialMovingAverage(data)
+        self.bollingerBands(data)
+        self.movingAverageConvergenceDivergence(data)
+        self.averageDirectionalMovementIndex(data)
+        self.commodityChannelIndex(data)
+        self.rateOfChange(data)
+        self.relativeStrengthIndex(data)
+        self.stochasticOscillatorFull(data)
+        self.williamsR(data)
+        self.onBalanceVolume(data)
+        self.dailyReturn(data)
+        self.responseVariable(data)
+        return self.get_data(data)
 
     def simpleMovingAverage(self, data):
         """Method for computing simple moving average technical indicator.
@@ -143,6 +142,16 @@ class TechnicalAnalyzer(object):
         data['obv'] = ta.OBV(np.asarray(data['Close']), np.asarray(map(lambda x: float(x), data['Volume'])))
         return data
 
+    def dailyReturn(self, data):
+        """Method for computing daily asset return.
+        :param data:
+        :return:
+        """
+        for i in range(len(data['Close'])-1):
+            data.loc[i+1, 'Return'] = ((np.asarray(data['Close'])[i+1]) - (np.asarray(data['Close'])[i])) / \
+                                      np.asarray(data['Close'])[i]
+        return data
+
     def responseVariable(self, data):
         """Method for computing the response variable: next day's percentage asset return.
         :param data:
@@ -152,6 +161,14 @@ class TechnicalAnalyzer(object):
             data.loc[i, 'response'] = np.asarray(data['Return'])[i+1]
         return data
 
+    def get_data(self, data):
+        """Method to return the dataframe with return and response variable as the for last and last
+         column, respectively. This reordering gives a good structure for subsequent processing."""
+        cols = list(data.columns.values)
+        cols.pop(cols.index('Return'))
+        cols.pop(cols.index('response'))
+        data = data[cols+['Return', 'response']]
+        return data
 
 """    
 # 200 rows with NaN values (as expected: consequence from feature engineering)
