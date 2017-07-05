@@ -16,10 +16,13 @@ class ModuleManager(object):
     def load_data(self, filename):
         """Load a pickled dataset from the provided filename
         :param filename: filename containing the pickled dataset
-        :return: pickled data set"""
+        :return: pickled data set
         with open(os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))),
                                'resources/Data/%s' % filename), 'rb') as f:
-            return load(f)
+            return load(f)"""
+        path = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))),
+                            ('resources/Data/%s' % filename))
+        return load(open(path, 'rb'))
 
     def load_model(self, filename):
         """Load a pickled model from the provided filename
@@ -45,9 +48,10 @@ class ModuleManager(object):
                             ('resources/Models/%s' % filename))
         dump(model, open(path, 'wb'))
 
-    def transform_csv_to_pickle(self, csv_filename):
-        """Method to load csv file and save pickled csv file."""
+    def transform_csv_to_pickle(self, filename):
+        """Method to load csv file and save pickled csv file.
+        :param filename: filename containing dataset in csv format"""
         csv_file = read_csv(os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))),
-                                         ('resources/Data/%s' % csv_filename)))
-        self.save_data(csv_filename[:-3]+'pkl', csv_file)
-    
+                                         ('resources/Data/%s' % filename)))
+        self.save_data(filename[:-4]+'_csv.pkl', csv_file)
+
