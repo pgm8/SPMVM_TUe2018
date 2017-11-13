@@ -7,8 +7,7 @@ from pandas import read_csv
 class ModuleManager(object):
     """ModuleManager class. The responsibility of the ModuleManager class is to load, transform and
     save files. If a filename is passed, then this file will be used to load, transform and/or save a
-    pickled object (i.e. model or dataset).
-    """
+    pickled object (e.g. model or dataset)."""
 
     def __init__(self, filename=None):
         self.filename = filename if filename else None
@@ -16,10 +15,7 @@ class ModuleManager(object):
     def load_data(self, filename):
         """Load a pickled dataset from the provided filename
         :param filename: filename containing the pickled dataset
-        :return: pickled data set
-        with open(os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))),
-                               'resources/Data/%s' % filename), 'rb') as f:
-            return load(f)"""
+        :return: pickled data set"""
         path = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))),
                             ('resources/Data/%s' % filename))
         return load(open(path, 'rb'))
@@ -33,7 +29,7 @@ class ModuleManager(object):
             return load(f)
 
     def save_data(self, filename, data):
-        """Save a pickled object to the provied filename
+        """Save a pickled object to the provided filename
         :param filename: filename containing the pickled dataset
         :param data: data set"""
         path = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))),
@@ -54,4 +50,15 @@ class ModuleManager(object):
         csv_file = read_csv(os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))),
                                          ('resources/Data/%s' % filename)))
         self.save_data(filename[:-4]+'_csv.pkl', csv_file)
+
+    def transform_pickle_to_csv(self, filename):
+        """Method to load a pickle object and save to csv file.
+        :param filename: filename containing pickled dataset
+        :param data: data set"""
+        data_csv = self.load_data(filename)
+        filename = filename[:-3]+'csv'
+        path = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))),
+                           ('resources/Data/%s' % filename))
+        data_csv.to_csv(path)
+
 
