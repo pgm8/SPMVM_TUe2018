@@ -44,7 +44,8 @@ class KNN(object):
 
     def getPrediction(self, neighbors):
         """" Returns prediction of response variable (inverse distance weighting).
-        @:param neighbors: list of (response, distance)-tuples."""
+        @:param neighbors: list of (response, distance)-tuples.
+        :return prediction: list of correlation estimates """
         responses = map(itemgetter(0), neighbors)
         distances = map(itemgetter(1), neighbors)
         if neighbors[0][1] == 0: # equal weighted average of neighbors with zero distance
