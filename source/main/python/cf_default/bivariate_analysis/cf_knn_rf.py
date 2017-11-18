@@ -46,8 +46,8 @@ for filename in files_list:
     data_cor_true.drop(data_cor_true.head(200).index, inplace=True)
     data_cor_true.reset_index(drop=True, inplace=True)
     # Separate data into feature and response components
-    X = data_cor_true.iloc[:, 0:-1]  # feature matrix
-    y = data_cor_true.iloc[:, -1]    # response vector
+    X = np.asarray(data_cor_true.iloc[:, 0:-1])  # feature matrix (vectorize data for speed up)
+    y = np.asarray(data_cor_true.iloc[:, -1])    # response vector
 
     t_start = 1000
     T = len(y)

@@ -43,7 +43,47 @@ files_list = os.listdir(os.path.join(os.path.dirname(os.path.dirname(os.path.dir
 start_time = time.time()
 mae_rf_vec = np.full(200, np.nan)  # Initialisation vector containing MAE for all window sizes
 k = 0
-for filename in files_list:
+
+for i in range(3, 5):
+    k += 1
+    print(k)
+    filename = file_path + '/dataset_emw_' + str(i) + '.pkl'
+    data_cor_true = load(open(filename, 'rb'))
+    # Drop first m_max = 200 rows to ensure same training and test set for all values of m
+    data_cor_true.drop(data_cor_true.head(200).index, inplace=True)
+    data_cor_true.reset_index(drop=True, inplace=True)
+    # Separate data into feature and response components
+    X = np.asarray(data_cor_true.iloc[:, 0:-1])  # feature matrix (vectorize data for speed up)
+    y = np.asarray(data_cor_true.iloc[:, -1])    # response vector
+
+    t_start = 1000
+    T = len(y)
+    y_hat_rf = np.full(T - t_start, np.nan)  # Initialisation vector containing y_hat_t for t = m+1,...,T
+    rf = RandomForestRegressor(n_estimators=50, n_jobs=1)   # n_Jobs != 1 increases computational time for some reason
+
+    for j, t in enumerate(range(t_start, T)):
+        X_train = X[0:t, :]
+        y_train = y[0:t]
+        x_test = X[t]  # This is in fact x_t+1
+        y_test = y[t]  # This is in fact y_t+1
+        y_hat = rf.fit(X_train, y_train).predict(x_test.reshape(-1, 1))
+        y_hat_rf[j] = y_hat
+
+    mae_rf_vec[i] = mean_absolute_error(y[t_start:], y_hat_rf)
+
+print(mae_rf_vec)
+print("%s: %f" % ('Execution time script', (time.time() - start_time)))
+
+"""
+plt.plot(mae_rf_vec, label='RF')
+plt.title('MAE for Random Forest(100) with true correlations')
+plt.xlabel('window length')
+plt.ylabel('MAE')
+plt.legend(loc='upper right', fancybox=True)
+plt.show()
+
+
+for filename in files_list[0:20]:
     i = [int(s) for s in re.findall(r'\d+', filename)]
     k += 1
     print(k)
@@ -58,7 +98,7 @@ for filename in files_list:
     t_start = 1000
     T = len(y)
     y_hat_rf = np.full(T - t_start, np.nan)    # Initialisation vector containing y_hat_t for t = m+1,...,T
-    rf = RandomForestRegressor()  # Default settings (for now)
+    rf = RandomForestRegressor(n_estimators=50)  # Default settings (for now)
     dt = DecisionTreeRegressor()
 
     for j, t in enumerate(range(t_start, T)):
@@ -70,18 +110,19 @@ for filename in files_list:
         y_hat_rf[j] = y_hat
 
     mae_rf_vec[i] = mean_absolute_error(y[t_start:], y_hat_rf)
+    
+"""
 
+"""
 path = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(__file__)))),
-                        ('resources/Data/mae_rf_true_corr_default.pkl'))
+                        ('resources/Data/mae_rf100_true_corr_default.pkl'))
 dump(mae_rf_vec, open(path, 'wb'))
 
-print(mae_rf_vec)
-print("%s: %f" % ('Execution time script', (time.time() - start_time)))
 
 plt.plot(mae_rf_vec, label='RF')
-plt.title('MAE for Random Forest with true correlations')
+plt.title('MAE for Random Forest(200) with true correlations')
 plt.xlabel('window length')
 plt.ylabel('MAE')
 plt.legend(loc='upper right', fancybox=True)
 plt.show()
-
+"""

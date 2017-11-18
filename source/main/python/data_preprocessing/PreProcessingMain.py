@@ -33,7 +33,7 @@ class PreProcesser(object):
 
     def simulate_random_correlation_ar(self, T, a0, a1):
         """Simulate a random correlation process with highly persistent time-varying correlations following an
-           auto-regressive process.
+           auto-regressive process. Add noise with ar process
         :param T: simulation length
         :param a0:
         :param a1:
@@ -207,10 +207,10 @@ def main():
     mae_knn_vec = mm.load_data('mae_knn_true_corr.pkl')
     mae_rf1_vec = mm.load_data('mae_rf_true_corr.pkl')
     mae_rf10_vec = mm.load_data('mae_rf_true_corr_default.pkl')
-    #mae_mw_vec = mm.load_data('mae_mw_true_corr.pkl')
-    #mae_emw_vec = mm.load_data('mae_emw_true_corr.pkl')
+    mae_mw_vec = mm.load_data('mae_mw_true_corr.pkl')
+    mae_emw_vec = mm.load_data('mae_emw_true_corr.pkl')
 
-
+    """
     window_min = 3
     window_max = 201
     mae_mw_vec = np.full(window_max, np.nan)
@@ -226,24 +226,25 @@ def main():
     mm.save_data('mae_mw_true_corr.pkl', mae_mw_vec)
     mm.save_data('mae_emw_true_corr.pkl', mae_emw_vec)
 
-    """
     plt.figure(0)
-    plt.plot(mae_mw_vec, label='Moving Window')
-    plt.plot(mae_emw_vec, label='Exp. Weighted Moving Window')
+    plt.plot(mae_mw_vec[0:101], label='Moving Window')
+    plt.plot(mae_emw_vec[0:101], label='Exp. Weighted Moving Window')
     #plt.plot(mae_knn_vec, label='KNN')
-    plt.plot(mae_rf_vec, label='RF')
-    plt.title('MAE for MW, EMW and RF')
+    #plt.plot(mae_rf_vec, label='RF')
+    plt.title('MAE for MW and EMW')
     plt.xlabel('window length'); plt.ylabel('MAE'); plt.legend(loc='upper right', fancybox=True)
     plt.ylim(0, 0.6)
     plt.show()
+    
     """
 
+
     plt.figure(1)
-    plt.plot(mae_mw_vec, label='Moving Window')
-    plt.plot(mae_emw_vec, label='Exp. Weighted Moving Window')
-    plt.plot(mae_knn_vec, label='KNN')
-    plt.plot(mae_rf1_vec, label='RF(1)')
-    plt.plot(mae_rf10_vec, label='RF(10)')
+    plt.plot(mae_mw_vec[0:101], label='Moving Window')
+    plt.plot(mae_emw_vec[0:101], label='Exp. Weighted Moving Window')
+    plt.plot(mae_knn_vec[0:101], label='KNN')
+    #plt.plot(mae_rf1_vec[0:101], label='RF(1)')
+    plt.plot(mae_rf10_vec[0:101], label='RF(10)')
     plt.plot()
     plt.title('MAE for MW, EMW, KNN and RF')
     plt.xlabel('window length')
@@ -252,7 +253,7 @@ def main():
     plt.ylim(0, 0.6)
     plt.show()
 
-    
+
     """
 
     ################################### Data set creation ###############################
