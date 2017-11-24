@@ -34,13 +34,15 @@ class TechnicalAnalyzer2(object):
         w_vec = self._exponential_weights(dt, theta)
         for t in range(dt - 1, len(y_i)):
             # Compute weighted means over dt consecutive observations
-            y_i_weighted = sum(map(lambda (w, y): w * y, zip(w_vec, y_i[t - dt + 1:t])))  # t is current time
-            y_j_weighted = sum(map(lambda (w, y): w * y, zip(w_vec, y_j[t - dt + 1:t])))
+            y_i_weighted = sum(map(lambda w_y: w_y[0] * w_y[1], zip(w_vec, y_i[t - dt + 1:t])))  # t is current time
+            y_j_weighted = sum(map(lambda w_y: w_y[0] * w_y[1], zip(w_vec, y_j[t - dt + 1:t])))
             # Compute weighted standard deviations over dt consecutive observations
-            sd_i_weighted = sqrt(sum(map(lambda (w, y): w * (y - y_i_weighted) ** 2, zip(w_vec, y_i[t - dt + 1:t]))))
-            sd_j_weighted = sqrt(sum(map(lambda (w, y): w * (y - y_j_weighted) ** 2, zip(w_vec, y_j[t - dt + 1:t]))))
+            sd_i_weighted = sqrt(sum(map(lambda w_y: w_y[0] * np.power((w_y[1] - y_i_weighted), 2),
+                                         zip(w_vec, y_i[t - dt + 1:t]))))
+            sd_j_weighted = sqrt(sum(map(lambda w_y: w_y[0] * np.power((w_y[1] - y_j_weighted), 2),
+                                         zip(w_vec, y_j[t - dt + 1:t]))))
             # Compute Pearson weighted correlation coefficient
-            sd_ij_weighted = sum(map(lambda (w, x, y): w * (x - y_i_weighted) * (y - y_j_weighted),
+            sd_ij_weighted = sum(map(lambda w_x_y: w_x_y[0] * (w_x_y[1] - y_i_weighted) * (w_x_y[2] - y_j_weighted),
                                      zip(w_vec, y_i[t - dt + 1:t], y_j[t - dt + 1:t])))
             rho_weighted[t] = sd_ij_weighted / (sd_i_weighted * sd_j_weighted)
         return rho_weighted
