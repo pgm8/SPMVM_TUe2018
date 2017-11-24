@@ -1,7 +1,8 @@
-from pandas_datareader import data as dt
-from ModuleManager import ModuleManager
-from TechnicalAnalyzer2 import TechnicalAnalyzer2
-from FeatureNormalizer import FeatureNormalizer
+#from pandas_datareader import data as dt
+
+import ModuleManager as ModuleManager
+import TechnicalAnalyzer2 as TechnicalAnalyzer2
+
 
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -10,6 +11,7 @@ import time
 from math import sqrt, exp
 
 from sklearn.metrics import mean_absolute_error
+from sklearn.metrics import mean_squared_error # use mse to penalize outliers more
 
 #  Set seed for pseudorandom number generator. This allows us to reproduce the results from our script.
 np.random.seed(30)  # globally set random seed  (30 is a good option) 21 days
@@ -145,9 +147,9 @@ class PreProcesser(object):
 def main():
 
     preprocesser = PreProcesser()
-    mm = ModuleManager()
-    ta = TechnicalAnalyzer2()
-    ft = FeatureNormalizer()
+    mm = ModuleManager.ModuleManager()
+    ta = TechnicalAnalyzer2.TechnicalAnalyzer2()
+    #ft = FeatureNormalizer()
 
     """
     # Create dataframe with Adjusted Close prices SP500 index and Russel2000 index
@@ -172,6 +174,7 @@ def main():
     random_corr_garch, _ = simulate_random_correlation_garch(500, a0, a1, b1)  # results in non positive definite matrices
     """
 
+    """
     T = 1700
     a0 = 0.1
     a1 = 0.8
@@ -179,30 +182,30 @@ def main():
     vol_matrix = np.array([[0.08, 0],  # Simple volatility matrix with unit variances for illustration purposes
                            [0, 0.1]])
 
-    #correlated_asset_paths = preprocesser.simulate_correlated_asset_paths(random_corr, vol_matrix, T)
+    correlated_asset_paths = preprocesser.simulate_correlated_asset_paths(random_corr, vol_matrix, T)
+    
 
-    """
     plt.title('Simulated data using Cholesky decomposition and time-varying correlations')
-    plt.plot(correlated_asset_paths[200:1699, 0], label='$y_{1,t}$')
-    plt.plot(correlated_asset_paths[200:1699, 1], label='$y_{2,t}$')
-    plt.plot(random_corr, label='$\\rho_t$')
+    plt.plot(correlated_asset_paths[1200:, 0], label='$y_{1,t}$', linewidth=1, color='black')
+    plt.plot(correlated_asset_paths[1200:, 1], label='$y_{2,t}$', linewidth=1, linestyle='--', color='blue')
+    plt.plot(random_corr[1200:], label='$\\rho_t$', linewidth=1, color='red')
     plt.legend(fontsize='small', bbox_to_anchor=(1, 0.22), fancybox=True)
-    plt.xlim(0, 1500)
+    plt.xlim(0, 500)
+    plt.ylim(-0.5, 1)
     plt.show()
 
     data = pd.DataFrame(correlated_asset_paths)
     data['rho'] = random_corr
     mm.save_data('correlated_sim_data.pkl', data)
-    
-    """
 
+    """
     ## MAE for (weighted) moving window estimates with varying window size
     #One idea in order to be consistent with later ml comparison. Take random corr process of length 1500 and
     #take MAE measures over last 500 values. Then with ml we can train the models on first 1000 observations and
     #compare MAE measures over last 500 values. SO out-of-sample MAE.
 
 
-
+    """
     simulated_data_process = mm.load_data('correlated_sim_data.pkl')
     mae_knn_vec = mm.load_data('mae_knn_true_corr.pkl')
     mae_rf1_vec = mm.load_data('mae_rf_true_corr.pkl')
@@ -210,7 +213,7 @@ def main():
     mae_mw_vec = mm.load_data('mae_mw_true_corr.pkl')
     mae_emw_vec = mm.load_data('mae_emw_true_corr.pkl')
 
-    """
+
     window_min = 3
     window_max = 201
     mae_mw_vec = np.full(window_max, np.nan)
@@ -236,7 +239,7 @@ def main():
     plt.ylim(0, 0.6)
     plt.show()
     
-    """
+
 
 
     plt.figure(1)
@@ -252,10 +255,9 @@ def main():
     plt.legend(loc='upper right', fancybox=True)
     plt.ylim(0, 0.6)
     plt.show()
-
-
     """
 
+    """
     ################################### Data set creation ###############################
     simulated_data_process = mm.load_data('correlated_sim_data.pkl')
     window_min = 3
@@ -265,16 +267,9 @@ def main():
         dataset = preprocesser.generate_bivariate_dataset(ta, simulated_data_process, m)
         mm.save_data('/bivariate_analysis/dataset_emw_%d.pkl' % m, dataset)
     print("%s: %f" % ('Execution time', (time.time() - start_time)))
-
+    """
+    """
     dt = 200
-    ## Dataset with true correlations as target variable
-    dataset_cor_true = pd.DataFrame(
-        ta.pearson_weighted_correlation_estimation(simulated_data_process[0],
-                                                   simulated_data_process[1], dt), columns=['EMW_t-1'])
-    # Ensure feature is past correlation mw estimate, i.e. x_t = EMW_t-1
-    dataset_cor_true['EMW_t-1'] = dataset_cor_true['EMW_t-1'].shift(periods=1, axis='index')
-    # Add output/ target variable to dataframe
-    dataset_cor_true['rho_true'] = simulated_data_process['rho']
     ## Dataset with proxies for correlation as target variable
     dataset_cor_proxies = pd.DataFrame(
         ta.pearson_weighted_correlation_estimation(simulated_data_process[0],
@@ -284,7 +279,6 @@ def main():
     # Write datasets to pickle objects
     mm.save_data('dataset_cor_true.pkl', dataset_cor_true)
     mm.save_data('dataset_cor_proxy.pkl', dataset_cor_proxies)
-    
     """
 
 
@@ -331,24 +325,6 @@ def main():
         mm.transform_pickle_to_csv('GSPC_base_norm.pkl')
         
         """
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 ###############################
