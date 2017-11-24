@@ -2,12 +2,13 @@ import numpy as np
 import os.path
 import re
 import time
-from pickle import load
-from pickle import dump
+
+import ModuleManager as ModuleManager
+
 import matplotlib.pyplot as plt
 from sklearn.neighbors import KNeighborsRegressor
 from sklearn.metrics import mean_absolute_error
-
+from sklearn.metrics import mean_squared_error
 
 """
 The "canonical" way to do time-series cross-validation is to roll through the dataset. Basically, the training set
@@ -31,17 +32,17 @@ script running time: 263 seconds
 #  Set seed for pseudorandom number generator. This allows us to reproduce the results from our script.
 np.random.seed(42)  # 42:The answer to life, the universe and everything.
 
+mm = ModuleManager.ModuleManager()
+
 # Load data into dataframe
-file_path = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(__file__)))),
-                        'resources/Data/bivariate_analysis')
 files_list = os.listdir(os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(__file__)))),
                         'resources/Data/bivariate_analysis'))
 
 start_time = time.time()
-mae_knn_vec = np.full(200, np.nan)  # Initialisation vector containing MAE for all window sizes
+mse_knn_vec = np.full(201, np.nan)  # Initialisation vector containing MAE for all window sizes
 for filename in files_list:
     i = [int(s) for s in re.findall(r'\d+', filename)]
-    data_cor_true = load(open(file_path + '/' + filename, 'rb'))
+    data_cor_true = mm.load_data('bivariate_analysis/' + filename)
     # Drop first m_max = 200 rows to ensure same training and test set for all values of m
     data_cor_true.drop(data_cor_true.head(200).index, inplace=True)
     data_cor_true.reset_index(drop=True, inplace=True)
@@ -54,27 +55,24 @@ for filename in files_list:
     y_hat_knn = np.full(T - t_start, np.nan)    # Initialisation vector containing y_hat_t for t = m+1,...,T
     knn = KNeighborsRegressor()  # Default settings (for now)
     for j, t in enumerate(range(t_start, T)):
-        X_train = X.iloc[0:t, :]
-        y_train = y.iloc[0:t]
-        x_test = X.iloc[t]  # This is in fact x_t+1
-        y_test = y.iloc[t]  # This is in fact y_t+1
+        X_train = X[0:t, :]
+        y_train = y[0:t]
+        x_test = X[t]  # This is in fact x_t+1
+        y_test = y[t]  # This is in fact y_t+1
         y_hat = knn.fit(X_train, y_train).predict(x_test.reshape(-1, 1))
         y_hat_knn[j] = y_hat
 
-    mae_knn_vec[i] = mean_absolute_error(y[t_start:], y_hat_knn)
-
-path = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(__file__)))),
-                        ('resources/Data/mae_knn_true_corr.pkl'))
-dump(mae_knn_vec, open(path, 'wb'))
+    mse_knn_vec[i] = mean_squared_error(y[t_start:], y_hat_knn)
 
 
+mm.save_data('mse_knn_true_corr.pkl', mse_knn_vec)
 
 
-print(mae_knn_vec)
-plt.plot(mae_knn_vec)
-plt.title('MAE for Nearest Neighbour with true correlations')
+print(mse_knn_vec)
+plt.plot(mse_knn_vec)
+plt.title('MSE for Nearest Neighbour with true correlations')
 plt.xlabel('window length')
-plt.ylabel('MAE')
+plt.ylabel('MSE')
 plt.show()
 print("%s: %f" % ('Execution time script', (time.time() - start_time)))
 
