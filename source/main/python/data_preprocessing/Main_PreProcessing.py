@@ -4,10 +4,9 @@ import PreProcessor as PreProcessor
 import ModuleManager as ModuleManager
 import TechnicalAnalyzer2 as TechnicalAnalyzer2
 
-
-import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
+from scipy.stats.stats import pearsonr
 import time
 from math import sqrt, exp
 
@@ -24,34 +23,14 @@ np.random.seed(42)
 
 def main():
 
-    preprocesser = PreProcessor()
+    preprocesser = PreProcessor.PreProcessor()
     mm = ModuleManager.ModuleManager()
     ta = TechnicalAnalyzer2.TechnicalAnalyzer2()
     # ft = FeatureNormalizer()
 
-    """
-    # Create dataframe with Adjusted Close prices SP500 index and Russel2000 index
-    data = pd.DataFrame()
-    mm.transform_csv_to_pickle(filename='RUT.csv')
-    sp500_data = mm.load_data(filename='GSPC_csv.pkl')
-    russel2000_data = mm.load_data(filename='RUT_csv.pkl')
-    data['Date'] = sp500_data['Date']
-    data['Adj Close SP500'] = sp500_data['Adj Close']
-    data['Adj Close Rus2000'] = russel2000_data['Adj Close']
-
-    # Compute sample bivariate correlations using moving window estimates
-    m = 120
-    data['RhoSP500Rus2000'] = data['Adj Close SP500'].rolling(window=m).corr(other=data['Adj Close Rus2000'])
-    #plt.plot(data['RhoSP500Rus2000'])
-    #plt.show()
-
-    # Generated data
-    a0 = 0.02
-    a1 = 0.2
-    b1 = 0.78
-    random_corr_garch, _ = simulate_random_correlation_garch(500, a0, a1, b1)  # results in non positive definite matrices
-    """
-
+    ##################################################################################################################
+    ###     Asset path simulation using Cholesky Factorization and predefined time-varying correlation dynamics    ###
+    ##################################################################################################################
     """
     T = 1751
     a0 = 0.1
@@ -60,11 +39,7 @@ def main():
     vol_matrix = np.array([[0.08, 0],  # Simple volatility matrix with unit variances for illustration purposes
                            [0, 0.1]])
 
-    #vol_matrix = np.array([[1, 0],  # Simple volatility matrix with unit variances for illustration purposes
-     #                      [0, 1]])
-
     correlated_asset_paths = preprocesser.simulate_correlated_asset_paths(random_corr, vol_matrix, T)
-
 
     plt.title('Simulated data using Cholesky decomposition and time-varying correlations')
     plt.plot(correlated_asset_paths[1200:, 0], label='$y_{1,t}$', linewidth=1, color='black')
@@ -79,13 +54,56 @@ def main():
     data['rho'] = random_corr
     mm.save_data('correlated_sim_data.pkl', data)
     """
+    ##################################################################################################################
+    ###     Estimation uncertainty in (weighted) Pearson correlation coefficient using moving window estimates     ###
+    ##################################################################################################################
+    simulated_data_process = mm.load_data('/bivariate_analysis/correlated_sim_data.pkl')
+    T = 500
+    delta_t = 21
+    ciw = 99
+
+    rho_estimates, lower_percentiles, upper_percentiles = \
+        preprocesser.bootstrap_moving_window_estimate(simulated_data_process, delta_t=delta_t, T=T, ciw=ciw)
+    # Figure
+    #plt.plot(rho_true, label='real correlation', linewidth=1, color='black')
+    plt.plot(rho_estimates, label='MW correlation', linewidth=1, color='red')
+    plt.plot(lower_percentiles, label='%d%% interval (bootstrap)' % ciw, linewidth=1,
+             color='magenta')
+    plt.plot(upper_percentiles, linewidth=1, color='magenta')
+    plt.title('MW estimates with window size %i' % delta_t)
+    plt.xlabel('observation')
+    plt.legend(loc='lower right', fancybox=True)
+    plt.xlim(0, T)
+    plt.yticks(np.arange(-1, 1.00000001, 0.2))
+    plt.show()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     ## MAE for (weighted) moving window estimates with varying window size
-    # One idea in order to be consistent with later ml comparison. Take random corr process of length 1500 and
-    # take MAE measures over last 500 values. Then with ml we can train the models on first 1000 observations and
-    # compare MAE measures over last 500 values. SO out-of-sample MAE.
-
-
+    # One idea in order to be consistent with later ml comparison. Take random corr process of length 1751 and
+    # take MSE measures over last 500 values. Then with ml we can train the models on first 1000 observations and
+    # compare MSE measures over last 500 values. SO out-of-sample MSE.
     """
     simulated_data_process = mm.load_data('correlated_sim_data.pkl')
     mae_knn_vec = mm.load_data('mae_knn_true_corr.pkl')
@@ -119,9 +137,6 @@ def main():
     plt.xlabel('window length'); plt.ylabel('MAE'); plt.legend(loc='upper right', fancybox=True)
     plt.ylim(0, 0.6)
     plt.show()
-
-
-
 
     plt.figure(1)
     plt.plot(mae_mw_vec[0:101], label='Moving Window')
@@ -165,23 +180,6 @@ def main():
 
 
 
-    """
-    a0 = 0.1
-    a1 = 0.8
-    random_corr = simulate_random_correlation_ar(500, a0, a1)
-    plt.title('Persistent time-varying correlation process following auto-regressive process')
-    plt.xlabel('t')
-    plt.plot(random_corr)
-    #plt.show()
-
-    a0 = 1.0
-    a1 = 0.1
-    b1 = 0.8
-    random_corr_garch, _ = simulate_random_corr_garch(500, a0, a1, b1)
-    plt.title('Time-varying correlation process following GARCH-like process')
-    plt.plot(random_corr_garch)
-    plt.show()
-    """
 
 
 

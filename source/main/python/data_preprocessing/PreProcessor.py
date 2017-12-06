@@ -1,6 +1,7 @@
 import pandas as pd
 import numpy as np
 from math import sqrt
+from scipy.stats.stats import pearsonr
 
 #  Set seed for pseudorandom number generator. This allows us to reproduce the results from our script.
 #np.random.seed(30)  # globally set random seed  (30 is a good option) 21 days
@@ -9,19 +10,11 @@ np.random.seed(42)
 
 class PreProcessor(object):
     """Preprocessor class. This class has the responsibility to preprocess the data. More specifically, the class
-    has the task of simulating random correlated asset paths in the bivariate case."""
+    has the task of simulating random correlated asset paths in the bivariate case. Additionally. the class has the
+    responsibility for estimating the uncertainty in the response variable through a bootstrap resampling procedure."""
 
     def __init__(self):
         """Initializer PreProcessor object."""
-
-    def data_retrieval(self):
-        """Method to pull financial data from yahoo.finance. Note: API does not seem to work anymore
-        due to changes of webpage structure at server's end."""
-        tickers = ['SPY']  # ETF SPY as proxy for S&P 500
-        data_source = 'google'
-        start = '1992-01-01'
-        end = '2016-12-31'
-        data_panel = dt.DataReader(tickers, data_source=data_source, start=start, end=end)
 
     def simulate_random_correlation_ar(self, T, a0, a1):
         """Simulate a random correlation process with highly persistent time-varying correlations following an
@@ -115,7 +108,7 @@ class PreProcessor(object):
         :param ta: technical analyzer object
         :param simulated_data_process: bivariate asset process with predefined correlation dynamics.
         :param m: window length
-        :param weighted: boolean whether to use weighted mw estimates as proxies or not
+        :param weighted: boolean whether to use weighted mw estimates as proxies
         :return: dataset (datastructure: dataframe)."""
         if weighted:
             emw_estimates = ta.pearson_weighted_correlation_estimation(simulated_data_process[0],
@@ -133,6 +126,60 @@ class PreProcessor(object):
         # Add output/ response variable to dataframe
         dataset['rho_true'] = simulated_data_process['rho']
         return dataset
+
+    def bootstrap_moving_window_estimate(self, data, delta_t, T=500, reps=1000, ciw=99, weighted=False):
+        """Method for measuring the estimation uncertainty associated to the correlation coefficients when moving
+        window estimates are used for approximating true correlations.
+        :param data: dataset used for the task of fun bootstrap_procedure
+        :param T: length of test set
+        :param delta_t: window length for (exponentially weighted) moving window estimates of Pearson correlation coefficient
+        :param reps: number of bootstrap samples
+        :param ciw: confidence interval width
+        :param weighted: boolean whether to use weighted mw estimates of true correlation
+        :return: correlation estimates with associated confidence intervals."""
+        assets_price = data.tail(T + delta_t - 1).iloc[:, :-1]; assets_price.reset_index(drop=True, inplace=True)
+        rho_true = data.tail(T).iloc[:, -1]; rho_true.reset_index(drop=True, inplace=True)
+        rho_estimates = np.full(T, np.nan)
+        lower_percentiles = list()  # Initialisation list containing lower percentile values
+        upper_percentiles = list()  # Initialisation list containing upper percentile values
+        p_low = (100 - ciw) / 2
+        p_high = 100 - p_low
+        for t in range(delta_t, T + delta_t):
+            sampling_data = np.asarray(assets_price.iloc[t - delta_t:t, :])
+            # Bootstrap resampling procedure:
+            # draw sample of size delta_t by randomly extracting time units with uniform probability, with replacement.
+            rho_bootstrapped = np.full(reps, np.nan)
+            for rep in range(reps):
+                indices = np.random.randint(0, sampling_data.shape[0], delta_t)
+                sample = sampling_data[indices]
+                if weighted is False:
+                    rho_bootstrapped[rep] = pearsonr(sample[:, 0], sample[:, 1])[0]
+                else:
+                    # Setup bootstrap procedure for weighted moving window estimates
+                    print()
+            rho_estimates[t - delta_t] = np.mean(rho_bootstrapped)
+            lower, upper = np.percentile(rho_bootstrapped, [p_low, p_high])
+            lower_percentiles.append(lower)
+            upper_percentiles.append(upper)
+        return rho_estimates, lower_percentiles, upper_percentiles
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
