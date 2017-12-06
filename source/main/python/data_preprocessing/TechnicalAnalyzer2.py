@@ -8,10 +8,10 @@ class TechnicalAnalyzer2(object):
     def __init__(self):
         """Initializer TechnicalAnalyzer object."""
 
-    def _exponential_weights(self, dt, theta):
-        """Private method for obtaining vector of weights where the functional form of the weights follow the
+    def exponential_weights(self, dt, theta):
+        """Method for obtaining vector of weights where the functional form of the weights follow the
         exponential function. The definition of our weight function ensures the sum of weights is equal to one.
-        As a recommendation from Pozzi et al. (2012): theta = dt / 3 for dt = {21, 251} [days]/
+        As a recommendation from Pozzi et al. (2012): theta = dt / 3 for dt = {21, 251} [days]
         :param dt: window length
         :param theta: weight's characteristic time, i.e. 1 / theta is the exponential decay factor
         :return: w: vector containing weights according to exponential function."""
@@ -31,7 +31,7 @@ class TechnicalAnalyzer2(object):
         rho_weighted = np.full(len(y_i),
                                np.nan)  # Initialise empty vector that will contain Pearson weighted correlations
         theta = dt / 3.0
-        w_vec = self._exponential_weights(dt, theta)
+        w_vec = self.exponential_weights(dt, theta)
         for t in range(dt - 1, len(y_i)):
             # Compute weighted means over dt consecutive observations
             y_i_weighted = sum(map(lambda w_y: w_y[0] * w_y[1], zip(w_vec, y_i[t - dt + 1:t])))  # t is current time
