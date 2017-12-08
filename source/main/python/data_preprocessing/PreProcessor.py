@@ -3,6 +3,10 @@ import numpy as np
 from math import sqrt
 from scipy.stats.stats import pearsonr
 
+from TechnicalAnalyzer import TechnicalAnalyzer
+
+import matplotlib.pyplot as plt
+
 #  Set seed for pseudorandom number generator. This allows us to reproduce the results from our script.
 #np.random.seed(30)  # globally set random seed  (30 is a good option) 21 days
 np.random.seed(42)
@@ -15,6 +19,7 @@ class PreProcessor(object):
 
     def __init__(self):
         """Initializer PreProcessor object."""
+        self.ta = TechnicalAnalyzer()
 
     def simulate_random_correlation_ar(self, T, a0, a1):
         """Simulate a random correlation process with highly persistent time-varying correlations following an
@@ -130,9 +135,9 @@ class PreProcessor(object):
     def bootstrap_moving_window_estimate(self, data, delta_t, T=500, reps=1000, ciw=99, weighted=False):
         """Method for measuring the estimation uncertainty associated to the correlation coefficients when moving
         window estimates are used for approximating true correlations.
-        :param data: dataset used for the task of fun bootstrap_procedure
+        :param data: dataset used for the task of bootstrap resampling
         :param T: length of test set
-        :param delta_t: window length for (exponentially weighted) moving window estimates of Pearson correlation coefficient
+        :param delta_t: window length for moving window estimates of Pearson correlation coefficient
         :param reps: number of bootstrap samples
         :param ciw: confidence interval width
         :param weighted: boolean whether to use weighted mw estimates of true correlation
@@ -144,6 +149,7 @@ class PreProcessor(object):
         upper_percentiles = list()  # Initialisation list containing upper percentile values
         p_low = (100 - ciw) / 2
         p_high = 100 - p_low
+
         for t in range(delta_t, T + delta_t):
             sampling_data = np.asarray(assets_price.iloc[t - delta_t:t, :])
             # Bootstrap resampling procedure:
@@ -152,16 +158,34 @@ class PreProcessor(object):
             for rep in range(reps):
                 indices = np.random.randint(0, sampling_data.shape[0], delta_t)
                 sample = sampling_data[indices]
-                if weighted is False:
-                    rho_bootstrapped[rep] = pearsonr(sample[:, 0], sample[:, 1])[0]
-                else:
+                if weighted:
                     # Setup bootstrap procedure for weighted moving window estimates
-                    print()
+                    w = self.ta.exponential_weights(delta_t, delta_t / 3)
+                    weight_vec_raw = w[indices]
+                    sum_w = np.sum(weight_vec_raw)
+                    weight_vec_norm = [i / sum_w for i in weight_vec_raw]  # Re-normalize weights to one
+                    rho_bootstrapped[rep] = \
+                        self.ta.pearson_weighted_correlation_estimation(sample[:, 0], sample[:, 1], delta_t,
+                                                                        weight_vec_norm)
+                else:
+                    rho_bootstrapped[rep] = pearsonr(sample[:, 0], sample[:, 1])[0]
             rho_estimates[t - delta_t] = np.mean(rho_bootstrapped)
             lower, upper = np.percentile(rho_bootstrapped, [p_low, p_high])
             lower_percentiles.append(lower)
             upper_percentiles.append(upper)
         return rho_estimates, lower_percentiles, upper_percentiles
+
+    def bootstrap_learner_estimate(self,  data, T=500, reps=1000, ciw=99):
+        """"Method for measuring the estimation uncertainty associated to the correlation coefficients when a learner
+        model is used for approximating true correlations.
+        :param data: dataset used for the task of bootstrap resampling
+        :param T: length of test set
+        :param reps: number of bootstrap samples
+        :param ciw: confidence interval width
+        :return: correlation estimates with associated confidence intervals."""
+
+
+
 
 
 
