@@ -22,7 +22,7 @@ class TechnicalAnalyzer(object):
             w[t - 1] = w0 * np.exp((t - dt) / theta)
         return w
 
-    def pearson_weighted_correlation_estimation(self, y_i, y_j, dt, weight_vec):
+    def pearson_weighted_correlation_estimation(self, y_i, y_j, dt, weight_vec=None):
         """Method for estimation of Pearson weighted time-varying correlation coefficient between two assets.
         In this work, the functional form for the weights follows the exponential function.
         :param y_i: vector containing price path of asset i
@@ -30,48 +30,39 @@ class TechnicalAnalyzer(object):
         :param dt: window length, i.e. window containing dt consecutive observations
         :param weight_vec: vector containing weights used for smoothing
         :return: rho_weighted: vector containing pearson weighted correlation estimates."""
-        """
-        if not weight_vec:
+        if weight_vec is None:
             theta = dt / 3
             w_vec = self.exponential_weights(dt, theta=theta)
+            # Body for non-bootstrap context
+            rho_weighted = np.full(len(y_i), np.nan)  # Initialise empty vector for Pearson weighted correlations
+            for t in range(dt - 1, len(y_i)):
+                # Compute weighted means over dt consecutive observations
+                y_i_weighted = sum(map(lambda w_y: w_y[0] * w_y[1], zip(w_vec, y_i[t - dt + 1:t])))  # t is current time
+                y_j_weighted = sum(map(lambda w_y: w_y[0] * w_y[1], zip(w_vec, y_j[t - dt + 1:t])))
+                # Compute weighted standard deviations over dt consecutive observations
+                sd_i_weighted = np.sqrt(sum(map(lambda w_y: w_y[0] * np.power((w_y[1] - y_i_weighted), 2),
+                                                zip(w_vec, y_i[t - dt + 1:t]))))
+                sd_j_weighted = np.sqrt(sum(map(lambda w_y: w_y[0] * np.power((w_y[1] - y_j_weighted), 2),
+                                                zip(w_vec, y_j[t - dt + 1:t]))))
+                # Compute Pearson weighted correlation coefficient
+                sd_ij_weighted = sum(map(lambda w_x_y: w_x_y[0] * (w_x_y[1] - y_i_weighted) * (w_x_y[2] - y_j_weighted),
+                                        zip(w_vec, y_i[t - dt + 1:t], y_j[t - dt + 1:t])))
+                rho_weighted[t] = sd_ij_weighted / (sd_i_weighted * sd_j_weighted)
         else:
             w_vec = weight_vec
-            print(w_vec)
-        """
-        #theta = dt / 3
-        #w_vec = self.exponential_weights(dt, theta=theta)
-
-        w_vec = weight_vec
-        # Body for bootstrap context
-        # Compute weighted means over dt consecutive observations
-        y_i_weighted = sum(map(lambda w_y: w_y[0] * w_y[1], zip(w_vec, y_i)))
-        y_j_weighted = sum(map(lambda w_y: w_y[0] * w_y[1], zip(w_vec, y_j)))
-        # Compute weighted standard deviations over dt consecutive observations
-        sd_i_weighted = np.sqrt(sum(map(lambda w_y: w_y[0] * np.power((w_y[1] - y_i_weighted), 2),
-                                        zip(w_vec, y_i))))
-        sd_j_weighted = np.sqrt(sum(map(lambda w_y: w_y[0] * np.power((w_y[1] - y_j_weighted), 2),
-                                        zip(w_vec, y_j))))
-        # Compute Pearson weighted correlation coefficient
-        sd_ij_weighted = sum(map(lambda w_x_y: w_x_y[0] * (w_x_y[1] - y_i_weighted) * (w_x_y[2] - y_j_weighted),
-                                 zip(w_vec, y_i, y_j)))
-        rho_weighted = sd_ij_weighted / (sd_i_weighted * sd_j_weighted)
-        """
-        # Body for non-bootstrap context
-        rho_weighted = np.full(len(y_i), np.nan)  # Initialise empty vector for containing Pearson weighted correlation
-        for t in range(dt - 1, len(y_i)):
+            # Body for bootstrap context
             # Compute weighted means over dt consecutive observations
-            y_i_weighted = sum(map(lambda w_y: w_y[0] * w_y[1], zip(w_vec, y_i[t - dt + 1:t])))  # t is current time
-            y_j_weighted = sum(map(lambda w_y: w_y[0] * w_y[1], zip(w_vec, y_j[t - dt + 1:t])))
+            y_i_weighted = sum(map(lambda w_y: w_y[0] * w_y[1], zip(w_vec, y_i)))
+            y_j_weighted = sum(map(lambda w_y: w_y[0] * w_y[1], zip(w_vec, y_j)))
             # Compute weighted standard deviations over dt consecutive observations
             sd_i_weighted = np.sqrt(sum(map(lambda w_y: w_y[0] * np.power((w_y[1] - y_i_weighted), 2),
-                                         zip(w_vec, y_i[t - dt + 1:t]))))
+                                            zip(w_vec, y_i))))
             sd_j_weighted = np.sqrt(sum(map(lambda w_y: w_y[0] * np.power((w_y[1] - y_j_weighted), 2),
-                                         zip(w_vec, y_j[t - dt + 1:t]))))
+                                            zip(w_vec, y_j))))
             # Compute Pearson weighted correlation coefficient
             sd_ij_weighted = sum(map(lambda w_x_y: w_x_y[0] * (w_x_y[1] - y_i_weighted) * (w_x_y[2] - y_j_weighted),
-                                     zip(w_vec, y_i[t - dt + 1:t], y_j[t - dt + 1:t])))
-            rho_weighted[t] = sd_ij_weighted / (sd_i_weighted * sd_j_weighted)
-        """
+                                     zip(w_vec, y_i, y_j)))
+            rho_weighted = sd_ij_weighted / (sd_i_weighted * sd_j_weighted)
         return rho_weighted
 
     def daily_log_return(self, data):
