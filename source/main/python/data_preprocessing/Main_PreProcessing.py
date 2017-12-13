@@ -1,11 +1,16 @@
 #from pandas_datareader import data as dt
 
-import PreProcessor as PreProcessor
-import ModuleManager as ModuleManager
-import TechnicalAnalyzer2 as TechnicalAnalyzer2
+from PreProcessor import PreProcessor
+from ModuleManager import ModuleManager
+from TechnicalAnalyzer import TechnicalAnalyzer
+from sklearn.ensemble import RandomForestRegressor
+from sklearn.neighbors import KNeighborsRegressor
+
+from sklearn.metrics import precision_score
 
 import matplotlib.pyplot as plt
 import numpy as np
+import pandas as pd
 from scipy.stats.stats import pearsonr
 import time
 from math import sqrt, exp
@@ -15,22 +20,20 @@ from sklearn.metrics import mean_squared_error # use mse to penalize outliers mo
 
 #  Set seed for pseudorandom number generator. This allows us to reproduce the results from our script.
 #np.random.seed(30)  # globally set random seed  (30 is a good option) 21 days
-np.random.seed(42)
-
-
-
+np.random.seed(30)
 
 
 def main():
 
-    preprocesser = PreProcessor.PreProcessor()
-    mm = ModuleManager.ModuleManager()
-    ta = TechnicalAnalyzer2.TechnicalAnalyzer2()
+    preprocesser = PreProcessor()
+    mm = ModuleManager()
+    ta = TechnicalAnalyzer()
     # ft = FeatureNormalizer()
+
 
     ##################################################################################################################
     ###     Asset path simulation using Cholesky Factorization and predefined time-varying correlation dynamics    ###
-    ##################################################################################################################
+    ################## ################################################################################################
     """
     T = 1751
     a0 = 0.1
@@ -48,7 +51,7 @@ def main():
     plt.legend(fontsize='small', bbox_to_anchor=(1, 0.22), fancybox=True)
     plt.xlim(0, 500)
     plt.ylim(-0.5, 1)
-    plt.show()
+    #plt.show()
 
     data = pd.DataFrame(correlated_asset_paths)
     data['rho'] = random_corr
@@ -57,14 +60,21 @@ def main():
     ##################################################################################################################
     ###     Estimation uncertainty in (weighted) Pearson correlation coefficient using moving window estimates     ###
     ##################################################################################################################
+    """
     simulated_data_process = mm.load_data('/bivariate_analysis/correlated_sim_data.pkl')
     T = 500
-    delta_t = 21
+    delta_t = 10
     ciw = 99
 
+    #start_time = time.time()
     rho_estimates, lower_percentiles, upper_percentiles = \
-        preprocesser.bootstrap_moving_window_estimate(simulated_data_process, delta_t=delta_t, T=T, ciw=ciw)
+        preprocesser.bootstrap_moving_window_estimate(simulated_data_process, delta_t=delta_t, T=T, ciw=ciw,
+                                                      weighted=False)
+    #print("%s: %f" % ('Execution time:', (time.time() - start_time)))
+    """
+    """
     # Figure
+    plt.figure(0)
     #plt.plot(rho_true, label='real correlation', linewidth=1, color='black')
     plt.plot(rho_estimates, label='MW correlation', linewidth=1, color='red')
     plt.plot(lower_percentiles, label='%d%% interval (bootstrap)' % ciw, linewidth=1,
@@ -75,107 +85,132 @@ def main():
     plt.legend(loc='lower right', fancybox=True)
     plt.xlim(0, T)
     plt.yticks(np.arange(-1, 1.00000001, 0.2))
+    plt.ylim(-1, 1)
     plt.show()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    ## MAE for (weighted) moving window estimates with varying window size
-    # One idea in order to be consistent with later ml comparison. Take random corr process of length 1751 and
-    # take MSE measures over last 500 values. Then with ml we can train the models on first 1000 observations and
-    # compare MSE measures over last 500 values. SO out-of-sample MSE.
     """
-    simulated_data_process = mm.load_data('correlated_sim_data.pkl')
-    mae_knn_vec = mm.load_data('mae_knn_true_corr.pkl')
-    mae_rf1_vec = mm.load_data('mae_rf_true_corr.pkl')
-    mae_rf10_vec = mm.load_data('mae_rf_true_corr_default.pkl')
-    mae_mw_vec = mm.load_data('mae_mw_true_corr.pkl')
-    mae_emw_vec = mm.load_data('mae_emw_true_corr.pkl')
+    ##################################################################################################################
+    ###       Mean squared error of (weighted) Pearson correlation coefficient using moving window estimates       ###
+    ##################################################################################################################
+    """
+    simulated_data_process = mm.load_data('/bivariate_analysis/correlated_sim_data.pkl')
+    T = 500
+    rho_true = simulated_data_process.tail(T).iloc[:, -1]
+    delta_t_min = 3
+    delta_t_max = 252
+    mse_mw_vec = np.full(delta_t_max-1, np.nan)
+    mse_emw_vec = np.full(delta_t_max-1, np.nan)
 
+    for dt in range(delta_t_min, delta_t_max):
+        mw_estimates = simulated_data_process.tail(T+dt-1).iloc[:, 0].rolling(window=dt).corr(
+            other=simulated_data_process.tail(T+dt-1)[1])
+        emw_estimates = ta.pearson_weighted_correlation_estimation(simulated_data_process.tail(T+dt-1).iloc[:, 0],
+                                                                   simulated_data_process.tail(T+dt-1)[1], dt)
+        mse_mw_vec[dt - 1] = mean_squared_error(rho_true, mw_estimates.tail(T))
+        mse_emw_vec[dt - 1] = mean_squared_error(rho_true, emw_estimates[-T:])
 
-    window_min = 3
-    window_max = 201
-    mae_mw_vec = np.full(window_max, np.nan)
-    mae_emw_vec = np.full(window_max, np.nan)
+    mm.save_data('mse_mw_true_corr.pkl', mse_mw_vec)
+    mm.save_data('mse_emw_true_corr.pkl', mse_emw_vec)
 
-    for m in range(window_min, window_max):
-        mw_estimates = simulated_data_process[0].rolling(window=m).corr(other=simulated_data_process[1])
-        emw_estimates = ta.pearson_weighted_correlation_estimation(simulated_data_process[0], simulated_data_process[1],
-                                                                   m)
-        mae_mw_vec[m-1] = mean_absolute_error(random_corr[1200:], mw_estimates[1200:])
-        mae_emw_vec[m-1] = mean_absolute_error(random_corr[1200:], emw_estimates[1200:])
+    mse_mw_vec = mm.load_data('mse_mw_true_corr.pkl')
+    mse_emw_vec = mm.load_data('mse_emw_true_corr.pkl')
 
-    mm.save_data('mae_mw_true_corr.pkl', mae_mw_vec)
-    mm.save_data('mae_emw_true_corr.pkl', mae_emw_vec)
-
-    plt.figure(0)
-    plt.plot(mae_mw_vec[0:101], label='Moving Window')
-    plt.plot(mae_emw_vec[0:101], label='Exp. Weighted Moving Window')
-    #plt.plot(mae_knn_vec, label='KNN')
-    #plt.plot(mae_rf_vec, label='RF')
-    plt.title('MAE for MW and EMW')
-    plt.xlabel('window length'); plt.ylabel('MAE'); plt.legend(loc='upper right', fancybox=True)
-    plt.ylim(0, 0.6)
-    plt.show()
-
+    # Figure
     plt.figure(1)
-    plt.plot(mae_mw_vec[0:101], label='Moving Window')
-    plt.plot(mae_emw_vec[0:101], label='Exp. Weighted Moving Window')
-    plt.plot(mae_knn_vec[0:101], label='KNN')
-    #plt.plot(mae_rf1_vec[0:101], label='RF(1)')
-    plt.plot(mae_rf10_vec[0:101], label='RF(10)')
-    plt.plot()
-    plt.title('MAE for MW, EMW, KNN and RF')
+    plt.plot(mse_mw_vec, label='Moving Window', color='blue')
+    plt.plot(mse_emw_vec, label='Exp. Weighted Moving Window', color='red')
+    plt.title('MSE for MW and EMW')
     plt.xlabel('window length')
-    plt.ylabel('MAE')
+    plt.ylabel('MSE')
     plt.legend(loc='upper right', fancybox=True)
-    plt.ylim(0, 0.6)
+    plt.xlim(0, 250)
+    plt.ylim(0, 0.5)
     plt.show()
     """
 
+    ##################################################################################################################
+    ###                                          Dataset creation                                                  ###
+    ##################################################################################################################
+    # Pearson correlation moving window estimates as covariates and true correlation as response variable
+    """
+    simulated_data_process = mm.load_data('correlated_sim_data.pkl')
+    delta_t_min = 3
+    delta_t_max = 4
+    start_time = time.time()
+    for dt in range(delta_t_min, delta_t_max):
+        dataset = preprocesser.generate_bivariate_dataset(ta, simulated_data_process, dt, weighted=False)
+        mm.save_data('/bivariate_analysis/emw/dataset_emw_%d.pkl' % dt, dataset)
+
+    print("%s: %f" % ('Execution time:', (time.time() - start_time)))
+    """
 
     """
-        ################################### Data set creation ###############################
-    simulated_data_process = mm.load_data('correlated_sim_data.pkl')
-    window_min = 21
-    window_max = 22
+    mse_knn_mw_vec = mm.load_data('mse_knn_mw_true_corr.pkl')
+    mse_knn_emw_vec = mm.load_data('mse_knn_emw_true_corr.pkl')
+    mse_mw_vec = mm.load_data('mse_mw_true_corr.pkl')
+
+    #mse_mw_vec = mm.load_data('mse_mw_true_corr.pkl')
+    #plt.plot(mse_mw_vec, label='Moving Window')
+    #plt.plot(mse_emw_vec, label='Exp. Weighted Moving Window')
+    plt.plot(mse_knn_mw_vec, label='KNN_mw')
+    plt.plot(mse_knn_emw_vec, label='KNN_emw')
+    plt.plot(mse_mw_vec, label='MW')
+    plt.title('MSE for KNN')
+    plt.xlabel('window length')
+    plt.ylabel('MSE')
+    plt.legend(loc='lower right', fancybox=True)
+    plt.ylim(0.06, 0.10)
+    plt.xlim(0, 250)
+    plt.show()
+    """
+
+    ##################################################################################################################
+    ###    Estimation uncertainty in (weighted) Pearson correlation coefficient using machine learner estimates    ###
+    ##################################################################################################################
+    T = 500
+    ciw = 99
+    reps = 1000
+    delta_t = [21, 251]
+    model = 'knn'
+    proxy_type = ['mw', 'emw']
+
     start_time = time.time()
-    for m in range(window_min, window_max):
-        dataset = preprocesser.generate_bivariate_dataset(ta, simulated_data_process, m)
-        mm.save_data('/bivariate_analysis/mw/dataset_mw_%d.pkl' % m, dataset)
+    for dt, proxy_type in [(x, y) for x in delta_t for y in proxy_type]:
+        dataset = mm.load_data('bivariate_analysis/%s/dataset_%s_%i.pkl' % (proxy_type, proxy_type, dt))
+        rho_estimates, lower_percentiles, upper_percentiles = \
+        preprocesser.bootstrap_learner_estimate(data=dataset, reps=reps, model=model)
+        data_frame = pd.DataFrame({'Percentile_low': lower_percentiles, 'Percentile_up': upper_percentiles,
+                                    'Rho_estimate': rho_estimates})
+        filename = '%s_%s_%i_estimate_uncertainty.pkl' % (model, proxy_type, dt)
+        mm.save_data('bivariate_analysis/' + filename, data_frame)
+        print(data_frame.head())
+
     print("%s: %f" % ('Execution time', (time.time() - start_time)))
 
+    # Figure
+    """
+    plt.figure(0)
+    # plt.plot(rho_true, label='real correlation', linewidth=1, color='black')
+    plt.plot(rho_estimates, label='KNN correlation', linewidth=1, color='red')
+    plt.plot(lower_percentiles, label='%d%% interval (bootstrap)' % ciw, linewidth=1, color='magenta')
+    plt.plot(upper_percentiles, linewidth=1, color='magenta')
 
-    dt = 200
-    ## Dataset with proxies for correlation as target variable
-    dataset_cor_proxies = pd.DataFrame(
-        ta.pearson_weighted_correlation_estimation(simulated_data_process[0],
-                                                   simulated_data_process[1], dt), columns=['rho_proxy'])
-    dataset_cor_proxies.insert(loc=0, column='EMW_t-1', value=dataset_cor_proxies['rho_proxy'].shift(periods=1,
-                                                                                                  axis='index'))
-    # Write datasets to pickle objects
-    mm.save_data('dataset_cor_true.pkl', dataset_cor_true)
-    mm.save_data('dataset_cor_proxy.pkl', dataset_cor_proxies)
+    plt.title('KNN estimates with window size %i' % delta_t)
+    plt.xlabel('observation')
+    plt.legend(loc='lower right', fancybox=True)
+    plt.xlim(0, T)
+    plt.yticks(np.arange(-1, 1.00000001, 0.2))
+    plt.ylim(-1, 1)
+    plt.show()
+    """
+
+
+    """
+    # Prepare models
+    models = []
+    models.append(('KNN', KNeighborsRegressor()))  # Option: weights='distance'
+    for name, model in models:
+        rho_estimates, lower_percentiles, upper_percentiles = \
+            preprocesser.bootstrap_learner_estimate(dataset)
     """
 
 
@@ -184,6 +219,19 @@ def main():
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+    
 
 
 
