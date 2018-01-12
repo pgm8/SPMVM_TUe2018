@@ -27,7 +27,7 @@ from sklearn.model_selection import KFold
 from sklearn.model_selection import cross_val_score
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.neighbors import KNeighborsRegressor
-from xgboost import XGBRegressor
+#from xgboost import XGBRegressor
 
 
 #  Set seed for pseudorandom number generator. This allows us to reproduce the results from our script.
@@ -46,7 +46,7 @@ y = spx.iloc[:, -1]   # response vector
 models = []
 models.append(('KNN', KNeighborsRegressor(weights='distance', algorithm='brute')))
 models.append(('RF', RandomForestRegressor()))
-models.append(('XGB', XGBRegressor()))
+#models.append(('XGB', XGBRegressor()))
 
 # Evaluate each model in turn
 names = []
