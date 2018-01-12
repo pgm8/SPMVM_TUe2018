@@ -158,7 +158,7 @@ def main():
     ##################################################################################################################
     ###                                          Dataset creation                                                  ###
     ##################################################################################################################
-    # Pearson correlation moving window estimates as covariates and true correlation as response variable
+    # Pearson correlation moving window estimates as covariate and true correlation as response variable
     """
     simulated_data_process = mm.load_data('correlated_sim_data.pkl')
     delta_t_min = 3
