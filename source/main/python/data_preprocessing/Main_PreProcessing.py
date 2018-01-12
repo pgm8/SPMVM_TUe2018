@@ -158,39 +158,24 @@ def main():
     ##################################################################################################################
     ###                                          Dataset creation                                                  ###
     ##################################################################################################################
-    # Pearson correlation moving window estimates as covariate and true correlation as response variable
-    """
-    simulated_data_process = mm.load_data('correlated_sim_data.pkl')
+    # Pearson correlation moving window estimates as covariate and true correlation or moving window
+    # estimate as proxy for target variable
+
+    simulated_data_process = mm.load_data('/bivariate_analysis/correlated_sim_data.pkl')
     delta_t_min = 3
-    delta_t_max = 4
+    delta_t_max = 252
+    proxy_type = ['mw', 'emw']
+    """
     start_time = time.time()
-    for dt in range(delta_t_min, delta_t_max):
-        dataset = preprocesser.generate_bivariate_dataset(ta, simulated_data_process, dt, weighted=False)
-        mm.save_data('/bivariate_analysis/emw/dataset_emw_%d.pkl' % dt, dataset)
+    for dt, proxy_type in [(x,y) for x in range(delta_t_min, delta_t_max) for y in proxy_type]:
+        print('(%i, %s)' % (dt, proxy_type))
+        dataset, dataset_proxy = \
+            preprocesser.generate_bivariate_dataset(ta, simulated_data_process, dt, proxy_type=proxy_type)
+        mm.save_data('/bivariate_analysis/true_cor/%s/dataset_%s_%d.pkl' % (proxy_type, proxy_type, dt), dataset)
+        mm.save_data('/bivariate_analysis/proxy_cor/%s/dataset_%s_%d.pkl' % (proxy_type, proxy_type, dt), dataset_proxy)
 
     print("%s: %f" % ('Execution time:', (time.time() - start_time)))
     """
-
-    """
-    mse_knn_mw_vec = mm.load_data('mse_knn_mw_true_corr.pkl')
-    mse_knn_emw_vec = mm.load_data('mse_knn_emw_true_corr.pkl')
-    mse_mw_vec = mm.load_data('mse_mw_true_corr.pkl')
-
-    #mse_mw_vec = mm.load_data('mse_mw_true_corr.pkl')
-    #plt.plot(mse_mw_vec, label='Moving Window')
-    #plt.plot(mse_emw_vec, label='Exp. Weighted Moving Window')
-    plt.plot(mse_knn_mw_vec, label='KNN_mw')
-    plt.plot(mse_knn_emw_vec, label='KNN_emw')
-    plt.plot(mse_mw_vec, label='MW')
-    plt.title('MSE for KNN')
-    plt.xlabel('window length')
-    plt.ylabel('MSE')
-    plt.legend(loc='lower right', fancybox=True)
-    plt.ylim(0.06, 0.10)
-    plt.xlim(0, 250)
-    plt.show()
-    """
-
     ##################################################################################################################
     ###    Estimation uncertainty in (weighted) Pearson correlation coefficient using machine learner estimates    ###
     ##################################################################################################################
@@ -343,7 +328,7 @@ def main():
     #print('knn5_emw_min: %f' % np.nanmin(mse_knn5_emw_vec));
     #print('knn5_emw_max: %f' % np.nanmax(mse_knn5_emw_vec));
 
-
+    """
     # Random Forest
     mse_rf10_mw_vec = mm.load_data('/bivariate_analysis/mse_rf10_mw_true_corr.pkl')
     mse_rf10_emw_vec = mm.load_data('/bivariate_analysis/mse_rf10_emw_true_corr.pkl')
@@ -358,7 +343,7 @@ def main():
     print('rf10_mw_max: %f' % np.nanmax(mse_rf10_mw_vec));
     print('rf10_emw_min: %f' % np.nanmin(mse_rf10_emw_vec));
     print('rf10_emw_max: %f' % np.nanmax(mse_rf10_emw_vec));
-
+    """
     """
     # Figure
     plt.figure(3)

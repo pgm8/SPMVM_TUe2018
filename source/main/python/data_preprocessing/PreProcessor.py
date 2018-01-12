@@ -106,29 +106,35 @@ class PreProcessor(object):
         cholesky_factor = np.linalg.cholesky(cov_matrix)
         return cholesky_factor
 
-    def generate_bivariate_dataset(self, ta, simulated_data_process, dt, weighted=False):
+    def generate_bivariate_dataset(self, ta, simulated_data_process, dt, proxy_type='mw'):
         """Method for generating a dataset with proxies (exponentially weighted) moving window correlation estimates
         for feature set and true correlation as the response variables.
         :param ta: technical analyzer object
         :param simulated_data_process: bivariate asset process with predefined correlation dynamics.
         :param dt: window length
-        :param weighted: boolean whether to use weighted mw estimates as proxies
-        :return: dataset (datastructure: dataframe)."""
-        if weighted:
+        :param proxy_type: type definition of proxy for estimates of true correlation
+        :return: datasets with true correlation and proxy for target."""
+        if proxy_type is 'emw':
             emw_estimates = ta.pearson_weighted_correlation_estimation(simulated_data_process[0],
                                                                        simulated_data_process[1], dt)
             emw_estimates = pd.Series(emw_estimates)
             # Feature set consists of lagged asset price and mw correlation estimate, e.g. x_t = EMW_t-1
             dataset = simulated_data_process.iloc[:, :2].shift(periods=1, axis='index')  # Dataframe
             dataset['EMW_t-1'] = emw_estimates.shift(periods=1, axis='index')
+            dataset_proxy = dataset.copy()      # copy feature matrix
+            # Dataset with true correlations as target variable and proxies
+            dataset['rho_true'] = simulated_data_process['rho']
+            dataset_proxy['rho_proxy'] = emw_estimates
         else:
             mw_estimates = simulated_data_process[0].rolling(window=dt).corr(other=simulated_data_process[1])
             # Feature set consists of lagged asset price and mw correlation estimate, e.g. x_t = EMW_t-1
             dataset = simulated_data_process.iloc[:, :2].shift(periods=1, axis='index')  # Dataframe
             dataset['MW_t-1'] = mw_estimates.shift(periods=1, axis='index')
-        # Dataset with true correlations as response variable
-        dataset['rho_true'] = simulated_data_process['rho']
-        return dataset
+            dataset_proxy = dataset.copy()       # copy feature matrix
+            # Dataset with true correlations as target variable and proxies
+            dataset['rho_true'] = simulated_data_process['rho']
+            dataset_proxy['rho_proxy'] = mw_estimates
+        return dataset, dataset_proxy
 
     def bootstrap_moving_window_estimate(self, data, delta_t, T=500, reps=1000, ciw=99, proxy_type='mw'):
         """Method for measuring the estimation uncertainty associated to the correlation coefficients when moving
