@@ -2,12 +2,14 @@ import numpy as np
 import os.path
 import time
 import re
-from pickle import load
-from pickle import dump
 import matplotlib.pyplot as plt
 from sklearn.ensemble import RandomForestRegressor
-from sklearn.tree import DecisionTreeRegressor
-from sklearn.metrics import mean_absolute_error
+from sklearn.metrics import mean_squared_error
+
+
+from ModuleManager import ModuleManager
+
+
 
 
 """
@@ -25,8 +27,10 @@ the length of the time serie dataset.
 3. Compute the MAE/MSE from e_m+1,...,e*_T.
 
 In our case: m = 1000, T = 1500
-script running time:  440 seconds if no_estimators = 1  
-script running time: 3438 seconds if no_estimators = 10 (default)
+script running time:   412 seconds if no_estimators = 1 and n_features  = sqrt, proxies: mw  
+script running time:  2876 seconds if no_estimators = 10 and n_features  = sqrt, proxies: mw
+script running time:  2719 seconds if no_estimators = 10 and n_features  = sqrt, proxies: emw  
+script running time: 26052 seconds if no_estimators = 10 and n_features  = sqrt, proxies: mw 
 
 """
 
@@ -34,95 +38,53 @@ script running time: 3438 seconds if no_estimators = 10 (default)
 #  Set seed for pseudorandom number generator. This allows us to reproduce the results from our script.
 np.random.seed(42)  # 42:The answer to life, the universe and everything.
 
+mm = ModuleManager()
+
 # Load data into dataframe
-file_path = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(__file__)))),
-                        'resources/Data/bivariate_analysis')
 files_list = os.listdir(os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(__file__)))),
-                        'resources/Data/bivariate_analysis'))
+                        'resources/Data/bivariate_analysis/emw/'))
 
+n_estimators_vec = [10]
 start_time = time.time()
-mae_rf_vec = np.full(200, np.nan)  # Initialisation vector containing MAE for all window sizes
-k = 0
 
-for i in range(3, 5):
-    k += 1
-    print(k)
-    filename = file_path + '/dataset_emw_' + str(i) + '.pkl'
-    data_cor_true = load(open(filename, 'rb'))
-    # Drop first m_max = 200 rows to ensure same training and test set for all values of m
-    data_cor_true.drop(data_cor_true.head(200).index, inplace=True)
-    data_cor_true.reset_index(drop=True, inplace=True)
-    # Separate data into feature and response components
-    X = np.asarray(data_cor_true.iloc[:, 0:-1])  # feature matrix (vectorize data for speed up)
-    y = np.asarray(data_cor_true.iloc[:, -1])    # response vector
+for n_estimators in n_estimators_vec:
+    mse_rf_vec = np.full(252, np.nan)  # Initialisation vector containing MSE for all window sizes
+    k = 0
+    for filename in files_list:
+        i = [int(s) for s in re.findall(r'\d+', filename)]
+        k += 1
+        print(k)
+        data_cor_true = mm.load_data('bivariate_analysis/emw/' + filename)
+        # Drop first m_max = 200 rows to ensure same training and test set for all values of m
+        data_cor_true.drop(data_cor_true.head(251).index, inplace=True)
+        data_cor_true.reset_index(drop=True, inplace=True)
+        # Separate data into feature and response components
+        X = data_cor_true.iloc[:, 0:-1]  # feature matrix
+        y = data_cor_true.iloc[:, -1]    # response vector
+        t_start = 1000
+        T = len(y)
+        y_hat_rf = np.full(T - t_start, np.nan)    # Initialisation vector containing y_hat_t for t = m+1,...,T
+        rf = RandomForestRegressor(n_estimators=n_estimators, max_features='sqrt')
 
-    t_start = 1000
-    T = len(y)
-    y_hat_rf = np.full(T - t_start, np.nan)  # Initialisation vector containing y_hat_t for t = m+1,...,T
-    rf = RandomForestRegressor(n_estimators=50, n_jobs=1)   # n_Jobs != 1 increases computational time for some reason
+        for j, t in enumerate(range(t_start, T)):
+            X_train = X.iloc[0:t, :]
+            y_train = y.iloc[0:t]
+            x_test = X.iloc[t]  # This is in fact x_t+1
+            y_test = y.iloc[t]  # This is in fact y_t+1
+            y_hat = rf.fit(X_train, y_train).predict(x_test.values.reshape(1, -1))
+            y_hat_rf[j] = y_hat
 
-    for j, t in enumerate(range(t_start, T)):
-        X_train = X[0:t, :]
-        y_train = y[0:t]
-        x_test = X[t]  # This is in fact x_t+1
-        y_test = y[t]  # This is in fact y_t+1
-        y_hat = rf.fit(X_train, y_train).predict(x_test.reshape(-1, 1))
-        y_hat_rf[j] = y_hat
+        mse_rf_vec[i] = mean_squared_error(y[t_start:], y_hat_rf)
 
-    mae_rf_vec[i] = mean_absolute_error(y[t_start:], y_hat_rf)
 
-print(mae_rf_vec)
-print("%s: %f" % ('Execution time script', (time.time() - start_time)))
+    print("%s: %f" % ('Execution time script', (time.time() - start_time)))
+    mm.save_data('/bivariate_analysis/mse_rf%i_emw_true_corr.pkl' % n_estimators, mse_rf_vec)
 
-"""
-plt.plot(mae_rf_vec, label='RF')
-plt.title('MAE for Random Forest(100) with true correlations')
+
+plt.plot(mse_rf_vec, label='RF')
+plt.title('MSE for Random Forest with true correlations')
 plt.xlabel('window length')
-plt.ylabel('MAE')
-plt.legend(loc='upper right', fancybox=True)
+plt.ylabel('MSE')
+plt.legend(loc='lower right', fancybox=True)
 plt.show()
 
-
-for filename in files_list[0:20]:
-    i = [int(s) for s in re.findall(r'\d+', filename)]
-    k += 1
-    print(k)
-    data_cor_true = load(open(file_path + '/' + filename, 'rb'))
-    # Drop first m_max = 200 rows to ensure same training and test set for all values of m
-    data_cor_true.drop(data_cor_true.head(200).index, inplace=True)
-    data_cor_true.reset_index(drop=True, inplace=True)
-    # Separate data into feature and response components
-    X = data_cor_true.iloc[:, 0:-1]  # feature matrix
-    y = data_cor_true.iloc[:, -1]    # response vector
-
-    t_start = 1000
-    T = len(y)
-    y_hat_rf = np.full(T - t_start, np.nan)    # Initialisation vector containing y_hat_t for t = m+1,...,T
-    rf = RandomForestRegressor(n_estimators=50)  # Default settings (for now)
-    dt = DecisionTreeRegressor()
-
-    for j, t in enumerate(range(t_start, T)):
-        X_train = X.iloc[0:t, :]
-        y_train = y.iloc[0:t]
-        x_test = X.iloc[t]  # This is in fact x_t+1
-        y_test = y.iloc[t]  # This is in fact y_t+1
-        y_hat = rf.fit(X_train, y_train).predict(x_test.reshape(-1, 1))
-        y_hat_rf[j] = y_hat
-
-    mae_rf_vec[i] = mean_absolute_error(y[t_start:], y_hat_rf)
-    
-"""
-
-"""
-path = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(__file__)))),
-                        ('resources/Data/mae_rf100_true_corr_default.pkl'))
-dump(mae_rf_vec, open(path, 'wb'))
-
-
-plt.plot(mae_rf_vec, label='RF')
-plt.title('MAE for Random Forest(200) with true correlations')
-plt.xlabel('window length')
-plt.ylabel('MAE')
-plt.legend(loc='upper right', fancybox=True)
-plt.show()
-"""

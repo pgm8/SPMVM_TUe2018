@@ -3,11 +3,10 @@ import os.path
 import re
 import time
 
-import ModuleManager as ModuleManager
+from ModuleManager import ModuleManager
 
 import matplotlib.pyplot as plt
 from sklearn.neighbors import KNeighborsRegressor
-from sklearn.metrics import mean_absolute_error
 from sklearn.metrics import mean_squared_error
 
 """
@@ -25,58 +24,52 @@ the length of the time serie dataset.
 3. Compute the MAE/MSE from e_m+1,...,e*_T.
 
 In our case: m = 1000, T = 1500
-script running time: 263 seconds
+script running time: 133 seconds
 """
 
 
 #  Set seed for pseudorandom number generator. This allows us to reproduce the results from our script.
 np.random.seed(42)  # 42:The answer to life, the universe and everything.
 
-mm = ModuleManager.ModuleManager()
+mm = ModuleManager()
 
 # Load data into dataframe
 files_list = os.listdir(os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(__file__)))),
-                        'resources/Data/bivariate_analysis'))
-
+                        'resources/Data/bivariate_analysis/emw/'))
+n_neighbors_vec = [5, 10, 25, 50, 100]
 start_time = time.time()
-mse_knn_vec = np.full(201, np.nan)  # Initialisation vector containing MAE for all window sizes
-for filename in files_list:
-    i = [int(s) for s in re.findall(r'\d+', filename)]
-    data_cor_true = mm.load_data('bivariate_analysis/' + filename)
-    # Drop first m_max = 200 rows to ensure same training and test set for all values of m
-    data_cor_true.drop(data_cor_true.head(200).index, inplace=True)
-    data_cor_true.reset_index(drop=True, inplace=True)
-    # Separate data into feature and response components
-    X = np.asarray(data_cor_true.iloc[:, 0:-1])  # feature matrix (vectorize data for speed up)
-    y = np.asarray(data_cor_true.iloc[:, -1])    # response vector
 
-    t_start = 1000
-    T = len(y)
-    y_hat_knn = np.full(T - t_start, np.nan)    # Initialisation vector containing y_hat_t for t = m+1,...,T
-    knn = KNeighborsRegressor()  # Default settings (for now)
-    for j, t in enumerate(range(t_start, T)):
-        X_train = X[0:t, :]
-        y_train = y[0:t]
-        x_test = X[t]  # This is in fact x_t+1
-        y_test = y[t]  # This is in fact y_t+1
-        y_hat = knn.fit(X_train, y_train).predict(x_test.reshape(-1, 1))
-        y_hat_knn[j] = y_hat
+for n_neighbors in n_neighbors_vec:
+    mse_knn_vec = np.full(252, np.nan)  # Initialisation vector containing MSE for all window sizes
+    for filename in files_list:
+        i = [int(s) for s in re.findall(r'\d+', filename)]
+        data_cor_true = mm.load_data('bivariate_analysis/emw/' + filename)
+        # Drop first m_max = 251 rows to ensure same training and test set for all values of m
+        data_cor_true.drop(data_cor_true.head(251).index, inplace=True)
+        data_cor_true.reset_index(drop=True, inplace=True)
+        # Separate data into feature and response components
+        X = np.asarray(data_cor_true.iloc[:, 0:-1])  # feature matrix (vectorize data for speed up)
+        y = np.asarray(data_cor_true.iloc[:, -1])    # response vector
+        t_start = 1000
+        T = len(y)
+        y_hat_knn = np.full(T - t_start, np.nan)    # Initialisation vector containing y_hat_t for t = m+1,...,T
+        knn = KNeighborsRegressor(n_neighbors=n_neighbors)  # Default settings: n_neighbors=5, weights=’uniform’
 
-    mse_knn_vec[i] = mean_squared_error(y[t_start:], y_hat_knn)
+        for j, t in enumerate(range(t_start, T)):
+            X_train = X[0:t, :]
+            y_train = y[0:t]
+            x_test = X[t]  # This is in fact x_t+1
+            y_test = y[t]  # This is in fact y_t+1
+            # Obtain estimation uncertainty in Pearson correlation estimation rho_t using bootstrap resampling:
+            # randomly extract 1000 samples of size delta_t (mv window length)
+            y_hat = knn.fit(X_train, y_train).predict(x_test.reshape(1, -1))
+            y_hat_knn[j] = y_hat
 
+        mse_knn_vec[i] = mean_squared_error(y[t_start:], y_hat_knn)
 
-mm.save_data('mse_knn_true_corr.pkl', mse_knn_vec)
+    mm.save_data('/bivariate_analysis/mse_knn%i_emw_true_corr.pkl' % n_neighbors, mse_knn_vec)
 
-
-print(mse_knn_vec)
-plt.plot(mse_knn_vec)
-plt.title('MSE for Nearest Neighbour with true correlations')
-plt.xlabel('window length')
-plt.ylabel('MSE')
-plt.show()
 print("%s: %f" % ('Execution time script', (time.time() - start_time)))
-
-
 
 
 
