@@ -160,12 +160,12 @@ def main():
     ##################################################################################################################
     # Pearson correlation moving window estimates as covariate and true correlation or moving window
     # estimate as proxy for target variable
-
+    """
     simulated_data_process = mm.load_data('/bivariate_analysis/correlated_sim_data.pkl')
     delta_t_min = 3
     delta_t_max = 252
     proxy_type = ['mw', 'emw']
-    """
+    
     start_time = time.time()
     for dt, proxy_type in [(x,y) for x in range(delta_t_min, delta_t_max) for y in proxy_type]:
         print('(%i, %s)' % (dt, proxy_type))
@@ -182,8 +182,8 @@ def main():
     T = 500
     ciw = 99
     reps = 1000
-    delta_t = [21, 251]
-    model = ['knn', 'rf']  # k-nearest neighbour: 'knn', random forest: 'rf'
+    delta_t = [21]
+    model = ['knn',]  # k-nearest neighbour: 'knn', random forest: 'rf'
     proxy_type = ['mw', 'emw']
     """
     for dt, proxy_type, model in [(x, y, z) for x in delta_t for y in proxy_type for z in model]:

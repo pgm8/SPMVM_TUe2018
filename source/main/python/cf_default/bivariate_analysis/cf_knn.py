@@ -35,15 +35,15 @@ mm = ModuleManager()
 
 # Load data into dataframe
 files_list = os.listdir(os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(__file__)))),
-                        'resources/Data/bivariate_analysis/emw/'))
-n_neighbors_vec = [5, 10, 25, 50, 100]
+                        'resources/Data/bivariate_analysis/proxy_cor/mw/'))
+n_neighbors_vec = [5, 25]  # [5, 10, 25, 50, 100]
 start_time = time.time()
 
 for n_neighbors in n_neighbors_vec:
     mse_knn_vec = np.full(252, np.nan)  # Initialisation vector containing MSE for all window sizes
     for filename in files_list:
         i = [int(s) for s in re.findall(r'\d+', filename)]
-        data_cor_true = mm.load_data('bivariate_analysis/emw/' + filename)
+        data_cor_true = mm.load_data('bivariate_analysis/proxy_cor/mw/' + filename)
         # Drop first m_max = 251 rows to ensure same training and test set for all values of m
         data_cor_true.drop(data_cor_true.head(251).index, inplace=True)
         data_cor_true.reset_index(drop=True, inplace=True)
@@ -67,7 +67,7 @@ for n_neighbors in n_neighbors_vec:
 
         mse_knn_vec[i] = mean_squared_error(y[t_start:], y_hat_knn)
 
-    mm.save_data('/bivariate_analysis/mse_knn%i_emw_true_corr.pkl' % n_neighbors, mse_knn_vec)
+    mm.save_data('/bivariate_analysis/proxy_cor/mse_knn%i_mw_proxy_corr.pkl' % n_neighbors, mse_knn_vec)
 
 print("%s: %f" % ('Execution time script', (time.time() - start_time)))
 
