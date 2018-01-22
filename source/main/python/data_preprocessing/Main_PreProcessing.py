@@ -11,7 +11,8 @@ from sklearn.metrics import precision_score
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
-from scipy.stats.stats import pearsonr
+import itertools as IT
+from scipy.stats.stats import pearsonr, kendalltau
 import time
 
 from sklearn.metrics import mean_absolute_error
@@ -91,11 +92,14 @@ def main():
         lower_percentiles = data['Percentile_low']
         upper_percentiles = data['Percentile_up']
         plt.figure()
+        plt.plot(simulated_data_process['rho'], label='true correlation', linewidth=1, color='black')
         plt.plot(rho_estimates, label='%s correlation' % proxy_type.upper(), linewidth=1, color='red')
-        plt.plot(lower_percentiles, label='%d%% interval (bootstrap)' % ciw, linewidth=1, color='magenta')
-        plt.plot(upper_percentiles, label="", linewidth=1, color='magenta')
+        plt.plot((upper_percentiles-lower_percentiles)-1, label='%d%% interval (bootstrap)'
+                                                                % ciw, linewidth=1, color='magenta')
+        #plt.plot(lower_percentiles, label='%d%% interval (bootstrap)' % ciw, linewidth=1, color='magenta')
+        #plt.plot(upper_percentiles, label="", linewidth=1, color='magenta')
         plt.xlabel('observation')
-        plt.legend(fontsize='small', loc='upper center', bbox_to_anchor=(0.5, 1.1), ncol=2, fancybox=True,
+        plt.legend(fontsize='small', loc='upper center', bbox_to_anchor=(0.5, 1.1), ncol=3, fancybox=True,
                    edgecolor='black')
         plt.xlim(0, T)
         plt.yticks(np.arange(-1, 1.00000001, 0.2))
@@ -113,37 +117,56 @@ def main():
     delta_t_max = 252
     mse_mw_vec = np.full(delta_t_max-1, np.nan)
     mse_emw_vec = np.full(delta_t_max-1, np.nan)
-
+    mse_kendall_vec = np.full(delta_t_max-1, np.nan)
+    """
+    """
+    start_time = time.time()
     for dt in range(delta_t_min, delta_t_max):
-        mw_estimates = simulated_data_process.tail(T+dt-1).iloc[:, 0].rolling(window=dt).corr(
-            other=simulated_data_process.tail(T+dt-1)[1])
-        emw_estimates = ta.pearson_weighted_correlation_estimation(simulated_data_process.tail(T+dt-1).iloc[:, 0],
-                                                                   simulated_data_process.tail(T+dt-1)[1], dt)
+        mw_estimates = simulated_data_process.tail(T + dt - 1).iloc[:, 0].rolling(window=dt).corr(
+            other=simulated_data_process.tail(T + dt - 1)[1])
+        emw_estimates = ta.pearson_weighted_correlation_estimation(simulated_data_process.tail(T + dt - 1).iloc[:, 0],
+                                                                   simulated_data_process.tail(T + dt - 1)[1], dt)
         mse_mw_vec[dt - 1] = mean_squared_error(rho_true, mw_estimates.tail(T))
         mse_emw_vec[dt - 1] = mean_squared_error(rho_true, emw_estimates[-T:])
+    """
+    """
+        for col1, col2, in IT.combinations(simulated_data_process.columns[:-1], 2):
+            def my_tau(idx):
+                df_tau = simulated_data_process[[col1, col2]].iloc[idx+len(simulated_data_process)-T-dt+1]
+                return kendalltau(df_tau[col1], df_tau[col2])[0]
+            kendall_estimates = pd.rolling_apply(np.arange(T+dt-1), dt, my_tau)
+        mse_kendall_vec[dt - 1] = mean_squared_error(rho_true, kendall_estimates[-T:])
+    mm.save_data('/bivariate_analysis/mse_kendall_true_corr.pkl', mse_kendall_vec)
+    print("%s: %f" % ('Execution time:', (time.time() - start_time)))
+    """
 
-    mm.save_data('mse_mw_true_corr.pkl', mse_mw_vec)
-    mm.save_data('mse_emw_true_corr.pkl', mse_emw_vec)
+    #mm.save_data('mse_mw_true_corr.pkl', mse_mw_vec)
+    #mm.save_data('mse_emw_true_corr.pkl', mse_emw_vec)
+
+
+    #mse_mw_vec = mm.load_data('bivariate_analysis/mse_mw_true_corr.pkl')
+    #mse_emw_vec = mm.load_data('bivariate_analysis/mse_emw_true_corr.pkl')
     """
-    """
-    mse_mw_vec = mm.load_data('bivariate_analysis/mse_mw_true_corr.pkl')
-    mse_emw_vec = mm.load_data('bivariate_analysis/mse_emw_true_corr.pkl')
 
     sd_mse_mw = np.nanstd(mse_mw_vec)
     sd_mse_emw = np.nanstd(mse_emw_vec)
 
     print(sd_mse_mw); print(sd_mse_mw**2)
     print(sd_mse_emw); print(sd_mse_emw**2)
-    #mse_knn_mw_vec = mm.load_data('/bivariate_analysis/mse_knn_mw_true_corr.pkl')
-    #mse_knn_emw_vec = mm.load_data('/bivariate_analysis/mse_knn_emw_true_corr.pkl')
+    #mse_knn_mw_vec = mm.load_data('bivariate_analysis/mse_knn_mw_true_corr.pkl')
+    #mse_knn_emw_vec = mm.load_data('bivariate_analysis/mse_knn_emw_true_corr.pkl')
+    """
+
+    #mse_kendall_vec = mm.load_data('bivariate_analysis/mse_kendall_true_corr.pkl')
     
    
     
-
+    """
     # Figure
     plt.figure(1)
     plt.plot(mse_mw_vec, label='MW', color='blue')
     plt.plot(mse_emw_vec, label='EMW', color='red')
+    plt.plot(mse_kendall_vec, label='Kendall', color='black')
     plt.xlabel('window length')
     plt.ylabel('MSE')
     plt.legend(fontsize='small', loc='upper center', bbox_to_anchor=(0.5, 1.1), ncol=5, fancybox=True,
@@ -153,6 +176,7 @@ def main():
     plt.ylim(0, 0.5)
     plt.show()
     """
+
 
 
     ##################################################################################################################
@@ -179,63 +203,78 @@ def main():
     ##################################################################################################################
     ###    Estimation uncertainty in (weighted) Pearson correlation coefficient using machine learner estimates    ###
     ##################################################################################################################
+    simulated_data_process = mm.load_data('/bivariate_analysis/correlated_sim_data.pkl')
     T = 500
     ciw = 99
     reps = 1000
-    delta_t = [21]
-    model = ['knn',]  # k-nearest neighbour: 'knn', random forest: 'rf'
+    delta_t = [21, 251]
+    model = ['knn', 'rf']  # k-nearest neighbour: 'knn', random forest: 'rf'
     proxy_type = ['mw', 'emw']
+    output_type = ['true', 'proxy']
     """
+
     for dt, proxy_type, model in [(x, y, z) for x in delta_t for y in proxy_type for z in model]:
         start_time = time.time()
-        dataset = mm.load_data('bivariate_analysis/%s/dataset_%s_%i.pkl' % (proxy_type, proxy_type, dt))
+        dataset = mm.load_data('bivariate_analysis/proxy_cor/%s/dataset_%s_%i.pkl' % (proxy_type, proxy_type, dt))
         rho_estimates, lower_percentiles, upper_percentiles, sd_rho_estimates = \
         preprocesser.bootstrap_learner_estimate(data=dataset, reps=reps, model=model)
         data_frame = pd.DataFrame({'Percentile_low': lower_percentiles, 'Percentile_up': upper_percentiles,
                                    'std rho estimate': sd_rho_estimates, 'Rho_estimate': rho_estimates})
-        filename = '%s_%s_%i_estimate_uncertainty.pkl' % (model, proxy_type, dt)
-        mm.save_data('bivariate_analysis/' + filename, data_frame)
+        filename = '%s_%s_%i_estimate_uncertainty_proxy_corr.pkl' % (model, proxy_type, dt)
+        mm.save_data('bivariate_analysis/proxy_cor/' + filename, data_frame)
         print("%s: %f" % ('Execution time', (time.time() - start_time)))
-    
-    # Execution time rf10, 21, emw: 9514 seconds
-    # Execution time rf10, 251, mw: 9594 seconds
-    # Execution time rf10, 251, emw: 9696 seconds
-    # Execution time rf, 21, mw: 95593 seconds (roughly 26.5 hours)
-    # Execution time rf, 251, mw: 162240 seconds (roughly 45 hours)
-    # Execution time rf, 21, emw: 274400 seconds (roughly 76 hours)
     """
+
+    # Execution time knn_IDW, 21, mw, proxy:  340 seconds
+    # Execution time knn5, 21, mw, proxy:     512 seconds
+    # Execution time rf10, 21, emw, true:    9514 seconds
+    # Execution time rf10, 251, mw, true:    9594 seconds
+    # Execution time rf10, 251, emw, true:   9696 seconds
+    # Execution time rf, 21, mw, true:      95593 seconds (roughly 26.5 hours)
+    # Execution time rf, 251, mw, true:    162240 seconds (roughly 45 hours)
+    # Execution time rf, 21, emw, true:    274400 seconds (roughly 76 hours)
+
+    # Figures
     """
-        # Figures
-        for dt, proxy_type, model in [(x, y, z) for x in delta_t for y in proxy_type for z in model]:
-            data = mm.load_data('bivariate_analysis/%s10_%s_%i_estimate_uncertainty.pkl' % (model, proxy_type, dt))
-            rho_estimates = data['Rho_estimate']
-            lower_percentiles = data['Percentile_low']
-            upper_percentiles = data['Percentile_up']
-            plt.figure()
-            plt.plot(rho_estimates, label='%s30 correlation' % model.upper(), linewidth=1, color='red')
-            plt.plot(lower_percentiles, label='%d%% interval (bootstrap)' % ciw, linewidth=1, color='magenta')
-            plt.plot(upper_percentiles, label="", linewidth=1, color='magenta')
-            plt.xlabel('observation')
-            plt.legend(fontsize='small', loc='upper center', bbox_to_anchor=(0.5, 1.1), ncol=2, fancybox=True,
-                       edgecolor='black')
-            plt.xlim(0, T)
-            plt.yticks(np.arange(-1, 1.00000001, 0.2))
-            plt.ylim(-1, 1)
-            plt.show()
-        """
-    """
-    n_neighbours = [10, 25]
-    for k in n_neighbours:
-        data = mm.load_data('bivariate_analysis/knn%i_mw_21_estimate_uncertainty.pkl' % k)
+    for dt, proxy_type, model, output_type in [(w, x, y, z) for w in delta_t for x in proxy_type
+                                               for y in model for z in output_type]:
+        print('%i, %s, %s, %s' % (dt, proxy_type, model, output_type))
+        data = mm.load_data('bivariate_analysis/%s_cor/%s_%s_%i_estimate_uncertainty_%s_corr.pkl'
+                                % (output_type, model, proxy_type, dt, output_type))
         rho_estimates = data['Rho_estimate']
         lower_percentiles = data['Percentile_low']
         upper_percentiles = data['Percentile_up']
         plt.figure()
-        plt.plot(rho_estimates, label='KNN(%i) correlation' % k, linewidth=1, color='red')
-        plt.plot(lower_percentiles, label='%d%% interval (bootstrap)' % ciw, linewidth=1, color='magenta')
-        plt.plot(upper_percentiles, label="", linewidth=1, color='magenta')
+        plt.plot(simulated_data_process['rho'], label='true correlation', linewidth=1, color='black')
+        plt.plot(rho_estimates, label='%s correlation' % model.upper(), linewidth=1, color='red')
+        #plt.plot(lower_percentiles, label='%d%% interval (bootstrap)' % ciw, linewidth=1, color='magenta')
+        #plt.plot(upper_percentiles, label="", linewidth=1, color='magenta')
+        plt.plot((upper_percentiles-lower_percentiles)-1, label='%d%% interval (bootstrap)' % ciw,
+                 linewidth=1, color='magenta')
         plt.xlabel('observation')
-        plt.legend(fontsize='small', loc='upper center', bbox_to_anchor=(0.5, 1.1), ncol=2, fancybox=True,
+        plt.legend(fontsize='small', loc='upper center', bbox_to_anchor=(0.5, 1.1), ncol=3, fancybox=True,
+                   edgecolor='black')
+        plt.xlim(0, 500)
+        plt.yticks(np.arange(-1, 1.00000001, 0.2))
+        plt.ylim(-1, 1)
+        plt.show()
+    """
+    """
+    n_neighbours = [10, 25]  # [10, 25]
+    for k in n_neighbours:
+        data = mm.load_data('bivariate_analysis/true_cor/knn%i_mw_21_estimate_uncertainty_true_corr.pkl' % k)
+        rho_estimates = data['Rho_estimate']
+        lower_percentiles = data['Percentile_low']
+        upper_percentiles = data['Percentile_up']
+        plt.figure()
+        plt.plot(simulated_data_process['rho'], label='true correlation', linewidth=1, color='black')
+        plt.plot(rho_estimates, label='KNN(%i) correlation' % k, linewidth=1, color='red')
+        plt.plot((upper_percentiles - lower_percentiles) - 1, label='%d%% interval (bootstrap)' % ciw,
+                 linewidth=1, color='magenta')
+        #plt.plot(lower_percentiles, label='%d%% interval (bootstrap)' % ciw, linewidth=1, color='magenta')
+        #plt.plot(upper_percentiles, label="", linewidth=1, color='magenta')
+        plt.xlabel('observation')
+        plt.legend(fontsize='small', loc='upper center', bbox_to_anchor=(0.5, 1.1), ncol=3, fancybox=True,
                    edgecolor='black')
         plt.xlim(0, T)
         plt.yticks(np.arange(-1, 1.00000001, 0.2))
@@ -244,55 +283,120 @@ def main():
     """
     """
     # Figure
-    data = mm.load_data('bivariate_analysis/rf10_emw_251_estimate_uncertainty.pkl')
+    data = mm.load_data('bivariate_analysis/true_cor/rf100_mw_21_estimate_uncertainty_true_corr.pkl')
     rho_estimates = data['Rho_estimate']
     lower_percentiles = data['Percentile_low']
     upper_percentiles = data['Percentile_up']
     plt.figure(1)
+    plt.plot(simulated_data_process['rho'], label='true correlation', linewidth=1, color='black')
     plt.plot(rho_estimates, label='RF correlation', linewidth=1, color='red')
-    plt.plot(lower_percentiles, label='%d%% interval (bootstrap)' % ciw, linewidth=1, color='magenta')
-    plt.plot(upper_percentiles, label="", linewidth=1, color='magenta')
+    plt.plot((upper_percentiles - lower_percentiles) - 1, label='%d%% interval (bootstrap)' % ciw,
+             linewidth=1, color='magenta')
+    #plt.plot(lower_percentiles, label='%d%% interval (bootstrap)' % ciw, linewidth=1, color='magenta')
+    #plt.plot(upper_percentiles, label="", linewidth=1, color='magenta')
     plt.xlabel('observation')
-    plt.legend(fontsize='small', loc='upper center', bbox_to_anchor=(0.5, 1.1), ncol=2, fancybox=True,
+    plt.legend(fontsize='small', loc='upper center', bbox_to_anchor=(0.5, 1.1), ncol=3, fancybox=True,
                edgecolor='black')
     plt.xlim(0, T)
     plt.yticks(np.arange(-1, 1.1, 0.2))
     plt.ylim(-1, 1)
     plt.show()
     """
-
     ##################################################################################################################
     ###       Mean squared error of (weighted) Pearson correlation coefficient using machine learner estimates     ###
     ##################################################################################################################
-    """
     simulated_data_process = mm.load_data('/bivariate_analysis/correlated_sim_data.pkl')
     rho_true = simulated_data_process.tail(T).iloc[:, -1]
     T = 500
     model = ['knn', 'rf']  # k-nearest neighbour: 'knn', random forest: 'rf'
     proxy_type = ['mw', 'emw']
-    """
     # Individual scripts for obtaining mse knn, rf
-    """
-    mse_mw_vec = mm.load_data('/bivariate_analysis/mse_mw_true_corr.pkl')
-    mse_emw_vec = mm.load_data('/bivariate_analysis/mse_emw_true_corr.pkl')
-    # KNN
-    mse_knn5_mw_vec = mm.load_data('/bivariate_analysis/mse_knn5_mw_true_corr.pkl')
-    mse_knn10_mw_vec = mm.load_data('/bivariate_analysis/mse_knn10_mw_true_corr.pkl')
-    mse_knn25_mw_vec = mm.load_data('/bivariate_analysis/mse_knn25_mw_true_corr.pkl')
-    mse_knn50_mw_vec = mm.load_data('/bivariate_analysis/mse_knn50_mw_true_corr.pkl')
-    mse_knn100_mw_vec = mm.load_data('/bivariate_analysis/mse_knn100_mw_true_corr.pkl')
 
-    mse_knn5_emw_vec = mm.load_data('/bivariate_analysis/mse_knn5_emw_true_corr.pkl')
-    mse_knn10_emw_vec = mm.load_data('/bivariate_analysis/mse_knn10_emw_true_corr.pkl')
-    mse_knn25_emw_vec = mm.load_data('/bivariate_analysis/mse_knn25_emw_true_corr.pkl')
-    mse_knn50_emw_vec = mm.load_data('/bivariate_analysis/mse_knn50_emw_true_corr.pkl')
-    mse_knn100_emw_vec = mm.load_data('/bivariate_analysis/mse_knn100_emw_true_corr.pkl')
+    mse_mw_vec = mm.load_data('bivariate_analysis/mse_mw_true_corr.pkl')
+    mse_emw_vec = mm.load_data('bivariate_analysis/mse_emw_true_corr.pkl')
+    ## KNN
     """
+    # True Correlation
+    mse_knn5_mw_vec = mm.load_data('bivariate_analysis/true_cor/mse_knn5_mw_true_corr.pkl')
+    mse_knn10_mw_vec = mm.load_data('bivariate_analysis/true_cor/mse_knn10_mw_true_corr.pkl')
+    mse_knn25_mw_vec = mm.load_data('bivariate_analysis/true_cor/mse_knn25_mw_true_corr.pkl')
+    mse_knn50_mw_vec = mm.load_data('bivariate_analysis/true_cor/mse_knn50_mw_true_corr.pkl')
+    mse_knn100_mw_vec = mm.load_data('bivariate_analysis/true_cor/mse_knn100_mw_true_corr.pkl')
+    mse_knn_mw_IDW_vec = mm.load_data('bivariate_analysis/true_cor/mse_knn_mw_IDW_true_corr.pkl')
+
+
+    mse_knn5_emw_vec = mm.load_data('bivariate_analysis/true_cor/mse_knn5_emw_true_corr.pkl')
+    mse_knn10_emw_vec = mm.load_data('bivariate_analysis/true_cor/mse_knn10_emw_true_corr.pkl')
+    mse_knn25_emw_vec = mm.load_data('bivariate_analysis/true_cor/mse_knn25_emw_true_corr.pkl')
+    mse_knn50_emw_vec = mm.load_data('bivariate_analysis/true_cor/mse_knn50_emw_true_corr.pkl')
+    mse_knn100_emw_vec = mm.load_data('bivariate_analysis/true_cor/mse_knn100_emw_true_corr.pkl')
     """
-    # Figure
+
+    # Proxy
+    mse_knn5_mw_proxy_vec = mm.load_data('bivariate_analysis/proxy_cor/mse_knn5_mw_proxy_corr.pkl')
+    mse_knn25_mw_proxy_vec = mm.load_data('bivariate_analysis/proxy_cor/mse_knn25_mw_proxy_corr.pkl')
+    mse_knn50_mw_proxy_vec = mm.load_data('bivariate_analysis/proxy_cor/mse_knn50_mw_proxy_corr.pkl')
+    mse_knn100_mw_proxy_vec = mm.load_data('bivariate_analysis/proxy_cor/mse_knn100_mw_proxy_corr.pkl')
+    mse_knn_mwD_proxy_vec = mm.load_data('bivariate_analysis/proxy_cor/mse_knn_mwD_proxy_corr.pkl')
+
+    mse_knn5_emw_proxy_vec = mm.load_data('bivariate_analysis/proxy_cor/mse_knn5_emw_proxy_corr.pkl')
+    mse_knn25_emw_proxy_vec = mm.load_data('bivariate_analysis/proxy_cor/mse_knn25_emw_proxy_corr.pkl')
+    mse_knn100_emw_proxy_vec = mm.load_data('bivariate_analysis/proxy_cor/mse_knn100_emw_proxy_corr.pkl')
+    mse_knn_emwD_proxy_vec = mm.load_data('bivariate_analysis/proxy_cor/mse_knn_emwD_proxy_corr.pkl')
+    """
+    # Variance in MSE window sizes
+    #sd_mse_knn5_mw = np.nanstd(mse_knn5_mw_vec); print(np.power(sd_mse_knn5_mw, 2))
+    #sd_mse_knn5_emw = np.nanstd(mse_knn5_emw_vec); print(np.power(sd_mse_knn5_emw, 2))
+    #sd_mse_knn25_mw = np.nanstd(mse_knn25_mw_vec); print(np.power(sd_mse_knn25_mw, 2))
+    #sd_mse_knn5_mw_proxy = np.nanstd(mse_knn5_mw_proxy_vec); print(np.power(sd_mse_knn5_mw_proxy, 2))
+    #sd_mse_knn5_emw_proxy = np.nanstd(mse_knn5_emw_proxy_vec);print(np.power(sd_mse_knn5_emw_proxy, 2))
+    #sd_mse_knn25_mw_proxy = np.nanstd(mse_knn25_mw_proxy_vec);print(np.power(sd_mse_knn25_mw_proxy, 2))
+    #sd_mse_knn25_emw_proxy = np.nanstd(mse_knn25_emw_proxy_vec);print(np.power(sd_mse_knn25_emw_proxy, 2))
+    #sd_mse_knn100_mw_proxy = np.nanstd(mse_knn100_mw_proxy_vec);print(np.power(sd_mse_knn100_mw_proxy, 2))
+    #sd_mse_knn100_emw_proxy = np.nanstd(mse_knn100_emw_proxy_vec);print(np.power(sd_mse_knn100_emw_proxy, 2))
+    #sd_mse_knn_mwD_proxy = np.nanstd(mse_knn_mwD_proxy_vec);print(np.power(sd_mse_knn_mwD_proxy, 2))
+    #sd_mse_knn_emwD_proxy = np.nanstd(mse_knn_emwD_proxy_vec);print(np.power(sd_mse_knn_emwD_proxy, 2))
+    
+    # Max-min in MSE window sizes
+    print('knn5_mw_proxy_min_max: (%f, %f)' % (np.nanmin(mse_knn5_mw_proxy_vec), np.nanmax(mse_knn5_mw_proxy_vec)))
+    print('knn5_emw_proxy_min_max: (%f, %f)' % (np.nanmin(mse_knn5_emw_proxy_vec), np.nanmax(mse_knn5_emw_proxy_vec)))
+    print('knn25_mw_proxy_min_max: (%f, %f)' % (np.nanmin(mse_knn25_mw_proxy_vec), np.nanmax(mse_knn25_mw_proxy_vec)))
+    print('knn25_emw_proxy_min_max: (%f, %f)' % (np.nanmin(mse_knn25_emw_proxy_vec), np.nanmax(mse_knn25_emw_proxy_vec)))
+    print('knn100_mw_proxy_min_max: (%f, %f)' % (np.nanmin(mse_knn100_mw_proxy_vec), np.nanmax(mse_knn100_mw_proxy_vec)))
+    print('knn100_emw_proxy_min_max: (%f, %f)' % (np.nanmin(mse_knn100_emw_proxy_vec), np.nanmax(mse_knn100_emw_proxy_vec)))
+    print('knn_mwD_proxy_min_max: (%f, %f)' % (np.nanmin(mse_knn_mwD_proxy_vec), np.nanmax(mse_knn_mwD_proxy_vec)))
+    print('knn_emwD_proxy_min_max: (%f, %f)' % (np.nanmin(mse_knn_emwD_proxy_vec), np.nanmax(mse_knn_emwD_proxy_vec)))
+    """
+
+# Figure
+    """
     plt.figure(1)
-    plt.plot(mse_knn5_mw_vec, label='KNN_mw', color='blue')
-    plt.plot(mse_knn5_emw_vec, label='KNN_emw', color='red')
+    plt.plot(mse_knn5_mw_proxy_vec, label='KNN_mw', color='blue')
+    plt.plot(mse_knn5_emw_proxy_vec, label='KNN_emw', color='red')
+    plt.xlabel('window length')
+    plt.ylabel('MSE')
+    plt.legend(fontsize='small', loc='upper center', bbox_to_anchor=(0.5, 1.1), ncol=2, fancybox=True,
+               edgecolor='black')
+    plt.xlim(0, 250)
+    plt.yticks(np.arange(0, 0.51, 0.1))
+    plt.ylim(0, 0.5)
+    plt.show()
+    """
+
+    plt.figure(2)
+    plt.plot(mse_mw_vec, label='MW', color='blue')
+    plt.plot(mse_emw_vec, label='EMW', color='red')
+    #plt.plot(mse_knn5_mw_proxy_vec, label='KNN(5)', linewidth=1, linestyle='--', color='black')
+    #plt.plot(mse_knn10_mw_vec, label='KNN(10)', color='red')
+    #plt.plot(mse_knn25_mw_proxy_vec, label='KNN(25)_mw', color='black')
+    #plt.plot(mse_knn25_mw_proxy_vec, label='KNN(25)', color='black' )
+    #plt.plot(mse_knn50_mw_proxy_vec, label='KNN(50)_mw')
+    #plt.plot(mse_knn100_mw_proxy_vec, label='KNN(100)', color='black')
+    plt.plot(mse_knn_mwD_proxy_vec, label='KNN_inverse_distance', color='black')
+    #plt.plot(mse_knn_emwD_proxy_vec, label='KNN_emw_idw')
+
+    #plt.plot(mse_knn50_mw_vec, label='KNN(50)')
+    #plt.plot(mse_knn100_mw_vec, label='KNN(100)')
     plt.xlabel('window length')
     plt.ylabel('MSE')
     plt.legend(fontsize='small', loc='upper center', bbox_to_anchor=(0.5, 1.1), ncol=5, fancybox=True,
@@ -300,68 +404,73 @@ def main():
     plt.xlim(0, 250)
     plt.yticks(np.arange(0, 0.51, 0.1))
     plt.ylim(0, 0.5)
-
-    plt.figure(2)
-    plt.plot(mse_mw_vec, label='MW', color='blue')
-    plt.plot(mse_emw_vec, label='EMW', color='red')
-    plt.plot(mse_knn5_mw_vec, label='KNN(5)', linewidth=1, linestyle='--', color='black')
-    #plt.plot(mse_knn10_mw_vec, label='KNN(10)', color='red')
-    plt.plot(mse_knn25_mw_vec, label='KNN(25)', color='black')
-    #plt.plot(mse_knn50_mw_vec, label='KNN(50)', color='magenta')
-    #plt.plot(mse_knn100_mw_vec, label='KNN(100)', color='grey')
-    plt.xlabel('window length')
-    plt.ylabel('MSE')
-    plt.legend(fontsize='small', loc='upper center', bbox_to_anchor=(0.5, 1.1), ncol=5, fancybox=True,
-               edgecolor='black')
-    plt.xlim(0, 250)
-    plt.yticks(np.arange(0.06, 0.21, 0.02))
-    plt.ylim(0.06, 0.20)
     plt.show()
-    """
-    # Variance in MSE window sizes
-    #sd_mse_knn5_mw = np.nanstd(mse_knn5_mw_vec); print(np.power(sd_mse_knn5_mw, 2))
-    #sd_mse_knn5_emw = np.nanstd(mse_knn5_emw_vec); print(np.power(sd_mse_knn5_emw, 2))
-    #sd_mse_knn25_mw = np.nanstd(mse_knn25_mw_vec); print(np.power(sd_mse_knn25_mw, 2))
-    # Max-min in MSE window sizes
-    #print('knn5_mw_min: %f' % np.nanmin(mse_knn5_mw_vec));
-    #print('knn5_mw_max: %f' % np.nanmax(mse_knn5_mw_vec));
-    #print('knn5_emw_min: %f' % np.nanmin(mse_knn5_emw_vec));
-    #print('knn5_emw_max: %f' % np.nanmax(mse_knn5_emw_vec));
+
 
     """
     # Random Forest
-    mse_rf10_mw_vec = mm.load_data('/bivariate_analysis/mse_rf10_mw_true_corr.pkl')
-    mse_rf10_emw_vec = mm.load_data('/bivariate_analysis/mse_rf10_emw_true_corr.pkl')
-    mse_rf100_mw_vec = mm.load_data('/bivariate_analysis/mse_rf100_mw_true_corr.pkl')
+    mse_rf10_mw_vec = mm.load_data('/bivariate_analysis/true_cor/mse_rf10_mw_true_corr.pkl')
+    mse_rf10_emw_vec = mm.load_data('/bivariate_analysis/true_cor/mse_rf10_emw_true_corr.pkl')
+
+    mse_rf10_mw_proxy_vec = mm.load_data('/bivariate_analysis/proxy_cor/mse_rf10_mw_proxy_corr.pkl')
+    mse_rf10_emw_proxy_vec = mm.load_data('/bivariate_analysis/proxy_cor/mse_rf10_emw_proxy_corr.pkl')
+    mse_rf100_emw_proxy_vec = mm.load_data('/bivariate_analysis/proxy_cor/mse_rf100_emw_proxy_corr.pkl')
+    mse_rf100_mw_proxy_vec = mm.load_data('/bivariate_analysis/proxy_cor/mse_rf100_mw_proxy_corr.pkl')
+
+    mse_rf300_emw_proxy_vec = mm.load_data('/bivariate_analysis/proxy_cor/mse_rf300_emw_proxy_corr.pkl')
+    #mse_rf300_mw_proxy_vec = mm.load_data('/bivariate_analysis/proxy_cor/mse_rf300_mw_proxy_corr.pkl')
+
+    mse_rf100_mw_vec = mm.load_data('/bivariate_analysis/true_cor/mse_rf100_mw_true_corr.pkl')
     # Variance in MSE window sizes
+    """
+    """
     sd_mse_rf10_mw = np.nanstd(mse_rf10_mw_vec); print(np.power(sd_mse_rf10_mw, 2))
     sd_mse_rf10_emw = np.nanstd(mse_rf10_emw_vec);print(np.power(sd_mse_rf10_emw, 2))
     sd_mse_rf100_mw = np.nanstd(mse_rf100_mw_vec); print(np.power(sd_mse_rf100_mw, 2))
-
+    """
+    """
+    sd_mse_rf10_mw_proxy = np.nanstd(mse_rf10_mw_proxy_vec); print(np.power(sd_mse_rf10_mw_proxy, 2))
+    sd_mse_rf10_emw_proxy = np.nanstd(mse_rf10_emw_proxy_vec);print(np.power(sd_mse_rf10_emw_proxy, 2))
+    sd_mse_rf100_emw_proxy = np.nanstd(mse_rf100_emw_proxy_vec); print(np.power(sd_mse_rf100_emw_proxy, 2))
+    sd_mse_rf300_emw_proxy = np.nanstd(mse_rf300_emw_proxy_vec); print(np.power(sd_mse_rf300_emw_proxy, 2))
+    sd_mse_rf100_mw_proxy = np.nanstd(mse_rf100_mw_proxy_vec); print(np.power(sd_mse_rf100_mw_proxy, 2))
+    """
     # Max-min in MSE window sizes
+    """
     print('rf10_mw_min: %f' % np.nanmin(mse_rf10_mw_vec));
     print('rf10_mw_max: %f' % np.nanmax(mse_rf10_mw_vec));
     print('rf10_emw_min: %f' % np.nanmin(mse_rf10_emw_vec));
     print('rf10_emw_max: %f' % np.nanmax(mse_rf10_emw_vec));
     """
     """
+    print('rf10_mw_proxy_min_max: (%f, %f)' % (np.nanmin(mse_rf10_mw_proxy_vec), np.nanmax(mse_rf10_mw_proxy_vec)))
+    print('rf10_emw_proxy_min_max: (%f, %f)' % (np.nanmin(mse_rf10_emw_proxy_vec), np.nanmax(mse_rf10_emw_proxy_vec)))
+    print('rf100_emw_proxy_min_max: (%f, %f)' % (np.nanmin(mse_rf100_emw_proxy_vec), np.nanmax(mse_rf100_emw_proxy_vec)))
+    print('rf300_emw_proxy_min_max: (%f, %f)' % (np.nanmin(mse_rf300_emw_proxy_vec), np.nanmax(mse_rf300_emw_proxy_vec)))
+    print('rf100_mw_proxy_min_max: (%f, %f)' % (np.nanmin(mse_rf100_mw_proxy_vec), np.nanmax(mse_rf100_mw_proxy_vec)))
+    """
+    """
     # Figure
     plt.figure(3)
-    #plt.plot(mse_rf10_mw_vec, label='RF_mw', color='blue')
-    #plt.plot(mse_rf10_emw_vec, label='RF_emw', color='red')
+    #plt.plot(mse_rf10_mw_proxy_vec, label='RF_mw', color='blue')
+    #plt.plot(mse_rf10_emw_proxy_vec, label='RF_emw', color='red')
     plt.plot(mse_mw_vec, label='MW', color='blue')
     plt.plot(mse_emw_vec, label='EMW', color='red')
-    plt.plot(mse_rf10_mw_vec, label='RF(10)', linewidth=1, linestyle='--', color='black')
-    plt.plot(mse_rf100_mw_vec, label='RF(100)', color='black')
+    plt.plot(mse_rf10_mw_proxy_vec, label='RF(10)', linewidth=1, linestyle='--', color='black')
+    #plt.plot(mse_rf100_emw_proxy_vec, label='RF(100)_emw', color='black')
+    plt.plot(mse_rf100_mw_proxy_vec, label='RF(100)', color='black')
+    #plt.plot(mse_rf300_mw_proxy_vec, label='RF(300)_mw')
+    #plt.plot(mse_rf300_emw_proxy_vec, label='RF(300)_emw')
     plt.xlabel('window length')
     plt.ylabel('MSE')
     plt.legend(fontsize='small', loc='upper center', bbox_to_anchor=(0.5, 1.1), ncol=5, fancybox=True,
                edgecolor='black')
-    plt.xlim(0, 250)
-    plt.yticks(np.arange(0.06, 0.21, 0.02))
-    plt.ylim(0.06, 0.2)
+    plt.xlim(0, 50)
+    plt.yticks(np.arange(0, 0.51, 0.1))
+    plt.ylim(0, 0.5)
     plt.show()
     """
+
 
 
 
