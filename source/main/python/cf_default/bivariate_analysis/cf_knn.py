@@ -37,9 +37,12 @@ mm = ModuleManager()
 T = 500
 simulated_data_process = mm.load_data('/bivariate_analysis/correlated_sim_data.pkl')
 y_rho_true = simulated_data_process.tail(T).iloc[:, -1]
+y_rho_true.reset_index(drop=True, inplace=True)
+
+print(y_rho_true)
 files_list = os.listdir(os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(__file__)))),
                         'resources/Data/bivariate_analysis/true_cor/mw/'))
-n_neighbors_vec = [1000]  # [5, 10, 25, 50, 100]
+n_neighbors_vec = [25]  # [5, 10, 25, 50, 100]
 start_time = time.time()
 
 for n_neighbors in n_neighbors_vec:
@@ -58,20 +61,16 @@ for n_neighbors in n_neighbors_vec:
         y_hat_knn = np.full(T - t_start, np.nan)    # Initialisation vector containing y_hat_t for t = m+1,...,T
 
         for j, t in enumerate(range(t_start, T)):
-            X_train = X[0:t, :]
-            y_train = y[0:t]
-            x_test = X[t]  # This is in fact x_t+1
-            y_test = y[t]  # This is in fact y_t+1
-            knn = KNeighborsRegressor(n_neighbors=len(X_train),
-                                      weights='distance')  # Default settings: n_neighbors=5, weights=’uniform’
-            # Obtain estimation uncertainty in Pearson correlation estimation rho_t using bootstrap resampling:
-            # randomly extract 1000 samples of size delta_t (mv window length)
+            X_train, y_train = X[0:t, :], y[0:t]
+
+            x_test, y_test = X[t], y[t]   # This is in fact x_t+1, y_t+1 respectively
+            knn = KNeighborsRegressor(n_neighbors=n_neighbors)  # Default settings: n_neighbors=5, weights=’uniform’
             y_hat = knn.fit(X_train, y_train).predict(x_test.reshape(1, -1))
             y_hat_knn[j] = y_hat
 
         mse_knn_vec[i] = mean_squared_error(y_rho_true, y_hat_knn)
 
-    mm.save_data('/bivariate_analysis/true_cor/mse_knn_mw_IDW_true_corr.pkl', mse_knn_vec)
+    #mm.save_data('/bivariate_analysis/true_cor/mse_knn_mw_IDW_true_corr.pkl', mse_knn_vec)
 
 print("%s: %f" % ('Execution time script', (time.time() - start_time)))
 

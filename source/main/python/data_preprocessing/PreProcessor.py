@@ -221,7 +221,6 @@ class PreProcessor(object):
                 y_train = y[0:t]
                 # Obtain estimation uncertainty in Pearson correlation estimation rho_t using bootstrap resampling:
                 if model is 'knn':
-                    print(len(X_train))
                     knn = KNeighborsRegressor(n_neighbors=5)  # n_neighbors=len(X_train)
                     rho_bootstrapped[rep] = knn.fit(X_train, y_train).predict(x_test.reshape(1, -1))
                 elif model is 'rf':
