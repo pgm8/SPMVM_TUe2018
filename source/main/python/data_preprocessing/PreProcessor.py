@@ -1,6 +1,5 @@
 import pandas as pd
 import numpy as np
-from math import sqrt
 from scipy.stats.stats import pearsonr
 
 from TechnicalAnalyzer import TechnicalAnalyzer
@@ -55,7 +54,7 @@ class PreProcessor(object):
             random_corr_garch[t-1] = np.maximum(-1 + eps, np.minimum(1 - eps, sigma[t-1] * eta))
             # Draw next sigma_t
             sigma_squared = a0 * sigma[0]**2 + a1 * random_corr_garch[t-1]**2 + b1 * sigma[t-1]**2
-            sigma[t] = sqrt(sigma_squared)
+            sigma[t] = np.sqrt(sigma_squared)
         return random_corr_garch, sigma
 
     def simulate_correlated_asset_paths(self, corr_vector, vol_matrix, T):
@@ -178,14 +177,14 @@ class PreProcessor(object):
                 else:
                     print('Please, choose an option from the supported set proxies for true correlations (moving'
                           'window, exponentially weighted moving window')
-            lower, upper = np.percentile(rho_bootstrapped, [p_low, p_high])
+            lower, upper = np.nanpercentile(rho_bootstrapped, [p_low, p_high])
             lower_percentiles[j] = lower
             upper_percentiles[j] = upper
-            rho_estimates[j] = np.mean(rho_bootstrapped)
-            sd_rho_estimates[j] = np.std(rho_bootstrapped)
+            rho_estimates[j] = np.nanmean(rho_bootstrapped)
+            sd_rho_estimates[j] = np.nanstd(rho_bootstrapped)
         return rho_estimates, lower_percentiles, upper_percentiles, sd_rho_estimates
 
-    def bootstrap_learner_estimate(self,  data, T=500, reps=1000, ciw=99, model='knn'):
+    def bootstrap_learner_estimate(self,  data, T=500, reps=1000, ciw=99, model='knn', n_neighbors=5):
         """"Method for measuring the estimation uncertainty associated to the correlation coefficients when a learner
         model is used for approximating true correlations.
         :param data: dataset used for the task of bootstrap resampling
@@ -193,6 +192,7 @@ class PreProcessor(object):
         :param reps: number of bootstrap samples
         :param ciw: confidence interval width
         :param model: learner model (e.g. nearest neighbour or random forest regressors)
+        :param n_neighbors: number of multivariate neighbours
         :return: correlation estimates with associated confidence intervals."""
         rho_estimates = np.full(T, np.nan)
         sd_rho_estimates = np.full(T, np.nan)  # bootstrapped standard error of rho estimates
@@ -224,16 +224,16 @@ class PreProcessor(object):
                     knn = KNeighborsRegressor(n_neighbors=5)  # n_neighbors=len(X_train)
                     rho_bootstrapped[rep] = knn.fit(X_train, y_train).predict(x_test.reshape(1, -1))
                 elif model is 'rf':
-                    rf = RandomForestRegressor(n_estimators=10, max_features='sqrt')
-                    rho_bootstrapped[rep] = rf.fit(X_train, y_train).predict(x_test.reshape(1, -1))
+                    rf = RandomForestRegressor(n_jobs=1, n_estimators=10, max_features=1).fit(X_train, y_train)
+                    rho_bootstrapped[rep] = rf.predict(x_test.reshape(1, -1))
                 else:
                     print('Please, choose an option from the supported set of learner algorithms (nearest neighbour, '
                           'random forest)')
-            lower, upper = np.percentile(rho_bootstrapped, [p_low, p_high])
+            lower, upper = np.nanpercentile(rho_bootstrapped, [p_low, p_high])
             lower_percentiles[j] = lower
             upper_percentiles[j] = upper
-            rho_estimates[j] = np.mean(rho_bootstrapped)
-            sd_rho_estimates[j] = np.std(rho_bootstrapped)
+            rho_estimates[j] = np.nanmean(rho_bootstrapped)
+            sd_rho_estimates[j] = np.nanstd(rho_bootstrapped)
         return rho_estimates, lower_percentiles, upper_percentiles, sd_rho_estimates
 
 
