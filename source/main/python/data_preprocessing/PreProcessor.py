@@ -1,6 +1,6 @@
 import pandas as pd
 import numpy as np
-from scipy.stats.stats import pearsonr
+from scipy.stats.stats import pearsonr, kendalltau
 
 from TechnicalAnalyzer import TechnicalAnalyzer
 from sklearn.neighbors import KNeighborsRegressor
@@ -12,8 +12,8 @@ np.random.seed(42)
 
 class PreProcessor(object):
     """Preprocessor class. This class has the responsibility to preprocess the data. More specifically, the class
-    has the task of simulating random correlated asset paths in the bivariate case. Additionally. the class has the
-    responsibility for estimating the uncertainty in the response variable through a bootstrap resampling procedure."""
+    has the task of simulating random correlated asset paths in the bivariate case. Additionally, the class has the
+    responsibility for estimating the uncertainty in the output variable through a bootstrap resampling procedure."""
 
     def __init__(self):
         """Initializer PreProcessor object."""
@@ -26,7 +26,7 @@ class PreProcessor(object):
         :param a0:
         :param a1:
         :return: random_corr: correlation process following specified dynamics."""
-        eps = 1e-5  # eq to 10^-5
+        eps = 1e-5
         random_corr = np.empty(T)
         random_corr[0] = a0 / (1 - a1)  # initialise random correlation process
         for t in range(1, T):
@@ -38,12 +38,12 @@ class PreProcessor(object):
         """Simulate a random correlation process following a GARCH(1,1)-like process. The parameter values used are in
         line with those found empirically in stock return series.
         :param T: simulation length
-        :param a0:
-        :param a1:
-        :param b1:
+        :param a0: 0.02
+        :param a1: 0.2
+        :param b1: 0.78
         :return: random_corr_garch: correlation process following specified dynamics.
         :return: sigma: volatility process."""
-        eps = 1e-5  # equivalent to 10^-5
+        eps = 1e-5
         random_corr_garch = np.empty(T)
         sigma = np.empty(T)
         #sigma[0] = sqrt(a0 / (1 - a1 - b1))  # parameter initialisation
@@ -143,8 +143,8 @@ class PreProcessor(object):
         :param delta_t: window length for moving window estimates of Pearson correlation coefficient
         :param reps: number of bootstrap samples
         :param ciw: confidence interval width
-        :param proxy_type: type definition of proxy for estimates of true correlation
-        :return: correlation estimates with associated confidence intervals."""
+        :param proxy_type: type definition of proxy for estimates of true correlation (mw, emw, kendall)
+        :return: correlation estimates with associated estimation uncertainty."""
         assets_price = data.tail(T + delta_t - 1).iloc[:, :-1]
         assets_price.reset_index(drop=True, inplace=True)
         rho_true = data.tail(T).iloc[:, -1]; rho_true.reset_index(drop=True, inplace=True)
@@ -172,11 +172,13 @@ class PreProcessor(object):
                     rho_bootstrapped[rep] = \
                         self.ta.pearson_weighted_correlation_estimation(sample[:, 0], sample[:, 1], delta_t,
                                                                         weight_vec_norm)
-                elif 'mw':
+                elif proxy_type is 'mw':
                     rho_bootstrapped[rep] = pearsonr(sample[:, 0], sample[:, 1])[0]
+                elif proxy_type is 'kendall':
+                    rho_bootstrapped[rep] = kendalltau(sample[:, 0], sample[:, 1])[0]
                 else:
-                    print('Please, choose an option from the supported set proxies for true correlations (moving'
-                          'window, exponentially weighted moving window')
+                    print('Please, choose an option from the supported set of proxies for true correlations (Pearson '
+                          'moving window, Pearson exponentially weighted moving window, Kendall moving window')
             lower, upper = np.nanpercentile(rho_bootstrapped, [p_low, p_high])
             lower_percentiles[j] = lower
             upper_percentiles[j] = upper
@@ -193,7 +195,7 @@ class PreProcessor(object):
         :param ciw: confidence interval width
         :param model: learner model (e.g. nearest neighbour or random forest regressors)
         :param n_neighbors: number of multivariate neighbours
-        :return: correlation estimates with associated confidence intervals."""
+        :return: correlation estimates with associated estimation uncertainty."""
         rho_estimates = np.full(T, np.nan)
         sd_rho_estimates = np.full(T, np.nan)  # bootstrapped standard error of rho estimates
         lower_percentiles = np.full(T, np.nan)  # Initialisation array containing lower percentile values

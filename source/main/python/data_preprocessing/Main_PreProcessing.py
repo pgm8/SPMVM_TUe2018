@@ -36,26 +36,28 @@ def main():
     T = 1751
     a0 = 0.1
     a1 = 0.8
-    random_corr = preprocesser.simulate_random_correlation_ar(T, a0, a1)
-    vol_matrix = np.array([[0.08, 0],# Simple volatility matrix with randomly chosen variances for illustration purposes
-                           [0, 0.1]])
+    #random_corr = preprocesser.simulate_random_correlation_ar(T, a0, a1)
+    random_corr, _ = preprocesser.simulate_random_correlation_garch(T, 0.02, 0.2, 0.78)
+    vol_matrix = np.array([[1, 0],# Simple volatility matrix with randomly chosen variances for illustration purposes
+                           [0, 1]])
     correlated_asset_paths = preprocesser.simulate_correlated_asset_paths(random_corr, vol_matrix, T)
 
     data = pd.DataFrame(correlated_asset_paths)
     data['rho'] = random_corr
-    mm.save_data('/bivariate_analysis/correlated_sim_data.pkl', data)
-
-
+    #mm.save_data('/bivariate_analysis/correlated_sim_data.pkl', data)
+    print(data.tail(500))
+    """
+    """
     # Figure
-    correlated_asset_paths = mm.load_data('/bivariate_analysis/correlated_sim_data.pkl')
+    #correlated_asset_paths = mm.load_data('/bivariate_analysis/correlated_sim_data.pkl')
     #plt.title('Simulated data using Cholesky decomposition and time-varying correlations')
-    correlated_asset_paths = correlated_asset_paths.tail(500);
-    correlated_asset_paths.reset_index(drop=True, inplace=True)
-    plt.plot(correlated_asset_paths.iloc[:, 0], label='$y_{1,t}$', linewidth=1, color='black')
-    plt.plot(correlated_asset_paths.iloc[:, 1], label='$y_{2,t}$', linewidth=1, linestyle='--', color='blue')
-    plt.plot(correlated_asset_paths.iloc[:, -1], label='$\\rho_t$', linewidth=1, color='red')
+    correlated_asset_paths = data.tail(500)
+    data.reset_index(drop=True, inplace=True)
+    plt.plot(data.iloc[:, 0], label='$y_{1,t}$', linewidth=1, color='black')
+    plt.plot(data.iloc[:, 1], label='$y_{2,t}$', linewidth=1, linestyle='--', color='blue')
+    plt.plot(data.iloc[:, -1], label='$\\rho_t$', linewidth=1, color='red')
     plt.legend(fontsize='small', loc='upper center', bbox_to_anchor=(0.5, 1.1), ncol=3, fancybox=True,
-                   edgecolor='black')
+               edgecolor='black')
     plt.xlim(0, 500)
     plt.ylim(-0.5, 1)
     plt.show()
@@ -65,16 +67,16 @@ def main():
     ##################################################################################################################
     ###     Estimation uncertainty in (weighted) Pearson correlation coefficient using moving window estimates     ###
     ##################################################################################################################
-    """
     simulated_data_process = mm.load_data('/bivariate_analysis/correlated_sim_data.pkl')
     T = 500
     delta_t = np.arange(3, 252)        # 3, 4, 5, 6, 7, 8, 9, 10, 21, 42, 63, 84, 126, 251
-    proxy_type = ['mw', 'emw']
+    proxy_type = ['kendall']  # kendall ['mw', 'emw', 'kendall']
     ciw = 99
-    start_time = time.time()
-    
+
+    """
     for dt, proxy_type in [(x, y) for x in delta_t for y in proxy_type]:
-        print(dt); print(proxy_type)
+        start_time = time.time()
+        print('(%s, %i)' % (proxy_type, dt))
         rho_estimates, lower_percentiles, upper_percentiles, sd_rho_estimates = \
         preprocesser.bootstrap_moving_window_estimate(data=simulated_data_process, delta_t=dt, T=T, ciw=ciw,
                                                       proxy_type=proxy_type)
@@ -82,7 +84,7 @@ def main():
                                    'std rho estimate': sd_rho_estimates, 'Rho_estimate': rho_estimates})
         filename = '%s_%i_estimate_uncertainty.pkl' % (proxy_type, dt)
         mm.save_data('bivariate_analysis/' + filename, data_frame)
-    print("%s: %f" % ('Execution time:', (time.time() - start_time)))
+        print("%s: %f" % ('Execution time:', (time.time() - start_time)))
     """
     """
     # Figures
@@ -110,7 +112,6 @@ def main():
     ##################################################################################################################
     ###       Mean squared error of (weighted) Pearson correlation coefficient using moving window estimates       ###
     ##################################################################################################################
-    """
     simulated_data_process = mm.load_data('/bivariate_analysis/correlated_sim_data.pkl')
     T = 500
     rho_true = simulated_data_process.tail(T).iloc[:, -1]
@@ -118,7 +119,7 @@ def main():
     delta_t_min, delta_t_max = 3, 252
     delta_t = np.arange(3, 252)  # dt = {[3, 10], 21, 42, 63, 126, 251}  (and 84 possibly)
     mse_kendall_vec = np.full(delta_t_max-1, np.nan)
-    proxy_type = ['mw', 'emw']  # run emw and mw individually otherwise one saves dataframe over other.
+    proxy_type = ['kendall']  # run emw and mw individually otherwise one saves dataframe over other.
     rho_bias_squared = np.full(delta_t_max, np.nan)
     rho_var_vec = np.full(delta_t_max, np.nan)
 
@@ -136,9 +137,9 @@ def main():
                                'MSE': rho_mse_vec})
     filename = 'mse_%s.pkl' % proxy_type
     mm.save_data('bivariate_analysis/' + filename, data_frame)
-    """
-    """
 
+    """
+    # Kendall correlation estimate 
         for col1, col2, in IT.combinations(simulated_data_process.columns[:-1], 2):
             def my_tau(idx):
                 df_tau = simulated_data_process[[col1, col2]].iloc[idx+len(simulated_data_process)-T-dt+1]
@@ -234,14 +235,14 @@ def main():
     ##################################################################################################################
     ###    Estimation uncertainty in (weighted) Pearson correlation coefficient using machine learner estimates    ###
     ##################################################################################################################
-
+    """
     simulated_data_process = mm.load_data('/bivariate_analysis/correlated_sim_data.pkl')
     T = 500
     rho_true = simulated_data_process.tail(T).iloc[:, -1]
     rho_true.reset_index(drop=True, inplace=True)
     ciw = 99
-    reps = 10
-    delta_t = range(11, 101)   # dt = {[3, 10], 21, 42, 63, 126, 251}  (and 84 possibly)
+    reps = 1000
+    delta_t = [3, 4, 5, 6, 7, 8, 9, 10 , 21, 42, 63, 126, 251]   # dt = {[3, 10], 21, 42, 63, 126, 251}  (and 84 possibly)
     model = ['knn']  # k-nearest neighbour: 'knn', random forest: 'rf'
     proxy_type = ['mw']
     output_type = ['true']
@@ -259,7 +260,7 @@ def main():
         filename = '%s5_%s_%i_estimate_uncertainty_%s_corr.pkl' % (model, proxy_type, dt, output_type)
         mm.save_data('bivariate_analysis/%s_cor/' % output_type + filename, data_frame)
         print("%s: %f" % ('Execution time', (time.time() - start_time)))
-
+    """
     """
     # Execution time knn_IDW, 21, mw, proxy:  340 seconds
     # Execution time knn5, 21, mw, proxy:     512 seconds
