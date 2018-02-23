@@ -36,26 +36,24 @@ def main():
     T = 1751
     a0 = 0.1
     a1 = 0.8
-    #random_corr = preprocesser.simulate_random_correlation_ar(T, a0, a1)
-    random_corr, _ = preprocesser.simulate_random_correlation_garch(T, 0.02, 0.2, 0.78)
-    vol_matrix = np.array([[1, 0],# Simple volatility matrix with randomly chosen variances for illustration purposes
-                           [0, 1]])
+    random_corr = preprocesser.simulate_random_correlation_ar(T, a0, a1)
+    #random_corr, _ = preprocesser.simulate_random_correlation_garch(T, 0.02, 0.2, 0.78)
+    vol_matrix = np.array([[0.08, 0],# Simple volatility matrix with randomly chosen variances for illustration purposes
+                           [0, 0.1]])
     correlated_asset_paths = preprocesser.simulate_correlated_asset_paths(random_corr, vol_matrix, T)
 
     data = pd.DataFrame(correlated_asset_paths)
     data['rho'] = random_corr
-    #mm.save_data('/bivariate_analysis/correlated_sim_data.pkl', data)
-    print(data.tail(500))
+    mm.save_data('/bivariate_analysis/correlated_sim_data.pkl', data)
     """
     """
     # Figure
-    #correlated_asset_paths = mm.load_data('/bivariate_analysis/correlated_sim_data.pkl')
-    #plt.title('Simulated data using Cholesky decomposition and time-varying correlations')
+    correlated_asset_paths = mm.load_data('/bivariate_analysis/correlated_sim_data.pkl')
     correlated_asset_paths = data.tail(500)
     data.reset_index(drop=True, inplace=True)
-    plt.plot(data.iloc[:, 0], label='$y_{1,t}$', linewidth=1, color='black')
-    plt.plot(data.iloc[:, 1], label='$y_{2,t}$', linewidth=1, linestyle='--', color='blue')
-    plt.plot(data.iloc[:, -1], label='$\\rho_t$', linewidth=1, color='red')
+    plt.plot(correlated_asset_paths.iloc[:, 0], label='$y_{1,t}$', linewidth=1, color='black')
+    plt.plot(correlated_asset_paths.iloc[:, 1], label='$y_{2,t}$', linewidth=1, linestyle='--', color='blue')
+    plt.plot(correlated_asset_paths.iloc[:, -1], label='$\\rho_t$', linewidth=1, color='red')
     plt.legend(fontsize='small', loc='upper center', bbox_to_anchor=(0.5, 1.1), ncol=3, fancybox=True,
                edgecolor='black')
     plt.xlim(0, 500)
@@ -118,11 +116,10 @@ def main():
     rho_true.reset_index(drop=True, inplace=True)
     delta_t_min, delta_t_max = 3, 252
     delta_t = np.arange(3, 252)  # dt = {[3, 10], 21, 42, 63, 126, 251}  (and 84 possibly)
-    mse_kendall_vec = np.full(delta_t_max-1, np.nan)
-    proxy_type = ['kendall']  # run emw and mw individually otherwise one saves dataframe over other.
+    proxy_type = ['mw', 'emw', 'kendall']  # run proxies individually otherwise one saves dataframe over other.
     rho_bias_squared = np.full(delta_t_max, np.nan)
     rho_var_vec = np.full(delta_t_max, np.nan)
-
+    """
     # Create dataframe with (interpolated) mse results, squared bias, variance for varying window sizes
     for proxy_type, dt in [(x, y) for x in proxy_type for y in delta_t]:
         print('%s, %i' % (proxy_type, dt))
@@ -137,7 +134,7 @@ def main():
                                'MSE': rho_mse_vec})
     filename = 'mse_%s.pkl' % proxy_type
     mm.save_data('bivariate_analysis/' + filename, data_frame)
-
+    """
     """
     # Kendall correlation estimate 
         for col1, col2, in IT.combinations(simulated_data_process.columns[:-1], 2):
@@ -149,13 +146,14 @@ def main():
     mm.save_data('/bivariate_analysis/mse_kendall_true_corr.pkl', mse_kendall_vec)
     print("%s: %f" % ('Execution time:', (time.time() - start_time)))
     """
-
+    """
+    # Load MSE data Pearson/ Kendall
     mse_mw_vec = mm.load_data('bivariate_analysis/mse_mw.pkl')
     mse_emw_vec = mm.load_data('bivariate_analysis/mse_emw.pkl')
-
-
+    mse_kendall_vec = mm.load_data('bivariate_analysis/mse_kendall.pkl')
     """
-    # Figure with interpolation
+    """
+    # Figure with interpolation MSE
     plt.figure(1)
     xs = np.arange(252)
     s1mask = np.isfinite(mse_mw_vec['MSE'])
@@ -173,11 +171,11 @@ def main():
     plt.show()
     """
     """
-    # Figure without interpolation 
+    # Figure without interpolation MSE 
     plt.figure(2)
     plt.plot(mse_mw_vec['MSE'], label='Moving Window', color='blue', linewidth=1)
     plt.plot(mse_emw_vec['MSE'], label='Exp. Weighted Moving Window', color='red', linewidth=1)
-    #plt.plot(mse_kendall_vec, label='Kendall', color='black')
+    plt.plot(mse_kendall_vec['MSE'], label='Kendall', color='black', linewidth=1, linestyle='--')
     plt.xlabel('window length')
     plt.ylabel('MSE')
     plt.legend(fontsize='small', loc='upper center', bbox_to_anchor=(0.5, 1.1), ncol=5, fancybox=True,
@@ -190,9 +188,9 @@ def main():
     """
     # Figure without interpolation MSE decomposition 
     plt.figure(3)
-    plt.plot(mse_mw_vec['bias_squared'], label='Squared Bias', color='blue', linewidth=1)
-    plt.plot(mse_mw_vec['variance'], label='Variance', color='red', linewidth=1)
-    plt.plot(mse_mw_vec['MSE'], label='MSE', color='black', linestyle='--', linewidth=1)
+    plt.plot(mse_kendall_vec['bias_squared'], label='Squared Bias', color='blue', linewidth=1)
+    plt.plot(mse_kendall_vec['variance'], label='Variance', color='red', linewidth=1)
+    plt.plot(mse_kendall_vec['MSE'], label='MSE', color='black', linestyle='--', linewidth=1)
     plt.xlabel('window length')
     plt.ylabel('MSE')
     plt.legend(fontsize='small', loc='upper center', bbox_to_anchor=(0.5, 1.1), ncol=5, fancybox=True,
@@ -206,22 +204,23 @@ def main():
     # Variance in MSE window sizes
     var_mse_mw = np.nanvar(mse_mw_vec['MSE']); print('mse_mw_var: %f' % var_mse_mw)
     var_mse_emw = np.nanvar(mse_emw_vec['MSE']); print('mse_emw_var: %f' % var_mse_emw)
+    var_mse_kendall = np.nanvar(mse_kendall_vec['MSE']); print('mse_kendall_var: %f' % var_mse_kendall)
 
     # Max-min in MSE window sizes
     print('mse_mw_min_max: (%f, %f)' % (np.nanmin(mse_mw_vec['MSE']), np.nanmax(mse_mw_vec['MSE'])))
     print('mse_emw_min_max: (%f, %f)' % (np.nanmin(mse_emw_vec['MSE']), np.nanmax(mse_emw_vec['MSE'])))
+    print('mse_kendall_min_max: (%f, %f)' % (np.nanmin(mse_kendall_vec['MSE']), np.nanmax(mse_kendall_vec['MSE'])))
     """
     ##################################################################################################################
     ###                                          Dataset creation                                                  ###
     ##################################################################################################################
     # Pearson correlation moving window estimates as covariate and true correlation or moving window
     # estimate as proxy for target variable
-    """
     simulated_data_process = mm.load_data('/bivariate_analysis/correlated_sim_data.pkl')
     delta_t_min = 3
     delta_t_max = 252
-    proxy_type = ['mw', 'emw']
-    
+    proxy_type = ['mw', 'emw']     # ['mw', 'emw']
+
     start_time = time.time()
     for dt, proxy_type in [(x,y) for x in range(delta_t_min, delta_t_max) for y in proxy_type]:
         print('(%i, %s)' % (dt, proxy_type))
@@ -235,19 +234,19 @@ def main():
     ##################################################################################################################
     ###    Estimation uncertainty in (weighted) Pearson correlation coefficient using machine learner estimates    ###
     ##################################################################################################################
-    """
     simulated_data_process = mm.load_data('/bivariate_analysis/correlated_sim_data.pkl')
     T = 500
     rho_true = simulated_data_process.tail(T).iloc[:, -1]
     rho_true.reset_index(drop=True, inplace=True)
     ciw = 99
     reps = 1000
-    delta_t = [3, 4, 5, 6, 7, 8, 9, 10 , 21, 42, 63, 126, 251]   # dt = {[3, 10], 21, 42, 63, 126, 251}  (and 84 possibly)
+    delta_t = [4]   # dt = {[3, 10], 21, 42, 63, 126, 251}  (and 84 possibly)
     model = ['knn']  # k-nearest neighbour: 'knn', random forest: 'rf'
     proxy_type = ['mw']
-    output_type = ['true']
-    n_neighbours = [10]
+    output_type = ['proxy']
+    n_neighbours = [5]
 
+    """
     for dt, proxy_type, model, k, output_type in [(x, y, z, k, o) for x in delta_t for y in proxy_type
                                      for z in model for k in n_neighbours for o in output_type]:
         start_time = time.time()
@@ -258,10 +257,9 @@ def main():
         data_frame = pd.DataFrame({'Percentile_low': lower_percentiles, 'Percentile_up': upper_percentiles,
                                    'std rho estimate': sd_rho_estimates, 'Rho_estimate': rho_estimates})
         filename = '%s5_%s_%i_estimate_uncertainty_%s_corr.pkl' % (model, proxy_type, dt, output_type)
-        mm.save_data('bivariate_analysis/%s_cor/' % output_type + filename, data_frame)
+        #mm.save_data('bivariate_analysis/%s_cor/' % output_type + filename, data_frame)
         print("%s: %f" % ('Execution time', (time.time() - start_time)))
-    """
-    """
+  
     # Execution time knn_IDW, 21, mw, proxy:  340 seconds
     # Execution time knn5, 21, mw, proxy:     512 seconds
     # Execution time rf10, 21, emw, true:    9514 seconds
@@ -271,21 +269,19 @@ def main():
     # Execution time rf, 251, mw, true:    162240 seconds (roughly 45 hours)
     # Execution time rf, 21, emw, true:    274400 seconds (roughly 76 hours)
     """
-
     """
-    n_neighbours = [10, 25]  # [10, 25]
-    for k in n_neighbours:
-        data = mm.load_data('bivariate_analysis/true_cor/knn%i_mw_21_estimate_uncertainty_true_corr.pkl' % k)
+    delta_t = [10, 21]  # [10, 25]
+    for dt in delta_t:
+        data = mm.load_data('bivariate_analysis/proxy_cor/mw/results_knn_mw_proxy_cor/'
+                            'knn5_mw_%i_estimate_uncertainty_proxy_corr.pkl' % dt)
         rho_estimates = data['Rho_estimate']
         lower_percentiles = data['Percentile_low']
         upper_percentiles = data['Percentile_up']
         plt.figure()
         plt.plot(simulated_data_process['rho'], label='true correlation', linewidth=1, color='black')
-        plt.plot(rho_estimates, label='KNN(%i) correlation' % k, linewidth=1, color='red')
+        plt.plot(rho_estimates, label='KNN(%i) correlation' % dt, linewidth=1, color='red')
         plt.plot((upper_percentiles - lower_percentiles) - 1, label='%d%% interval (bootstrap)' % ciw,
                  linewidth=1, color='magenta')
-        #plt.plot(lower_percentiles, label='%d%% interval (bootstrap)' % ciw, linewidth=1, color='magenta')
-        #plt.plot(upper_percentiles, label="", linewidth=1, color='magenta')
         plt.xlabel('observation')
         plt.legend(fontsize='small', loc='upper center', bbox_to_anchor=(0.5, 1.1), ncol=3, fancybox=True,
                    edgecolor='black')
@@ -315,7 +311,28 @@ def main():
     plt.ylim(-1, 1)
     plt.show()
     """
-    
+    """
+    # Figure
+    data = mm.load_data('bivariate_analysis/proxy_cor/mw/results_knn_mw_proxy_cor/'
+                        'knn_mw_10_IDW_estimate_uncertainty_proxy_corr.pkl')
+    rho_estimates = data['Rho_estimate']
+    lower_percentiles = data['Percentile_low']
+    upper_percentiles = data['Percentile_up']
+    plt.figure(1)
+    plt.plot(simulated_data_process['rho'], label='true correlation', linewidth=1, color='black')
+    plt.plot(rho_estimates, label='KNN_idw correlation', linewidth=1, color='red')
+    plt.plot((upper_percentiles - lower_percentiles) - 1, label='%d%% interval (bootstrap)' % ciw,
+             linewidth=1, color='magenta')
+    # plt.plot(lower_percentiles, label='%d%% interval (bootstrap)' % ciw, linewidth=1, color='magenta')
+    # plt.plot(upper_percentiles, label="", linewidth=1, color='magenta')
+    plt.xlabel('observation')
+    plt.legend(fontsize='small', loc='upper center', bbox_to_anchor=(0.5, 1.1), ncol=3, fancybox=True,
+               edgecolor='black')
+    plt.xlim(0, T)
+    plt.yticks(np.arange(-1, 1.1, 0.2))
+    plt.ylim(-1, 1)
+    plt.show()
+    """
     
     ##################################################################################################################
     ###       Mean squared error of (weighted) Pearson correlation coefficient using machine learner estimates     ###
@@ -326,21 +343,22 @@ def main():
     rho_true.reset_index(drop=True, inplace=True)
     ciw = 99
     reps = 1000
-    delta_t = [3, 4, 5, 6, 7, 8, 9, 10,21, 42, 63, 126, 251]   # dt = {[3, 10], 21, 42, 63, 126, 251}  (and 84 possibly)
+    delta_t = range(3, 101)   # dt = {[3, 10], 21, 42, 63, 126, 251}  (and 84 possibly)
     model = ['knn']  # k-nearest neighbour: 'knn', random forest: 'rf'
     proxy_type = ['mw']
-    output_type = ['true']
-    rho_bias_squared = np.full(252, np.nan)
-    rho_var_vec = np.full(252, np.nan)
-    rho_mse_vec = np.full(252, np.nan)
-
-    """
+    output_type = ['proxy']
+    n_neighbour = [5, 10, 25, 50, 100]  # IDW, lenTrain separate
+    rho_bias_squared = np.full(101, np.nan)
+    rho_var_vec = np.full(101, np.nan)
+    rho_mse_vec = np.full(101, np.nan)
+    """"
     # Create dataframe with (interpolated) mse results, squared bias, variance for varying window lengths
-    for dt, proxy_type, model, output_type in [(w, x, y, z) for w in delta_t for x in proxy_type
-                                               for y in model for z in output_type]:
-        print('%i, %s, %s, %s' % (dt, proxy_type, model, output_type))
-        data = mm.load_data('bivariate_analysis/%s_cor/%s5_%s_%i_estimate_uncertainty_%s_corr.pkl'
-                                % (output_type, model, proxy_type, dt, output_type))
+    for model, n_neighbour, proxy_type, dt, output_type in [(w, k, x, y, z) for w in model for k in n_neighbour for
+                                                            x in proxy_type for y in delta_t for z in output_type]:
+        filename = '%s%i_%s_%i_estimate_uncertainty_%s_corr.pkl' % (model, n_neighbour, proxy_type, dt, output_type)
+        print(filename)
+        data = mm.load_data('bivariate_analysis/%s_cor/%s/results_%s_%s_%s_cor/' % (output_type, proxy_type, model,
+                                                                                    proxy_type, output_type) + filename)
         rho_estimates = data['Rho_estimate']
         rho_bias_squared[dt] = np.mean(np.power(rho_estimates-rho_true, 2))
         rho_var_vec[dt] = np.power(np.mean(data['std rho estimate']), 2)
@@ -348,11 +366,11 @@ def main():
     rho_mse_vec = np.array([np.sum(pair) for pair in zip(rho_bias_squared, rho_var_vec)])
     data_frame = pd.DataFrame({'bias_squared': rho_bias_squared, 'variance': rho_var_vec,
                                'MSE': rho_mse_vec})
-    filename = 'mse_%s5_%s_%s_corr.pkl' % (model, proxy_type, output_type)
-    mm.save_data('bivariate_analysis/%s_cor/' % output_type + filename, data_frame)
-    
-
-    # Figure with interpolation
+    filename = 'mse_%s%i_%s_%s_cor.pkl' % (model, n_neighbour, proxy_type, output_type)
+    mm.save_data('bivariate_analysis/%s_cor/mse_results_%s_cor/' % (output_type, output_type) + filename, data_frame)
+    """
+    """
+    # Figure with interpolation MSE decomposition
     plt.figure(1)
     xs = np.arange(252)
     s1mask = np.isfinite(rho_bias_squared)
@@ -371,103 +389,62 @@ def main():
     plt.ylim(0, 0.5)
     plt.show()
     """
-    """    
-    mse_mw_vec = mm.load_data('bivariate_analysis/mse_mw.pkl')
-    mse_emw_vec = mm.load_data('bivariate_analysis/mse_emw.pkl')
-    """
-    ## KNN
-    # True Correlation
-    mse_knn5_mw_vec = mm.load_data('bivariate_analysis/true_cor/mse_knn5_mw_true_corr.pkl')
-    mse_knn10_mw_vec = mm.load_data('bivariate_analysis/true_cor/mse_knn10_mw_true_corr.pkl')
-    mse_knn25_mw_vec = mm.load_data('bivariate_analysis/true_cor/mse_knn25_mw_true_corr.pkl')
-    mse_knn50_mw_vec = mm.load_data('bivariate_analysis/true_cor/mse_knn50_mw_true_corr.pkl')
-    mse_knn100_mw_vec = mm.load_data('bivariate_analysis/true_cor/mse_knn100_mw_true_corr.pkl')
-    mse_knn_mw_IDW_vec = mm.load_data('bivariate_analysis/true_cor/mse_knn_mw_IDW_true_corr.pkl')
-
-
-    mse_knn5_emw_vec = mm.load_data('bivariate_analysis/true_cor/mse_knn5_emw_true_corr.pkl')
-    mse_knn10_emw_vec = mm.load_data('bivariate_analysis/true_cor/mse_knn10_emw_true_corr.pkl')
-    mse_knn25_emw_vec = mm.load_data('bivariate_analysis/true_cor/mse_knn25_emw_true_corr.pkl')
-    mse_knn50_emw_vec = mm.load_data('bivariate_analysis/true_cor/mse_knn50_emw_true_corr.pkl')
-    mse_knn100_emw_vec = mm.load_data('bivariate_analysis/true_cor/mse_knn100_emw_true_corr.pkl')
-
-    # Proxy
-    mse_knn5_mw_proxy_vec = mm.load_data('bivariate_analysis/proxy_cor/mse_knn5_mw_proxy_corr.pkl')
-    mse_knn100_mw_proxy_vec = mm.load_data('bivariate_analysis/proxy_cor/mse_knn100_mw_proxy_corr.pkl')
-
-    mse_knn5_emw_proxy_vec = mm.load_data('bivariate_analysis/proxy_cor/mse_knn5_emw_proxy_corr.pkl')
-
-    """
-    # Variance in MSE window sizes
-    #sd_mse_knn5_mw = np.nanstd(mse_knn5_mw_vec); print(np.power(sd_mse_knn5_mw, 2))
-    #sd_mse_knn5_emw = np.nanstd(mse_knn5_emw_vec); print(np.power(sd_mse_knn5_emw, 2))
-    #sd_mse_knn25_mw = np.nanstd(mse_knn25_mw_vec); print(np.power(sd_mse_knn25_mw, 2))
-    #sd_mse_knn5_mw_proxy = np.nanstd(mse_knn5_mw_proxy_vec); print(np.power(sd_mse_knn5_mw_proxy, 2))
-    #sd_mse_knn5_emw_proxy = np.nanstd(mse_knn5_emw_proxy_vec);print(np.power(sd_mse_knn5_emw_proxy, 2))
-    #sd_mse_knn25_mw_proxy = np.nanstd(mse_knn25_mw_proxy_vec);print(np.power(sd_mse_knn25_mw_proxy, 2))
-    #sd_mse_knn25_emw_proxy = np.nanstd(mse_knn25_emw_proxy_vec);print(np.power(sd_mse_knn25_emw_proxy, 2))
-    #sd_mse_knn100_mw_proxy = np.nanstd(mse_knn100_mw_proxy_vec);print(np.power(sd_mse_knn100_mw_proxy, 2))
-    #sd_mse_knn100_emw_proxy = np.nanstd(mse_knn100_emw_proxy_vec);print(np.power(sd_mse_knn100_emw_proxy, 2))
-    #sd_mse_knn_mwD_proxy = np.nanstd(mse_knn_mwD_proxy_vec);print(np.power(sd_mse_knn_mwD_proxy, 2))
-    #sd_mse_knn_emwD_proxy = np.nanstd(mse_knn_emwD_proxy_vec);print(np.power(sd_mse_knn_emwD_proxy, 2))
     
-    # Max-min in MSE window sizes
-    print('knn5_mw_proxy_min_max: (%f, %f)' % (np.nanmin(mse_knn5_mw_proxy_vec), np.nanmax(mse_knn5_mw_proxy_vec)))
-    print('knn5_emw_proxy_min_max: (%f, %f)' % (np.nanmin(mse_knn5_emw_proxy_vec), np.nanmax(mse_knn5_emw_proxy_vec)))
-    print('knn25_mw_proxy_min_max: (%f, %f)' % (np.nanmin(mse_knn25_mw_proxy_vec), np.nanmax(mse_knn25_mw_proxy_vec)))
-    print('knn25_emw_proxy_min_max: (%f, %f)' % (np.nanmin(mse_knn25_emw_proxy_vec), np.nanmax(mse_knn25_emw_proxy_vec)))
-    print('knn100_mw_proxy_min_max: (%f, %f)' % (np.nanmin(mse_knn100_mw_proxy_vec), np.nanmax(mse_knn100_mw_proxy_vec)))
-    print('knn100_emw_proxy_min_max: (%f, %f)' % (np.nanmin(mse_knn100_emw_proxy_vec), np.nanmax(mse_knn100_emw_proxy_vec)))
-    print('knn_mwD_proxy_min_max: (%f, %f)' % (np.nanmin(mse_knn_mwD_proxy_vec), np.nanmax(mse_knn_mwD_proxy_vec)))
-    print('knn_emwD_proxy_min_max: (%f, %f)' % (np.nanmin(mse_knn_emwD_proxy_vec), np.nanmax(mse_knn_emwD_proxy_vec)))
-    """
-    """
-# Figure
-    plt.figure(1)
-    xs = np.arange(252)
-    s1mask = np.isfinite(mse_knn5_mw_proxy_vec['MSE'])
-    s2mask = np.isfinite(mse_knn5_emw_proxy_vec['MSE'])
-    plt.plot(xs[s1mask], mse_knn5_mw_proxy_vec['MSE'][s1mask], label='KNN_mw', color='blue')
-    plt.plot(xs[s2mask], mse_knn5_emw_proxy_vec['MSE'][s2mask], label='KNN_emw', color='red')
-    plt.xlabel('window length')
-    plt.ylabel('MSE')
-    plt.legend(fontsize='small', loc='upper center', bbox_to_anchor=(0.5, 1.1), ncol=2, fancybox=True,
-               edgecolor='black')
-    plt.xlim(0, 250)
-    plt.yticks(np.arange(0, 0.51, 0.1))
-    plt.ylim(0, 0.5)
-    plt.show()
-    """
-    """
-    plt.figure(2)
-    plt.plot(mse_mw_vec, label='MW', color='blue')
-    plt.plot(mse_emw_vec, label='EMW', color='red')
-    #plt.plot(mse_knn5_mw_proxy_vec, label='KNN(5)', linewidth=1, linestyle='--', color='black')
-    #plt.plot(mse_knn10_mw_vec, label='KNN(10)', color='red')
-    #plt.plot(mse_knn25_mw_proxy_vec, label='KNN(25)_mw', color='black')
-    #plt.plot(mse_knn25_mw_proxy_vec, label='KNN(25)', color='black' )
-    #plt.plot(mse_knn50_mw_proxy_vec, label='KNN(50)_mw')
-    #plt.plot(mse_knn100_mw_proxy_vec, label='KNN(100)', color='black')
-    plt.plot(mse_knn_mwD_proxy_vec, label='KNN_inverse_distance', color='black')
-    #plt.plot(mse_knn_emwD_proxy_vec, label='KNN_emw_idw')
+    # Load MSE data Pearson/ Kendall
+    mse_mw_vec = mm.load_data('bivariate_analysis/mse_mw.pkl')
+    mse_kendall_vec = mm.load_data('bivariate_analysis/mse_kendall.pkl')
 
-    #plt.plot(mse_knn50_mw_vec, label='KNN(50)')
-    #plt.plot(mse_knn100_mw_vec, label='KNN(100)')
+    # Load MSE data KNN
+    # True Correlation
+
+    # Proxy Correlation
+    mse_knn5_mw_proxy_cor = mm.load_data('bivariate_analysis/proxy_cor/mse_results_proxy_cor/mse_knn5_mw_proxy_cor.pkl')
+    mse_knn10_mw_proxy_cor = mm.load_data('bivariate_analysis/proxy_cor/mse_results_proxy_cor/mse_knn10_mw_proxy_cor.pkl')
+    mse_knn25_mw_proxy_cor = mm.load_data('bivariate_analysis/proxy_cor/mse_results_proxy_cor/mse_knn25_mw_proxy_cor.pkl')
+    mse_knn50_mw_proxy_cor = mm.load_data('bivariate_analysis/proxy_cor/mse_results_proxy_cor/mse_knn50_mw_proxy_cor.pkl')
+    mse_knn100_mw_proxy_cor = mm.load_data('bivariate_analysis/proxy_cor/mse_results_proxy_cor/mse_knn100_mw_proxy_cor.pkl')
+    mse_knn_mw_IDW_proxy_cor = mm.load_data('bivariate_analysis/proxy_cor/mse_results_proxy_cor/mse_knn_mw_IDW_proxy_cor.pkl')
+
+    """
+    # Figure without interpolation MSE
+    plt.figure(1)
+    plt.plot(mse_mw_vec['MSE'], label='MW', color='blue', linewidth=1)
+    plt.plot(mse_kendall_vec['MSE'], label='Kendall', color='red', linewidth=1)
+    #plt.plot(mse_knn5_mw_proxy_cor['MSE'], label='KNN(5)', linewidth=1, linestyle='--', color='black')
+    #plt.plot(mse_knn10_mw_proxy_cor['MSE'], label='knn(10)', color='red')
+    #plt.plot(mse_knn25_mw_proxy_cor['MSE'], label='KNN(25)')
+    #plt.plot(mse_knn50_mw_proxy_cor['MSE'], label='KNN(50)')
+    #plt.plot(mse_knn100_mw_proxy_cor['MSE'], label='KNN(100)', linewidth=1, color='black')
+    plt.plot(mse_knn_mw_IDW_proxy_cor['MSE'], label='KNN_inverse_distance', linewidth=1, color='black')
+
     plt.xlabel('window length')
     plt.ylabel('MSE')
     plt.legend(fontsize='small', loc='upper center', bbox_to_anchor=(0.5, 1.1), ncol=5, fancybox=True,
                edgecolor='black')
-    plt.xlim(0, 250)
+    plt.xlim(0, 100)
     plt.yticks(np.arange(0, 0.51, 0.1))
-    plt.ylim(0, 0.5)
+    plt.ylim(0, 0.54)
     plt.show()
     """
 
+    """
+    # Variance in MSE window sizes
+    sd_mse_knn5_mw_proxy = np.nanstd(mse_knn5_mw_proxy_cor['MSE']);print(np.power(sd_mse_knn5_mw_proxy, 2))
+    sd_mse_knn100_mw_proxy = np.nanstd(mse_knn100_mw_proxy_cor['MSE']);print(np.power(sd_mse_knn100_mw_proxy, 2))
+    sd_mse_knn_mw_IDW_proxy = np.nanstd(mse_knn_mw_IDW_proxy_cor['MSE']);print(np.power(sd_mse_knn_mw_IDW_proxy, 2))
 
+
+    # Max-min in MSE window sizes
+    print('knn5_mw_proxy_min_max: (%f, %f)' % (np.nanmin(mse_knn5_mw_proxy_cor['MSE']), np.nanmax(mse_knn5_mw_proxy_cor['MSE'])))
+    print('knn100_mw_proxy_min_max: (%f, %f)' % (np.nanmin(mse_knn100_mw_proxy_cor['MSE']), np.nanmax(mse_knn100_mw_proxy_cor['MSE'])))
+    print('knn_mw_IDW_proxy_min_max: (%f, %f)' % (np.nanmin(mse_knn_mw_IDW_proxy_cor['MSE']), np.nanmax(mse_knn_mw_IDW_proxy_cor['MSE'])))
+    """
+    """
     # Random Forest
     mse_rf10_mw_vec = mm.load_data('/bivariate_analysis/true_cor/mse_rf10_mw_true_corr.pkl')
     mse_rf10_emw_vec = mm.load_data('/bivariate_analysis/true_cor/mse_rf10_emw_true_corr.pkl')
     mse_rf100_true_cor = mm.load_data('/bivariate_analysis/true_cor/mse_rf100_mw_true_corr.pkl')
+    """
     """
     # Try out mse decomposition
     T = 500
@@ -483,7 +460,7 @@ def main():
     print(mse_true_bootstrapped)
     print(mean_squared_error(rho_estimate, rho_true))
     """
-
+    """
     mse_rf10_mw_proxy_vec = mm.load_data('/bivariate_analysis/proxy_cor/mse_rf10_mw_proxy_corr.pkl')
     mse_rf10_emw_proxy_vec = mm.load_data('/bivariate_analysis/proxy_cor/mse_rf10_emw_proxy_corr.pkl')
     mse_rf100_emw_proxy_vec = mm.load_data('/bivariate_analysis/proxy_cor/mse_rf100_emw_proxy_corr.pkl')
@@ -493,7 +470,7 @@ def main():
     #mse_rf300_mw_proxy_vec = mm.load_data('/bivariate_analysis/proxy_cor/mse_rf300_mw_proxy_corr.pkl')
 
     mse_rf100_mw_vec = mm.load_data('/bivariate_analysis/true_cor/mse_rf100_mw_true_corr.pkl')
-
+    """
     # Variance in MSE window sizes
     """
     sd_mse_rf10_mw = np.nanstd(mse_rf10_mw_vec); print(np.power(sd_mse_rf10_mw, 2))

@@ -124,15 +124,25 @@ class PreProcessor(object):
             # Dataset with true correlations as target variable and proxies
             dataset['rho_true'] = simulated_data_process['rho']
             dataset_proxy['rho_proxy'] = emw_estimates
-        else:
+        elif proxy_type is 'mw':
             mw_estimates = simulated_data_process[0].rolling(window=dt).corr(other=simulated_data_process[1])
-            # Feature set consists of lagged asset price and mw correlation estimate, e.g. x_t = EMW_t-1
+            # Feature set consists of lagged asset price and mw correlation estimate, e.g. x_t = MW_t-1
             dataset = simulated_data_process.iloc[:, :2].shift(periods=1, axis='index')  # Dataframe
             dataset['MW_t-1'] = mw_estimates.shift(periods=1, axis='index')
             dataset_proxy = dataset.copy()       # copy feature matrix
             # Dataset with true correlations as target variable and proxies
             dataset['rho_true'] = simulated_data_process['rho']
             dataset_proxy['rho_proxy'] = mw_estimates
+        else:  # Kendall as proxy
+            ?!?!kendall_estimates = simulated_data_process[0].rolling(window=dt).corr(other=simulated_data_process[1])
+            # Feature set consists of lagged asset price and kendall correlation estimate, e.g. x_t = kendall_t-1
+            dataset = simulated_data_process.iloc[:, :2].shift(periods=1, axis='index')  # Dataframe
+            dataset['Kendall_t-1'] = kendall_estimates.shift(periods=1, axis='index')
+            dataset_proxy = dataset.copy()  # copy feature matrix
+            # Dataset with true correlations as target variable and proxies
+            dataset['rho_true'] = simulated_data_process['rho']
+            dataset_proxy['rho_proxy'] = kendall_estimates
+
         return dataset, dataset_proxy
 
     def bootstrap_moving_window_estimate(self, data, delta_t, T=500, reps=1000, ciw=99, proxy_type='mw'):

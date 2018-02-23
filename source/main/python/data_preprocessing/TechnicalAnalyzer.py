@@ -8,6 +8,14 @@ class TechnicalAnalyzer(object):
     def __init__(self):
         """Initializer TechnicalAnalyzer object."""
 
+    def kendall_correlation_estimation(self):
+        """Method for estimation of pair wise Kendall time-varying correlation coefficients.
+
+        :return:
+        """
+
+
+
     @staticmethod
     def exponential_weights(dt, theta):
         """Static method for obtaining vector of weights where the functional form of the weights follow the
