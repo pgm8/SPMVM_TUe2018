@@ -9,7 +9,6 @@ from sklearn.neighbors import KNeighborsRegressor
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
-import itertools as IT
 from scipy.stats.stats import pearsonr, kendalltau
 import time
 
@@ -17,7 +16,6 @@ from sklearn.metrics import mean_absolute_error
 from sklearn.metrics import mean_squared_error  # use mse to penalize outliers more
 
 #  Set seed for pseudorandom number generator. This allows us to reproduce the results from our script.
-#np.random.seed(30)  # globally set random seed  (30 is a good option) 21 days
 np.random.seed(30)
 
 
@@ -218,17 +216,16 @@ def main():
     # estimate as proxy for target variable
     simulated_data_process = mm.load_data('/bivariate_analysis/correlated_sim_data.pkl')
     delta_t_min = 3
-    delta_t_max = 252
-    proxy_type = ['mw', 'emw']     # ['mw', 'emw']
-
+    delta_t_max = 4
+    proxy_type = ['kendall']     # ['mw', 'emw', 'kendall']
+    """
     start_time = time.time()
     for dt, proxy_type in [(x,y) for x in range(delta_t_min, delta_t_max) for y in proxy_type]:
         print('(%i, %s)' % (dt, proxy_type))
         dataset, dataset_proxy = \
             preprocesser.generate_bivariate_dataset(ta, simulated_data_process, dt, proxy_type=proxy_type)
-        mm.save_data('/bivariate_analysis/true_cor/%s/dataset_%s_%d.pkl' % (proxy_type, proxy_type, dt), dataset)
-        mm.save_data('/bivariate_analysis/proxy_cor/%s/dataset_%s_%d.pkl' % (proxy_type, proxy_type, dt), dataset_proxy)
-
+        mm.save_data('/bivariate_analysis/true_cor/%s/data/dataset_%s_%d.pkl' % (proxy_type, proxy_type, dt), dataset)
+        mm.save_data('/bivariate_analysis/proxy_cor/%s/data/dataset_%s_%d.pkl' % (proxy_type, proxy_type, dt), dataset_proxy)
     print("%s: %f" % ('Execution time:', (time.time() - start_time)))
     """
     ##################################################################################################################

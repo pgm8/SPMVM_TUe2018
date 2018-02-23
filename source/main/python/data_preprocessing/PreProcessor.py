@@ -1,6 +1,6 @@
 import pandas as pd
 import numpy as np
-from scipy.stats.stats import pearsonr, kendalltau
+from scipy.stats.stats import pearsonr
 
 from TechnicalAnalyzer import TechnicalAnalyzer
 from sklearn.neighbors import KNeighborsRegressor
@@ -105,13 +105,14 @@ class PreProcessor(object):
         cholesky_factor = np.linalg.cholesky(cov_matrix)
         return cholesky_factor
 
-    def generate_bivariate_dataset(self, ta, simulated_data_process, dt, proxy_type='mw'):
+    def generate_bivariate_dataset(self, ta, simulated_data_process, dt, proxy_type='mw', T=500):
         """Method for generating a dataset with proxies (exponentially weighted) moving window correlation estimates
         for feature set and true correlation as the response variables.
         :param ta: technical analyzer object
         :param simulated_data_process: bivariate asset process with predefined correlation dynamics.
         :param dt: window length
         :param proxy_type: type definition of proxy for estimates of true correlation
+        :param T: length test set
         :return: datasets with true correlation and proxy for target."""
         if proxy_type is 'emw':
             emw_estimates = ta.pearson_weighted_correlation_estimation(simulated_data_process[0],
@@ -134,7 +135,7 @@ class PreProcessor(object):
             dataset['rho_true'] = simulated_data_process['rho']
             dataset_proxy['rho_proxy'] = mw_estimates
         else:  # Kendall as proxy
-            ?!?!kendall_estimates = simulated_data_process[0].rolling(window=dt).corr(other=simulated_data_process[1])
+            kendall_estimates = ta.kendall_correlation_estimation(simulated_data_process, dt)
             # Feature set consists of lagged asset price and kendall correlation estimate, e.g. x_t = kendall_t-1
             dataset = simulated_data_process.iloc[:, :2].shift(periods=1, axis='index')  # Dataframe
             dataset['Kendall_t-1'] = kendall_estimates.shift(periods=1, axis='index')
@@ -142,7 +143,6 @@ class PreProcessor(object):
             # Dataset with true correlations as target variable and proxies
             dataset['rho_true'] = simulated_data_process['rho']
             dataset_proxy['rho_proxy'] = kendall_estimates
-
         return dataset, dataset_proxy
 
     def bootstrap_moving_window_estimate(self, data, delta_t, T=500, reps=1000, ciw=99, proxy_type='mw'):

@@ -1,5 +1,7 @@
 import numpy as np
-
+import pandas as pd
+import itertools as IT
+from scipy.stats.stats import kendalltau
 
 
 class TechnicalAnalyzer(object):
@@ -8,13 +10,19 @@ class TechnicalAnalyzer(object):
     def __init__(self):
         """Initializer TechnicalAnalyzer object."""
 
-    def kendall_correlation_estimation(self):
-        """Method for estimation of pair wise Kendall time-varying correlation coefficients.
-
-        :return:
-        """
-
-
+    @staticmethod
+    def kendall_correlation_estimation(data, dt):
+        """Method for estimation of pairwise time-varying Kendall correlation coefficients.
+        :param data: data frame containing asset price paths
+        :param dt: window length
+        :return: kendall_estimates: data frame containing pairwise Kendall correlation estimates."""
+        for col1, col2, in IT.combinations(data.columns[:-1], 2):  # All columns but last this is true correlation in bivariate case
+            def my_tau(idx):
+                df_tau = data[[col1, col2]].iloc[idx]
+                return kendalltau(df_tau[col1], df_tau[col2])[0]
+            kendall_estimates = pd.rolling_apply(np.arange(len(data)), dt, my_tau)
+        kendall_estimates = pd.Series(kendall_estimates)
+        return kendall_estimates
 
     @staticmethod
     def exponential_weights(dt, theta):
@@ -81,11 +89,3 @@ class TechnicalAnalyzer(object):
         data['log return'] = np.log(data['Close']).diff()
         return data
 
-    def get_data(self, data):
-        """Method to return the dataframe with return and response variable as the for last and last
-         column, respectively. This reordering gives a good structure for subsequent processing."""
-        cols = list(data.columns.values)
-        cols.pop(cols.index('log return'))
-        cols.pop(cols.index('response'))
-        data = data[cols+['log return', 'response']]
-        return data
