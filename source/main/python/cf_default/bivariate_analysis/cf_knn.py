@@ -41,7 +41,7 @@ y_rho_true.reset_index(drop=True, inplace=True)
 
 print(y_rho_true)
 files_list = os.listdir(os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(__file__)))),
-                        'resources/Data/bivariate_analysis/true_cor/mw/'))
+                        'resources/Data_mw_true/bivariate_analysis/true_cor/mw/'))
 n_neighbors_vec = [25]  # [5, 10, 25, 50, 100]
 start_time = time.time()
 

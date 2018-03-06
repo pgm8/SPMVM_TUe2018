@@ -58,7 +58,7 @@ start_time = time.time()
 for n_estimators, proxy_type in [(x, y) for x in n_estimators_vec for y in proxy_type]:
     print('(%s, %s)' % (proxy_type, n_estimators))
     files_list = os.listdir(os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(__file__)))),
-                                         'resources/Data/bivariate_analysis/proxy_cor/%s/' % proxy_type))
+                                         'resources/Data_mw_true/bivariate_analysis/proxy_cor/%s/' % proxy_type))
     mse_rf_vec = np.full(252, np.nan)  # Initialisation vector containing MSE for all window sizes
     k = 0
     for filename in files_list:

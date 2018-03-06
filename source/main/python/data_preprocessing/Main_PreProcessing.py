@@ -212,13 +212,14 @@ def main():
     ##################################################################################################################
     ###                                          Dataset creation                                                  ###
     ##################################################################################################################
-    # Pearson correlation moving window estimates as covariate and true correlation or moving window
+    # Pearson and Kendall correlation moving window estimates as covariate and true correlation or moving window
     # estimate as proxy for target variable
+    """
     simulated_data_process = mm.load_data('/bivariate_analysis/correlated_sim_data.pkl')
     delta_t_min = 3
-    delta_t_max = 4
+    delta_t_max = 252
     proxy_type = ['kendall']     # ['mw', 'emw', 'kendall']
-    """
+
     start_time = time.time()
     for dt, proxy_type in [(x,y) for x in range(delta_t_min, delta_t_max) for y in proxy_type]:
         print('(%i, %s)' % (dt, proxy_type))

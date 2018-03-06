@@ -13,7 +13,7 @@ np.random.seed(42)  # 42:The answer to life, the universe and everything.
 
 # Load SPX dataframe
 picklename = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))),
-                          'resources/Data/SP500_data_reduced_Norm.pkl')
+                          'resources/Data_mw_true/SP500_data_reduced_Norm.pkl')
 spx = load(open(picklename, 'rb'))
 
 
@@ -61,14 +61,14 @@ plt.show()
 
 # Save vector with feature importance weights using pickle
 picklename = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))),
-                          'resources/Data/w_featuresSP500_reduced.pkl')
+                          'resources/Data_mw_true/w_featuresSP500_reduced.pkl')
 dump(w_features, open(picklename, 'wb'))
 
 # Save dataset with reduced dimension using pickle
 spx = spx[['Date', 'High', 'Low', 'Close', 'ema5', 'ema20', 'ema100', 'ema200', 'response']]
 
 picklename = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))),
-                          'resources/Data/SP500_data_reduced.pkl')
+                          'resources/Data_mw_true/SP500_data_reduced.pkl')
 dump(spx, open(picklename, 'wb'))
 
 
