@@ -105,7 +105,7 @@ class PreProcessor(object):
         cholesky_factor = np.linalg.cholesky(cov_matrix)
         return cholesky_factor
 
-    def generate_bivariate_dataset(self, ta, simulated_data_process, dt, proxy_type='mw', T=500):
+    def generate_bivariate_dataset(self, ta, simulated_data_process, dt, proxy_type='pearson', T=500):
         """Method for generating a dataset with proxies (exponentially weighted) moving window correlation estimates
         for feature set and true correlation as the response variables.
         :param ta: technical analyzer object
@@ -125,7 +125,7 @@ class PreProcessor(object):
             # Dataset with true correlations as target variable and proxies
             dataset['rho_true'] = simulated_data_process['rho']
             dataset_proxy['rho_proxy'] = emw_estimates
-        elif proxy_type is 'mw':
+        elif proxy_type is 'pearson':
             mw_estimates = simulated_data_process[0].rolling(window=dt).corr(other=simulated_data_process[1])
             # Feature set consists of lagged asset price and mw correlation estimate, e.g. x_t = MW_t-1
             dataset = simulated_data_process.iloc[:, :2].shift(periods=1, axis='index')  # Dataframe
@@ -145,7 +145,7 @@ class PreProcessor(object):
             dataset_proxy['rho_proxy'] = kendall_estimates
         return dataset, dataset_proxy
 
-    def bootstrap_moving_window_estimate(self, data, delta_t, T=500, reps=1000, ciw=99, proxy_type='mw'):
+    def bootstrap_moving_window_estimate(self, data, delta_t, T=500, reps=1000, ciw=99, proxy_type='pearson'):
         """Method for measuring the estimation uncertainty associated to the correlation coefficients when moving
         window estimates are used for approximating true correlations.
         :param data: dataset used for the task of bootstrap resampling
@@ -153,7 +153,7 @@ class PreProcessor(object):
         :param delta_t: window length for moving window estimates of Pearson correlation coefficient
         :param reps: number of bootstrap samples
         :param ciw: confidence interval width
-        :param proxy_type: type definition of proxy for estimates of true correlation (mw, emw, kendall)
+        :param proxy_type: type definition of proxy for estimates of true correlation (pearson, emw, kendall)
         :return: correlation estimates with associated estimation uncertainty."""
         assets_price = data.tail(T + delta_t - 1).iloc[:, :-1]
         assets_price.reset_index(drop=True, inplace=True)
@@ -182,7 +182,7 @@ class PreProcessor(object):
                     rho_bootstrapped[rep] = \
                         self.ta.pearson_weighted_correlation_estimation(sample[:, 0], sample[:, 1], delta_t,
                                                                         weight_vec_norm)
-                elif proxy_type is 'mw':
+                elif proxy_type is 'pearson':
                     rho_bootstrapped[rep] = pearsonr(sample[:, 0], sample[:, 1])[0]
                 elif proxy_type is 'kendall':
                     rho_bootstrapped[rep] = kendalltau(sample[:, 0], sample[:, 1])[0]

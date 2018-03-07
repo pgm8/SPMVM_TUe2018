@@ -41,7 +41,7 @@ y_rho_true.reset_index(drop=True, inplace=True)
 
 print(y_rho_true)
 files_list = os.listdir(os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(__file__)))),
-                        'resources/Data_mw_true/bivariate_analysis/true_cor/mw/'))
+                        'resources/Data_mw_true/bivariate_analysis/true_cor/pearson/'))
 n_neighbors_vec = [25]  # [5, 10, 25, 50, 100]
 start_time = time.time()
 
@@ -49,7 +49,7 @@ for n_neighbors in n_neighbors_vec:
     mse_knn_vec = np.full(252, np.nan)  # Initialisation vector containing MSE for all window sizes
     for filename in files_list:
         i = [int(s) for s in re.findall(r'\d+', filename)]
-        data_cor_true = mm.load_data('bivariate_analysis/true_cor/mw/' + filename)
+        data_cor_true = mm.load_data('bivariate_analysis/true_cor/pearson/' + filename)
         # Drop first m_max = 251 rows to ensure same training and test set for all values of m
         data_cor_true.drop(data_cor_true.head(251).index, inplace=True)
         data_cor_true.reset_index(drop=True, inplace=True)

@@ -27,13 +27,13 @@ the length of the time serie dataset.
 3. Compute the MAE/MSE from e_m+1,...,e*_T.
 
 In our case: m = 1000, T = 1500
-script running time:   412 seconds if no_estimators = 1 and n_features  = sqrt, true cor, proxies: mw  
-script running time:  2876 seconds if no_estimators = 10 and n_features  = sqrt, true cor, proxies: mw
+script running time:   412 seconds if no_estimators = 1 and n_features  = sqrt, true cor, proxies: pearson  
+script running time:  2876 seconds if no_estimators = 10 and n_features  = sqrt, true cor, proxies: pearson
 script running time:  2719 seconds if no_estimators = 10 and n_features  = sqrt, true cor, proxies: emw  
-script running time: 26052 seconds if no_estimators = 100 and n_features  = sqrt, true cor, proxies: mw 
+script running time: 26052 seconds if no_estimators = 100 and n_features  = sqrt, true cor, proxies: pearson 
 
 script running time: 24049 seconds if no_estimators = 100 and n_features  = sqrt, proxy cor, proxies: emw
-script running time: 47886 seconds if no_estimators = 100 and n_features  = sqrt, proxy cor, proxies: mw 
+script running time: 47886 seconds if no_estimators = 100 and n_features  = sqrt, proxy cor, proxies: pearson 
 
 
 
