@@ -15,6 +15,8 @@ import time
 from sklearn.metrics import mean_absolute_error
 from sklearn.metrics import mean_squared_error  # use mse to penalize outliers more
 
+import os.path
+
 #  Set seed for pseudorandom number generator. This allows us to reproduce the results from our script.
 np.random.seed(30)
 
@@ -114,7 +116,7 @@ def main():
     rho_true.reset_index(drop=True, inplace=True)
     delta_t_min, delta_t_max = 3, 252
     delta_t = np.arange(3, 252)  # dt = {[3, 10], 21, 42, 63, 126, 251}  (and 84 possibly)
-    proxy_type = ['mw', 'emw', 'kendall']  # run proxies individually otherwise one saves dataframe over other.
+    proxy_type = ['pearson', 'emw', 'kendall']  # run proxies individually otherwise one saves dataframe over other.
     rho_bias_squared = np.full(delta_t_max, np.nan)
     rho_var_vec = np.full(delta_t_max, np.nan)
     """
@@ -146,34 +148,14 @@ def main():
     """
     """
     # Load MSE data Pearson/ Kendall
-    mse_mw_vec = mm.load_data('bivariate_analysis/mse_mw.pkl')
-    mse_emw_vec = mm.load_data('bivariate_analysis/mse_emw.pkl')
+    mse_pearson_vec = mm.load_data('bivariate_analysis/mse_pearson.pkl')
     mse_kendall_vec = mm.load_data('bivariate_analysis/mse_kendall.pkl')
     """
     """
-    # Figure with interpolation MSE
-    plt.figure(1)
-    xs = np.arange(252)
-    s1mask = np.isfinite(mse_mw_vec['MSE'])
-    s2mask = np.isfinite(mse_emw_vec['MSE'])
-    plt.plot(xs[s1mask], mse_mw_vec['MSE'][s1mask], label='Moving Window', color='blue', linestyle='-', linewidth=1)
-    plt.plot(xs[s2mask], mse_emw_vec['MSE'][s2mask], label='Exp. Weighted Moving Window', color='red', linestyle='-',
-             linewidth=1)
-    plt.xlabel('window length')
-    plt.ylabel('MSE')
-    plt.legend(fontsize='small', loc='upper center', bbox_to_anchor=(0.5, 1.1), ncol=3, fancybox=True,
-               edgecolor='black')
-    plt.xlim(0, 250)
-    plt.yticks(np.arange(0, 1.00000001, 0.1))
-    plt.ylim(0, 0.6)
-    plt.show()
-    """
-    """
     # Figure without interpolation MSE 
-    plt.figure(2)
-    plt.plot(mse_mw_vec['MSE'], label='Moving Window', color='blue', linewidth=1)
-    plt.plot(mse_emw_vec['MSE'], label='Exp. Weighted Moving Window', color='red', linewidth=1)
-    plt.plot(mse_kendall_vec['MSE'], label='Kendall', color='black', linewidth=1, linestyle='--')
+    plt.figure(1)
+    plt.plot(mse_pearson_vec['MSE'], label='Pearson', color='indigo', linewidth=1)
+    plt.plot(mse_kendall_vec['MSE'], label='Kendall', color='aquamarine', linewidth=1, linestyle='--')
     plt.xlabel('window length')
     plt.ylabel('MSE')
     plt.legend(fontsize='small', loc='upper center', bbox_to_anchor=(0.5, 1.1), ncol=5, fancybox=True,
@@ -185,7 +167,7 @@ def main():
     """
     """
     # Figure without interpolation MSE decomposition 
-    plt.figure(3)
+    plt.figure(2)
     plt.plot(mse_kendall_vec['bias_squared'], label='Squared Bias', color='blue', linewidth=1)
     plt.plot(mse_kendall_vec['variance'], label='Variance', color='red', linewidth=1)
     plt.plot(mse_kendall_vec['MSE'], label='MSE', color='black', linestyle='--', linewidth=1)
@@ -200,13 +182,11 @@ def main():
     """
     """
     # Variance in MSE window sizes
-    var_mse_mw = np.nanvar(mse_mw_vec['MSE']); print('mse_mw_var: %f' % var_mse_mw)
-    var_mse_emw = np.nanvar(mse_emw_vec['MSE']); print('mse_emw_var: %f' % var_mse_emw)
+    var_mse_pearson = np.nanvar(mse_pearson_vec['MSE']); print('mse_pearson_var: %f' % var_mse_pearson)
     var_mse_kendall = np.nanvar(mse_kendall_vec['MSE']); print('mse_kendall_var: %f' % var_mse_kendall)
 
     # Max-min in MSE window sizes
-    print('mse_mw_min_max: (%f, %f)' % (np.nanmin(mse_mw_vec['MSE']), np.nanmax(mse_mw_vec['MSE'])))
-    print('mse_emw_min_max: (%f, %f)' % (np.nanmin(mse_emw_vec['MSE']), np.nanmax(mse_emw_vec['MSE'])))
+    print('mse_pearson_min_max: (%f, %f)' % (np.nanmin(mse_pearson_vec['MSE']), np.nanmax(mse_pearson_vec['MSE'])))
     print('mse_kendall_min_max: (%f, %f)' % (np.nanmin(mse_kendall_vec['MSE']), np.nanmax(mse_kendall_vec['MSE'])))
     """
     ##################################################################################################################
@@ -218,7 +198,7 @@ def main():
     simulated_data_process = mm.load_data('/bivariate_analysis/correlated_sim_data.pkl')
     delta_t_min = 3
     delta_t_max = 252
-    proxy_type = ['kendall']     # ['mw', 'emw', 'kendall']
+    proxy_type = ['kendall']     # ['pearson', 'emw', 'kendall']
 
     start_time = time.time()
     for dt, proxy_type in [(x,y) for x in range(delta_t_min, delta_t_max) for y in proxy_type]:
@@ -240,7 +220,7 @@ def main():
     reps = 1000
     delta_t = [4]   # dt = {[3, 10], 21, 42, 63, 126, 251}  (and 84 possibly)
     model = ['knn']  # k-nearest neighbour: 'knn', random forest: 'rf'
-    proxy_type = ['mw']
+    proxy_type = ['pearson']
     output_type = ['proxy']
     n_neighbours = [5]
 
@@ -257,20 +237,20 @@ def main():
         filename = '%s5_%s_%i_estimate_uncertainty_%s_corr.pkl' % (model, proxy_type, dt, output_type)
         #mm.save_data('bivariate_analysis/%s_cor/' % output_type + filename, data_frame)
         print("%s: %f" % ('Execution time', (time.time() - start_time)))
-  
-    # Execution time knn_IDW, 21, mw, proxy:  340 seconds
-    # Execution time knn5, 21, mw, proxy:     512 seconds
-    # Execution time rf10, 21, emw, true:    9514 seconds
-    # Execution time rf10, 251, mw, true:    9594 seconds
-    # Execution time rf10, 251, emw, true:   9696 seconds
-    # Execution time rf, 21, mw, true:      95593 seconds (roughly 26.5 hours)
-    # Execution time rf, 251, mw, true:    162240 seconds (roughly 45 hours)
-    # Execution time rf, 21, emw, true:    274400 seconds (roughly 76 hours)
+    """
+    """
+    for dt in range(3, 101):
+        path = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))),
+                                'resources/Data/bivariate_analysis/proxy_cor/pearson/'
+                                'results_rf_pearson_proxy_cor/')
+        filename = 'rf1000_mw_%i_estimate_uncertainty_proxy_corr.pkl' % dt
+        new_name = 'rf1000_pearson_%i_estimate_uncertainty_proxy_corr.pkl' % dt
+        os.rename(path+filename, path+new_name)
     """
     """
     delta_t = [10, 21]  # [10, 25]
     for dt in delta_t:
-        data = mm.load_data('bivariate_analysis/proxy_cor/mw/results_knn_mw_proxy_cor/'
+        data = mm.load_data('bivariate_analysis/proxy_cor/pearson/results_knn_pearson_proxy_cor/'
                             'knn5_mw_%i_estimate_uncertainty_proxy_corr.pkl' % dt)
         rho_estimates = data['Rho_estimate']
         lower_percentiles = data['Percentile_low']
@@ -311,7 +291,7 @@ def main():
     """
     """
     # Figure
-    data = mm.load_data('bivariate_analysis/proxy_cor/mw/results_knn_mw_proxy_cor/'
+    data = mm.load_data('bivariate_analysis/proxy_cor/pearson/results_knn_pearson_proxy_cor/'
                         'knn_mw_10_IDW_estimate_uncertainty_proxy_corr.pkl')
     rho_estimates = data['Rho_estimate']
     lower_percentiles = data['Percentile_low']
@@ -343,7 +323,7 @@ def main():
     reps = 1000
     delta_t = range(3, 101)   # dt = {[3, 10], 21, 42, 63, 126, 251}  (and 84 possibly)
     model = ['knn']  # k-nearest neighbour: 'knn', random forest: 'rf'
-    proxy_type = ['mw']
+    proxy_type = ['pearson']
     output_type = ['proxy']
     n_neighbour = [5, 10, 25, 50, 100]  # IDW, lenTrain separate
     rho_bias_squared = np.full(101, np.nan)
@@ -396,12 +376,6 @@ def main():
     # True Correlation
 
     # Proxy Correlation
-    mse_knn5_mw_proxy_cor = mm.load_data('bivariate_analysis/proxy_cor/mse_results_proxy_cor/mse_knn5_mw_proxy_cor.pkl')
-    mse_knn10_mw_proxy_cor = mm.load_data('bivariate_analysis/proxy_cor/mse_results_proxy_cor/mse_knn10_mw_proxy_cor.pkl')
-    mse_knn25_mw_proxy_cor = mm.load_data('bivariate_analysis/proxy_cor/mse_results_proxy_cor/mse_knn25_mw_proxy_cor.pkl')
-    mse_knn50_mw_proxy_cor = mm.load_data('bivariate_analysis/proxy_cor/mse_results_proxy_cor/mse_knn50_mw_proxy_cor.pkl')
-    mse_knn100_mw_proxy_cor = mm.load_data('bivariate_analysis/proxy_cor/mse_results_proxy_cor/mse_knn100_mw_proxy_cor.pkl')
-    mse_knn_mw_IDW_proxy_cor = mm.load_data('bivariate_analysis/proxy_cor/mse_results_proxy_cor/mse_knn_mw_IDW_proxy_cor.pkl')
 
     """
     # Figure without interpolation MSE
