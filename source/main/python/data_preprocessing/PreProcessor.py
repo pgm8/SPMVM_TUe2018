@@ -3,6 +3,7 @@ import numpy as np
 from scipy.stats.stats import pearsonr
 
 from TechnicalAnalyzer import TechnicalAnalyzer
+from ModuleManager import ModuleManager
 from sklearn.neighbors import KNeighborsRegressor
 from sklearn.ensemble import RandomForestRegressor
 
@@ -18,6 +19,7 @@ class PreProcessor(object):
     def __init__(self):
         """Initializer PreProcessor object."""
         self.ta = TechnicalAnalyzer()
+        self.mm = ModuleManager()
 
     def simulate_random_correlation_ar(self, T, a0, a1):
         """Simulate a random correlation process with highly persistent time-varying correlations following an
@@ -247,6 +249,52 @@ class PreProcessor(object):
             rho_estimates[j] = np.nanmean(rho_bootstrapped)
             sd_rho_estimates[j] = np.nanstd(rho_bootstrapped)
         return rho_estimates, lower_percentiles, upper_percentiles, sd_rho_estimates
+
+    def mse_knn_sensitivity_analysis(self, proxy_type='pearson', output_type='true'):
+        """Method for creation of a dataframe containing information on MSE decomposition as a function of different
+        parameterizations for learner model.
+        :param proxy_type: type of moving window estimator used as covariate.
+        :param output_type: output variable true correlation or proxy.
+        :return: dataframe."""
+        rho_bias_squared = np.full(1001, np.nan)
+        rho_var_vec = np.full(1001, np.nan)
+        rho_mse_vec = np.full(1001, np.nan)
+        # Load mse decomposition data
+        mse_knn5 = self.mm.load_data('bivariate_analysis/%s_cor/mse_results_%s_cor/mse_knn5_%s_%s_cor.pkl'
+                                     % (output_type, output_type, proxy_type, output_type))
+        mse_knn10 = self.mm.load_data('bivariate_analysis/%s_cor/mse_results_%s_cor/mse_knn10_%s_%s_cor.pkl'
+                                      % (output_type, output_type, proxy_type, output_type))
+        mse_knn25 = self.mm.load_data('bivariate_analysis/%s_cor/mse_results_%s_cor/mse_knn25_%s_%s_cor.pkl'
+                                      % (output_type, output_type, proxy_type, output_type))
+        mse_knn50 = self.mm.load_data('bivariate_analysis/%s_cor/mse_results_%s_cor/mse_knn50_%s_%s_cor.pkl'
+                                      % (output_type, output_type, proxy_type, output_type))
+        mse_knn_100_to_1000 = self.mm.load_data('bivariate_analysis/%s_cor/mse_results_%s_cor/'
+                            'mse_knn100_to_1000_%s_%s_cor.pkl' % (output_type, output_type, proxy_type, output_type))
+        # Creation of dataframe
+        rho_mse_vec[5], rho_bias_squared[5], rho_var_vec[5] = mse_knn5.iloc[10, :]
+        rho_mse_vec[10], rho_bias_squared[10], rho_var_vec[10] = mse_knn10.iloc[10, :]
+        rho_mse_vec[25], rho_bias_squared[25], rho_var_vec[25] = mse_knn25.iloc[10, :]
+        rho_mse_vec[50], rho_bias_squared[50], rho_var_vec[50] = mse_knn50.iloc[10, :]
+        rho_mse_vec[100], rho_bias_squared[100], rho_var_vec[100] = mse_knn_100_to_1000.iloc[1, :]
+        rho_mse_vec[200], rho_bias_squared[200], rho_var_vec[200] = mse_knn_100_to_1000.iloc[2, :]
+        rho_mse_vec[300], rho_bias_squared[300], rho_var_vec[300] = mse_knn_100_to_1000.iloc[3, :]
+        rho_mse_vec[400], rho_bias_squared[400], rho_var_vec[400] = mse_knn_100_to_1000.iloc[4, :]
+        rho_mse_vec[500], rho_bias_squared[500], rho_var_vec[500] = mse_knn_100_to_1000.iloc[5, :]
+        rho_mse_vec[600], rho_bias_squared[600], rho_var_vec[600] = mse_knn_100_to_1000.iloc[6, :]
+        rho_mse_vec[700], rho_bias_squared[700], rho_var_vec[700] = mse_knn_100_to_1000.iloc[7, :]
+        rho_mse_vec[800], rho_bias_squared[800], rho_var_vec[800] = mse_knn_100_to_1000.iloc[8, :]
+        rho_mse_vec[900], rho_bias_squared[900], rho_var_vec[900] = mse_knn_100_to_1000.iloc[9, :]
+        rho_mse_vec[1000], rho_bias_squared[1000], rho_var_vec[1000] = mse_knn_100_to_1000.iloc[10, :]
+        # Dataframe with information on MSE decomposition as a function of different learner parameterizations
+        data_frame = pd.DataFrame({'bias_squared': rho_bias_squared, 'variance': rho_var_vec,
+                                   'MSE': rho_mse_vec})
+        return data_frame
+
+
+
+
+
+
 
 
 
