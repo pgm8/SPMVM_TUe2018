@@ -189,6 +189,47 @@ def main():
     print('mse_pearson_min_max: (%f, %f)' % (np.nanmin(mse_pearson_vec['MSE']), np.nanmax(mse_pearson_vec['MSE'])))
     print('mse_kendall_min_max: (%f, %f)' % (np.nanmin(mse_kendall_vec['MSE']), np.nanmax(mse_kendall_vec['MSE'])))
     """
+
+    ##################################################################################################################
+    ###                         Minimum Determinant Pearson and Kendall Moving Window                              ###
+    ##################################################################################################################
+    # Get information on the minimum determinants over all corrlation estimates for all window sizes [3, 100]
+    delta_t = range(3, 101)
+    det_min_vec = np.full(101, np.nan)
+    proxy_type = 'pearson'
+    """
+    for dt in delta_t:
+        # Load data Pearson/ Kendall
+        det_data_vec = np.full(501, np.nan)
+        filename = '%s_%i_estimate_uncertainty.pkl' % (proxy_type, dt)
+        data = mm.load_data('bivariate_analysis/results_%s/%s' % (proxy_type, filename))
+        # Compute determinants for every dataset
+        for i, rho in enumerate(data['Rho_estimate']):
+            det_data_vec[i+1] = preprocesser.determinant_LU_factorization(rho, 2)
+        det_min_vec[dt] = np.nanmin(det_data_vec)
+    mm.save_data('bivariate_analysis/determinant_min_%s.pkl' % proxy_type, det_min_vec)
+    """
+    """
+    # Plot minimum determinants of Pearson and Kendal Moving Window estimates of correlation
+    det_min_pearson = mm.load_data('bivariate_analysis/determinant_min_pearson.pkl')
+    det_min_kendall = mm.load_data('bivariate_analysis/determinant_min_kendall.pkl')
+    plt.figure(1)
+    plt.plot(det_min_pearson, label='Pearson', linewidth=1, color='orange')
+    plt.plot(det_min_kendall, label='Kendall', linewidth=1)
+    plt.xlabel('window length')
+    plt.ylabel('minimum det($R_t)$')
+    plt.legend(fontsize='small', loc='upper center', bbox_to_anchor=(0.5, 1.1), ncol=2, fancybox=True,
+               edgecolor='black')
+    plt.xlim(0, 100)
+    plt.yticks(np.arange(-0.1, 1.1, 0.1))
+    plt.ylim(-0.1, 1)
+    plt.show()
+    """
+
+    
+    
+    
+    
     ##################################################################################################################
     ###                                          Dataset creation                                                  ###
     ##################################################################################################################
@@ -271,7 +312,8 @@ def main():
     """
     """
     # Figure
-    data = mm.load_data('bivariate_analysis/true_cor/rf100_mw_21_estimate_uncertainty_true_corr.pkl')
+    data = mm.load_data('bivariate_analysis/true_cor/pearson/results_rf_pearson_true_cor/'
+                        'rf1000_pearson_21_estimate_uncertainty_true_corr.pkl')
     rho_estimates = data['Rho_estimate']
     lower_percentiles = data['Percentile_low']
     upper_percentiles = data['Percentile_up']
@@ -322,14 +364,14 @@ def main():
     rho_true.reset_index(drop=True, inplace=True)
     ciw = 99
     reps = 1000
-    delta_t = range(3, 101)   # dt = {[3, 10], 21, 42, 63, 126, 251}  (and 84 possibly)
-    model = ['rf']  # k-nearest neighbour: 'knn', random forest: 'rf'
-    proxy_type = ['kendall']
-    output_type = ['true']
-    n_neighbour = [10]  #  5, 10, 25, 50, 100, len_train, IDW
-    rho_bias_squared = np.full(101, np.nan)
-    rho_var_vec = np.full(101, np.nan)
-    rho_mse_vec = np.full(101, np.nan)
+    delta_t = [10]   # dt = {[3, 10], 21, 42, 63, 126, 251}  (and 84 possibly)
+    model = ['knn']  # k-nearest neighbour: 'knn', random forest: 'rf'
+    proxy_type = ['pearson']
+    output_type = ['proxy']
+    n_neighbour = [100, 200, 300, 400, 500, 600, 700, 800, 900, 1000]  #  5, 10, 25, 50, 100, len_train, IDW
+    rho_bias_squared = np.full(11, np.nan)
+    rho_var_vec = np.full(11, np.nan)
+    rho_mse_vec = np.full(11, np.nan)
 
     """
     # Create dataframe with (interpolated) mse results, squared bias, variance for varying window lengths
@@ -340,14 +382,13 @@ def main():
         data = mm.load_data('bivariate_analysis/%s_cor/%s/results_%s_%s_%s_cor/' % (output_type, proxy_type, model,
                                                                                     proxy_type, output_type) + filename)
         rho_estimates = data['Rho_estimate']
-        rho_bias_squared[dt] = np.mean(np.power(rho_estimates-rho_true, 2))
-        rho_var_vec[dt] = np.power(np.mean(data['std rho estimate']), 2)
+        rho_bias_squared[int(n_neighbour / 100)] = np.mean(np.power(rho_estimates-rho_true, 2))
+        rho_var_vec[int(n_neighbour / 100)] = np.power(np.mean(data['std rho estimate']), 2)
 
     rho_mse_vec = np.array([np.sum(pair) for pair in zip(rho_bias_squared, rho_var_vec)])
     data_frame = pd.DataFrame({'bias_squared': rho_bias_squared, 'variance': rho_var_vec,
                                'MSE': rho_mse_vec})
-    filename = 'mse_%s%i_%s_%s_cor.pkl' % (model, n_neighbour, proxy_type, output_type)
-    print(filename)
+    filename = 'mse_%s100_to_1000_%s_%s_cor.pkl' % (model, proxy_type, output_type)
     mm.save_data('bivariate_analysis/%s_cor/mse_results_%s_cor/' % (output_type, output_type) + filename, data_frame)
     """
 
@@ -375,8 +416,17 @@ def main():
 
     # Proxy Correlation
     mse_knn5_pearson_proxy = mm.load_data('bivariate_analysis/proxy_cor/mse_results_proxy_cor/mse_knn5_pearson_proxy_cor.pkl')
+    mse_knn10_pearson_proxy = mm.load_data('bivariate_analysis/proxy_cor/mse_results_proxy_cor/mse_knn10_pearson_proxy_cor.pkl')
+    mse_knn25_pearson_proxy = mm.load_data('bivariate_analysis/proxy_cor/mse_results_proxy_cor/mse_knn25_pearson_proxy_cor.pkl')
+    mse_knn50_pearson_proxy = mm.load_data('bivariate_analysis/proxy_cor/mse_results_proxy_cor/mse_knn50_pearson_proxy_cor.pkl')
+    mse_knn100_pearson_proxy = mm.load_data('bivariate_analysis/proxy_cor/mse_results_proxy_cor/mse_knn100_pearson_proxy_cor.pkl')
+
+    mse_knn_len_train_pearson_proxy = mm.load_data('bivariate_analysis/proxy_cor/mse_results_proxy_cor/mse_knn_len_train_pearson_proxy_cor.pkl')
+    mse_knn_IDW_pearson_proxy = mm.load_data('bivariate_analysis/proxy_cor/mse_results_proxy_cor/mse_knn_IDW_pearson_proxy_cor.pkl')
 
     mse_knn5_kendall_proxy = mm.load_data('bivariate_analysis/proxy_cor/mse_results_proxy_cor/mse_knn5_kendall_proxy_cor.pkl')
+    mse_knn_len_train_kendall_proxy = mm.load_data('bivariate_analysis/proxy_cor/mse_results_proxy_cor/mse_knn_len_train_kendall_proxy_cor.pkl')
+    mse_knn_IDW_kendall_proxy = mm.load_data('bivariate_analysis/proxy_cor/mse_results_proxy_cor/mse_knn_IDW_kendall_proxy_cor.pkl')
 
     ## Load MSE data RF
     # True Correlation
@@ -384,6 +434,7 @@ def main():
     mse_rf100_pearson_true = mm.load_data('bivariate_analysis/true_cor/mse_results_true_cor/mse_rf100_pearson_true_cor.pkl')
     mse_rf300_pearson_true = mm.load_data('bivariate_analysis/true_cor/mse_results_true_cor/mse_rf300_pearson_true_cor.pkl')
     mse_rf1000_pearson_true = mm.load_data('bivariate_analysis/true_cor/mse_results_true_cor/mse_rf1000_pearson_true_cor.pkl')
+
 
     mse_rf10_kendall_true = mm.load_data('bivariate_analysis/true_cor/mse_results_true_cor/mse_rf10_kendall_true_cor.pkl')
     mse_rf100_kendall_true = mm.load_data('bivariate_analysis/true_cor/mse_results_true_cor/mse_rf100_kendall_true_cor.pkl')
@@ -393,19 +444,23 @@ def main():
     """
     # Figure without interpolation MSE
     plt.figure(1)
-    #plt.plot(mse_pearson_vec['MSE'], label='Pearson', color='indigo', linewidth=1)
-    #plt.plot(mse_kendall_vec['MSE'], label='Kendall', color='cyan', linestyle='--', linewidth=1)
-    plt.plot(mse_knn5_pearson_true['MSE'], label='KNN_pearson', linewidth=1, color='brown')
-    plt.plot(mse_knn5_kendall_true['MSE'], label='KNN_kendall', linewidth=1, color='xkcd:azure')
-    #plt.plot(mse_knn10_pearson_true['MSE'], label='KNN(10)', linewidth=1)
-    #plt.plot(mse_knn25_pearson_true['MSE'], label='KNN(25)', linewidth=1)
-    #plt.plot(mse_knn50_pearson_true['MSE'], label='KNN(50)', linewidth=1)
+    plt.plot(mse_pearson_vec['MSE'], label='Pearson', color='indigo', linewidth=1)
+    plt.plot(mse_kendall_vec['MSE'], label='Kendall', color='cyan', linestyle='--', linewidth=1)
+    plt.plot(mse_knn5_pearson_proxy['MSE'], label='KNN(5)_pearson', linewidth=1, color='brown')
+    plt.plot(mse_knn5_kendall_proxy['MSE'], label='KNN_kendall', linewidth=1, color='xkcd:azure')
+    #plt.plot(mse_knn10_pearson_proxy['MSE'], label='KNN(10)', linewidth=1)
+    #plt.plot(mse_knn25_pearson_proxy['MSE'], label='KNN(25)', linewidth=1)
+    #plt.plot(mse_knn50_pearson_proxy['MSE'], label='KNN(50)', linewidth=1)
+    #plt.plot(mse_knn100_pearson_proxy['MSE'], label='KNN(100)', linewidth=1)
     #plt.plot(mse_knn_IDW_pearson_true['MSE'], label='KNN_pearson_IDW', color='black', linewidth=1)
     #plt.plot(mse_knn_IDW_kendall_true['MSE'], label='KNN_kendall_idw', linewidth=1, color='xkcd:azure')
     #plt.plot(mse_knn_len_train_pearson_true['MSE'], label='KNN_pearson_len_train', linewidth=1)
+    #plt.plot(mse_knn_len_train_pearson_proxy['MSE'], label='KNN_pearson_len_train', color='black', linewidth=1)
+    #plt.plot(mse_knn_IDW_pearson_proxy['MSE'], label='KNN_pearson_IDW', color='black', linewidth=1)
+
     plt.xlabel('window length')
     plt.ylabel('MSE')
-    plt.legend(fontsize='small', loc='upper center', bbox_to_anchor=(0.5, 1.1), ncol=5, fancybox=True,
+    plt.legend(fontsize='small', loc='upper center', bbox_to_anchor=(0.5, 1.1), ncol=7, fancybox=True,
                edgecolor='black')
     plt.xlim(0, 100)
     plt.yticks(np.arange(0, 0.61, 0.1))
@@ -413,21 +468,21 @@ def main():
     plt.show()
     """
     # Figure without interpolation MSE decomposition
-
+    """
     plt.figure(2)
-    plt.plot(mse_knn5_pearson_proxy['bias_squared'], label='Squared Bias', color='blue', linewidth=1)
-    plt.plot(mse_knn5_pearson_proxy['variance'], label='Variance', color='red', linewidth=1)
-    plt.plot(mse_knn5_pearson_proxy['MSE'], label='MSE', color='black', linestyle='--', linewidth=1)
+    plt.plot(mse_knn_IDW_kendall_true['bias_squared'], label='Squared Bias', color='blue', linewidth=1)
+    plt.plot(mse_knn_IDW_kendall_true['variance'], label='Variance', color='red', linewidth=1)
+    plt.plot(mse_knn_IDW_kendall_true['MSE'], label='MSE', color='black', linestyle='--', linewidth=1)
     plt.xlabel('window length')
     plt.ylabel('MSE')
     plt.legend(fontsize='small', loc='upper center', bbox_to_anchor=(0.5, 1.1), ncol=3, fancybox=True,
                edgecolor='black')
     plt.xlim(0, 100)
-    plt.yticks(np.arange(0, 0.21, 0.02))
-    plt.ylim(0, 0.20)
+    plt.yticks(np.arange(0, 0.31, 0.02))
+    plt.ylim(0, 0.2)
     plt.show()
 
-
+    """
     # Figure with interpolation MSE decomposition sensitivity analysis
     """
     mse_knn_pearson_true_cor_sa = preprocesser.mse_knn_sensitivity_analysis()
@@ -438,14 +493,23 @@ def main():
                  mse_knn_kendall_true_cor_sa)
     """
     """
+    mse_knn_pearson_proxy_cor_sa = preprocesser.mse_knn_sensitivity_analysis(output_type='proxy')
+    mm.save_data('bivariate_analysis/proxy_cor/mse_results_proxy_cor/mse_knn_pearson_proxy_cor_sensitivity_analysis.pkl',
+                 mse_knn_pearson_proxy_cor_sa)
+    mse_knn_kendall_proxy_cor_sa = preprocesser.mse_knn_sensitivity_analysis(proxy_type='kendall', output_type='proxy')
+    mm.save_data('bivariate_analysis/proxy_cor/mse_results_proxy_cor/mse_knn_kendall_proxy_cor_sensitivity_analysis.pkl',
+                 mse_knn_kendall_proxy_cor_sa)
+
+    """
+    """
     plt.figure(3)
     xs = np.arange(1001)
-    s1mask = np.isfinite(mse_knn_pearson_true_cor_sa['bias_squared'])
-    s2mask = np.isfinite(mse_knn_pearson_true_cor_sa['variance'])
-    s3mask = np.isfinite(mse_knn_pearson_true_cor_sa['MSE'])
-    plt.plot(xs[s1mask], mse_knn_pearson_true_cor_sa['bias_squared'][s1mask], label='Squared Bias', color='blue', linestyle='-', linewidth=1, marker='.')
-    plt.plot(xs[s2mask], mse_knn_pearson_true_cor_sa['variance'][s2mask], label='Variance', color='red', linestyle='-', linewidth=1, marker='.')
-    plt.plot(xs[s3mask], mse_knn_pearson_true_cor_sa['MSE'][s3mask], label='MSE', color='black', linestyle='--', linewidth=1, marker='.')
+    s1mask = np.isfinite(mse_knn_pearson_proxy_cor_sa['bias_squared'])
+    s2mask = np.isfinite(mse_knn_pearson_proxy_cor_sa['variance'])
+    s3mask = np.isfinite(mse_knn_pearson_proxy_cor_sa['MSE'])
+    plt.plot(xs[s1mask], mse_knn_pearson_proxy_cor_sa['bias_squared'][s1mask], label='Squared Bias', color='blue', linestyle='-', linewidth=1, marker='.')
+    plt.plot(xs[s2mask], mse_knn_pearson_proxy_cor_sa['variance'][s2mask], label='Variance', color='red', linestyle='-', linewidth=1, marker='.')
+    plt.plot(xs[s3mask], mse_knn_pearson_proxy_cor_sa['MSE'][s3mask], label='MSE', color='black', linestyle='--', linewidth=1, marker='.')
 
     plt.xlabel('number of neighbours')
     plt.ylabel('MSE')
@@ -457,7 +521,7 @@ def main():
     plt.ylim(0, 0.2)
     plt.show()
     """
-
+    """
     # Variance in MSE window sizes for KNN with Pearson/ Kendall as covariates.
     # True Correlation
     #var_mse_knn5_pearson_true = np.nanvar(mse_knn5_pearson_true['MSE']); print('mse_knn5_pearson_var: %.8f' % var_mse_knn5_pearson_true)
@@ -466,15 +530,30 @@ def main():
     #var_mse_knn_IDW_pearson_true = np.nanvar(mse_knn_IDW_pearson_true['MSE']); print('mse_knn_IDW_pearson_var: %.9f' % var_mse_knn_IDW_pearson_true)
     #var_mse_knn_len_train_kendall_true = np.nanvar(mse_knn_len_train_kendall_true['MSE']); print('mse_knn_len_train_pearson_var: %f' % var_mse_knn_len_train_kendall_true)
     #var_mse_knn_IDW_kendall_true = np.nanvar(mse_knn_IDW_kendall_true['MSE']); print('mse_knn_IDW_pearson_var: %f' % var_mse_knn_IDW_kendall_true)
+    # Proxy Correlation
+    #var_mse_knn5_pearson_proxy = np.nanvar(mse_knn5_pearson_proxy['MSE']); print('mse_knn5_pearson_proxy_var: %.6f' % var_mse_knn5_pearson_proxy)
+    #var_mse_knn5_kendall_proxy = np.nanvar(mse_knn5_kendall_proxy['MSE']); print('mse_knn5_kendall_proxy_var: %.6f' % var_mse_knn5_kendall_proxy)
+    #var_mse_knn_len_train_pearson_proxy = np.nanvar(mse_knn_len_train_pearson_proxy['MSE']); print('mse_knn_len_train_pearson_proxy_var: %.8f' % var_mse_knn_len_train_pearson_proxy)
+    #var_mse_knn_len_train_kendall_proxy = np.nanvar(mse_knn_len_train_kendall_proxy['MSE']); print('mse_knn_len_train_kendall_proxy_var: %.9f' % var_mse_knn_len_train_kendall_proxy)
+    #var_mse_knn_IDW_pearson_proxy = np.nanvar(mse_knn_IDW_pearson_proxy['MSE']); print('mse_knn_IDW_pearson_proxy_var: %.8f' % var_mse_knn_IDW_pearson_proxy)
+    #var_mse_knn_IDW_kendall_proxy = np.nanvar(mse_knn_IDW_kendall_proxy['MSE']); print('mse_knn_IDW_kendall_proxy_var: %.8f' % var_mse_knn_IDW_kendall_proxy)
 
     # Max-min in MSE window sizes for KNN with Pearson/ Kendall as covariates.
+    # True Correlation
     #print('mse_knn5_pearson_min_max: (%.4f, %.4f)' % (np.nanmin(mse_knn5_pearson_true['MSE']), np.nanmax(mse_knn5_pearson_true['MSE'])))
     #print('mse_knn5_kendall_min_max: (%.4f, %.4f)' % (np.nanmin(mse_knn5_kendall_true['MSE']), np.nanmax(mse_knn5_kendall_true['MSE'])))
     #print('mse_knn_len_train_pearson_min_max: (%.4f, %.4f)' % (np.nanmin(mse_knn_len_train_pearson_true['MSE']), np.nanmax(mse_knn_len_train_pearson_true['MSE'])))
     #print('mse_knn_IDW_pearson_min_max: (%.4f, %.4f)' % (np.nanmin(mse_knn_IDW_pearson_true['MSE']), np.nanmax(mse_knn_IDW_pearson_true['MSE'])))
     #print('mse_knn_len_train_kendall_min_max: (%.4f, %.4f)' % (np.nanmin(mse_knn_len_train_kendall_true['MSE']), np.nanmax(mse_knn_len_train_kendall_true['MSE'])))
     #print('mse_knn_IDW_kendall_min_max: (%.4f, %.4f)' % (np.nanmin(mse_knn_IDW_kendall_true['MSE']), np.nanmax(mse_knn_IDW_kendall_true['MSE'])))
-
+    # Proxy Correlation
+    #print('mse_knn5_pearson_proxy_min_max: (%.4f, %.4f)' % (np.nanmin(mse_knn5_pearson_proxy['MSE']), np.nanmax(mse_knn5_pearson_proxy['MSE'])))
+    #print('mse_knn5_kendall_proxy_min_max: (%.4f, %.4f)' % (np.nanmin(mse_knn5_kendall_proxy['MSE']), np.nanmax(mse_knn5_kendall_proxy['MSE'])))
+    #print('mse_knn_len_train_pearson_proxy_min_max: (%.4f, %.4f)' % (np.nanmin(mse_knn_len_train_pearson_proxy['MSE']), np.nanmax(mse_knn_len_train_pearson_proxy['MSE'])))
+    #print('mse_knn_len_train_kendall_proxy_min_max: (%.4f, %.4f)' % (np.nanmin(mse_knn_len_train_kendall_proxy['MSE']), np.nanmax(mse_knn_len_train_kendall_proxy['MSE'])))
+    #print('mse_knn_IDW_pearson_proxy_min_max: (%.4f, %.4f)' % (np.nanmin(mse_knn_IDW_pearson_proxy['MSE']), np.nanmax(mse_knn_IDW_pearson_proxy['MSE'])))
+    #print('mse_knn_IDW_kendall_proxy_min_max: (%.4f, %.4f)' % (np.nanmin(mse_knn_IDW_kendall_proxy['MSE']), np.nanmax(mse_knn_IDW_kendall_proxy['MSE'])))
+    """
     """
     # Variance in MSE window sizes for RF with Pearson/ Kendall as covariates.
     # True Correlation
@@ -516,8 +595,68 @@ def main():
     plt.ylim(0, 0.2)
     plt.show()
     """
+    """
+    # Figure with interpolation MSE decomposition sensitivity analysis
+    mse_rf_pearson_true_cor_sa = mm.load_data('bivariate_analysis/true_cor/mse_results_true_cor/mse_rf300_1_to_3_pearson_true_cor.pkl')
+    plt.figure(3)
+    xs = np.arange(4)
+    s1mask = np.isfinite(mse_rf_pearson_true_cor_sa['bias_squared'])
+    s2mask = np.isfinite(mse_rf_pearson_true_cor_sa['variance'])
+    s3mask = np.isfinite(mse_rf_pearson_true_cor_sa['MSE'])
+    plt.plot(xs[s1mask], mse_rf_pearson_true_cor_sa['bias_squared'][s1mask], label='Squared Bias', color='blue', linestyle='-', linewidth=1, marker='.')
+    plt.plot(xs[s2mask], mse_rf_pearson_true_cor_sa['variance'][s2mask], label='Variance', color='red', linestyle='-', linewidth=1, marker='.')
+    plt.plot(xs[s3mask], mse_rf_pearson_true_cor_sa['MSE'][s3mask], label='MSE', color='black', linestyle='--', linewidth=1, marker='.')
 
+    plt.xlabel('number of covariates')
+    plt.ylabel('MSE')
+    plt.legend(fontsize='small', loc='upper center', bbox_to_anchor=(0.5, 1.1), ncol=3, fancybox=True,
+                  edgecolor='black')
+    plt.xlim(0, 3)
+    plt.xticks([0, 1, 2, 3])
+    plt.yticks(np.arange(0, 0.21, 0.02))
+    plt.ylim(0, 0.2)
+    plt.show()
+    """
+    ##################################################################################################################
+    ###                                   Minimum Determinant Learner Models                                       ###
+    ##################################################################################################################
+    # Rho_estimate
+    # Get information on the minimum determinants over all correlation estimates for all window sizes [3, 100]
+    delta_t = range(3, 101)
+    det_min_vec = np.full(101, np.nan)
+    proxy_type = 'kendall'
+    output_type = 'true'
 
+    """
+    for dt in delta_t:
+        # Load data Pearson/ Kendall
+        det_data_vec = np.full(501, np.nan)
+        filename = 'knn5_%s_%i_estimate_uncertainty_%s_corr.pkl' % (proxy_type, dt, output_type)
+        data = mm.load_data('bivariate_analysis/%s_cor/%s/results_knn_%s_%s_cor/%s'
+                            % (output_type, proxy_type, proxy_type, output_type, filename))
+        # Compute determinants for every dataset
+        for i, rho in enumerate(data['Rho_estimate']):
+            det_data_vec[i+1] = preprocesser.determinant_LU_factorization(rho, 2)
+        det_min_vec[dt] = np.nanmin(det_data_vec)
+        filename_save = 'determinant_min_knn5_%s_%s_cor.pkl' % (proxy_type, output_type)
+    mm.save_data('bivariate_analysis/%s_cor/det_results_%s_cor/%s' % (output_type, output_type, filename_save), det_min_vec)
+    """
+    """
+    # Plot minimum determinants of Pearson and Kendal Moving Window estimates of correlation
+    det_min_knn_pearson = mm.load_data('bivariate_analysis/true_cor/det_results_true_cor/determinant_min_knn5_pearson_true_cor.pkl')
+    det_min_knn_kendall = mm.load_data('bivariate_analysis/true_cor/det_results_true_cor/determinant_min_knn5_kendall_true_cor.pkl')
+    plt.figure(1)
+    plt.plot(det_min_knn_pearson, label='Pearson', linewidth=1, color='orange')
+    plt.plot(det_min_knn_kendall, label='Kendall', linewidth=1)
+    plt.xlabel('window length')
+    plt.ylabel('minimum det($R_t)$')
+    plt.legend(fontsize='small', loc='upper center', bbox_to_anchor=(0.5, 1.1), ncol=2, fancybox=True,
+               edgecolor='black')
+    plt.xlim(0, 100)
+    plt.yticks(np.arange(-0.1, 1.1, 0.1))
+    plt.ylim(-0.1, 1)
+    plt.show()
+    """
 
 
 

@@ -107,6 +107,16 @@ class PreProcessor(object):
         cholesky_factor = np.linalg.cholesky(cov_matrix)
         return cholesky_factor
 
+    def determinant_LU_factorization(self, corr_vec, n):
+        """Method for determining the determinant of a given matrix. Determinants are computed using using
+        LU factorization.
+        :param corr_vec: time-varying correlation vector
+        :param n: dimension correlation matrix
+        :return: determinant."""
+        cor_matrix = self.construct_correlation_matrix(corr_vec, n)
+        det = np.linalg.det(cor_matrix)
+        return det
+
     def generate_bivariate_dataset(self, ta, simulated_data_process, dt, proxy_type='pearson', T=500):
         """Method for generating a dataset with proxies (exponentially weighted) moving window correlation estimates
         for feature set and true correlation as the response variables.
@@ -252,7 +262,7 @@ class PreProcessor(object):
 
     def mse_knn_sensitivity_analysis(self, proxy_type='pearson', output_type='true'):
         """Method for creation of a dataframe containing information on MSE decomposition as a function of different
-        parameterizations for learner model.
+        parameterizations for knn learner model.
         :param proxy_type: type of moving window estimator used as covariate.
         :param output_type: output variable true correlation or proxy.
         :return: dataframe."""
@@ -290,6 +300,25 @@ class PreProcessor(object):
                                    'MSE': rho_mse_vec})
         return data_frame
 
+    def mse_rf_sensitivity_analysis(self, proxy_type='pearson', output_type='true'):
+        """Method for creation of a dataframe containing information on MSE decomposition as a function of different
+        parameterizations for rf learner model.
+        :param proxy_type: type of moving window estimator used as covariate.
+        :param output_type: output variable true correlation or proxy.
+        :return: dataframe."""
+        rho_bias_squared = np.full(4, np.nan)
+        rho_var_vec = np.full(4, np.nan)
+        rho_mse_vec = np.full(4, np.nan)
+        # Load mse decomposition data
+        mse_rf300_1_to_3 = self.mm.load_data('bivariate_analysis/%s_cor/mse_results_%s_cor/'
+                            'mse_rf300_1_to_3_%s_%s_cor.pkl' % (output_type, output_type, proxy_type, output_type))
+        rho_mse_vec[1], rho_bias_squared[1], rho_var_vec[1] = mse_rf300_1_to_3.iloc[1, :]
+        rho_mse_vec[2], rho_bias_squared[2], rho_var_vec[2] = mse_rf300_1_to_3.iloc[2, :]
+        rho_mse_vec[3], rho_bias_squared[3], rho_var_vec[3] = mse_rf300_1_to_3.iloc[3, :]
+        # Dataframe with information on MSE decomposition as a function of different learner parameterizations
+        data_frame = pd.DataFrame({'bias_squared': rho_bias_squared, 'variance': rho_var_vec,
+                                   'MSE': rho_mse_vec})
+        return data_frame
 
 
 
