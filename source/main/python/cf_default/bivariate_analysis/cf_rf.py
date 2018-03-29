@@ -27,10 +27,15 @@ the length of the time serie dataset.
 3. Compute the MAE/MSE from e_m+1,...,e*_T.
 
 In our case: m = 1000, T = 1500
-script running time:   412 seconds if no_estimators = 1 and n_features  = sqrt, proxies: mw  
-script running time:  2876 seconds if no_estimators = 10 and n_features  = sqrt, proxies: mw
-script running time:  2719 seconds if no_estimators = 10 and n_features  = sqrt, proxies: emw  
-script running time: 26052 seconds if no_estimators = 10 and n_features  = sqrt, proxies: mw 
+script running time:   412 seconds if no_estimators = 1 and n_features  = sqrt, true cor, proxies: pearson  
+script running time:  2876 seconds if no_estimators = 10 and n_features  = sqrt, true cor, proxies: pearson
+script running time:  2719 seconds if no_estimators = 10 and n_features  = sqrt, true cor, proxies: emw  
+script running time: 26052 seconds if no_estimators = 100 and n_features  = sqrt, true cor, proxies: pearson 
+
+script running time: 24049 seconds if no_estimators = 100 and n_features  = sqrt, proxy cor, proxies: emw
+script running time: 47886 seconds if no_estimators = 100 and n_features  = sqrt, proxy cor, proxies: pearson 
+
+
 
 """
 
@@ -41,20 +46,26 @@ np.random.seed(42)  # 42:The answer to life, the universe and everything.
 mm = ModuleManager()
 
 # Load data into dataframe
-files_list = os.listdir(os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(__file__)))),
-                        'resources/Data/bivariate_analysis/emw/'))
+T = 500
+simulated_data_process = mm.load_data('/bivariate_analysis/correlated_sim_data.pkl')
+y_rho_true = simulated_data_process.tail(T).iloc[:, -1]
 
-n_estimators_vec = [10]
+
+n_estimators_vec = [300]
+proxy_type = ['emw']
 start_time = time.time()
 
-for n_estimators in n_estimators_vec:
+for n_estimators, proxy_type in [(x, y) for x in n_estimators_vec for y in proxy_type]:
+    print('(%s, %s)' % (proxy_type, n_estimators))
+    files_list = os.listdir(os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(__file__)))),
+                                         'resources/Data_mw_true/bivariate_analysis/proxy_cor/%s/' % proxy_type))
     mse_rf_vec = np.full(252, np.nan)  # Initialisation vector containing MSE for all window sizes
     k = 0
     for filename in files_list:
         i = [int(s) for s in re.findall(r'\d+', filename)]
         k += 1
         print(k)
-        data_cor_true = mm.load_data('bivariate_analysis/emw/' + filename)
+        data_cor_true = mm.load_data('bivariate_analysis/proxy_cor/%s/' % proxy_type + filename)
         # Drop first m_max = 200 rows to ensure same training and test set for all values of m
         data_cor_true.drop(data_cor_true.head(251).index, inplace=True)
         data_cor_true.reset_index(drop=True, inplace=True)
@@ -74,17 +85,19 @@ for n_estimators in n_estimators_vec:
             y_hat = rf.fit(X_train, y_train).predict(x_test.values.reshape(1, -1))
             y_hat_rf[j] = y_hat
 
-        mse_rf_vec[i] = mean_squared_error(y[t_start:], y_hat_rf)
+        mse_rf_vec[i] = mean_squared_error(y_rho_true, y_hat_rf)
 
 
     print("%s: %f" % ('Execution time script', (time.time() - start_time)))
-    mm.save_data('/bivariate_analysis/mse_rf%i_emw_true_corr.pkl' % n_estimators, mse_rf_vec)
+    mm.save_data('/bivariate_analysis/proxy_cor/mse_rf%i_%s_proxy_corr.pkl' % (n_estimators, proxy_type), mse_rf_vec)
 
 
+""""
 plt.plot(mse_rf_vec, label='RF')
 plt.title('MSE for Random Forest with true correlations')
 plt.xlabel('window length')
 plt.ylabel('MSE')
 plt.legend(loc='lower right', fancybox=True)
 plt.show()
+"""
 

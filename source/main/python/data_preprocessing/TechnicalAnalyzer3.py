@@ -181,5 +181,5 @@ spx = spx.dropna()
 spx = spx.reset_index(drop=True)
 
 # Write data into CSV file
-spx.to_csv(os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), 'resources/Data/SP500_data.csv'))
+spx.to_csv(os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), 'resources/Data_mw_true/SP500_data.csv'))
 """

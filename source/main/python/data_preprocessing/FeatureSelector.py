@@ -11,7 +11,7 @@ np.random.seed(42)  # 42:The answer to life, the universe and everything.
 
 # Load SPX dataframe
 picklename = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))),
-                          'resources/Data/SP500_data_Norm.pkl')
+                          'resources/Data_mw_true/SP500_data_Norm.pkl')
 spx = load(open(picklename, 'rb'))
 
 # Separate spx data into feature matrix and response vector
