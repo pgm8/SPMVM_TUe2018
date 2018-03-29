@@ -63,7 +63,7 @@ def main():
 
 
     ##################################################################################################################
-    ###     Estimation uncertainty in (weighted) Pearson correlation coefficient using moving window estimates     ###
+    ###     Estimation uncertainty in Pearson and Kendall correlation coefficient using moving window estimates    ###
     ##################################################################################################################
     simulated_data_process = mm.load_data('/bivariate_analysis/correlated_sim_data.pkl')
     T = 500
@@ -108,7 +108,7 @@ def main():
         plt.show()
     """
     ##################################################################################################################
-    ###       Mean squared error of (weighted) Pearson correlation coefficient using moving window estimates       ###
+    ###       Mean squared error of Pearson and Kendall correlation coefficient using moving window estimates      ###
     ##################################################################################################################
     simulated_data_process = mm.load_data('/bivariate_analysis/correlated_sim_data.pkl')
     T = 500
@@ -251,7 +251,7 @@ def main():
     print("%s: %f" % ('Execution time:', (time.time() - start_time)))
     """
     ##################################################################################################################
-    ###    Estimation uncertainty in (weighted) Pearson correlation coefficient using machine learner estimates    ###
+    ###    Estimation uncertainty in Pearson and Kendall correlation coefficient using machine learner estimates   ###
     ##################################################################################################################
     simulated_data_process = mm.load_data('/bivariate_analysis/correlated_sim_data.pkl')
     T = 500
@@ -312,8 +312,8 @@ def main():
     """
     """
     # Figure
-    data = mm.load_data('bivariate_analysis/true_cor/pearson/results_rf_pearson_true_cor/'
-                        'rf1000_pearson_21_estimate_uncertainty_true_corr.pkl')
+    data = mm.load_data('bivariate_analysis/proxy_cor/kendall/results_rf_kendall_proxy_cor/'
+                        'rf10_kendall_21_estimate_uncertainty_proxy_corr.pkl')
     rho_estimates = data['Rho_estimate']
     lower_percentiles = data['Percentile_low']
     upper_percentiles = data['Percentile_up']
@@ -332,16 +332,16 @@ def main():
     plt.ylim(-1, 1)
     plt.show()
     """
-    """
+
     # Figure
-    data = mm.load_data('bivariate_analysis/proxy_cor/pearson/results_knn_pearson_proxy_cor/'
-                        'knn_mw_10_IDW_estimate_uncertainty_proxy_corr.pkl')
+    data = mm.load_data('bivariate_analysis/true_cor/pearson/results_rf_pearson_true_cor/'
+                        'rf100_pearson_3_estimate_uncertainty_10_rep_true_corr.pkl')
     rho_estimates = data['Rho_estimate']
     lower_percentiles = data['Percentile_low']
     upper_percentiles = data['Percentile_up']
     plt.figure(1)
     plt.plot(simulated_data_process['rho'], label='true correlation', linewidth=1, color='black')
-    plt.plot(rho_estimates, label='KNN_idw correlation', linewidth=1, color='red')
+    plt.plot(rho_estimates, label='RF(100_10) correlation', linewidth=1, color='red')
     plt.plot((upper_percentiles - lower_percentiles) - 1, label='%d%% interval (bootstrap)' % ciw,
              linewidth=1, color='magenta')
     # plt.plot(lower_percentiles, label='%d%% interval (bootstrap)' % ciw, linewidth=1, color='magenta')
@@ -353,7 +353,7 @@ def main():
     plt.yticks(np.arange(-1, 1.1, 0.2))
     plt.ylim(-1, 1)
     plt.show()
-    """
+
     
     ##################################################################################################################
     ###        Mean squared error of Pearson/Kendall correlation coefficient using machine learner estimates       ###
@@ -364,33 +364,50 @@ def main():
     rho_true.reset_index(drop=True, inplace=True)
     ciw = 99
     reps = 1000
-    delta_t = [10]   # dt = {[3, 10], 21, 42, 63, 126, 251}  (and 84 possibly)
-    model = ['knn']  # k-nearest neighbour: 'knn', random forest: 'rf'
+    delta_t = range(3, 101)   # dt = {[3, 10], 21, 42, 63, 126, 251}  (and 84 possibly)
+    model = ['rf']  # k-nearest neighbour: 'knn', random forest: 'rf'
     proxy_type = ['pearson']
-    output_type = ['proxy']
-    n_neighbour = [100, 200, 300, 400, 500, 600, 700, 800, 900, 1000]  #  5, 10, 25, 50, 100, len_train, IDW
-    rho_bias_squared = np.full(11, np.nan)
-    rho_var_vec = np.full(11, np.nan)
-    rho_mse_vec = np.full(11, np.nan)
+    output_type = ['true']
+    n_neighbour = [10]  # 5, 10, 25, 50, 100, len_train, IDW
+    rho_bias_squared = np.full(101, np.nan)
+    rho_var_vec = np.full(101, np.nan)
+    rho_mse_vec = np.full(101, np.nan)
 
     """
     # Create dataframe with (interpolated) mse results, squared bias, variance for varying window lengths
     for model, n_neighbour, proxy_type, dt, output_type in [(w, k, x, y, z) for w in model for k in n_neighbour for
                                                             x in proxy_type for y in delta_t for z in output_type]:
-        filename = '%s%i_%s_%i_estimate_uncertainty_%s_corr.pkl' % (model, n_neighbour, proxy_type, dt, output_type)
+        filename = '%s%i_3_%s_%i_estimate_uncertainty_%s_corr.pkl' % (model, n_neighbour, proxy_type, dt, output_type)
         print(filename)
         data = mm.load_data('bivariate_analysis/%s_cor/%s/results_%s_%s_%s_cor/' % (output_type, proxy_type, model,
                                                                                     proxy_type, output_type) + filename)
         rho_estimates = data['Rho_estimate']
-        rho_bias_squared[int(n_neighbour / 100)] = np.mean(np.power(rho_estimates-rho_true, 2))
-        rho_var_vec[int(n_neighbour / 100)] = np.power(np.mean(data['std rho estimate']), 2)
+        rho_bias_squared[dt] = np.mean(np.power(rho_estimates-rho_true, 2))
+        rho_var_vec[dt] = np.power(np.mean(data['std rho estimate']), 2)
 
     rho_mse_vec = np.array([np.sum(pair) for pair in zip(rho_bias_squared, rho_var_vec)])
     data_frame = pd.DataFrame({'bias_squared': rho_bias_squared, 'variance': rho_var_vec,
                                'MSE': rho_mse_vec})
-    filename = 'mse_%s100_to_1000_%s_%s_cor.pkl' % (model, proxy_type, output_type)
-    mm.save_data('bivariate_analysis/%s_cor/mse_results_%s_cor/' % (output_type, output_type) + filename, data_frame)
+    filename_save = 'mse_%s%i_3_%s_%s_cor.pkl' % (model, n_neighbour, proxy_type, output_type)
+    print(filename_save)
+    mm.save_data('bivariate_analysis/%s_cor/mse_results_%s_cor/' % (output_type, output_type) + filename_save, data_frame)
     """
+    """
+    # Decision tree mse computation
+    for dt in delta_t:
+        filename = 'dt_pearson_%i_estimate_uncertainty_true_corr.pkl' % dt
+        data = mm.load_data('bivariate_analysis/true_cor/pearson/dt/' + filename)
+        rho_estimates = data['Rho_estimate']
+        rho_bias_squared[dt] = np.mean(np.power(rho_estimates - rho_true, 2))
+    data_frame = pd.DataFrame({'MSE': rho_bias_squared})
+    filename = 'mse_dt_pearson_true_cor.pkl' 
+    mm.save_data('bivariate_analysis/true_cor/mse_results_true_cor/' + filename, data_frame)
+    """
+
+
+        
+        
+
 
     ## Load MSE data Pearson/ Kendall
     mse_pearson_vec = mm.load_data('bivariate_analysis/mse_pearson.pkl')
@@ -440,6 +457,12 @@ def main():
     mse_rf100_kendall_true = mm.load_data('bivariate_analysis/true_cor/mse_results_true_cor/mse_rf100_kendall_true_cor.pkl')
     mse_rf300_kendall_true = mm.load_data('bivariate_analysis/true_cor/mse_results_true_cor/mse_rf300_kendall_true_cor.pkl')
     mse_rf1000_kendall_true = mm.load_data('bivariate_analysis/true_cor/mse_results_true_cor/mse_rf1000_kendall_true_cor.pkl')
+
+    # Proxy Correlation
+    mse_rf10_pearson_proxy = mm.load_data('bivariate_analysis/proxy_cor/mse_results_proxy_cor/mse_rf10_pearson_proxy_cor.pkl')
+
+    mse_rf10_kendall_proxy = mm.load_data('bivariate_analysis/proxy_cor/mse_results_proxy_cor/mse_rf10_kendall_proxy_cor.pkl')
+
 
     """
     # Figure without interpolation MSE
@@ -559,10 +582,18 @@ def main():
     # True Correlation
     var_mse_rf10_pearson_true = np.nanvar(mse_rf10_pearson_true['MSE']); print('var_mse_rf10_pearson_true: %.7f' % var_mse_rf10_pearson_true)
     var_mse_rf10_kendall_true = np.nanvar(mse_rf10_kendall_true['MSE']); print('var_mse_rf10_kendall_true: %.7f' % var_mse_rf10_kendall_true)
+    # Proxy Correlation
+    var_mse_rf10_pearson_proxy = np.nanvar(mse_rf10_pearson_proxy['MSE']); print('var_mse_rf10_pearson_proxy: %.5f' % var_mse_rf10_pearson_proxy)
+    var_mse_rf10_kendall_proxy = np.nanvar(mse_rf10_kendall_proxy['MSE']); print('var_mse_rf10_kendall_proxy: %.5f' % var_mse_rf10_kendall_proxy)
 
     # Max-min in MSE window sizes for RF with Pearson/ Kendall as covariates.
+    # True Correlation
     print('mse_rf10_pearson_min_max: (%.4f, %.4f)' % (np.nanmin(mse_rf10_pearson_true['MSE']), np.nanmax(mse_rf10_pearson_true['MSE'])))
     print('mse_rf10_kendall_min_max: (%.4f, %.4f)' % (np.nanmin(mse_rf10_kendall_true['MSE']), np.nanmax(mse_rf10_kendall_true['MSE'])))
+    
+    # Proxy Correlation
+    #print('mse_rf10_pearson_proxy_min_max: (%.4f, %.4f)' % (np.nanmin(mse_rf10_pearson_proxy['MSE']), np.nanmax(mse_rf10_pearson_proxy['MSE'])))
+    #print('mse_rf10_kendall_proxy_min_max: (%.4f, %.4f)' % (np.nanmin(mse_rf10_kendall_proxy['MSE']), np.nanmax(mse_rf10_kendall_proxy['MSE'])))
     """
     """
     # Figure without interpolation MSE
@@ -570,28 +601,35 @@ def main():
     #plt.plot(mse_pearson_vec['MSE'], label='Pearson', color='indigo', linewidth=1)
     #plt.plot(mse_kendall_vec['MSE'], label='Kendall', color='cyan', linestyle='--', linewidth=1)
     plt.plot(mse_rf10_pearson_true['MSE'], label='RF_pearson', color='goldenrod', linewidth=1)
-    plt.plot(mse_rf10_kendall_true['MSE'], label='KNN_kendall', color='xkcd:teal', linewidth=1)
+    #plt.plot(mse_rf10_kendall_proxy['MSE'], label='KNN_kendall', color='xkcd:teal', linewidth=1)
+    #plt.plot(mse_rf100_pearson_true['MSE'], label='RF_pearson', linewidth=1)
+    #plt.plot(mse_rf1000_pearson_true['MSE'], label='RF_pearson', linewidth=1)
     plt.xlabel('window length')
     plt.ylabel('MSE')
     plt.legend(fontsize='small', loc='upper center', bbox_to_anchor=(0.5, 1.1), ncol=5, fancybox=True,
                edgecolor='black')
     plt.xlim(0, 100)
-    plt.yticks(np.arange(0, 0.61, 0.1))
-    plt.ylim(0, 0.60)
+    plt.yticks(np.arange(0, 0.61, 0.01))
+    plt.ylim(0.1, 0.2)
     plt.show()
     """
-    """
+
     # Figure without interpolation MSE decomposition
+    mse_dt_pearson_true = mm.load_data('bivariate_analysis/true_cor/mse_results_true_cor/mse_dt_pearson_true_cor.pkl')
+    mse_rf10_2_pearson_true = mm.load_data('bivariate_analysis/true_cor/mse_results_true_cor/mse_rf10_2_pearson_true_cor.pkl')
+    mse_rf10_3_pearson_true = mm.load_data('bivariate_analysis/true_cor/mse_results_true_cor/mse_rf10_3_pearson_true_cor.pkl')
+    """
     plt.figure(5)
     plt.plot(mse_rf10_pearson_true['bias_squared'], label='Squared Bias', color='blue', linewidth=1)
     plt.plot(mse_rf10_pearson_true['variance'], label='Variance', color='red', linewidth=1)
     plt.plot(mse_rf10_pearson_true['MSE'], label='MSE', color='black', linestyle='--', linewidth=1)
+    plt.plot(mse_dt_pearson_true, label='dt_squared_bias', linewidth=1)
     plt.xlabel('window length')
     plt.ylabel('MSE')
     plt.legend(fontsize='small', loc='upper center', bbox_to_anchor=(0.5, 1.1), ncol=3, fancybox=True,
                edgecolor='black')
     plt.xlim(0, 100)
-    plt.yticks(np.arange(0, 0.21, 0.02))
+    plt.yticks(np.arange(0, 0.61, 0.02))
     plt.ylim(0, 0.2)
     plt.show()
     """
@@ -625,38 +663,84 @@ def main():
     delta_t = range(3, 101)
     det_min_vec = np.full(101, np.nan)
     proxy_type = 'kendall'
-    output_type = 'true'
+    output_type = 'proxy'
+    learner = 'rf'
 
     """
     for dt in delta_t:
         # Load data Pearson/ Kendall
         det_data_vec = np.full(501, np.nan)
-        filename = 'knn5_%s_%i_estimate_uncertainty_%s_corr.pkl' % (proxy_type, dt, output_type)
-        data = mm.load_data('bivariate_analysis/%s_cor/%s/results_knn_%s_%s_cor/%s'
-                            % (output_type, proxy_type, proxy_type, output_type, filename))
+        filename = '%s10_%s_%i_estimate_uncertainty_%s_corr.pkl' % (learner, proxy_type, dt, output_type)
+        print(filename)
+        data = mm.load_data('bivariate_analysis/%s_cor/%s/results_%s_%s_%s_cor/%s'
+                            % (output_type, proxy_type, learner, proxy_type, output_type, filename))
         # Compute determinants for every dataset
         for i, rho in enumerate(data['Rho_estimate']):
             det_data_vec[i+1] = preprocesser.determinant_LU_factorization(rho, 2)
         det_min_vec[dt] = np.nanmin(det_data_vec)
-        filename_save = 'determinant_min_knn5_%s_%s_cor.pkl' % (proxy_type, output_type)
+    filename_save = 'determinant_min_%s10_%s_%s_cor.pkl' % (learner, proxy_type, output_type)
     mm.save_data('bivariate_analysis/%s_cor/det_results_%s_cor/%s' % (output_type, output_type, filename_save), det_min_vec)
     """
+
+
+    # Plot minimum determinants of KNN estimates of correlation
+    # True Cor
+    det_min_knn5_pearson = mm.load_data('bivariate_analysis/true_cor/det_results_true_cor/determinant_min_knn5_pearson_true_cor.pkl')
+    det_min_knn5_kendall = mm.load_data('bivariate_analysis/true_cor/det_results_true_cor/determinant_min_knn5_kendall_true_cor.pkl')
+    det_min_knn_len_train_pearson = mm.load_data('bivariate_analysis/true_cor/det_results_true_cor/determinant_min_knn_len_train_pearson_true_cor.pkl')
+    det_min_knn_len_train_kendall = mm.load_data('bivariate_analysis/true_cor/det_results_true_cor/determinant_min_knn_len_train_kendall_true_cor.pkl')
+    det_min_knn_IDW_pearson = mm.load_data('bivariate_analysis/true_cor/det_results_true_cor/determinant_min_knn_IDW_pearson_true_cor.pkl')
+    det_min_knn_IDW_kendall = mm.load_data('bivariate_analysis/true_cor/det_results_true_cor/determinant_min_knn_IDW_kendall_true_cor.pkl')
+    # Proxy Cor
+    det_min_knn5_pearson_proxy = mm.load_data('bivariate_analysis/proxy_cor/det_results_proxy_cor/determinant_min_knn5_pearson_proxy_cor.pkl')
+    det_min_knn5_kendall_proxy = mm.load_data('bivariate_analysis/proxy_cor/det_results_proxy_cor/determinant_min_knn5_kendall_proxy_cor.pkl')
+    det_min_knn_len_train_pearson_proxy = mm.load_data('bivariate_analysis/proxy_cor/det_results_proxy_cor/determinant_min_knn_len_train_pearson_proxy_cor.pkl')
+    det_min_knn_len_train_kendall_proxy = mm.load_data('bivariate_analysis/proxy_cor/det_results_proxy_cor/determinant_min_knn_len_train_kendall_proxy_cor.pkl')
+    det_min_knn_IDW_pearson_proxy = mm.load_data('bivariate_analysis/proxy_cor/det_results_proxy_cor/determinant_min_knn_IDW_pearson_proxy_cor.pkl')
+    det_min_knn_IDW_kendall_proxy = mm.load_data('bivariate_analysis/proxy_cor/det_results_proxy_cor/determinant_min_knn_IDW_kendall_proxy_cor.pkl')
+
     """
-    # Plot minimum determinants of Pearson and Kendal Moving Window estimates of correlation
-    det_min_knn_pearson = mm.load_data('bivariate_analysis/true_cor/det_results_true_cor/determinant_min_knn5_pearson_true_cor.pkl')
-    det_min_knn_kendall = mm.load_data('bivariate_analysis/true_cor/det_results_true_cor/determinant_min_knn5_kendall_true_cor.pkl')
     plt.figure(1)
-    plt.plot(det_min_knn_pearson, label='Pearson', linewidth=1, color='orange')
-    plt.plot(det_min_knn_kendall, label='Kendall', linewidth=1)
+    plt.plot(det_min_knn_IDW_pearson_proxy, label='KNN_pearson_IDW', linewidth=1, color='orange')
+    plt.plot(det_min_knn_IDW_kendall_proxy, label='KNN_kendall_IDW', linewidth=1)
+    plt.plot(det_min_knn_len_train_pearson_proxy, label='KNN_pearson_len_train', linewidth=1)
+    plt.plot(det_min_knn_len_train_kendall_proxy, label='KNN_kendall_len_train', linewidth=1)
     plt.xlabel('window length')
     plt.ylabel('minimum det($R_t)$')
-    plt.legend(fontsize='small', loc='upper center', bbox_to_anchor=(0.5, 1.1), ncol=2, fancybox=True,
+    plt.legend(fontsize='small', loc='upper center', bbox_to_anchor=(0.5, 1.15), ncol=2, fancybox=True,
                edgecolor='black')
     plt.xlim(0, 100)
     plt.yticks(np.arange(-0.1, 1.1, 0.1))
     plt.ylim(-0.1, 1)
     plt.show()
     """
+    """
+    # Plot minimum determinants of RF estimates of correlation
+    # True Cor
+    det_min_rf10_pearson = mm.load_data('bivariate_analysis/true_cor/det_results_true_cor/determinant_min_rf10_pearson_true_cor.pkl')
+    det_min_rf10_kendall = mm.load_data('bivariate_analysis/true_cor/det_results_true_cor/determinant_min_rf10_kendall_true_cor.pkl')
+
+    # Proxy Cor
+    det_min_rf10_pearson_proxy = mm.load_data('bivariate_analysis/proxy_cor/det_results_proxy_cor/determinant_min_rf10_pearson_proxy_cor.pkl')
+    det_min_rf10_kendall_proxy = mm.load_data('bivariate_analysis/proxy_cor/det_results_proxy_cor/determinant_min_rf10_kendall_proxy_cor.pkl')
+
+    print(np.nanmin(det_min_rf10_pearson_proxy))
+    print(np.nanmin(det_min_rf10_kendall_proxy))
+
+    plt.figure(1)
+    plt.plot(det_min_rf10_pearson_proxy, label='RF_pearson', linewidth=1, color='orange')
+    plt.plot(det_min_rf10_kendall_proxy, label='RF_kendall', linewidth=1)
+    plt.xlabel('window length')
+    plt.ylabel('minimum det($R_t)$')
+    plt.legend(fontsize='small', loc='upper center', bbox_to_anchor=(0.5, 1.15), ncol=2, fancybox=True,
+               edgecolor='black')
+    plt.xlim(0, 100)
+    plt.yticks(np.arange(-0.1, 1.1, 0.1))
+    plt.ylim(-0.1, 1)
+    plt.show()
+    """
+
+
 
 
 
