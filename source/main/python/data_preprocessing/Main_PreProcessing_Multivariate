@@ -1,0 +1,69 @@
+
+import numpy as np
+import pandas as pd
+from PreProcessor import PreProcessor
+from ModuleManager import ModuleManager
+from TechnicalAnalyzer import TechnicalAnalyzer
+import os
+
+from sklearn.neighbors import KNeighborsRegressor
+
+#  Set seed for pseudorandom number generator. This allows us to reproduce the results from our script.
+np.random.seed(42)
+
+
+def main():
+
+    preprocesser = PreProcessor()
+    mm = ModuleManager()
+    ta = TechnicalAnalyzer()
+
+    ##################################################################################################################
+    ###                                          Dataset Import                                                    ###
+    ##################################################################################################################
+    """
+    filename = 'multivariate_analysis/returns_data.csv'
+    path = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))),
+                        ('resources/Data/%s' % filename))
+    df = pd.read_csv(path)
+    data = pd.DataFrame()
+    assets = ['IBM', 'GE', 'AAPL', 'AMZN']
+    for asset in assets:
+        data_asset = df.loc[df['TICKER'] == asset, 'PRC']
+        data_asset.reset_index(drop=True, inplace=True)
+        # Tranform asset closing prices to log returns
+        data[asset] = np.log(1 + data_asset.pct_change())
+    mm.save_data('multivariate_analysis/returns_data.pkl', data)
+    """
+    
+
+    ##################################################################################################################
+    ###                                          Dataset creation                                                  ###
+    ##################################################################################################################
+    # Pearson and Kendall correlation moving window estimates as covariate and true correlation or moving window
+    # estimate as proxy for output variable
+
+    # Test dataframe with 4 log return paths
+    data = mm.load_data('multivariate_analysis/returns_data.pkl')
+    dt = 10
+    proxy_type = 'kendall'
+    dataset = preprocesser.generate_multivariate_dataset(ta, data=data, dt=dt, proxy_type=proxy_type)
+    print(dataset.head(30))
+
+
+
+
+
+
+
+
+
+
+
+
+
+###############################
+####         MAIN          ####
+###############################
+if __name__ == '__main__':
+    main()
