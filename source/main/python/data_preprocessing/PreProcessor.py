@@ -125,19 +125,8 @@ class PreProcessor(object):
         :param dt: window length
         :param proxy_type: type definition of proxy for estimates of true correlation
         :param T: length test set
-        :return: datasets with true correlation and proxy for target."""
-        if proxy_type is 'emw':
-            emw_estimates = ta.pearson_weighted_correlation_estimation(simulated_data_process[0],
-                                                                       simulated_data_process[1], dt)
-            emw_estimates = pd.Series(emw_estimates)
-            # Feature set consists of lagged asset price and mw correlation estimate, e.g. x_t = EMW_t-1
-            dataset = simulated_data_process.iloc[:, :2].shift(periods=1, axis='index')  # Dataframe
-            dataset['EMW_t-1'] = emw_estimates.shift(periods=1, axis='index')
-            dataset_proxy = dataset.copy()      # copy feature matrix
-            # Dataset with true correlations as target variable and proxies
-            dataset['rho_true'] = simulated_data_process['rho']
-            dataset_proxy['rho_proxy'] = emw_estimates
-        elif proxy_type is 'pearson':
+        :return: datasets with true correlation and proxy for output variable."""
+        if proxy_type is 'pearson':
             mw_estimates = simulated_data_process[0].rolling(window=dt).corr(other=simulated_data_process[1])
             # Feature set consists of lagged asset price and mw correlation estimate, e.g. x_t = MW_t-1
             dataset = simulated_data_process.iloc[:, :2].shift(periods=1, axis='index')  # Dataframe
@@ -147,7 +136,7 @@ class PreProcessor(object):
             dataset['rho_true'] = simulated_data_process['rho']
             dataset_proxy['rho_proxy'] = mw_estimates
         else:  # Kendall as proxy
-            kendall_estimates = ta.kendall_correlation_estimation(simulated_data_process, dt)
+            kendall_estimates = ta.kendall_correlation_estimation(simulated_data_process.iloc[:, :2], dt)
             # Feature set consists of lagged asset price and kendall correlation estimate, e.g. x_t = kendall_t-1
             dataset = simulated_data_process.iloc[:, :2].shift(periods=1, axis='index')  # Dataframe
             dataset['Kendall_t-1'] = kendall_estimates.shift(periods=1, axis='index')
@@ -156,6 +145,22 @@ class PreProcessor(object):
             dataset['rho_true'] = simulated_data_process['rho']
             dataset_proxy['rho_proxy'] = kendall_estimates
         return dataset, dataset_proxy
+
+    def generate_multivariate_dataset(self, ta, data, dt, proxy_type='pearson'):
+        """
+        :param ta: technical analyzer object
+        :param data: dataframe with log returns
+        :param dt: window length
+        :param proxy_type: type definition of proxy for estimates of true correlation
+        :return: dataset with approximated covariates and output variable."""
+        kendall_estimates = ta.kendall_correlation_estimation(data, dt)
+        # Feature set consists of lagged kendall correlation estimate amd lagged min. and max. asset returns
+        dataset = kendall_estimates.shift(periods=1, axis='index')
+        dataset['r_min'] = np.min(data, axis=1).shift(periods=1, axis='index')
+        dataset['r_max'] = np.max(data, axis=1).shift(periods=1, axis='index')
+        # Dataset with proxies
+        result = pd.concat([dataset, kendall_estimates], axis=1, join='inner')
+        return result
 
     def bootstrap_moving_window_estimate(self, data, delta_t, T=500, reps=1000, ciw=99, proxy_type='pearson'):
         """Method for measuring the estimation uncertainty associated to the correlation coefficients when moving
