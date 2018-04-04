@@ -5,7 +5,7 @@ from scipy.stats.stats import kendalltau
 
 
 class TechnicalAnalyzer(object):
-    """Technical analysis class. This class has the responsibility to engineer the feature space."""
+    """Technical analysis class. This class has the responsibility to engineer the covariate space."""
 
     def __init__(self):
         """Initializer TechnicalAnalyzer object."""
@@ -13,16 +13,17 @@ class TechnicalAnalyzer(object):
     @staticmethod
     def kendall_correlation_estimation(data, dt):
         """Method for estimation of pairwise time-varying Kendall correlation coefficients.
-        :param data: data frame containing asset price paths
+        :param data: data frame containing asset (return) price paths
         :param dt: window length
-        :return: kendall_estimates: data frame containing pairwise Kendall correlation estimates."""
-        for col1, col2, in IT.combinations(data.columns[:-1], 2):  # All columns but last this is true correlation in bivariate case
+        :return: kendall_estimates_frame: data frame containing pairwise Kendall correlation estimates."""
+        kendall_estimates_frame = pd.DataFrame()
+        for col1, col2, in IT.combinations(data.columns, 2):
             def my_tau(idx):
                 df_tau = data[[col1, col2]].iloc[idx]
                 return kendalltau(df_tau[col1], df_tau[col2])[0]
-            kendall_estimates = pd.rolling_apply(np.arange(len(data)), dt, my_tau)
-        kendall_estimates = pd.Series(kendall_estimates)
-        return kendall_estimates
+            kendall_estimates = pd.Series(pd.rolling_apply(np.arange(len(data)), dt, my_tau))
+            kendall_estimates_frame[col1+col2] = kendall_estimates
+        return kendall_estimates_frame
 
     @staticmethod
     def exponential_weights(dt, theta):
