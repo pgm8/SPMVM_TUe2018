@@ -42,17 +42,22 @@ class NearestNeighborMultivariate(object):
         return neighbors
 
 
-    def getPrediction(self, neighbors):
+    def getPrediction(self, neighbors, weights='uniform'):
         """" Returns prediction of response variable (inverse distance weighting).
-        @:param neighbors: list of (response, distance)-tuples."""
+        :param neighbors: list of (response, distance)-tuples."""
         responses = map(itemgetter(0), neighbors)
         distances = map(itemgetter(1), neighbors)
-        if neighbors[0][1] == 0: # equal weighted average of neighbors with zero distance
+        if neighbors[0][1] == 0:  # equal weighted average of neighbors with zero distance
             zero_distances = filter(lambda k_v: k_v[1] == 0, neighbors)  # Retrieve tuples with zero distance
             prediction = float(sum(map(itemgetter(0), zero_distances))) / len(filter(lambda k_v: k_v[1] == 0, neighbors))
-        else: # inverse distance weighted average of k nearest neighbors
+        elif weights is 'distance':  # inverse distance weighted average of k nearest neighbors
             prediction = sum(map(lambda x_y: x_y[1] / float(x_y[0]), zip(distances, responses))) / \
                          sum(map(lambda x: 1 / float(x), distances))
+        elif weights is 'uniform':
+
+        else:
+            print('Please choose ')
+
         return prediction
 
 

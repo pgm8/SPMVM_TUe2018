@@ -36,29 +36,6 @@ class PreProcessor(object):
             random_corr[t] = np.maximum(-1 + eps, np.minimum(1 - eps, a0 + a1 * random_corr[t-1] + eta))
         return random_corr
 
-    def simulate_random_correlation_garch(self, T, a0, a1, b1):
-        """Simulate a random correlation process following a GARCH(1,1)-like process. The parameter values used are in
-        line with those found empirically in stock return series.
-        :param T: simulation length
-        :param a0: 0.02
-        :param a1: 0.2
-        :param b1: 0.78
-        :return: random_corr_garch: correlation process following specified dynamics.
-        :return: sigma: volatility process."""
-        eps = 1e-5
-        random_corr_garch = np.empty(T)
-        sigma = np.empty(T)
-        #sigma[0] = sqrt(a0 / (1 - a1 - b1))  # parameter initialisation
-        sigma[0] = 0.03  # parameter initialisation
-        for t in range(1, T):
-            eta = np.random.normal(0, 0.2)
-            # Draw next correlation_t
-            random_corr_garch[t-1] = np.maximum(-1 + eps, np.minimum(1 - eps, sigma[t-1] * eta))
-            # Draw next sigma_t
-            sigma_squared = a0 * sigma[0]**2 + a1 * random_corr_garch[t-1]**2 + b1 * sigma[t-1]**2
-            sigma[t] = np.sqrt(sigma_squared)
-        return random_corr_garch, sigma
-
     def simulate_correlated_asset_paths(self, corr_vector, vol_matrix, T):
         """Simulate asset paths with specified time-varying correlation dynamics.
         :param corr_vector: time-varying correlation vector
@@ -118,8 +95,8 @@ class PreProcessor(object):
         return det
 
     def generate_bivariate_dataset(self, ta, simulated_data_process, dt, proxy_type='pearson', T=500):
-        """Method for generating a dataset with proxies (exponentially weighted) moving window correlation estimates
-        for feature set and true correlation as the response variables.
+        """Method for generating a bivariate dataset with proxies moving window correlation estimates for covariate set
+        and true correlation as the output variables.
         :param ta: technical analyzer object
         :param simulated_data_process: bivariate asset process with predefined correlation dynamics.
         :param dt: window length
@@ -127,16 +104,17 @@ class PreProcessor(object):
         :param T: length test set
         :return: datasets with true correlation and proxy for output variable."""
         if proxy_type is 'pearson':
-            mw_estimates = simulated_data_process[0].rolling(window=dt).corr(other=simulated_data_process[1])
+            pearson_estimates = ta.moving_window_correlation_estimation(simulated_data_process.iloc[:, :2], dt)
             # Feature set consists of lagged asset price and mw correlation estimate, e.g. x_t = MW_t-1
             dataset = simulated_data_process.iloc[:, :2].shift(periods=1, axis='index')  # Dataframe
-            dataset['MW_t-1'] = mw_estimates.shift(periods=1, axis='index')
+            dataset['MW_t-1'] = pearson_estimates.shift(periods=1, axis='index')
             dataset_proxy = dataset.copy()       # copy feature matrix
             # Dataset with true correlations as target variable and proxies
             dataset['rho_true'] = simulated_data_process['rho']
-            dataset_proxy['rho_proxy'] = mw_estimates
+            dataset_proxy['rho_proxy'] = pearson_estimates
         else:  # Kendall as proxy
-            kendall_estimates = ta.kendall_correlation_estimation(simulated_data_process.iloc[:, :2], dt)
+            kendall_estimates = ta.moving_window_correlation_estimation(simulated_data_process.iloc[:, :2], dt,
+                                                                        proxy_type='kendall')
             # Feature set consists of lagged asset price and kendall correlation estimate, e.g. x_t = kendall_t-1
             dataset = simulated_data_process.iloc[:, :2].shift(periods=1, axis='index')  # Dataframe
             dataset['Kendall_t-1'] = kendall_estimates.shift(periods=1, axis='index')
@@ -147,19 +125,20 @@ class PreProcessor(object):
         return dataset, dataset_proxy
 
     def generate_multivariate_dataset(self, ta, data, dt, proxy_type='pearson'):
-        """
+        """Method for generating a multivariate dataset with proxies moving window correlation estimates for covariate
+        set and true correlation as the output variables
         :param ta: technical analyzer object
         :param data: dataframe with log returns
         :param dt: window length
         :param proxy_type: type definition of proxy for estimates of true correlation
         :return: dataset with approximated covariates and output variable."""
-        kendall_estimates = ta.kendall_correlation_estimation(data, dt)
+        correlation_estimates = ta.moving_window_correlation_estimation(data, dt, proxy_type=proxy_type)
         # Feature set consists of lagged kendall correlation estimate amd lagged min. and max. asset returns
-        dataset = kendall_estimates.shift(periods=1, axis='index')
+        dataset = correlation_estimates.shift(periods=1, axis='index')
         dataset['r_min'] = np.min(data, axis=1).shift(periods=1, axis='index')
         dataset['r_max'] = np.max(data, axis=1).shift(periods=1, axis='index')
         # Dataset with proxies
-        result = pd.concat([dataset, kendall_estimates], axis=1, join='inner')
+        result = pd.concat([dataset, correlation_estimates], axis=1, join='inner')
         return result
 
     def bootstrap_moving_window_estimate(self, data, delta_t, T=500, reps=1000, ciw=99, proxy_type='pearson'):

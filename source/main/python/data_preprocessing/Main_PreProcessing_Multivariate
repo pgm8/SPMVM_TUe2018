@@ -4,6 +4,8 @@ import pandas as pd
 from PreProcessor import PreProcessor
 from ModuleManager import ModuleManager
 from TechnicalAnalyzer import TechnicalAnalyzer
+
+import matplotlib.pyplot as plt
 import os
 
 from sklearn.neighbors import KNeighborsRegressor
@@ -22,33 +24,146 @@ def main():
     ###                                          Dataset Import                                                    ###
     ##################################################################################################################
     """
-    filename = 'multivariate_analysis/returns_data.csv'
+    filename = 'multivariate_analysis/returns_data_raw.csv'
     path = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))),
                         ('resources/Data/%s' % filename))
     df = pd.read_csv(path)
-    data = pd.DataFrame()
-    assets = ['IBM', 'GE', 'AAPL', 'AMZN']
+    data = pd.DataFrame({'date': df.loc[:4027, 'date']})
+    assets = ['IBM', 'GE', 'AMZN']
+
     for asset in assets:
         data_asset = df.loc[df['TICKER'] == asset, 'PRC']
         data_asset.reset_index(drop=True, inplace=True)
         # Tranform asset closing prices to log returns
-        data[asset] = np.log(1 + data_asset.pct_change())
+        data[asset] = 100 * (np.log(data_asset).diff())  # percentage log returns
+
     mm.save_data('multivariate_analysis/returns_data.pkl', data)
+    mm.transform_pickle_to_csv('multivariate_analysis/returns_data.pkl')
     """
-    
+    """
+    # Log returns stable market conditions
+    data = mm.load_data('multivariate_analysis/returns_data.pkl')
+    data_stable = data.iloc[2769:, :]
+    data_stable.reset_index(drop=True, inplace=True)
+    mm.save_data('multivariate_analysis/returns_data_stable_market.pkl', data_stable)
+    mm.transform_pickle_to_csv('multivariate_analysis/returns_data_stable_market.pkl')
+    ## Descriptive statistics asset returns
+    """
+    """
+    data_stat = mm.load_data('multivariate_analysis/returns_data.pkl')
+    # NaN values: Expected only first row because of log return computation
+    print('Number of rows with missing values: %i' % sum([True for _, row in data_stat.iterrows() if any(row.isnull())]))
+    # Mean
+    print('Means of log return series: '); print(data_stat.mean(axis=0))
+    # St. Error
+    print('Standard error of means: '); print(data_stat.sem(axis=0))
+    # Skewness
+    print('Skewness log return series: '); print(data_stat.skew(axis=0))
+    # Excess Kurtosis
+    print('Excess Kurtosis: '); print(data_stat.kurtosis(axis=0))
+    # Minimum
+    print('Minimum log return: '); print(data_stat.min(axis=0))
+    # Maximum
+    print('Maximum log return: '); print(data_stat.max(axis=0))
+    """
+    """
+    ## Mean corrected log returns
+    n = 3  # number of assets
+    data_mean_corrected = data_stat['date']
+    df = data_stat.iloc[:, -n:]-data_stat.mean(axis=0)
+    result = pd.concat([data_mean_corrected, df], axis=1, join='inner')
+    mm.save_data('multivariate_analysis/returns_data_mean_corrected.pkl', result)
+    mm.transform_pickle_to_csv('multivariate_analysis/returns_data_mean_corrected.pkl')
+    """
 
     ##################################################################################################################
     ###                                          Dataset creation                                                  ###
     ##################################################################################################################
     # Pearson and Kendall correlation moving window estimates as covariate and true correlation or moving window
     # estimate as proxy for output variable
-
-    # Test dataframe with 4 log return paths
+    # Test dataframe with 3 log return paths
+    """
     data = mm.load_data('multivariate_analysis/returns_data.pkl')
+    dates = data['date']
+    data.drop(['date'], axis=1, inplace=True)
     dt = 10
-    proxy_type = 'kendall'
-    dataset = preprocesser.generate_multivariate_dataset(ta, data=data, dt=dt, proxy_type=proxy_type)
-    print(dataset.head(30))
+    proxy_type = ['pearson', 'kendall']
+
+    for proxy_type in proxy_type:
+        dataset = preprocesser.generate_multivariate_dataset(ta, data=data, dt=dt, proxy_type=proxy_type)
+        result = pd.concat([dates, dataset], axis=1, join='inner')
+        mm.save_data('multivariate_analysis/%s/data/dataset_%s_%i_assets_3.pkl' % (proxy_type, proxy_type, dt), result)
+    """
+    ##################################################################################################################
+    ###                  Time-varying pair wise correlation estimation using machine learning                      ###
+    ##################################################################################################################
+    # Estimate correlations for "stable" market period: 03/01/2017 - 29/12/2017 (251 days)
+    n = 3  # Number of assets under consideration
+    n_corr = int((n*(n-1)) / 2)
+    T = 251
+    data = mm.load_data('multivariate_analysis/kendall/data/dataset_kendall_10_assets_3.pkl')
+    data.drop(data.head(2769).index, inplace=True)
+    data.drop(['date'], axis=1, inplace=True)
+    data.reset_index(drop=True, inplace=True)
+    headers = list(data.columns.values[:n_corr])
+    rho_estimates = pd.DataFrame(columns=headers)
+    # Training data: 4 years with rolling forward horizon: initially 02/01/2013 - 30/12/2016 (1008 days)
+    t_train_init = data.shape[0] - T  # [2769, 3776] = 1008 values is 4 years of daily log return data
+    """
+    n_neighbors = 5
+    for j, t in enumerate(range(t_train_init, data.shape[0])):  # j = {0, 250}, t = {1008, 1258}
+        sample = np.asarray(data.iloc[:t, :])  # True rolling window is [j:t, :]
+        x_test = np.asarray(data.iloc[t, :n_corr+2])  # This is in fact x_t+1
+        #y_test = np.asarray(data.iloc[t, -n_corr:])  # This is in fact y_t+1
+        X = np.asarray(sample[:, :n_corr+2])  # covariate matrix (vectorize data for speed up)
+        y = np.asarray(sample[:, -n_corr:])  # response vector
+        X_train, y_train = X[:t, :], y[:t]
+        knn = KNeighborsRegressor(n_neighbors=n_neighbors).fit(X_train, y_train)  # n_neighbors=len(X_train)
+        rho_estimate = knn.predict(x_test.reshape(1, -1))
+        df = pd.DataFrame(rho_estimate, columns=headers)
+        rho_estimates = pd.merge(rho_estimates, df, how='outer')
+    mm.save_data('multivariate_analysis/kendall/kendall_cor_estimates/cor_knn5_kendall_3_assets_stable.pkl', rho_estimates)
+    mm.transform_pickle_to_csv('multivariate_analysis/kendall/kendall_cor_estimates/cor_knn5_kendall_3_assets_stable.pkl')
+    """
+    ##################################################################################################################
+    ###                                   Minimum Determinant Learning Algorithms                                       ###
+    ##################################################################################################################
+    # Compute matrix determinants for all time t in stable period
+    """
+    proxy_type = ['pearson', 'kendall']
+    det_min_vec = np.full(T, np.nan)
+    for proxy_type in proxy_type:
+        data_cor = mm.load_data('multivariate_analysis/%s/%s_cor_estimates/cor_knn5_%s_3_assets_stable.pkl' %
+                                (proxy_type, proxy_type, proxy_type))
+        for row in range(0, T):
+            print(proxy_type, row)
+            det_min_vec[row] = preprocesser.determinant_LU_factorization(data_cor.iloc[row, :], n)
+        filename = 'determinant_knn5_%s_3_assets_stable.pkl' % proxy_type
+        mm.save_data('multivariate_analysis/%s/det_results_%s/%s' % (proxy_type, proxy_type, filename), det_min_vec)
+
+    # Plot determinants of time-varying correlation matrices obtained from KNN
+    det_knn5_pearson = mm.load_data('multivariate_analysis/pearson/det_results_pearson/determinant_knn5_pearson_3_assets_stable.pkl')
+    det_knn5_kendall = mm.load_data('multivariate_analysis/kendall/det_results_kendall/determinant_knn5_kendall_3_assets_stable.pkl')
+    plt.figure(1)
+    plt.plot(det_knn5_pearson, label='KNN_pearson', linewidth=1, color='orange')
+    plt.plot(det_knn5_kendall, label='KNN_kendall', linewidth=1)
+    plt.xlabel('observation')
+    plt.ylabel('det($R_t)$')
+    plt.legend(fontsize='small', loc='upper center', bbox_to_anchor=(0.5, 1.1), ncol=2, fancybox=True,
+               edgecolor='black')
+    plt.xlim(0, 250)
+    plt.yticks(np.arange(-0.1, 1.1, 0.1))
+    plt.ylim(-0.1, 1)
+    plt.show()
+    """
+
+
+
+
+
+
+
+
 
 
 
