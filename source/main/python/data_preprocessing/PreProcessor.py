@@ -125,8 +125,8 @@ class PreProcessor(object):
         return dataset, dataset_proxy
 
     def generate_multivariate_dataset(self, ta, data, dt, proxy_type='pearson'):
-        """Method for generating a multivariate dataset with proxies moving window correlation estimates for covariate
-        set and true correlation as the output variables
+        """Method for generating a multivariate dataset with moving window estimates as approximation for true
+        correlation constructing the set of covariates and output variable.
         :param ta: technical analyzer object
         :param data: dataframe with log returns
         :param dt: window length

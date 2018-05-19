@@ -258,7 +258,7 @@ def main():
     delta_t = [21]   # dt = {[3, 10], 21, 42, 63, 126, 251}  (and 84 possibly)
     model = ['knn']  # k-nearest neighbour: 'knn', random forest: 'rf'
     proxy_type = ['pearson', 'kendall']
-    output_type = ['true']
+    output_type = ['true', 'proxy']
     n_neighbours = [5]
 
     """
@@ -278,7 +278,7 @@ def main():
     """
 
     """
-    # Figure with bootstrap uncertainty
+    # Figure with bootstrap uncertainty Nearest Neighbors
     for dt, proxy_type in [(x, y) for x in delta_t for y in proxy_type]:
         print('(%s, %i)' % (proxy_type, dt))
         data = mm.load_data('bivariate_analysis/proxy_cor/%s/results_knn_%s_proxy_cor/'
@@ -300,49 +300,30 @@ def main():
         plt.show()
     """
     """
-    # Figure
-    data = mm.load_data('bivariate_analysis/true_cor/kendall/results_rf_kendall_true_cor/'
-                        'rf10_kendall_21_estimate_uncertainty_rep_1000_true_corr.pkl')
-    rho_estimates = data['Rho_estimate']
-    lower_percentiles = data['Percentile_low']
-    upper_percentiles = data['Percentile_up']
-    plt.figure(1)
-    plt.plot(simulated_data_process['rho'], label='true correlation', linewidth=1, color='black')
-    plt.plot(rho_estimates, label='RF correlation', linewidth=1, color='red')
-    plt.plot((upper_percentiles - lower_percentiles) - 1, label='%d%% interval (bootstrap)' % ciw,
-             linewidth=1, color='magenta')
-    #plt.plot(lower_percentiles, label='%d%% interval (bootstrap)' % ciw, linewidth=1, color='magenta')
-    #plt.plot(upper_percentiles, label="", linewidth=1, color='magenta')
-    plt.xlabel('observation')
-    plt.legend(fontsize='small', loc='upper center', bbox_to_anchor=(0.5, 1.1), ncol=3, fancybox=True,
-               edgecolor='black')
-    plt.xlim(0, T)
-    plt.yticks(np.arange(-1, 1.1, 0.2))
-    plt.ylim(-1, 1)
-    plt.show()  
-    """
-    """
-    # Figure
-    data = mm.load_data('bivariate_analysis/proxy_cor/pearson/results_rf_pearson_proxy_cor/'
-                        'rf10_pearson_21_estimate_uncertainty_rep_1000_proxy_corr.pkl')
-    rho_estimates = data['Rho_estimate']
-    lower_percentiles = data['Percentile_low']
-    upper_percentiles = data['Percentile_up']
-    plt.figure(1)
-    plt.plot(simulated_data_process['rho'], label='true correlation', linewidth=1, color='black')
-    plt.plot(rho_estimates, label='RF correlation', linewidth=1, color='red')
-    plt.plot((upper_percentiles - lower_percentiles) - 1, label='%d%% interval (bootstrap)' % ciw,
-             linewidth=1, color='magenta')
-    # plt.plot(lower_percentiles, label='%d%% interval (bootstrap)' % ciw, linewidth=1, color='magenta')
-    # plt.plot(upper_percentiles, label="", linewidth=1, color='magenta')
-    plt.xlabel('observation')
-    plt.legend(fontsize='small', loc='upper center', bbox_to_anchor=(0.5, 1.1), ncol=3, fancybox=True,
-               edgecolor='black')
-    plt.xlim(0, T)
-    plt.yticks(np.arange(-1, 1.1, 0.2))
-    plt.ylim(-1, 1)
-    plt.show()  
-    """
+    # Figure with bootstrap uncertainty Random Forest
+    for proxy_type, output_type in [(x, y) for x in proxy_type for y in output_type]:
+        filename = 'rf10_%s_21_estimate_uncertainty_rep_1000_%s_corr.pkl' % (proxy_type, output_type)
+        print(filename)
+        data = mm.load_data('bivariate_analysis/%s_cor/%s/results_rf_%s_%s_cor/%s' % (output_type, proxy_type,
+                                                                                      proxy_type, output_type, filename))
+        rho_estimates = data['Rho_estimate']
+        lower_percentiles = data['Percentile_low']
+        upper_percentiles = data['Percentile_up']
+        plt.figure(1)
+        plt.plot(simulated_data_process['rho'], label='true correlation', linewidth=1, color='black')
+        plt.plot(rho_estimates, label='RF correlation', linewidth=1, color='red')
+        plt.plot((upper_percentiles - lower_percentiles) - 1, label='%d%% interval (bootstrap)' % ciw,
+                 linewidth=1, color='magenta')
+        #plt.plot(lower_percentiles, label='%d%% interval (bootstrap)' % ciw, linewidth=1, color='magenta')
+        #plt.plot(upper_percentiles, label="", linewidth=1, color='magenta')
+        plt.xlabel('observation')
+        plt.legend(fontsize='small', loc='upper center', bbox_to_anchor=(0.5, 1.1), ncol=3, fancybox=True,
+                   edgecolor='black')
+        plt.xlim(0, T)
+        plt.yticks(np.arange(-1, 1.1, 0.2))
+        plt.ylim(-1, 1)
+        plt.show()
+     """
 
     ##################################################################################################################
     ###        Mean squared error of Pearson/Kendall correlation coefficient using machine learner estimates       ###
@@ -356,7 +337,7 @@ def main():
     delta_t = range(3, 101)   # dt = {[3, 10], 21, 42, 63, 126, 251}  (and 84 possibly)
     model = ['rf']  # k-nearest neighbour: 'knn', random forest: 'rf'
     proxy_type = ['pearson']
-    output_type = ['proxy']
+    output_type = ['true']
     n_neighbour = [10]  # 5, 10, 25, 50, 100, len_train, IDW
     rho_bias_squared = np.full(101, np.nan)
     rho_var_vec = np.full(101, np.nan)
@@ -569,39 +550,40 @@ def main():
     """
     # Variance in MSE window sizes for RF with Pearson/ Kendall as covariates.
     # True Correlation
-    var_mse_rf10_pearson_true = np.nanvar(mse_rf10_pearson_true['MSE']); print('var_mse_rf10_pearson_true: %.7f' % var_mse_rf10_pearson_true)
-    var_mse_rf10_kendall_true = np.nanvar(mse_rf10_kendall_true['MSE']); print('var_mse_rf10_kendall_true: %.7f' % var_mse_rf10_kendall_true)
+    #var_mse_rf10_pearson_true = np.nanvar(mse_rf10_pearson_true['MSE']); print('var_mse_rf10_pearson_true: %.8f' % var_mse_rf10_pearson_true)
+    #var_mse_rf10_kendall_true = np.nanvar(mse_rf10_kendall_true['MSE']); print('var_mse_rf10_kendall_true: %.8f' % var_mse_rf10_kendall_true)
     # Proxy Correlation
-    var_mse_rf10_pearson_proxy = np.nanvar(mse_rf10_pearson_proxy['MSE']); print('var_mse_rf10_pearson_proxy: %.5f' % var_mse_rf10_pearson_proxy)
-    var_mse_rf10_kendall_proxy = np.nanvar(mse_rf10_kendall_proxy['MSE']); print('var_mse_rf10_kendall_proxy: %.5f' % var_mse_rf10_kendall_proxy)
+    var_mse_rf10_pearson_proxy = np.nanvar(mse_rf10_pearson_proxy['MSE']); print('var_mse_rf10_pearson_proxy: %.6f' % var_mse_rf10_pearson_proxy)
+    var_mse_rf10_kendall_proxy = np.nanvar(mse_rf10_kendall_proxy['MSE']); print('var_mse_rf10_kendall_proxy: %.6f' % var_mse_rf10_kendall_proxy)
 
     # Max-min in MSE window sizes for RF with Pearson/ Kendall as covariates.
     # True Correlation
-    print('mse_rf10_pearson_min_max: (%.4f, %.4f)' % (np.nanmin(mse_rf10_pearson_true['MSE']), np.nanmax(mse_rf10_pearson_true['MSE'])))
-    print('mse_rf10_kendall_min_max: (%.4f, %.4f)' % (np.nanmin(mse_rf10_kendall_true['MSE']), np.nanmax(mse_rf10_kendall_true['MSE'])))
+    #print('mse_rf10_pearson_min_max: (%.4f, %.4f)' % (np.nanmin(mse_rf10_pearson_true['MSE']), np.nanmax(mse_rf10_pearson_true['MSE'])))
+    #print('mse_rf10_kendall_min_max: (%.4f, %.4f)' % (np.nanmin(mse_rf10_kendall_true['MSE']), np.nanmax(mse_rf10_kendall_true['MSE'])))
     
     # Proxy Correlation
-    #print('mse_rf10_pearson_proxy_min_max: (%.4f, %.4f)' % (np.nanmin(mse_rf10_pearson_proxy['MSE']), np.nanmax(mse_rf10_pearson_proxy['MSE'])))
-    #print('mse_rf10_kendall_proxy_min_max: (%.4f, %.4f)' % (np.nanmin(mse_rf10_kendall_proxy['MSE']), np.nanmax(mse_rf10_kendall_proxy['MSE'])))
+    print('mse_rf10_pearson_proxy_min_max: (%.4f, %.4f)' % (np.nanmin(mse_rf10_pearson_proxy['MSE']), np.nanmax(mse_rf10_pearson_proxy['MSE'])))
+    print('mse_rf10_kendall_proxy_min_max: (%.4f, %.4f)' % (np.nanmin(mse_rf10_kendall_proxy['MSE']), np.nanmax(mse_rf10_kendall_proxy['MSE'])))
     """
     """
     # Figure without interpolation MSE
     plt.figure(4)
     #plt.plot(mse_pearson_vec['MSE'], label='Pearson', color='indigo', linewidth=1)
     #plt.plot(mse_kendall_vec['MSE'], label='Kendall', color='cyan', linestyle='--', linewidth=1)
-    plt.plot(mse_rf10_pearson_true['MSE'], label='RF_pearson', color='goldenrod', linewidth=1)
+    plt.plot(mse_rf10_pearson_proxy['MSE'], label='RF_pearson', color='goldenrod', linewidth=1)
     #plt.plot(mse_rf10_kendall_proxy['MSE'], label='KNN_kendall', color='xkcd:teal', linewidth=1)
-    #plt.plot(mse_rf100_pearson_true['MSE'], label='RF_pearson', linewidth=1)
+    plt.plot(mse_rf10_kendall_proxy['MSE'], label='RF_kendall', color='green', linewidth=1)
     #plt.plot(mse_rf1000_pearson_true['MSE'], label='RF_pearson', linewidth=1)
     plt.xlabel('window length')
     plt.ylabel('MSE')
     plt.legend(fontsize='small', loc='upper center', bbox_to_anchor=(0.5, 1.1), ncol=5, fancybox=True,
                edgecolor='black')
     plt.xlim(0, 100)
-    plt.yticks(np.arange(0, 0.61, 0.01))
-    plt.ylim(0.1, 0.2)
+    plt.yticks(np.arange(0, 0.61, 0.1))
+    plt.ylim(0, 0.6)
     plt.show()
     """
+
 
     # Figure without interpolation MSE decomposition
     """
@@ -609,11 +591,11 @@ def main():
     mse_rf10_2_pearson_true = mm.load_data('bivariate_analysis/true_cor/mse_results_true_cor/mse_rf10_2_pearson_true_cor.pkl')
     mse_rf10_3_pearson_true = mm.load_data('bivariate_analysis/true_cor/mse_results_true_cor/mse_rf10_3_pearson_true_cor.pkl')
     """
-
+    """
     plt.figure(5)
-    plt.plot(mse_rf10_pearson_proxy['bias_squared'], label='Squared Bias', color='blue', linewidth=1)
-    plt.plot(mse_rf10_pearson_proxy['variance'], label='Variance', color='red', linewidth=1)
-    plt.plot(mse_rf10_pearson_proxy['MSE'], label='MSE', color='black', linestyle='--', linewidth=1)
+    plt.plot(mse_rf10_kendall_proxy['bias_squared'], label='Squared Bias', color='blue', linewidth=1)
+    plt.plot(mse_rf10_kendall_proxy['variance'], label='Variance', color='red', linewidth=1)
+    plt.plot(mse_rf10_kendall_proxy['MSE'], label='MSE', color='black', linestyle='--', linewidth=1)
     #plt.plot(mse_dt_pearson_true, label='dt_squared_bias', linewidth=1)
     plt.xlabel('window length')
     plt.ylabel('MSE')
@@ -623,7 +605,7 @@ def main():
     plt.yticks(np.arange(0, 0.61, 0.02))
     plt.ylim(0, 0.3)
     plt.show()
-
+    """
     """ 
     # Figure with interpolation MSE decomposition sensitivity analysis
     mse_rf_pearson_true_cor_sa = mm.load_data('bivariate_analysis/true_cor/mse_results_true_cor/mse_rf300_1_to_3_pearson_true_cor.pkl')
@@ -653,15 +635,15 @@ def main():
     # Get information on the minimum determinants over all correlation estimates for all window sizes [3, 100]
     delta_t = range(3, 101)
     det_min_vec = np.full(101, np.nan)
-    proxy_type = 'kendall'
-    output_type = 'proxy'
+    proxy_type = 'pearson'
+    output_type = 'true'
     learner = 'rf'
 
-    """
+    """                    
     for dt in delta_t:
         # Load data Pearson/ Kendall
         det_data_vec = np.full(501, np.nan)
-        filename = '%s10_%s_%i_estimate_uncertainty_%s_corr.pkl' % (learner, proxy_type, dt, output_type)
+        filename = '%s10_%s_%i_estimate_uncertainty_rep_1000_%s_corr.pkl' % (learner, proxy_type, dt, output_type)
         print(filename)
         data = mm.load_data('bivariate_analysis/%s_cor/%s/results_%s_%s_%s_cor/%s'
                             % (output_type, proxy_type, learner, proxy_type, output_type, filename))
@@ -705,12 +687,12 @@ def main():
     plt.ylim(-0.1, 1)
     plt.show()
     """
-    """
+
     # Plot minimum determinants of RF estimates of correlation
     # True Cor
-    det_min_rf10_pearson = mm.load_data('bivariate_analysis/true_cor/det_results_true_cor/determinant_min_rf10_pearson_true_cor.pkl')
-    det_min_rf10_kendall = mm.load_data('bivariate_analysis/true_cor/det_results_true_cor/determinant_min_rf10_kendall_true_cor.pkl')
-
+    det_min_rf10_pearson_true = mm.load_data('bivariate_analysis/true_cor/det_results_true_cor/determinant_min_rf10_pearson_true_cor.pkl')
+    det_min_rf10_kendall_true = mm.load_data('bivariate_analysis/true_cor/det_results_true_cor/determinant_min_rf10_kendall_true_cor.pkl')
+    """
     # Proxy Cor
     det_min_rf10_pearson_proxy = mm.load_data('bivariate_analysis/proxy_cor/det_results_proxy_cor/determinant_min_rf10_pearson_proxy_cor.pkl')
     det_min_rf10_kendall_proxy = mm.load_data('bivariate_analysis/proxy_cor/det_results_proxy_cor/determinant_min_rf10_kendall_proxy_cor.pkl')

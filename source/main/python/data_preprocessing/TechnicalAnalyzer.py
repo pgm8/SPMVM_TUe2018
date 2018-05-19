@@ -5,7 +5,8 @@ from scipy.stats.stats import kendalltau, pearsonr
 
 
 class TechnicalAnalyzer(object):
-    """Technical analysis class. This class has the responsibility to engineer the covariate space."""
+    """Technical analysis class. This class has the responsibility to engineer the covariate space
+    using Pearson and Kendall moving window approximations as well as the output space."""
 
     def __init__(self):
         """Initializer TechnicalAnalyzer object."""
