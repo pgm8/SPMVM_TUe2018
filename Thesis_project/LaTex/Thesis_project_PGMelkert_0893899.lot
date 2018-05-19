@@ -1,0 +1,22 @@
+\select@language {british}
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\contentsline {table}{\numberline {4.1}{\ignorespaces Mean Squared Error (MSE) decomposition as a function of the number of neighbors (k) for KNN with proxy for covariates and true correlation.\relax }}{22}{table.caption.11}
+\contentsline {table}{\numberline {4.2}{\ignorespaces Mean Squared Error (MSE) decomposition as a function of the number of neighbors (k) for KNN with approximations for both covariates and output variable.\relax }}{30}{table.caption.19}
+\addvspace {10\p@ }
+\contentsline {table}{\numberline {5.1}{\ignorespaces Descriptive statistics of Dow Jones Industrial Average daily log returns under tranquil conditions.}}{42}{table.caption.24}
+\contentsline {table}{\numberline {5.2}{\ignorespaces Descriptive statistics of Dow Jones Industrial Average daily log returns under volatile market conditions.}}{43}{table.caption.25}
+\contentsline {table}{\numberline {5.3}{\ignorespaces Kupiec test with Gaussian distributed conditional innovations for tranquil market conditions.}}{44}{table.caption.26}
+\contentsline {table}{\numberline {5.4}{\ignorespaces Kupiec test with Student's t-distributed conditional innovations for tranquil market conditions.}}{44}{table.caption.27}
+\contentsline {table}{\numberline {5.5}{\ignorespaces Christoffersen Markov test with Gaussian distributed conditional innovations for tranquil market conditions.}}{45}{table.caption.28}
+\contentsline {table}{\numberline {5.6}{\ignorespaces Christoffersen Markov test with Student's t-distributed conditional innovations for tranquil market conditions.}}{46}{table.caption.29}
+\contentsline {table}{\numberline {5.7}{\ignorespaces Kupiec test with Student's t-distributed conditional innovations for volatile market conditions.}}{46}{table.caption.30}
+\contentsline {table}{\numberline {5.8}{\ignorespaces Christoffersen Markov test with Student's t-distributed conditional innovations for volatile market conditions.}}{47}{table.caption.31}
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\contentsline {table}{\numberline {A.1}{\ignorespaces Kupiec test with Gaussian distributed conditional innovations for tranquil market conditions.}}{50}{table.caption.33}
+\contentsline {table}{\numberline {A.2}{\ignorespaces Christoffersen Markov test with Gaussian distributed conditional innovations for tranquil market conditions.}}{51}{table.caption.34}
+\contentsline {table}{\numberline {A.3}{\ignorespaces Kupiec test with Student's t-distributed conditional innovations for tranquil market conditions.}}{51}{table.caption.35}
+\contentsline {table}{\numberline {A.4}{\ignorespaces Christoffersen Markov test with Student's t-distributed conditional innovations for tranquil market conditions.}}{52}{table.caption.36}

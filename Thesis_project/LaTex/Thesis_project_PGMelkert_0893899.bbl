@@ -1,0 +1,96 @@
+\begin{thebibliography}{15}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{\texttt{#1}}
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi: #1}\else
+  \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[Ba{\c{s}}t{\"u}rk et~al.(2016)Ba{\c{s}}t{\"u}rk, Almeida, Golan, and
+  Kaymak]{ref:Basturk2016}
+Nalan Ba{\c{s}}t{\"u}rk, Rui~Jorge Almeida, Robert Golan, and Uzay Kaymak.
+\newblock Multivariate time-varying volatility modeling using probabilistic
+  fuzzy systems.
+\newblock In \emph{Computational Intelligence (SSCI), 2016 IEEE Symposium
+  Series on}, pages 1--8. IEEE, 2016.
+
+\bibitem[Bauwens et~al.(2006)Bauwens, Laurent, and Rombouts]{ref:Bauwens2006}
+Luc Bauwens, S{\'e}bastien Laurent, and Jeroen V.~K. Rombouts.
+\newblock Multivariate garch models: a survey.
+\newblock \emph{Journal of Applied Econometrics}, 21\penalty0 (1):\penalty0
+  79--109, 2006.
+
+\bibitem[Breiman(2001)]{ref:Breiman2001}
+Leo Breiman.
+\newblock Random forests.
+\newblock \emph{Machine Learning}, 45\penalty0 (1):\penalty0 5--32, 2001.
+
+\bibitem[Campbell(2005)]{ref:Campbell2005}
+Sean~D. Campbell.
+\newblock A review of backtesting and backtesting procedures.
+\newblock Finance and Economics Discussion Series 2005-21, Board of Governors
+  of the Federal Reserve System (U.S.), 2005.
+
+\bibitem[Christoffersen(1998)]{ref:Christoffersen1998}
+Peter~F Christoffersen.
+\newblock Evaluating interval forecasts.
+\newblock \emph{International economic review}, pages 841--862, 1998.
+
+\bibitem[Cirillo(2016)]{ref:Cirillo2016}
+P.~Cirillo.
+\newblock Risk management.
+\newblock WI3421TU lecture notes, TU Delft, 2016.
+
+\bibitem[Engle(2002)]{ref:Engle2002}
+Robert Engle.
+\newblock Dynamic conditional correlation: A simple class of multivariate
+  generalized autoregressive conditional heteroskedasticity models.
+\newblock \emph{Journal of Business \& Economic Statistics}, 20\penalty0
+  (3):\penalty0 339--350, 2002.
+
+\bibitem[Goodrich et~al.(2015)Goodrich, Tamassia, and
+  Goldwasser]{ref:Goodrich2015}
+Michael~T Goodrich, Roberto Tamassia, and Michael~H Goldwasser.
+\newblock \emph{Data Structures and Algorithms in Java}.
+\newblock Wiley, 6 edition, 2015.
+
+\bibitem[Hastie et~al.(2009)Hastie, Tibshirani, and Friedman]{ref:Hastie2009}
+Trevor Hastie, Robert Tibshirani, and Jerome Friedman.
+\newblock \emph{The Elements of Statistical Learning: Data Mining, Inference
+  and Prediction}.
+\newblock Springer Series in Statistics. Springer, 2009.
+
+\bibitem[Kupiec(1995)]{ref:Kupiec1995}
+Paul~H Kupiec.
+\newblock Techniques for verifying the accuracy of risk measurement models.
+\newblock \emph{The journal of Derivatives}, 3\penalty0 (2):\penalty0 73--84,
+  1995.
+
+\bibitem[Louppe(2014)]{ref:Louppe2014}
+Gilles Louppe.
+\newblock \emph{Understanding random forests: From theory to practice}.
+\newblock PhD thesis, University of Li{\`e}ge, July 2014.
+
+\bibitem[McNeil et~al.(2015)McNeil, Frey, and Embrechts]{ref:QRM2015}
+Alexander~J. McNeil, R{\"u}diger Frey, and Paul Embrechts.
+\newblock \emph{Quantative Risk Management: Concepts, Techniques and Tools}.
+\newblock Princeton University Press, 2015.
+
+\bibitem[Plyakha et~al.(2012)Plyakha, Uppal, and Vilkov]{ref:Plyakha2012}
+Yuliya Plyakha, Raman Uppal, and Grigory Vilkov.
+\newblock Why does an equal-weighted portfolio outperform value-and
+  price-weighted portfolios.
+\newblock \emph{Available at SSRN}, 1787045, 2012.
+
+\bibitem[Pozzi et~al.(2012)Pozzi, Di~Matteo, and Aste]{ref:Pozzi2012}
+F.~Pozzi, T.~Di~Matteo, and T.~Aste.
+\newblock Exponential smoothing weighted correlations.
+\newblock \emph{The European Physical Journal B}, 85\penalty0 (6):\penalty0
+  175, June 2012.
+
+\bibitem[Shepard(1968)]{ref:Shepard1968}
+Donald Shepard.
+\newblock A two-dimensional interpolation function for irregularly-spaced data.
+\newblock In \emph{Proceedings of the 1968 23rd ACM National Conference}, ACM
+  '68, pages 517--524, New York, NY, USA, 1968. ACM.
+
+\end{thebibliography}
