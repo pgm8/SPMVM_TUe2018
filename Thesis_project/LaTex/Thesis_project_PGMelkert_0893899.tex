@@ -259,16 +259,19 @@ In this section some theoretical background is given of the learning algorithms 
 \end{itemize}
 
 \noindent
-The k-nearest neighbors algorithm is a simple nonparametric learning algorithm and sensitive to the distance function because of the inherent sensitivity to irrelevant or redundant features. Therefore, a feature weighted k-nearest neighbor algorithm (henceforth FWKNN) that takes the relative importance of features into account is proposed. FWKNN makes a decision by identifying the k weighted nearest neighbors, which share the highest similarity with the unseen sample instance. As a measure for similarity, the Euclidian distance is used. Following the work of Chen and Hao \cite{ref:Chen2017}, the FWKNN uses a modified distance function by incorporating feature importance. Our approach differs from Chen and Hao in the way feature importance is obtained and in the way the response variable is predicted from its k nearest neighbors. Where Chen and Hao apply the information gain to measure feature importance to classification, feature importance is obtained from a random forest model with default parameter settings in our study. The formula for the modified distance function between two data points x$_i$ and x$_j$ is shown in Eq. \ref{eq:distanceFunction}.
+The k-nearest neighbors algorithm (henceforth KNN) is a simple nonparametric learning algorithm. The algorithm makes a decision by identifying the $k$ nearest neighbors that share the highest similarity with the unseen sample instance. In this work, Euclidian distance is used as a metric for similarity. That is, the distance between two data points x$_i$ and x$_j$ is defined as follows: 
 
 \begin{equation} \label{eq:distanceFunction}
-	d^w(x_i,x_j) = \sqrt{\sum_{k=1}^{n} P_k \cdot (x_{i,k} - x_{j,k})^2} 	
+	d(x_i,x_j) = \sqrt{\sum_{m=1}^{n} (x_{i,m} - x_{j,m})^2} 	
 \end{equation} 
 
-where d$^{w}$(x$_i$, x$_j$) is the weighted Euclidian distance between data points x$_i$ and x$_j$, x$_{i,k}$ is the kth feature value of x$_i$, x$_{j,k}$ is the kth feature value of x$_j$. P$_k \ge 0$ is the vector which indicates the importance of each feature.   \\
+\noindent 
 
-In addition to feature weighting, in our work it is preferred to discriminate between the k nearest neighbors when making predictions, i.e. let the closest observation among the k nearest neighbors have more say in affecting the outcome of the unseen sample instance. An extension is therefore FWKNN where each of k nearest neighbors has a weight induced from its distance with respect to the unseen sample instance. More precisely, each of the k nearest neighbors has a weight equal to the inverse of its distance to the unseen sample instance, i.e. inverse distance weighting. This differs from the work of Chen and Hao \cite{ref:Chen2017} where each of the k nearest neighbors contribute equally to the outcome of the unseen sample instance. The simple inverse distance weighting function, defined by \cite{ref:Shepard1968}, is adapted and implemented in our work. \\
+where d(x$_i$, x$_j$) is the Euclidian distance between data points x$_i$ and x$_j$, x$_{i,k}$ is the mth covariate value of x$_i$, x$_{j,m}$ is the mth covariate value of x$_j$.   \\
 
+In this work it is preferred to discriminate between the k nearest neighbors when making predictions, i.e. let the closest observation among the k nearest neighbors have more say in affecting the outcome of the unseen sample instance. Therefore, a parameterization of KNN is considered where each of the k nearest neighbors has a weight induced from its distance with respect to the unseen sample instance. More precisely, each of the k nearest neighbors has a weight equal to the inverse of its distance to the unseen sample instance, i.e. inverse distance weighting, that is, a simple inverse distance weighting function as defined by \cite{ref:Shepard1968}: \\
+
+\noindent
 Let the training dataset be denoted by T$_{train} = {(x_1, y_1), (x_2, y_2), \cdots, (x_N, y_N)}$, $x_i = (x^1_i, x^2_i, \cdots, x^d_i) \in$ X, y$_i \in \mathbb{R}$. Let s = (x$_0$) denote an unseen sample instance and $y_0$ its prediction. The adapted inverse distance weighting function is shown in Eq. \ref{eq:IDWfunction}.
 
 \begin{align} \label{eq:IDWfunction}
@@ -985,6 +988,7 @@ In this section, a more realistic approach is taken to the application of neares
 \bigskip
 \noindent
 \textbf{State what you are precisely going to look at in this section.}
+"A fourth issue is the degree of noise in the desired output values (the supervisory target variables). If the desired output values are often incorrect (because of human error or sensor errors), then the learning algorithm should not attempt to find a function that exactly matches the training examples. Attempting to fit the data too carefully leads to overfitting. You can overfit even when there are no measurement errors (stochastic noise) if the function you are trying to learn is too complex for your learning model. In such a situation, the part of the target function that cannot be modeled "corrupts" your training data - this phenomenon has been called deterministic noise. When either type of noise is present, it is better to go with a higher bias, lower variance estimator."
 
 %%%%%% NEAREST neighbor PROXY 	%%%%%%%%
 \subsection{Nearest neighbor} \label{sec:knn_proxy_cor}
@@ -1592,6 +1596,7 @@ XOM   & 0.0608  & 0.0524    & 0.0570   & 14.47           & -15.04  & 15.87   \\ 
 \subsection{Tranquil market conditions: mid-1990's}
 
 
+
 \begin{table}[H]
 \centering
 \captionsetup[subtable]{position=below}
@@ -1729,7 +1734,7 @@ RF(100)\_kendall										\\ [1ex]
 
 
 \subsection{Volatile market conditions: 2000-2001 Dot-com bubble}
-DCC and pearson idw perform really well for backtest period 2000-2001. pearson idw is indepedent for all quantiles levels greater than 0.9 whereas dcc is rejected at 0.9 level. 
+DCC and pearson idw perform really well for backtest period 2000-2001. pearson idw is independent for all quantiles levels greater than 0.9 whereas dcc is rejected at 0.9 level. 
 
 \begin{table}[H]
 \centering
