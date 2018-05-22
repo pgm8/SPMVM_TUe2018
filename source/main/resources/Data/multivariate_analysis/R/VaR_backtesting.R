@@ -1,12 +1,12 @@
 #################################################################################################################
 rm(list=ls())  # remove all variables in R
-set.seed(42)
 install.packages("rugarch")
 install.packages("rmgarch")
 library(rugarch)
 library(rmgarch)
 library(parallel)
 source("R/fun_VaR_backtesting.R")
+set.seed(42)  # 42:The answer to life, the universe and everything.
 
 # Data sample import 
 setwd("~/Documents/Python/PycharmProjects/thesisOML/ml_tue2017/source/main/resources/Data/multivariate_analysis")

@@ -102,6 +102,7 @@ def main():
     ##################################################################################################################
     # Estimate correlations for stable market conditions: 03/01/1995 - 31/12/1999
     # Estimate correlations for volatile market conditions: 02/01/2004 - 31/12/2008
+    """
     dt = 10
     n = 30  # Number of assets under consideration
     n_corr = int((n*(n-1)) / 2)
@@ -137,12 +138,12 @@ def main():
             rho_estimate = knn.predict(x_test.reshape(1, -1))
             df = pd.DataFrame(rho_estimate, columns=headers)
             rho_estimates = pd.merge(rho_estimates, df, how='outer')
-   
+        
         mm.save_data('multivariate_analysis/%s/%s_cor_estimates/cor_knn_idw_%s_%i_DJI30_%s.pkl' %
                      (proxy_type, proxy_type, proxy_type, dt, period), rho_estimates)
         mm.transform_pickle_to_csv('multivariate_analysis/%s/%s_cor_estimates/cor_knn_idw_%s_%i_DJI30_%s.pkl' %
                                    (proxy_type, proxy_type, proxy_type, dt, period))
-        """
+        
         mm.save_data('multivariate_analysis/%s/%s_cor_estimates/cor_knn_idw_%s_%i_DJI30_2000_2001.pkl' %
                      (proxy_type, proxy_type, proxy_type, dt), rho_estimates)
         mm.transform_pickle_to_csv('multivariate_analysis/%s/%s_cor_estimates/cor_knn_idw_%s_%i_DJI30_2000_2001.pkl' %

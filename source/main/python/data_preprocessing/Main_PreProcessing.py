@@ -28,7 +28,7 @@ def main():
 
     ##################################################################################################################
     ###     Asset path simulation using Cholesky Factorization and predefined time-varying correlation dynamics    ###
-    ################## ################################################################################################
+    ################## ###############################################################################################
     """
     T = 1751
     a0 = 0.1
@@ -223,10 +223,6 @@ def main():
     plt.show()
     """
 
-    
-    
-    
-    
     ##################################################################################################################
     ###                                          Dataset creation                                                  ###
     ##################################################################################################################
@@ -334,51 +330,35 @@ def main():
     rho_true.reset_index(drop=True, inplace=True)
     ciw = 99
     reps = 1000
-    delta_t = range(3, 101)   # dt = {[3, 10], 21, 42, 63, 126, 251}  (and 84 possibly)
+    delta_t = [10]   #  range(3, 101)   # dt = {[3, 10], 21, 42, 63, 126, 251}  (and 84 possibly)
     model = ['rf']  # k-nearest neighbour: 'knn', random forest: 'rf'
     proxy_type = ['pearson']
     output_type = ['true']
-    n_neighbour = [10]  # 5, 10, 25, 50, 100, len_train, IDW
-    rho_bias_squared = np.full(101, np.nan)
-    rho_var_vec = np.full(101, np.nan)
-    rho_mse_vec = np.full(101, np.nan)
+    n_neighbour = [10, 100, 300, 600, 1000]  # 5, 10, 25, 50, 100, len_train, IDW
+    rho_bias_squared = np.full(1001, np.nan)
+    rho_var_vec = np.full(1001, np.nan)
+    rho_mse_vec = np.full(1001, np.nan)
 
     """
     # Create dataframe with (interpolated) mse results, squared bias, variance for varying window lengths
     for model, n_neighbour, proxy_type, dt, output_type in [(w, k, x, y, z) for w in model for k in n_neighbour for
                                                             x in proxy_type for y in delta_t for z in output_type]:
-        filename = '%s%i_%s_%i_estimate_uncertainty_rep_1000_%s_corr.pkl' % (model, n_neighbour, proxy_type, dt, output_type)
+        filename = '%s%i_%s_%i_estimate_uncertainty_rep_100_%s_corr.pkl' % (model, n_neighbour, proxy_type, dt, output_type)
         print(filename)
         data = mm.load_data('bivariate_analysis/%s_cor/%s/results_%s_%s_%s_cor/' % (output_type, proxy_type, model,
                                                                                     proxy_type, output_type) + filename)
         rho_estimates = data['Rho_estimate']
-        rho_bias_squared[dt] = np.mean(np.power(rho_estimates-rho_true, 2))
-        rho_var_vec[dt] = np.power(np.mean(data['std rho estimate']), 2)
+        rho_bias_squared[n_neighbour] = np.mean(np.power(rho_estimates-rho_true, 2))
+        rho_var_vec[n_neighbour] = np.power(np.mean(data['std rho estimate']), 2)
 
     rho_mse_vec = np.array([np.sum(pair) for pair in zip(rho_bias_squared, rho_var_vec)])
     data_frame = pd.DataFrame({'bias_squared': rho_bias_squared, 'variance': rho_var_vec,
                                'MSE': rho_mse_vec})
-    filename_save = 'mse_%s%i_%s_%s_cor.pkl' % (model, n_neighbour, proxy_type, output_type)
+    filename_save = 'mse_%s_%s_%s_cor_sensitivity_analysis_trees.pkl' % (model, proxy_type, output_type)
     print(filename_save)
     mm.save_data('bivariate_analysis/%s_cor/mse_results_%s_cor/' % (output_type, output_type) + filename_save, data_frame)
     """
     """
-    # Decision tree mse computation
-    for dt in delta_t:
-        filename = 'dt_pearson_%i_estimate_uncertainty_true_corr.pkl' % dt
-        data = mm.load_data('bivariate_analysis/true_cor/pearson/dt/' + filename)
-        rho_estimates = data['Rho_estimate']
-        rho_bias_squared[dt] = np.mean(np.power(rho_estimates - rho_true, 2))
-    data_frame = pd.DataFrame({'MSE': rho_bias_squared})
-    filename = 'mse_dt_pearson_true_cor.pkl' 
-    mm.save_data('bivariate_analysis/true_cor/mse_results_true_cor/' + filename, data_frame)
-    """
-
-
-        
-        
-
-
     ## Load MSE data Pearson/ Kendall
     mse_pearson_vec = mm.load_data('bivariate_analysis/mse_pearson.pkl')
     mse_kendall_vec = mm.load_data('bivariate_analysis/mse_kendall.pkl')
@@ -432,7 +412,7 @@ def main():
     mse_rf10_pearson_proxy = mm.load_data('bivariate_analysis/proxy_cor/mse_results_proxy_cor/mse_rf10_pearson_proxy_cor.pkl')
 
     mse_rf10_kendall_proxy = mm.load_data('bivariate_analysis/proxy_cor/mse_results_proxy_cor/mse_rf10_kendall_proxy_cor.pkl')
-
+    """
 
     """
     # Figure without interpolation MSE
@@ -584,14 +564,12 @@ def main():
     plt.show()
     """
 
-
     # Figure without interpolation MSE decomposition
     """
     mse_dt_pearson_true = mm.load_data('bivariate_analysis/true_cor/mse_results_true_cor/mse_dt_pearson_true_cor.pkl')
     mse_rf10_2_pearson_true = mm.load_data('bivariate_analysis/true_cor/mse_results_true_cor/mse_rf10_2_pearson_true_cor.pkl')
     mse_rf10_3_pearson_true = mm.load_data('bivariate_analysis/true_cor/mse_results_true_cor/mse_rf10_3_pearson_true_cor.pkl')
-    """
-    """
+    
     plt.figure(5)
     plt.plot(mse_rf10_kendall_proxy['bias_squared'], label='Squared Bias', color='blue', linewidth=1)
     plt.plot(mse_rf10_kendall_proxy['variance'], label='Variance', color='red', linewidth=1)
@@ -606,8 +584,8 @@ def main():
     plt.ylim(0, 0.3)
     plt.show()
     """
-    """ 
-    # Figure with interpolation MSE decomposition sensitivity analysis
+    """
+    # Figure with interpolation MSE decomposition sensitivity analysis number of covariates
     mse_rf_pearson_true_cor_sa = mm.load_data('bivariate_analysis/true_cor/mse_results_true_cor/mse_rf300_1_to_3_pearson_true_cor.pkl')
     plt.figure(3)
     xs = np.arange(4)
@@ -628,6 +606,31 @@ def main():
     plt.ylim(0, 0.2)
     plt.show()
     """
+
+    # Figure with interpolation MSE decomposition sensitivity analysis number of trees
+    mse_rf_pearson_true_cor_sa_trees = mm.load_data(
+        'bivariate_analysis/true_cor/mse_results_true_cor/mse_rf_pearson_true_cor_sensitivity_analysis_trees.pkl')
+    plt.figure(4)
+    xs = np.arange(1001)
+    s1mask = np.isfinite(mse_rf_pearson_true_cor_sa_trees['bias_squared'])
+    s2mask = np.isfinite(mse_rf_pearson_true_cor_sa_trees['variance'])
+    s3mask = np.isfinite(mse_rf_pearson_true_cor_sa_trees['MSE'])
+    plt.plot(xs[s1mask], mse_rf_pearson_true_cor_sa_trees['bias_squared'][s1mask], label='Squared Bias', color='blue',
+             linestyle='-', linewidth=1, marker='.')
+    plt.plot(xs[s2mask], mse_rf_pearson_true_cor_sa_trees['variance'][s2mask], label='Variance', color='red', linestyle='-',
+             linewidth=1, marker='.')
+    plt.plot(xs[s3mask], mse_rf_pearson_true_cor_sa_trees['MSE'][s3mask], label='MSE', color='black', linestyle='--',
+             linewidth=1, marker='.')
+    plt.xlabel('number of estimators')
+    plt.ylabel('MSE')
+    plt.legend(fontsize='small', loc='upper center', bbox_to_anchor=(0.5, 1.1), ncol=3, fancybox=True,
+               edgecolor='black')
+    plt.xlim(0, 1000)
+    plt.xticks([10, 100, 300, 600, 1000])
+    plt.yticks(np.arange(0, 0.21, 0.02))
+    plt.ylim(0, 0.2)
+    plt.show()
+
     ##################################################################################################################
     ###                                   Minimum Determinant Learning Algorithms                                       ###
     ##################################################################################################################
