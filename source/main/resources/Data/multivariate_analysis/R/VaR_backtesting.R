@@ -47,12 +47,20 @@ mu_portfolio_loss <- w%*%colMeans(data)  # Expected portfolio return (assumed co
 vol_data_tranquil_mvt<- read.csv(file="volatilities_mvt_DJI30_1994_1995.csv", row.names=1)
 vol_data_tranquil_mvnorm<- read.csv(file="volatilities_mvnorm_DJI30_1994_1995.csv", row.names=1)
 cor_DCCgarch_tranquil_mvt <- read.csv(file="cor_DCC_mvt_DJI30_1994_1995.csv", row.names=1)
+cor_DCCgarch_tranquil_mvnorm <- read.csv(file="cor_DCC_mvnorm_DJI30_1994_1995.csv", row.names=1)
 cor_KNN5_pearson_tranquil <- read.csv(file="pearson/pearson_cor_estimates/cor_knn5_pearson_10_DJI30_1994_1995.csv", row.names=1)
 cor_KNN5_kendall_tranquil <- read.csv(file="kendall/kendall_cor_estimates/cor_knn5_kendall_10_DJI30_1994_1995.csv", row.names=1)
 cor_KNN_idw_pearson_tranquil <- read.csv(file="pearson/pearson_cor_estimates/cor_knn_idw_pearson_10_DJI30_1994_1995.csv", row.names=1)
 cor_KNN_idw_kendall_tranquil <- read.csv(file="kendall/kendall_cor_estimates/cor_knn_idw_kendall_10_DJI30_1994_1995.csv", row.names=1)
 
 ## Compute portfolio conditional covariances
+# Multivariate Normal distributed errors
+sigma_DCCgarch_tranquil_mvnorm <- sigma_vec_portfolio(vol_data_tranquil_mvnorm, cor_DCCgarch_tranquil_mvnorm, T=T, w=w) 
+sigma_KNN5_pearson_tranquil_mvnorm <- sigma_vec_portfolio(vol_data_tranquil_mvnorm, cor_KNN5_pearson_tranquil, T=T, w=w)
+sigma_KNN5_kendall_tranquil_mvnorm <- sigma_vec_portfolio(vol_data_tranquil_mvnorm, cor_KNN5_kendall_tranquil, T=T, w=w)
+sigma_KNN_idw_pearson_tranquil_mvnorm <- sigma_vec_portfolio(vol_data_tranquil_mvnorm, cor_KNN_idw_pearson_tranquil, T=T, w=w)
+sigma_KNN_idw_kendall_tranquil_mvnorm <- sigma_vec_portfolio(vol_data_tranquil_mvnorm, cor_KNN_idw_kendall_tranquil, T=T, w=w)
+# Multivariate Student t-distributed errors
 sigma_DCCgarch_tranquil_mvt <- sigma_vec_portfolio(vol_data_tranquil_mvt, cor_DCCgarch_tranquil_mvt, T=T, w=w) 
 sigma_KNN5_pearson_tranquil_mvt <- sigma_vec_portfolio(vol_data_tranquil_mvt, cor_KNN5_pearson_tranquil, T=T, w=w)
 sigma_KNN5_kendall_tranquil_mvt <- sigma_vec_portfolio(vol_data_tranquil_mvt, cor_KNN5_kendall_tranquil, T=T, w=w)
@@ -60,6 +68,13 @@ sigma_KNN_idw_pearson_tranquil_mvt <- sigma_vec_portfolio(vol_data_tranquil_mvt,
 sigma_KNN_idw_kendall_tranquil_mvt <- sigma_vec_portfolio(vol_data_tranquil_mvt, cor_KNN_idw_kendall_tranquil, T=T, w=w)
 
 ## Value-at-Risk Computation 
+# Multivariate Normal distributed errors
+dcc_VaR_tranquil_mvnorm <- VaR_estimates(sigma_portfolio=sigma_DCCgarch_tranquil_mvnorm, mu= mu_portfolio_loss, cl=alpha)
+knn5_pearson_VaR_tranquil_mvnorm <- VaR_estimates(sigma_portfolio=sigma_KNN5_pearson_tranquil_mvnorm,mu= mu_portfolio_loss, cl=alpha)
+knn5_kendall_VaR_tranquil_mvnorm <- VaR_estimates(sigma_portfolio=sigma_KNN5_kendall_tranquil_mvnorm, mu=mu_portfolio_loss, cl=alpha)
+knn_idw_pearson_VaR_tranquil_mvnorm <- VaR_estimates(sigma_portfolio=sigma_KNN_idw_pearson_tranquil_mvnorm, mu=mu_portfolio_loss, cl=alpha)
+knn_idw_kendall_VaR_tranquil_mvnorm <- VaR_estimates(sigma_portfolio=sigma_KNN_idw_kendall_tranquil_mvnorm, mu=mu_portfolio_loss, cl=alpha)
+# Multivariate Student t-distributed errors
 dcc_VaR_tranquil_mvt <- VaR_estimates(sigma_portfolio=sigma_DCCgarch_tranquil_mvt, mu= mu_portfolio_loss, cl=alpha)
 knn5_pearson_VaR_tranquil_mvt <- VaR_estimates(sigma_portfolio=sigma_KNN5_pearson_tranquil_mvt,mu= mu_portfolio_loss, cl=alpha)
 knn5_kendall_VaR_tranquil_mvt <- VaR_estimates(sigma_portfolio=sigma_KNN5_kendall_tranquil_mvt, mu=mu_portfolio_loss, cl=alpha)
@@ -68,23 +83,35 @@ knn_idw_kendall_VaR_tranquil_mvt <- VaR_estimates(sigma_portfolio=sigma_KNN_idw_
 
 ## Value-at-Risk Backtesting   
 VaR_true <- as.matrix(tail(data, T))%*%w  #  Out-of-sample realized returns assuming equally weighted portfolio
+# Multivariate Normal distributed errors
+backtest_dccGarch_tranquil_mvnorm <- uc_ind_test(VaR_est=dcc_VaR_tranquil_mvnorm, cl=alpha)
+backtest_KNN5_pearson_tranquil_mvnorm <- uc_ind_test(VaR_est=knn5_pearson_VaR_tranquil_mvnorm, cl=alpha)
+backtest_KNN5_kendall_tranquil_mvnorm <- uc_ind_test(VaR_est=knn5_kendall_VaR_tranquil_mvnorm, cl=alpha)
+backtest_KNN_idw_pearson_tranquil_mvnorm <- uc_ind_test(VaR_est=knn_idw_pearson_VaR_tranquil_mvnorm, cl=alpha)
+backtest_KNN_idw_kendall_tranquil_mvnorm <- uc_ind_test(VaR_est=knn_idw_kendall_VaR_tranquil_mvnorm, cl=alpha)
+# Multivariate Student t-distributed errors
 backtest_dccGarch_tranquil_mvt <- uc_ind_test(VaR_est=dcc_VaR_tranquil_mvt, cl=alpha)
 backtest_KNN5_pearson_tranquil_mvt <- uc_ind_test(VaR_est=knn5_pearson_VaR_tranquil_mvt, cl=alpha)
 backtest_KNN5_kendall_tranquil_mvt <- uc_ind_test(VaR_est=knn5_kendall_VaR_tranquil_mvt, cl=alpha)
 backtest_KNN_idw_pearson_tranquil_mvt <- uc_ind_test(VaR_est=knn_idw_pearson_VaR_tranquil_mvt, cl=alpha)
 backtest_KNN_idw_kendall_tranquil_mvt <- uc_ind_test(VaR_est=knn_idw_kendall_VaR_tranquil_mvt, cl=alpha)
 # Write backtest results to csv file
-write.csv(backtest_dccGarch_tranquil_mvt, file="backtest_dccGarch_mvt_1994_1995.csv") 
-write.csv(backtest_KNN5_pearson_tranquil_mvt, file="backtest_KNN5_pearson_mvt_1994_1995.csv") 
-write.csv(backtest_KNN5_kendall_tranquil_mvt, file="backtest_KNN5_kendall_mvt_1994_1995.csv") 
-write.csv(backtest_KNN_idw_pearson_tranquil_mvt, file="backtest_KNN_idw_pearson_mvt_1994_1995.csv") 
-write.csv(backtest_KNN_idw_kendall_tranquil_mvt, file="backtest_KNN_idw_kendall_mvt_1994_1995.csv") 
+write.csv(backtest_dccGarch_tranquil_mvnorm, file="backtest/backtest_dccGarch_mvnorm_1994_1995.csv") 
+write.csv(backtest_KNN5_pearson_tranquil_mvnorm, file="backtest/backtest_KNN5_pearson_mvnorm_1994_1995.csv") 
+write.csv(backtest_KNN5_kendall_tranquil_mvnorm, file="backtest/backtest_KNN5_kendall_mvnorm_1994_1995.csv") 
+write.csv(backtest_KNN_idw_pearson_tranquil_mvnorm, file="backtest/backtest_KNN_idw_pearson_mvnorm_1994_1995.csv") 
+write.csv(backtest_KNN_idw_kendall_tranquil_mvnorm, file="backtest/backtest_KNN_idw_kendall_mvnorm_1994_1995.csv") 
+write.csv(backtest_dccGarch_tranquil_mvt, file="backtest/backtest_dccGarch_mvt_1994_1995.csv") 
+write.csv(backtest_KNN5_pearson_tranquil_mvt, file="backtest/backtest_KNN5_pearson_mvt_1994_1995.csv") 
+write.csv(backtest_KNN5_kendall_tranquil_mvt, file="backtest/backtest_KNN5_kendall_mvt_1994_1995.csv") 
+write.csv(backtest_KNN_idw_pearson_tranquil_mvt, file="backtest/backtest_KNN_idw_pearson_mvt_1994_1995.csv") 
+write.csv(backtest_KNN_idw_kendall_tranquil_mvt, file="backtest/backtest_KNN_idw_kendall_mvt_1994_1995.csv") 
 # View backtest results
-View(backtest_dccGarch_tranquil_mvt)
-View(backtest_KNN5_pearson_tranquil_mvt)
-View(backtest_KNN5_kendall_tranquil_mvt)
-View(backtest_KNN_idw_pearson_tranquil_mvt)
-View(backtest_KNN_idw_kendall_tranquil_mvt)
+View(backtest_dccGarch_tranquil_mvnorm)
+View(backtest_KNN5_pearson_tranquil_mvnorm)
+View(backtest_KNN5_kendall_tranquil_mvnorm)
+View(backtest_KNN_idw_pearson_tranquil_mvnorm)
+View(backtest_KNN_idw_kendall_tranquil_mvnorm)
 
 
 
@@ -103,14 +130,11 @@ t <- c((nrow(data)-T):(nrow(data)-1))
 ## Dynamic Conditional Correlation model with various error distributions
 dccGarch_mvnorm_vol <- dcc_garch_modeling(data=a_t, t=t, distribution.model="norm", distribution="mvnorm")
 dccGarch_mvt_vol <-  dcc_garch_modeling(data=a_t, t=t, distribution.model="std", distribution="mvt") 
-
 # Write matrices containing time-varying volatilies and correlations to csv file
 # Add column names to file containing conditional correlations
 col_names <- read.csv(file="pearson/pearson_cor_estimates/cor_knn5_pearson_10_DJI30_1994_1995.csv", row.names=1)
 colnames(dccGarch_mvnorm_vol$R_t_file) <- c(colnames(col_names))[1:(N*(N-1)/2)]
 colnames(dccGarch_mvt_vol$R_t_file) <- c(colnames(col_names))[1:(N*(N-1)/2)]
-
-## Choose to either do rolling forward or extending horizon. Check this by comparing performance and take most favourable
 write.csv(dccGarch_mvnorm_vol$D_t_file, file="volatilities_mvnorm_DJI30_2000_2001.csv")
 write.csv(dccGarch_mvnorm_vol$R_t_file, file="cor_DCC_mvnorm_DJI30_2000_2001.csv")
 write.csv(dccGarch_mvt_vol$D_t_file, file="volatilities_mvt_DJI30_2000_2001.csv")
@@ -123,6 +147,7 @@ mu_portfolio_loss <- w%*%colMeans(data)  # Expected portfolio return (assumed co
 ## Load conditional correlations and volatilities data
 vol_data_vol_mvt<- read.csv(file="volatilities_mvt_DJI30_2000_2001_ext.csv", row.names=1)
 vol_data_vol_mvnorm<- read.csv(file="volatilities_mvnorm_DJI30_2000_2001_ext.csv", row.names=1)
+cor_DCCgarch_vol_mvnorm <- read.csv(file="cor_DCC_mvnorm_DJI30_2000_2001_ext.csv", row.names=1)
 cor_DCCgarch_vol_mvt <- read.csv(file="cor_DCC_mvt_DJI30_2000_2001_ext.csv", row.names=1)
 cor_KNN5_pearson_vol <- read.csv(file="pearson/pearson_cor_estimates/cor_knn5_pearson_10_DJI30_2000_2001.csv", row.names=1)
 cor_KNN5_kendall_vol <- read.csv(file="kendall/kendall_cor_estimates/cor_knn5_kendall_10_DJI30_2000_2001.csv", row.names=1)
@@ -130,6 +155,13 @@ cor_KNN_idw_pearson_vol <- read.csv(file="pearson/pearson_cor_estimates/cor_knn_
 cor_KNN_idw_kendall_vol <- read.csv(file="kendall/kendall_cor_estimates/cor_knn_idw_kendall_10_DJI30_2000_2001.csv", row.names=1)
 
 # Compute portfolio conditional covariances
+# Multivariate Normal distributed errors
+sigma_DCCgarch_vol_mvnorm <- sigma_vec_portfolio(vol_data_vol_mvnorm, cor_DCCgarch_vol_mvnorm, T=T, w=w) 
+sigma_KNN5_pearson_vol_mvnorm <- sigma_vec_portfolio(vol_data_vol_mvnorm, cor_KNN5_pearson_vol, T=T, w=w)
+sigma_KNN5_kendall_vol_mvnorm <- sigma_vec_portfolio(vol_data_vol_mvnorm, cor_KNN5_kendall_vol, T=T, w=w)
+sigma_KNN_idw_pearson_vol_mvnorm <- sigma_vec_portfolio(vol_data_vol_mvnorm, cor_KNN_idw_pearson_vol, T=T, w=w)
+sigma_KNN_idw_kendall_vol_mvnorm <- sigma_vec_portfolio(vol_data_vol_mvnorm, cor_KNN_idw_kendall_vol, T=T, w=w)
+# Multivariate Student t-distributed errors
 sigma_DCCgarch_vol_mvt <- sigma_vec_portfolio(vol_data_vol_mvt, cor_DCCgarch_vol_mvt, T=T, w=w) 
 sigma_KNN5_pearson_vol_mvt <- sigma_vec_portfolio(vol_data_vol_mvt, cor_KNN5_pearson_vol, T=T, w=w)
 sigma_KNN5_kendall_vol_mvt <- sigma_vec_portfolio(vol_data_vol_mvt, cor_KNN5_kendall_vol, T=T, w=w)
@@ -137,6 +169,13 @@ sigma_KNN_idw_pearson_vol_mvt <- sigma_vec_portfolio(vol_data_vol_mvt, cor_KNN_i
 sigma_KNN_idw_kendall_vol_mvt <- sigma_vec_portfolio(vol_data_vol_mvt, cor_KNN_idw_kendall_vol, T=T, w=w)
 
 ## Value-at-Risk Computation 
+# Multivariate Normal distributed errors
+dcc_VaR_vol_mvnorm <- VaR_estimates(sigma_portfolio=sigma_DCCgarch_vol_mvnorm, mu= mu_portfolio_loss, cl=alpha)
+knn5_pearson_VaR_vol_mvnorm <- VaR_estimates(sigma_portfolio=sigma_KNN5_pearson_vol_mvnorm,mu= mu_portfolio_loss, cl=alpha)
+knn5_kendall_VaR_vol_mvnorm <- VaR_estimates(sigma_portfolio=sigma_KNN5_kendall_vol_mvnorm, mu=mu_portfolio_loss, cl=alpha)
+knn_idw_pearson_VaR_vol_mvnorm <- VaR_estimates(sigma_portfolio=sigma_KNN_idw_pearson_vol_mvnorm, mu=mu_portfolio_loss, cl=alpha)
+knn_idw_kendall_VaR_vol_mvnorm <- VaR_estimates(sigma_portfolio=sigma_KNN_idw_kendall_vol_mvnorm, mu=mu_portfolio_loss, cl=alpha)
+# Multivariate Student t-distributed errors
 dcc_VaR_vol_mvt <- VaR_estimates(sigma_portfolio=sigma_DCCgarch_vol_mvt, mu= mu_portfolio_loss, cl=alpha)
 knn5_pearson_VaR_vol_mvt <- VaR_estimates(sigma_portfolio=sigma_KNN5_pearson_vol_mvt,mu= mu_portfolio_loss, cl=alpha)
 knn5_kendall_VaR_vol_mvt <- VaR_estimates(sigma_portfolio=sigma_KNN5_kendall_vol_mvt, mu=mu_portfolio_loss, cl=alpha)
@@ -145,12 +184,24 @@ knn_idw_kendall_VaR_vol_mvt <- VaR_estimates(sigma_portfolio=sigma_KNN_idw_kenda
 
 ## Value-at-Risk Backtesting   
 VaR_true <- as.matrix(tail(data, T))%*%w  #  Out-of-sample realized returns assuming equally weighted portfolio
+# Multivariate Normal distributed errors
+backtest_dccGarch_vol_mvnorm <- uc_ind_test(VaR_est=dcc_VaR_vol_mvnorm, cl=alpha)
+backtest_KNN5_pearson_vol_mvnorm <- uc_ind_test(VaR_est=knn5_pearson_VaR_vol_mvnorm, cl=alpha)
+backtest_KNN5_kendall_vol_mvnorm <- uc_ind_test(VaR_est=knn5_kendall_VaR_vol_mvnorm, cl=alpha)
+backtest_KNN_idw_pearson_vol_mvnorm <- uc_ind_test(VaR_est=knn_idw_pearson_VaR_vol_mvnorm, cl=alpha)
+backtest_KNN_idw_kendall_vol_mvnorm <- uc_ind_test(VaR_est=knn_idw_kendall_VaR_vol_mvnorm, cl=alpha)
+# Multivariate Student t-distributed errors
 backtest_dccGarch_vol_mvt <- uc_ind_test(VaR_est=dcc_VaR_vol_mvt, cl=alpha)
 backtest_KNN5_pearson_vol_mvt <- uc_ind_test(VaR_est=knn5_pearson_VaR_vol_mvt, cl=alpha)
 backtest_KNN5_kendall_vol_mvt <- uc_ind_test(VaR_est=knn5_kendall_VaR_vol_mvt, cl=alpha)
 backtest_KNN_idw_pearson_vol_mvt <- uc_ind_test(VaR_est=knn_idw_pearson_VaR_vol_mvt, cl=alpha)
 backtest_KNN_idw_kendall_vol_mvt <- uc_ind_test(VaR_est=knn_idw_kendall_VaR_vol_mvt, cl=alpha)
 # Write backtest results to csv file
+write.csv(backtest_dccGarch_vol_mvnorm, file="backtest_dccGarch_mvnorm_2000_2001.csv") 
+write.csv(backtest_KNN5_pearson_vol_mvnorm, file="backtest_KNN5_pearson_mvnorm_2000_2001.csv") 
+write.csv(backtest_KNN5_kendall_vol_mvnorm, file="backtest_KNN5_kendall_mvnorm_2000_2001.csv") 
+write.csv(backtest_KNN_idw_pearson_vol_mvnorm, file="backtest_KNN_idw_pearson_mvnorm_2000_2001.csv") 
+write.csv(backtest_KNN_idw_kendall_vol_mvnorm, file="backtest_KNN_idw_kendall_mvnorm_2000_2001.csv")
 write.csv(backtest_dccGarch_vol_mvt, file="backtest_dccGarch_mvt_2000_2001.csv") 
 write.csv(backtest_KNN5_pearson_vol_mvt, file="backtest_KNN5_pearson_mvt_2000_2001.csv") 
 write.csv(backtest_KNN5_kendall_vol_mvt, file="backtest_KNN5_kendall_mvt_2000_2001.csv") 
@@ -162,12 +213,6 @@ View(backtest_KNN5_pearson_vol_mvt)
 View(backtest_KNN5_kendall_vol_mvt)
 View(backtest_KNN_idw_pearson_vol_mvt)
 View(backtest_KNN_idw_kendall_vol_mvt)
-
-
-
-
-
-
 
 
 
