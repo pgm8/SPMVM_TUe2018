@@ -7,9 +7,9 @@ dcc_garch_modeling <- function(data=a_t, t=t, distribution.model="norm", distrib
   colnames(D_t_file) <- c(colnames(data))[1:N]
   R_t_file <- matrix(NaN, T, N*(N-1)/2)
   cl = makePSOCKcluster(10)
-  for (i in seq_along(t)) {  
+  for (i in seq_along(t)) {  # for (i in seq_along(t))  # tranquil: {1720:2223}, voaltile: {3225:3734}
     tic <- Sys.time()
-    data_train <- data[1:(t[i]+1),1:N]  # Rolling forward: data[i:(t[i]+1),1:N]  
+    data_train <- data[1:t[i],1:N]  # Rolling forward: data[i:t[i],1:N]  
     # Specify univariate GARCH(1,1) with marginal Student-t dist. errors for each component series
     univ_garch_spec <- ugarchspec(variance.model=list(model="fGARCH", submodel="GARCH", garchOrder=c(1, 1)), 
                                   mean.model=list(armaOrder=c(0,0), include.mean=FALSE), distribution.model=distribution.model)
@@ -21,8 +21,9 @@ dcc_garch_modeling <- function(data=a_t, t=t, distribution.model="norm", distrib
     # Estimate DCC-GARCH(1,1) mvt model
     fit.dcc = dccfit(dcc_spec, data=data_train, solver='solnp', cluster=cl, fit.control=list(eval.se = FALSE), fit=fit.multi_garch)
     # Save conditional volatilities and correlations
-    D_t_file[i, ] <- tail(sigma(fit.multi_garch),1)
-    R_t_file[i, ] <- t(rcor(fit.dcc)[,,dim(rcor(fit.dcc))[3]])[lower.tri(t(rcor(fit.dcc)[,,dim(rcor(fit.dcc))[3]]),diag=FALSE)]
+    dcc.forc <- dccforecast(fit.dcc, n.ahead=1, n.roll=0)  # T+1 forecasts
+    D_t_file[i, ] <- as.numeric(sigma(dcc.forc))
+    R_t_file[i, ] <- t(dcc.forc@mforecast[["R"]][[1]][,,1])[lower.tri(t(dcc.forc@mforecast[["R"]][[1]][,,1]),diag=FALSE)]
     print(i)
     print(t[i])
     print(Sys.time()-tic)
@@ -30,7 +31,6 @@ dcc_garch_modeling <- function(data=a_t, t=t, distribution.model="norm", distrib
   stopCluster(cl)
   return(list("D_t_file"=D_t_file, "R_t_file"=R_t_file))
 }
-
 ####################################################################################################
 ######                                Value-at-Risk Estimation                               #######
 ####################################################################################################
@@ -79,7 +79,7 @@ VaR_estimates <- function(sigma_portfolio, mu=mu_portfolio_loss, cl=alpha) {
 ####################################################################################################
 ######                                Value-at-Risk Backtesting                              #######
 ####################################################################################################
-# Kupiec's Unconditional Coverage Test % Christoffersen Markov Test for independence 
+# Kupiec's Unconditional Coverage Test & Christoffersen Markov Test for independence 
 uc_ind_test <- function(VaR_est, cl=alpha) {
   # Initialise datastructure to save test results
   row_names <- c("exceedances", "LR_pof", "LR_crit_pof", "decision_pof",
@@ -116,3 +116,15 @@ uc_ind_test <- function(VaR_est, cl=alpha) {
   }
   return(Kupiec_Christoffersen_mat)
 }
+
+
+# Non-rejection regions Kupiec test
+regions_uc_test <- function(T=T, alpha=alpha) {
+  # alpha: quantile of the loss distribution
+  c <- -qnorm(0.025)  # two sided test with confidence level 95%
+  lb <- T*(1-alpha)-c*sqrt(T*alpha*(1-alpha))
+  ub <- T*(1-alpha)+c*sqrt(T*alpha*(1-alpha))
+  return(list("lb"=round(lb), "ub"=ceiling(ub)))
+}
+
+
