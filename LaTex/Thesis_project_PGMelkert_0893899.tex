@@ -76,12 +76,13 @@
 
 \section*{Abstract}    % Asterisk is to remove header numbering (and toc)
 \addcontentsline{toc}{section}{\numberline{}Abstract}  % Gets summary in toc
+\iffalse
 "In this paper, we propose the first KNN and RF for modeling time-varying correlations of financial market returns and to improve moving window correlation estimates. The methods capture time varying correlation and conditional volatility without an underlying restricted statistical model for the correlations. " \\
 
-\iffalse
+
 \noindent
 In this paper we propose an estimator of the conditional covariance matrix in a quantitive finance setting. Based on the estimation of conditional correlations using machine learning algorithms, this methodology provides an efficient estimator from a semi parametric point of view. \\
-\fi
+
 
 
 \noindent
@@ -91,7 +92,7 @@ correlations lead to a multivariate volatility model with time-varying propertie
 \noindent
 Stochastic correlation forecasts are evaluated within the context of risk management. "We use the model to estimate the conditional covariance of up to 30 assets using Dow Jones Industrial Average stocks, and conduct specification tests of the estimator using an industry standard benchmark for volatility models (Dynamic Conditional Correlation model). This new estimator demonstrates very strong performance especially considering ease of implementation of the estimator." \\
 
-\iffalse
+
 "More accurate models of risk, as the ones proposed in this paper, can lead to better assessment and understanding of held portfolios and market exposure. The performance of VaR models is evaluated by using an unconditional coverage test (Kupiec test) and an independence test (Christoffersen Markov test)". It is (hopefully) found that the DCC-GARCH model is sometimes rejected, while the machine learning algorithms of VaR are never/ less frequently  ejected.
 \fi
 
@@ -207,7 +208,7 @@ This paper is intended to address the last deficiency by clearly defining... mac
 
 
 \section{Research Objectives}
-"The goal of this thesis is to provide a comprehensive and self-contained analysis of a class of algorithms known as" nearest neighbors and random forests \citep{ref:Breiman2001} and their aptness as estimators of time-varying correlations.  \\
+"The goal of this thesis is to provide a comprehensive and self-contained analysis of a class of algorithms known as" nearest neighbors and random forests \citep{ref:Breiman2001} and their aptness as estimators of time-varying correlation between financial returns.  \\
 
 \noindent 
 "In this context, the goal of this paper is to propose a simple approach to modeling multivariate volatility. The proposed model is kept parsimonious in parameterization to overcome the difficulty of curse of dimensionality." In addition, no distributional assumption is made on the correlation dynamics, i.e. no structure equation is imposed. Consequently, the proposed model is very flexible. On the other hand, lack of imposed structure does not guarantee the resulting time-varying covariance matrices are positive semi-definite such that this must be verified with obtained parameters.  \\
@@ -316,21 +317,21 @@ From the pseudocode of the KNN algorithm it is observed that the hyper-parameter
 
 
 \subsection{Random Forest Algorithm}
-\textit{The Random Forest predictor \citep{ref:Breiman2001} is an ensemble predictor that combines bagging \citep{ref:Breiman1996} and random feature subspacing \citep{ref:Ho1998}, to construct accurate classification or regression ensembles of decision trees. Both bagging and random subspacing are effective ensemble methods in themselves -- both implicitly increase diversity amongst classifiers by limiting their scope, and effectively forcing them to learn a rather specialized prediction rule. During prediction, each of the individual ensemble members 'vote' for the prediction that best resembles its limited scope -- these votes are then combined using an aggregation method to compute the final ensemble prediction.} \\
+\textit{The Random Forest predictor \citep{ref:Breiman2001} is an ensemble predictor that combines bagging \citep{ref:Breiman1996} and random covariate subspacing \citep{ref:Ho1998}, to construct accurate classification or regression ensembles of decision trees. Both bagging and random subspacing are effective ensemble methods in themselves -- both implicitly increase diversity amongst classifiers by limiting their scope, and effectively forcing them to learn a rather specialized prediction rule. During prediction, each of the individual ensemble members 'vote' for the prediction that best resembles its limited scope -- these votes are then combined using an aggregation method to compute the final ensemble prediction.} \\
 
 \noindent
 \begin{enumerate}
 	\item State decision tree base learning for random forest: CART is a decision tree induction algorithm that utilizes entropy and information gain/ mse to recursively divide data into increasingly pure partitions. 
-	\item Move on to topic of random forest: proposed by breiman (2001). Combination of decision tree, bagging and random feature subspacing.
+	\item Move on to topic of random forest: proposed by breiman (2001). Combination of decision tree, bagging and random covariate subspacing.
 	\item Move on to topic of multivariate regression output random forests. Different options for this and the choice for us to use a specific implementation although many were proposed: for instance Segal and Xiao (2011) propose a multivariate Random Forest ensemble (Breiman, 2001) using the covariance weighted multivariate regression trees proposed by Segal (1992), that show an increased predictive performance compared to other methods for multivariate prediction, as well as univariate prediction. We will only have to adapt the splitting function. 
 \end{enumerate}
 
 
 
-\subsubsection{Classification And Regression Trees}
-"Decision Trees (DTs) are a non-parametric supervised learning method used for classification and regression. The goal is to create a model that predicts the value of a target variable by learning simple decision rules inferred from the data features."
+\subsubsection{Classification and Regression Trees}
+"Decision Trees (DTs) are a non-parametric supervised learning method used for classification and regression. The goal is to create a model that predicts the value of a target variable by learning simple decision rules inferred from the data covariates."
 \textit{Breiman RF is based on Classification and Regression Trees (henceforth CART) decision tree algorithm (L. Breiman, J. H. Friedman, R. A. Olshen, and C. J. Stone. Classification and regression trees. 1984.). The CART trees used in Random Forest much resemble C4.5 trees, but have a couple of key differences. As proposed by Breiman (2001), RF-CART uses squared error loss to compute node purity. However, the most interesting difference between
-the two trees is the application of random feature subspacing in RF-CART trees ? whereas C4.5 examines all possible features to find the best split in any given node, the trees in Random Forest examine only a random subsample of features in each node.} \\
+the two trees is the application of random covariate subspacing in RF-CART trees ? whereas C4.5 examines all possible covariates to find the best split in any given node, the trees in Random Forest examine only a random subsample of covariates in each node.} \\
 
 \noindent
 "As for the CART-split criterion, it originates from the influential CART program of \cite{ref:Breiman1984}, and is used in the construction of the individual trees to choose the best cuts perpendicular to the axes. At each node of each tree, the best cut is selected by optimizing the CART-split criterion, based on the so-called Gini impurity (for classification) or the prediction squared error (for regression). \\
@@ -339,14 +340,14 @@ the two trees is the application of random feature subspacing in RF-CART trees ?
 Selecting splits: " In general terms, the split at each node will be found that will generate the greatest improvement in predictive accuracy. This is usually measured with some type of node impurity measure, which provides an indication of the relative homogeneity (the inverse of impurity) of cases in the terminal nodes. If all cases in each terminal node show identical values, then node impurity is minimal, homogeneity is maximal, and prediction is perfect." \\
 
 \noindent
-"Proposed by Quinlan (1993), C4.5 is a decision tree induction algorithm that utilizes entropy and information gain to recursively divide data into increasingly pure partitions. Given a data set of examples $zs = {(x1, y1),(x2, y2), ...(xn, yn)}$, the goal is to train a decision tree such that its leaf nodes contain instances with as low variance as possible with regards to output values ? this is accomplished by, in each node, splitting the examples into two partitions based on the featurevalue pair that best separates the data, until no gain can be had from further partitioning."
+"Proposed by Quinlan (1993), C4.5 is a decision tree induction algorithm that utilizes entropy and information gain to recursively divide data into increasingly pure partitions. Given a data set of examples $zs = {(x1, y1),(x2, y2), ...(xn, yn)}$, the goal is to train a decision tree such that its leaf nodes contain instances with as low variance as possible with regards to output values ? this is accomplished by, in each node, splitting the examples into two partitions based on the covariatevalue pair that best separates the data, until no gain can be had from further partitioning."
 
 \subsubsection{Bagging}
 " Bagging (a contraction of bootstrap-aggregating) is a general aggregation scheme, which generates
 bootstrap samples from the original data set, constructs a predictor from each sample, and decides by averaging. It is one of the most effective computationally intensive procedures to improve on unstable estimates."
 
 
-\subsubsection{Random Feature Subspacing}
+\subsubsection{Random Covariate Subspacing}
 
 
 \subsubsection{Multi-Output Random Forest}
@@ -369,7 +370,7 @@ The main advantage of multi-output decision trees is that dependencies between o
 \iffalse
 \noindent
 \textbf{A Random Forest Guided Tour - Biau and Scornet, 2015. Good information on random forests in plain terms.} \\
-Aside from being simple to use, the method is generally recognized for its accuracy and its ability to deal with small sample sizes and high-dimensional feature spaces. At the same time, it is easily parallelizable and has therefore the potential to deal with large real-life systems....  J. Howard (Kaggle) and M. Bowles (Biomatica) claim in Howard and Bowles (2012) that ensembles of decision trees?often known as ?random forests??have been the most successful general-purpose algorithm in modern times, while H. Varian, Chief Economist at Google, advocates in Varian (2014) the use of random forests in econometrics... \\
+Aside from being simple to use, the method is generally recognized for its accuracy and its ability to deal with small sample sizes and high-dimensional covariate spaces. At the same time, it is easily parallelizable and has therefore the potential to deal with large real-life systems....  J. Howard (Kaggle) and M. Bowles (Biomatica) claim in Howard and Bowles (2012) that ensembles of decision trees?often known as ?random forests??have been the most successful general-purpose algorithm in modern times, while H. Varian, Chief Economist at Google, advocates in Varian (2014) the use of random forests in econometrics... \\
 \fi
 
 \subsection{Bias-Variance Decomposition} \label{sec:mse_decompose}
@@ -544,12 +545,12 @@ In Sections \ref{sec:ml_supervised} and \ref{sec:mvm} we have established the me
 Recall that the goal of this paper is to leverage machine learning algorithms to model the time-varying correlation between financial returns, i.e. coefficient $\rho_{i,j,t}$ in $R_t$ of the covariance-variance decomposition in \eqref{eq:covariance_decomposition}. As the time-varying correlations between financial returns are unobservable we define the response variable $Y$ using approximations of time-varying correlation in the form of sample correlations from moving windows, which are calculated according to \eqref{eq:mw_rho} and \eqref{eq:mw_kendall} for Pearson's linear correlation coefficient and Kendall's $\tau$ correlation coefficient, respectively. Pearson and Kendall moving window correlation estimates of the previous time unit, $\hat{\rho}_{i,j,t-1}$, are used for constructing the set of covariates $X^T$ in addition to the minimum and maximum return of the previous time unit, $min_{i,j}(r_{i,j,t-1})$ and $max_{i,j}(r_{i,j,t-1})$.   \\        
 
 \noindent
-In the case we have an asset universe of size $k$, there are $k(k-1)/2$ pairwise correlations to be predicted in the form of response variable $Y_t$ at each time unit $t \in \{1,2,\dots,T\}$. The set of covariates at each time unit, $X_t$, will consist of $k(k-1)/2$ pairwise correlations plus the minimum and maximum return of the previous day, which results in a covariate space of dimension $k(k-1)/2 + 2$.  \\
+In the case of a k-dimensional asset universe, there are $k(k-1)/2$ pairwise correlations to be predicted in the form of response variable $Y_t$ at each time unit $t \in \{1,2,\dots,T\}$. The set of covariates at each time unit, $X_t$, will consist of $k(k-1)/2$ pairwise correlations plus the minimum and maximum return of the previous day, which results in a covariate space of dimension $k(k-1)/2 + 2$.  \\
 
 \noindent
 Hence, the dataset can be formulated as a $T\times (k^2-k+2)$ matrix, that is, 
 
-% Data set with feature matrix and response variable
+% Data set with covariate matrix and response variable
 \begin{equation} \label{eq:dataset}
 	\left[ 
 	\begin{array}{cccccccccc}
@@ -564,7 +565,7 @@ Hence, the dataset can be formulated as a $T\times (k^2-k+2)$ matrix, that is,
 where the response variable of day $t$, $Y_t$, is defined as a $k(k-1)/2$-dimensional vector containing pairwise correlation estimates of day $t+1$, i.e. $Y_t = (\hat{\rho}_{1,2,t+1}, \hat{\rho}_{1,3,t+1}, \dots, \hat{\rho}_{2,3,t+1}, \hat{\rho}_{2,4,t+1}, \dots,  \hat{\rho}_{k,k(k-1)/2,t+1})$. \\ 
 
 \noindent
-One should note that the set of covariates and response variable in the dataset of \eqref{eq:dataset} both contain noise in the form of approximation error as both are approximations of correlation and not the true correlation. A consequence of noisy data is the risk of overfitting and this is something to take into consideration during the simulation study in Chapter \ref{ch:simulation_study}.   
+One should note that the set of covariates and response variable in the dataset of \eqref{eq:dataset} contain noise in the form of approximation error as both are approximations of correlation and not true correlation. A consequence of noisy data is the risk of overfitting and this is something to take into consideration during the simulation study, which will be discussed in Chapter \ref{ch:simulation_study}.   
 
 
 
@@ -682,8 +683,8 @@ Concluding, Pearson and Kendall moving window estimates of time-varying correlat
 
 
 
-\section{KNN, RF Application with True Correlations for Response Variable and Proxies for Covariates} \label{sec:true_correlation}
-"In this section, the input variables of the learning algorithms are approximations of actual (unobserved) correlation. Simulation experiments are used to study the effect using approximations of correlations as the input variables on the learning algorithm results, isolating this effect from the approximations of the response variable, which is illustrated in Section \ref{sec:proxy_correlation}. The simulation study will give insight into the (function) approximation capability of KNN/ RF, particularly in comparison to Pearson/ Kendall approximation.  This will give us some initial information wrt possible success of these algorithms in the task of modelling time-varying correlation." \\
+\section{Learning with True Correlation for Response Variable and Proxies for Covariates} \label{sec:true_correlation}
+"In this section, the input variables of the learning algorithms are approximations of actual (unobserved) correlation. Simulation experiments are used to study the effect using approximations of correlations as the input variables on the learning algorithm results, isolating this effect from the approximations of the response variable, which is illustrated in Section \ref{sec:proxy_correlation}. The simulation study will give insight into the (function) approximation capability of the learning algorithms, particularly in comparison with Pearson and Kendall moving window approximations. This will give us some initial information with respect to possible success of these algorithms in the task of modeling time-varying correlation." \\
 
 
 
@@ -857,7 +858,7 @@ Eq. \eqref{eq:mse_decomposition_knn} and our discussion from Section \ref{sec:ms
 \end{figure}
 
 \noindent
-Next, two more interesting parameterizations of the KNN learning algorithm are analysed. In both parameterizations, the set of neighbors used for point estimation of time-varying correlation is defined as the entire training set. However, in the first parameterizations, the KNN algorithm uses an uniformly weighted average of correlations, i.e. each of the neighbors contributing equally to the point estimate of time-varying correlation. In the second parameterizations, the KNN algorithm uses an inverse distance weighted average of correlations, as defined in \eqref{eq:IDWfunction} \citep{ref:Shepard1968}. The MSE decomposition of both parameterizations with Pearson covariates and true correlation is depicted in Fig. \ref{fig:decom_mse_knn_len_train_IDW_pearson_kendall_true}. It is clear that the variance terms becomes negligible small in case the set of neighbors used for point estimation of time-varying correlation is defined as the entire training set, regardless of the weighting function. The red line of the variance is barely observable in the bottom of Fig. \ref{fig:decom_mse_knn_len_train_pearson_true} and Fig. \ref{fig:decom_mse_knn_IDW_pearson_true}. This is in line with results depicted in Tabel \ref{tab:mse_decomp_knn_pearson_kendall_true} where the value of the variance term is negligible small for $k=1000$, regardless whether the set of covariates is constructed from Pearson or Kendall moving window estimates of correlation.          
+Next, two more interesting parameterizations of the KNN learning algorithm are analysed. In both parameterizations, the set of neighbors used for point estimation of time-varying correlation is defined as the entire training set. However, in the first parameterizations, the KNN algorithm uses an uniformly weighted average of correlations, i.e. each of the neighbors contributing equally to the point estimate of time-varying correlation. In the second parameterizations, the KNN algorithm uses an inverse distance weighted average of correlations, as defined in \eqref{eq:IDWfunction}. The MSE decomposition of both parameterizations with Pearson covariates and true correlation is depicted in Fig. \ref{fig:decom_mse_knn_len_train_IDW_pearson_kendall_true}. It is clear that the variance terms becomes negligible small in case the set of neighbors used for point estimation of time-varying correlation is defined as the entire training set, regardless of the weighting function. The red line of the variance is barely observable in the bottom of Fig. \ref{fig:decom_mse_knn_len_train_pearson_true} and Fig. \ref{fig:decom_mse_knn_IDW_pearson_true}. This is in line with results depicted in Tabel \ref{tab:mse_decomp_knn_pearson_kendall_true} where the value of the variance term is negligible small for $k=1000$, regardless whether the set of covariates is constructed from Pearson or Kendall moving window estimates of correlation.          
 
 \begin{figure}[H]  % [h] parameter makes sure figures are located at 'this' location.
 	\centering
@@ -984,7 +985,7 @@ The MSE decompositions into bias and variance terms from RF estimates of correla
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%% Proxies for Correlation %%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{KNN, RF Application with Proxies for Response Variable and Covariates} \label{sec:proxy_correlation}
+\section{Learning with Proxies for Response Variable and Covariates} \label{sec:proxy_correlation}
 In this section, a more realistic approach is taken to the application of nearest neighbors and random forests algorithms for time-varying correlation estimation. Both the covariates and response variable are obtained from moving window estimation, as defined in \eqref{eq:mw_rho} and \eqref{eq:mw_kendall}. This is different from Sec. \ref{sec:true_correlation} where the response variable of the learning algorithms was defined as the true observed correlation (given by the simulated parameters). \textbf{Relate this section to the research question how learning algorithms perform/ behave when the response variable contains noise in the form of approximation error.} \\
 
 \noindent

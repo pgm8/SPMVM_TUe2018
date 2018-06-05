@@ -10,9 +10,9 @@
 \BOOKMARK [1][-]{section.2.1}{Machine Learning and the Concept of Supervised learning}{chapter.2}% 10
 \BOOKMARK [2][-]{subsection.2.1.1}{Nearest Neighbors Algorithm}{section.2.1}% 11
 \BOOKMARK [2][-]{subsection.2.1.2}{Random Forest Algorithm}{section.2.1}% 12
-\BOOKMARK [3][-]{subsubsection.2.1.2.1}{Classification And Regression Trees}{subsection.2.1.2}% 13
+\BOOKMARK [3][-]{subsubsection.2.1.2.1}{Classification and Regression Trees}{subsection.2.1.2}% 13
 \BOOKMARK [3][-]{subsubsection.2.1.2.2}{Bagging}{subsection.2.1.2}% 14
-\BOOKMARK [3][-]{subsubsection.2.1.2.3}{Random Feature Subspacing}{subsection.2.1.2}% 15
+\BOOKMARK [3][-]{subsubsection.2.1.2.3}{Random Covariate Subspacing}{subsection.2.1.2}% 15
 \BOOKMARK [3][-]{subsubsection.2.1.2.4}{Multi-Output Random Forest}{subsection.2.1.2}% 16
 \BOOKMARK [2][-]{subsection.2.1.3}{Bias-Variance Decomposition}{section.2.1}% 17
 \BOOKMARK [1][-]{section.2.2}{Multivariate Volatility Modeling}{chapter.2}% 18
@@ -21,10 +21,10 @@
 \BOOKMARK [1][-]{section.2.3}{Correlation Estimation using Machine Learning}{chapter.2}% 21
 \BOOKMARK [0][-]{chapter.3}{Simulated Data with Time-Varying Correlation}{}% 22
 \BOOKMARK [1][-]{section.3.1}{Moving Window Estimates of Correlation}{chapter.3}% 23
-\BOOKMARK [1][-]{section.3.2}{KNN, RF Application with True Correlations for Response Variable and Proxies for Covariates}{chapter.3}% 24
+\BOOKMARK [1][-]{section.3.2}{Learning with True Correlation for Response Variable and Proxies for Covariates}{chapter.3}% 24
 \BOOKMARK [2][-]{subsection.3.2.1}{Nearest Neighbor}{section.3.2}% 25
 \BOOKMARK [2][-]{subsection.3.2.2}{Random Forest}{section.3.2}% 26
-\BOOKMARK [1][-]{section.3.3}{KNN, RF Application with Proxies for Response Variable and Covariates}{chapter.3}% 27
+\BOOKMARK [1][-]{section.3.3}{Learning with Proxies for Response Variable and Covariates}{chapter.3}% 27
 \BOOKMARK [2][-]{subsection.3.3.1}{Nearest Neighbor}{section.3.3}% 28
 \BOOKMARK [2][-]{subsection.3.3.2}{Random Forest}{section.3.3}% 29
 \BOOKMARK [1][-]{section.3.4}{Conclusion Simulation Results}{chapter.3}% 30
