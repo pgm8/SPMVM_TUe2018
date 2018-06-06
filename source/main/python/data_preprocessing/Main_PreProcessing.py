@@ -324,6 +324,7 @@ def main():
     ##################################################################################################################
     ###        Mean squared error of Pearson/Kendall correlation coefficient using machine learner estimates       ###
     ##################################################################################################################
+
     simulated_data_process = mm.load_data('/bivariate_analysis/correlated_sim_data.pkl')
     T = 500
     rho_true = simulated_data_process.tail(T).iloc[:, -1]
@@ -358,7 +359,9 @@ def main():
     print(filename_save)
     mm.save_data('bivariate_analysis/%s_cor/mse_results_%s_cor/' % (output_type, output_type) + filename_save, data_frame)
     """
-    """
+
+
+
     ## Load MSE data Pearson/ Kendall
     mse_pearson_vec = mm.load_data('bivariate_analysis/mse_pearson.pkl')
     mse_kendall_vec = mm.load_data('bivariate_analysis/mse_kendall.pkl')
@@ -412,7 +415,7 @@ def main():
     mse_rf10_pearson_proxy = mm.load_data('bivariate_analysis/proxy_cor/mse_results_proxy_cor/mse_rf10_pearson_proxy_cor.pkl')
 
     mse_rf10_kendall_proxy = mm.load_data('bivariate_analysis/proxy_cor/mse_results_proxy_cor/mse_rf10_kendall_proxy_cor.pkl')
-    """
+
 
     """
     # Figure without interpolation MSE
@@ -548,11 +551,11 @@ def main():
     """
     # Figure without interpolation MSE
     plt.figure(4)
-    #plt.plot(mse_pearson_vec['MSE'], label='Pearson', color='indigo', linewidth=1)
-    #plt.plot(mse_kendall_vec['MSE'], label='Kendall', color='cyan', linestyle='--', linewidth=1)
+    plt.plot(mse_pearson_vec['MSE'], label='Pearson', color='indigo', linewidth=1)
+    plt.plot(mse_kendall_vec['MSE'], label='Kendall', color='cyan', linestyle='--', linewidth=1)
     plt.plot(mse_rf10_pearson_proxy['MSE'], label='RF_pearson', color='goldenrod', linewidth=1)
-    #plt.plot(mse_rf10_kendall_proxy['MSE'], label='KNN_kendall', color='xkcd:teal', linewidth=1)
-    plt.plot(mse_rf10_kendall_proxy['MSE'], label='RF_kendall', color='green', linewidth=1)
+    plt.plot(mse_rf10_kendall_proxy['MSE'], label='RF_kendall', color='xkcd:teal', linewidth=1)
+    #plt.plot(mse_rf10_kendall_proxy['MSE'], label='RF_kendall', color='green', linewidth=1)
     #plt.plot(mse_rf1000_pearson_true['MSE'], label='RF_pearson', linewidth=1)
     plt.xlabel('window length')
     plt.ylabel('MSE')
@@ -606,16 +609,21 @@ def main():
     plt.ylim(0, 0.2)
     plt.show()
     """
-
+    """
     # Figure with interpolation MSE decomposition sensitivity analysis number of trees
-    mse_rf_pearson_true_cor_sa_trees = mm.load_data(
-        'bivariate_analysis/true_cor/mse_results_true_cor/mse_rf_pearson_true_cor_sensitivity_analysis_trees.pkl')
+    mse_rf_pearson_true_cor_sa_trees = preprocesser.mse_rf_sensitivity_analysis(rho_true=rho_true)
+    mse_rf_kendall_true_cor_sa_trees = preprocesser.mse_rf_sensitivity_analysis(
+        rho_true=rho_true, proxy_type='kendall', output_type='true', type='trees')
+
+    mse_rf_pearson_proxy_cor_sa_trees = preprocesser.mse_rf_sensitivity_analysis(rho_true=rho_true, output_type='proxy')
+    mse_rf_kendall_proxy_cor_sa_trees = preprocesser.mse_rf_sensitivity_analysis(
+        rho_true=rho_true, proxy_type='kendall', output_type='proxy', type='trees')
     plt.figure(4)
     xs = np.arange(1001)
-    s1mask = np.isfinite(mse_rf_pearson_true_cor_sa_trees['bias_squared'])
-    s2mask = np.isfinite(mse_rf_pearson_true_cor_sa_trees['variance'])
-    s3mask = np.isfinite(mse_rf_pearson_true_cor_sa_trees['MSE'])
-    plt.plot(xs[s1mask], mse_rf_pearson_true_cor_sa_trees['bias_squared'][s1mask], label='Squared Bias', color='blue',
+    s1mask = np.isfinite(mse_rf_kendall_true_cor_sa_trees['bias_squared'])
+    s2mask = np.isfinite(mse_rf_kendall_true_cor_sa_trees['variance'])
+    s3mask = np.isfinite(mse_rf_kendall_true_cor_sa_trees['MSE'])
+    plt.plot(xs[s1mask], mse_rf_kendall_true_cor_sa_trees['bias_squared'][s1mask], label='Squared Bias', color='blue',
              linestyle='-', linewidth=1, marker='.')
     plt.plot(xs[s2mask], mse_rf_pearson_true_cor_sa_trees['variance'][s2mask], label='Variance', color='red', linestyle='-',
              linewidth=1, marker='.')
@@ -630,7 +638,7 @@ def main():
     plt.yticks(np.arange(0, 0.21, 0.02))
     plt.ylim(0, 0.2)
     plt.show()
-
+    """
     ##################################################################################################################
     ###                                   Minimum Determinant Learning Algorithms                                       ###
     ##################################################################################################################

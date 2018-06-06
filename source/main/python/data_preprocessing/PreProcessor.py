@@ -1,9 +1,9 @@
 import pandas as pd
 import numpy as np
-from scipy.stats.stats import pearsonr
+from scipy.stats.stats import pearsonr, kendalltau
 
 from TechnicalAnalyzer import TechnicalAnalyzer
-from ModuleManager import ModuleManager
+from ModuleManager import ModuleManager 
 from sklearn.neighbors import KNeighborsRegressor
 from sklearn.ensemble import RandomForestRegressor
 
@@ -184,7 +184,7 @@ class PreProcessor(object):
                     rho_bootstrapped[rep] = kendalltau(sample[:, 0], sample[:, 1])[0]
                 else:
                     print('Please, choose an option from the supported set of proxies for true correlations (Pearson '
-                          'moving window, Pearson exponentially weighted moving window, Kendall moving window')
+                          'moving window or Kendall moving window')
             lower, upper = np.nanpercentile(rho_bootstrapped, [p_low, p_high])
             lower_percentiles[j] = lower
             upper_percentiles[j] = upper
@@ -284,15 +284,33 @@ class PreProcessor(object):
                                    'MSE': rho_mse_vec})
         return data_frame
 
-    def mse_rf_sensitivity_analysis(self, proxy_type='pearson', output_type='true', type='trees'):
+    def mse_rf_sensitivity_analysis(self, rho_true, proxy_type='pearson', output_type='true', type='trees'):
         """Method for creation of a dataframe containing information on MSE decomposition as a function of different
         parameterizations for rf learner model.
+        :param rho_true: vector containing true correlation
         :param proxy_type: type of moving window estimator used as covariate.
         :param output_type: output variable true correlation or proxy.
         :return: dataframe."""
         if type is 'trees':
-            print('trees')
-
+            rho_bias_squared = np.full(1001, np.nan)
+            rho_var_vec = np.full(1001, np.nan)
+            rho_mse_vec = np.full(1001, np.nan)
+            trees = [10, 100, 300, 600, 1000]
+            # Load mse decomposition data
+            for tree in trees:
+                data = self.mm.load_data('bivariate_analysis/%s_cor/%s/results_rf_%s_%s_cor/'
+                                      'rf%i_%s_10_estimate_uncertainty_rep_100_%s_corr.pkl'
+                                      % (output_type, proxy_type, proxy_type, output_type,
+                                         tree, proxy_type, output_type))
+                rho_estimates = data['Rho_estimate']
+                rho_bias_squared[tree] = np.mean(np.power(rho_estimates-rho_true, 2))
+                rho_var_vec[tree] = np.power(np.mean(data['std rho estimate']), 2)
+            rho_mse_vec = np.array([np.sum(pair) for pair in zip(rho_bias_squared, rho_var_vec)])
+            data_frame = pd.DataFrame({'bias_squared': rho_bias_squared, 'variance': rho_var_vec,
+                                           'MSE': rho_mse_vec})
+            filename_save = 'mse_rf_%s_%s_cor_sensitivity_analysis_trees.pkl' % (proxy_type, output_type)
+            self.mm.save_data('bivariate_analysis/%s_cor/mse_results_%s_cor/' %
+                              (output_type, output_type) + filename_save, data_frame)
         else:
             rho_bias_squared = np.full(4, np.nan)
             rho_var_vec = np.full(4, np.nan)
@@ -306,6 +324,9 @@ class PreProcessor(object):
             # Dataframe with information on MSE decomposition as a function of different learner parameterizations
             data_frame = pd.DataFrame({'bias_squared': rho_bias_squared, 'variance': rho_var_vec,
                                        'MSE': rho_mse_vec})
+            filename_save = 'mse_rf_%s_%s_cor_sensitivity_analysis_covariates.pkl' % (proxy_type, output_type)
+            self.mm.save_data('bivariate_analysis/%s_cor/mse_results_%s_cor/' %
+                              (output_type, output_type) + filename_save, data_frame)
         return data_frame
 
 

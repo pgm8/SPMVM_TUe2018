@@ -77,10 +77,9 @@ def main():
     ##################################################################################################################
     # Moving window estimates as approximation for true correlation constructing set of covariates and output variable
     # Dataframe with DJI 30 constituents
-
+    """"
     dt = 10
-    proxy_type = ['kendall']
-
+    proxy_type = ['pearson, ''kendall']
     data = mm.load_data('multivariate_analysis/DJI30_returns_1987_2001.pkl')
     dates = data['Date'].iloc[10:]
     data.drop(['Date'], axis=1, inplace=True)
@@ -98,7 +97,7 @@ def main():
     ##################################################################################################################
     # Estimate correlations for stable market conditions: 03/01/1995 - 31/12/1999
     # Estimate correlations for volatile market conditions: 02/01/2004 - 31/12/2008
-
+    """
     dt = 10
     n = 30  # Number of assets under consideration
     n_corr = int((n*(n-1)) / 2)
