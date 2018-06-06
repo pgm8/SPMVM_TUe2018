@@ -23,21 +23,28 @@
 \BOOKMARK [1][-]{section.3.1}{Moving Window Estimates of Correlation}{chapter.3}% 23
 \BOOKMARK [1][-]{section.3.2}{Learning with True Correlation for Response Variable and Proxies for Covariates}{chapter.3}% 24
 \BOOKMARK [2][-]{subsection.3.2.1}{Nearest Neighbor}{section.3.2}% 25
-\BOOKMARK [2][-]{subsection.3.2.2}{Random Forest}{section.3.2}% 26
-\BOOKMARK [1][-]{section.3.3}{Learning with Proxies for Response Variable and Covariates}{chapter.3}% 27
-\BOOKMARK [2][-]{subsection.3.3.1}{Nearest Neighbor}{section.3.3}% 28
-\BOOKMARK [2][-]{subsection.3.3.2}{Random Forest}{section.3.3}% 29
-\BOOKMARK [1][-]{section.3.4}{Conclusion Simulation Results}{chapter.3}% 30
-\BOOKMARK [0][-]{chapter.4}{Systems of Correlations in Quantitative Financial Risk Management}{}% 31
-\BOOKMARK [1][-]{section.4.1}{Value-at-Risk as Measure for Market Risk}{chapter.4}% 32
-\BOOKMARK [1][-]{section.4.2}{Dynamic Conditional Correlation Model}{chapter.4}% 33
-\BOOKMARK [1][-]{section.4.3}{Backtesting Methodology}{chapter.4}% 34
-\BOOKMARK [1][-]{section.4.4}{Data and Descriptive Statistics}{chapter.4}% 35
-\BOOKMARK [1][-]{section.4.5}{Empirical Results}{chapter.4}% 36
-\BOOKMARK [2][-]{subsection.4.5.1}{Tranquil Market Conditions: Mid-1990's}{section.4.5}% 37
-\BOOKMARK [2][-]{subsection.4.5.2}{Volatile Market Conditions: 2000-2001 Dot-com Bubble}{section.4.5}% 38
-\BOOKMARK [1][-]{section.4.6}{Conclusion Empirical Results}{chapter.4}% 39
-\BOOKMARK [0][-]{chapter.5}{Conclusion and Future Research}{}% 40
-\BOOKMARK [0][-]{appendix.A}{Theoretical Analysis Value-at-Risk Forecasting}{}% 41
-\BOOKMARK [1][-]{section.A.1}{Tranquil Market Conditions: Mid-1990's}{appendix.A}% 42
-\BOOKMARK [1][-]{section.A.2}{Volatile Market Conditions: 2000-2001 Dot-com Bubble}{appendix.A}% 43
+\BOOKMARK [3][-]{subsubsection.3.2.1.1}{Diagnosing the Generalization Error of KNN}{subsection.3.2.1}% 26
+\BOOKMARK [3][-]{subsubsection.3.2.1.2}{Alternative KNN Parameterizations}{subsection.3.2.1}% 27
+\BOOKMARK [2][-]{subsection.3.2.2}{Random Forest}{section.3.2}% 28
+\BOOKMARK [3][-]{subsubsection.3.2.2.1}{Diagnosing the Generalization Error of RF}{subsection.3.2.2}% 29
+\BOOKMARK [3][-]{subsubsection.3.2.2.2}{Alternative RF Parameterizations}{subsection.3.2.2}% 30
+\BOOKMARK [1][-]{section.3.3}{Learning with Proxies for Response Variable and Covariates}{chapter.3}% 31
+\BOOKMARK [2][-]{subsection.3.3.1}{Nearest Neighbor}{section.3.3}% 32
+\BOOKMARK [3][-]{subsubsection.3.3.1.1}{Diagnosing the Generalization Error of KNN}{subsection.3.3.1}% 33
+\BOOKMARK [2][-]{subsection.3.3.2}{Random Forest}{section.3.3}% 34
+\BOOKMARK [3][-]{subsubsection.3.3.2.1}{Diagnosing the Generalization Error of RF}{subsection.3.3.2}% 35
+\BOOKMARK [3][-]{subsubsection.3.3.2.2}{Alternative RF Parameterizations}{subsection.3.3.2}% 36
+\BOOKMARK [1][-]{section.3.4}{Conclusion Simulation Results}{chapter.3}% 37
+\BOOKMARK [0][-]{chapter.4}{Systems of Correlations in Quantitative Financial Risk Management}{}% 38
+\BOOKMARK [1][-]{section.4.1}{Value-at-Risk as Measure for Market Risk}{chapter.4}% 39
+\BOOKMARK [1][-]{section.4.2}{Dynamic Conditional Correlation Model}{chapter.4}% 40
+\BOOKMARK [1][-]{section.4.3}{Backtesting Methodology}{chapter.4}% 41
+\BOOKMARK [1][-]{section.4.4}{Data and Descriptive Statistics}{chapter.4}% 42
+\BOOKMARK [1][-]{section.4.5}{Empirical Results}{chapter.4}% 43
+\BOOKMARK [2][-]{subsection.4.5.1}{Tranquil Market Conditions: Mid-1990's}{section.4.5}% 44
+\BOOKMARK [2][-]{subsection.4.5.2}{Volatile Market Conditions: 2000-2001 Dot-com Bubble}{section.4.5}% 45
+\BOOKMARK [1][-]{section.4.6}{Conclusion Empirical Results}{chapter.4}% 46
+\BOOKMARK [0][-]{chapter.5}{Conclusion and Future Research}{}% 47
+\BOOKMARK [0][-]{appendix.A}{Theoretical Analysis Value-at-Risk Forecasting}{}% 48
+\BOOKMARK [1][-]{section.A.1}{Tranquil Market Conditions: Mid-1990's}{appendix.A}% 49
+\BOOKMARK [1][-]{section.A.2}{Volatile Market Conditions: 2000-2001 Dot-com Bubble}{appendix.A}% 50

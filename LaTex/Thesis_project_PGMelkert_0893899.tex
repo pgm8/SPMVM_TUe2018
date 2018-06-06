@@ -362,10 +362,10 @@ as previously done in single output decision trees.
 
 \noindent
 In Scikit-Learn library: Mean squared error impurity criterion with  $MSE = var_l + var_r$.  The best split is the split 
-that maximizes impurity decrease. I think in the setting of multiple outputs scikit learn decision tree compute the average impurity decrease over the q output variables (but I am not sure, cant really confirm from reading the code on github). \\
+that maximizes impurity decrease. In case of multiple outputs scikit learn decision tree computes the average impurity decrease over all output variables. This is confirmed by gilles louppe. \\
 
 \noindent
-The main advantage of multi-output decision trees is that dependencies between output variables can be taken into account, whereas building q individual models cannot exploit such correlations, which may affect the overall accuracy of the model. A second advantage is that building a single model is often less computationally expensive than building q different models, both from a time and space complexity point of view." (louppe, 2014)
+"The main advantage of multi-output decision trees is that dependencies between output variables can be taken into account, whereas building q individual models cannot exploit such correlations, which may affect the overall accuracy of the model. A second advantage is that building a single model is often less computationally expensive than building q different models, both from a time and space complexity point of view." (louppe, 2014)
 
 \iffalse
 \noindent
@@ -398,7 +398,7 @@ where the subscripts $(l)$ in \eqref{eq:mse_decomposition_knn} denote the instan
 The second and third terms in expression \eqref{eq:mse_decomposition_knn} are the (squared) bias and variance components, respectively, and under one's control. For k-nearest neighbors, the model complexity is inversely related to and controlled by the number of neighbors $k$, i.e. the higher the value of $k$, the lower the model complexity. As such, the (squared) bias tends to increase with an increase in $k$, whereas the variance term decreases as the inverse of $k$, i.e. bias-variance tradeoff with variation of $k$.  \\
 
 \noindent
-The accuracy of random forests depends on the strength of the individual random forest trees and of the dependence between them \citep{ref:Breiman2001}. A brief discussion of the interplay between these two gives a more formal foundation for understanding the paperings of random forests and, inherently, the results obtained from different parameterizations during the simulation study in Sections \ref{sec:true_correlation}-\ref{sec:proxy_correlation}. The expected prediction error of a random forest regression fit $\hat{f}_{rf}(X)$ at a query instance $X = x_0$ can be decomposed:
+The accuracy of random forests depends on the strength of the individual random forest trees and of the dependence between them \citep{ref:Breiman2001}. A brief discussion of the interplay between these two gives a more formal foundation for understanding the workings of random forests and, inherently, the results obtained from different parameterizations during the simulation study in Sections \ref{sec:true_correlation}-\ref{sec:proxy_correlation}. The expected prediction error of a random forest regression fit $\hat{f}_{rf}(X)$ at a query instance $X = x_0$ can be decomposed:
 
 \begin{align}
 	\text{Err}_{rf}^B(x_0) &= E[(Y - \hat{f}_{rf}^B(x_0))^2 | X = x_0]\nonumber \\
@@ -542,7 +542,7 @@ Similar to Pearson moving window estimates of correlation, Kendall's $\tau$ corr
 In Sections \ref{sec:ml_supervised} and \ref{sec:mvm} we have established the methodological underpinnings of machine learning and multivariate volatility modeling; two methodologies that play a central role throughout this paper. In this section we will discuss what approach we take to successfully formulate estimation of time-varying correlations as a supervised learning problem. \\
 
 \noindent
-Recall that the goal of this paper is to leverage machine learning algorithms to model the time-varying correlation between financial returns, i.e. coefficient $\rho_{i,j,t}$ in $R_t$ of the covariance-variance decomposition in \eqref{eq:covariance_decomposition}. As the time-varying correlations between financial returns are unobservable we define the response variable $Y$ using approximations of time-varying correlation in the form of sample correlations from moving windows, which are calculated according to \eqref{eq:mw_rho} and \eqref{eq:mw_kendall} for Pearson's linear correlation coefficient and Kendall's $\tau$ correlation coefficient, respectively. Pearson and Kendall moving window correlation estimates of the previous time unit, $\hat{\rho}_{i,j,t-1}$, are used for constructing the set of covariates $X^T$ in addition to the minimum and maximum return of the previous time unit, $min_{i,j}(r_{i,j,t-1})$ and $max_{i,j}(r_{i,j,t-1})$.   \\        
+Recall that the goal of this paper is to leverage machine learning algorithms to model the time-varying correlation between financial returns, i.e. coefficient $\rho_{i,j,t}$ in $R_t$ of the covariance-variance decomposition in \eqref{eq:covariance_decomposition}. As the time-varying correlations between financial returns are unobservable we define the response variable $Y$ using approximations of time-varying correlation in the form of sample correlations from moving windows, which are calculated according to \eqref{eq:mw_rho} and \eqref{eq:mw_kendall} for Pearson's linear correlation coefficient and Kendall's $\tau$ correlation coefficient, respectively. Pearson and Kendall moving window correlation estimates of the previous time unit, $\hat{\rho}_{i,j,t-1}$, are used for constructing the set of covariates $X^T$ in addition to the minimum and maximum return of the previous time unit, $min_{i}(r_{i,t-1})$ and $max_{i}(r_{i,t-1})$.   \\        
 
 \noindent
 In the case of a k-dimensional asset universe, there are $k(k-1)/2$ pairwise correlations to be predicted in the form of response variable $Y_t$ at each time unit $t \in \{1,2,\dots,T\}$. The set of covariates at each time unit, $X_t$, will consist of $k(k-1)/2$ pairwise correlations plus the minimum and maximum return of the previous day, which results in a covariate space of dimension $k(k-1)/2 + 2$.  \\
@@ -554,10 +554,10 @@ Hence, the dataset can be formulated as a $T\times (k^2-k+2)$ matrix, that is,
 \begin{equation} \label{eq:dataset}
 	\left[ 
 	\begin{array}{cccccccccc}
-		\hat{\rho}_{1,2,1} & \hat{\rho}_{1,3,1}  & \cdots  & \hat{\rho}_{2,3,1} & \hat{\rho}_{2,4,1} & \cdots  &  \hat{\rho}_{k,k(k-1)/2,1} & min_{i,j}(r_{i,j,1}) & max_{i,j}(r_{i,j,1}) & Y_1   \\
-		\hat{\rho}_{1,2,2} &  \hat{\rho}_{1,3,2} & \cdots  & \hat{\rho}_{2,3,2} & \hat{\rho}_{2,4,2}  & \cdots  &  \hat{\rho}_{k,k(k-1)/2,2} & min_{i,j}(r_{i,j,2})  & max_{i,j}(r_{i,j,2}) & Y_2    \\
+		\hat{\rho}_{1,2,1} & \hat{\rho}_{1,3,1}  & \cdots  & \hat{\rho}_{2,3,1} & \hat{\rho}_{2,4,1} & \cdots  &  \hat{\rho}_{k,k(k-1)/2,1} & min_{i}(r_{i,1}) & max_{i}(r_{i,1}) & Y_1   \\
+		\hat{\rho}_{1,2,2} &  \hat{\rho}_{1,3,2} & \cdots  & \hat{\rho}_{2,3,2} & \hat{\rho}_{2,4,2}  & \cdots  &  \hat{\rho}_{k,k(k-1)/2,2} & min_{i}(r_{i,2})  & max_{i}(r_{i,2}) & Y_2    \\
 		\vdots  & \vdots & \vdots   & \vdots  &  \vdots & \vdots & \vdots & \vdots  & \vdots  & \vdots  \\ 
-		\hat{\rho}_{1,2,T} &  \hat{\rho}_{1,3,T} & \cdots  &  \hat{\rho}_{2,3,T} & \hat{\rho}_{2,4,T} & \cdots &  \hat{\rho}_{k,k(k-1)/2,T} & min_{i,j}(r_{i,j,T})  & max_{i,j}(r_{i,j,T}) & Y_T \\
+		\hat{\rho}_{1,2,T} &  \hat{\rho}_{1,3,T} & \cdots  &  \hat{\rho}_{2,3,T} & \hat{\rho}_{2,4,T} & \cdots &  \hat{\rho}_{k,k(k-1)/2,T} & min_{i}(r_{i,T})  & max_{i}(r_{i,T}) & Y_T \\
 	\end{array} \right] \\
 \end{equation} 
 
@@ -609,7 +609,10 @@ To assess some of the statistical properties when moving window estimates of cor
 \section{Moving Window Estimates of Correlation}
 
 \noindent
-The accuracy of Pearson and Kendall estimates for time-varying correlation is compared by using mean squared error (MSE) between estimated and actual correlations. The variance of mean squared errors from Pearson estimates in Fig. \ref{fig:mse_pearson_kendall_bootstrap} is approximately 1.78e-3 while that of Kendall is approximately 1.59e-3, i.e. Kendall estimates are slightly less sensitive to the choice of window length compared to Pearson estimates but the difference seems negligible small or might even not be significant. Interestingly, it is observed that Kendall estimates for time-varying correlation have slightly higher MSE values for larger window lengths. A possible explanation for this observation is that the simulated asset returns follow a multivariate normal distribution, i.e. an elliptical distribution. Therefore, it makes sense that a linear correlation coefficient such as Pearson results in lower MSE values for most window lengths. Pearson can get unreliable in the presence of fat-tailed distributions, which is generally a property of real asset return data \citep{ref:Pozzi2012}. It will be interesting to verify whether Kendall is a better choice for approximation of true correlation in the case of real asset return data in Chapter \ref{chap:multivariate_analysis}.  
+The accuracy of Pearson and Kendall estimates for time-varying correlation is compared by using mean squared error (MSE) between estimated and actual correlations. The variance of mean squared errors from Pearson estimates in Fig. \ref{fig:mse_pearson_kendall_bootstrap} is approximately 1.78e-3 while that of Kendall is approximately 1.59e-3, i.e. Kendall estimates are slightly less sensitive to the choice of window length compared to Pearson estimates but the difference seems negligible small or might even not be significant. Interestingly, it is observed that Kendall estimates for time-varying correlation have slightly higher MSE values for larger window lengths. A possible explanation for this observation is that the simulated asset returns follow a multivariate normal distribution, i.e. an elliptical distribution. Therefore, it makes sense that a linear correlation coefficient such as Pearson results in lower MSE values for most window lengths. Pearson can get unreliable in the presence of fat-tailed distributions, which is generally a property of real asset return data \citep{ref:Pozzi2012}. It will be interesting to verify whether Kendall is a better choice for approximation of true correlation in the case of real asset return data in Chapter \ref{chap:multivariate_analysis}.  \\
+
+\noindent
+Pearson and Kendall moving window estimates of time-varying correlation satisfy the positive semi-definiteness condition in the time-varying correlation matrix $R_t$ for all time $t$ under all choices of window length. Fig. \ref{fig:det_pearson_kendall} presents the obtained minimum determinants of $R_t$ for all choices of window length. In fact, \cite{ref:Pozzi2012} give proves that Pearson and Kendall correlation matrices generally are positive semi-definite matrices.     
 
 
 \begin{figure}[H]
@@ -617,10 +620,19 @@ The accuracy of Pearson and Kendall estimates for time-varying correlation is co
 	\begin{subfigure}[b]{0.49 \textwidth}
 		\centering 
 		\includegraphics[width=\textwidth]{mse_pearson_kendall.png} 
+		\caption{MSE for Pearson and Kendall Moving Window bootstrap estimates.}
+		\label{fig:mse_pearson_kendall_bootstrap}
 	\end{subfigure}
-	\caption{Comparison MSE for Pearson and Kendall Moving Window bootstrap estimates\protect\footnotemark.}
-	\label{fig:mse_pearson_kendall_bootstrap}
+	\begin{subfigure}[b]{0.49 \textwidth}
+		\centering 
+		\includegraphics[width=\textwidth]{det_pearson_kendall} 
+		\caption{Minimum det($R_t$) from Pearson and Kendall Moving Window bootstrap estimates.}
+		\label{fig:det_pearson_kendall}
+	\end{subfigure}
+	\caption{Comparison MSE and minimum determinants for Pearson and Kendall Moving Window bootstrap estimates\protect\footnotemark.}
+	\label{fig:mse_det_pearson_kendall_bootstrap}
 \end{figure}
+
 
 \footnotetext{For Pearson and Kendall correlation approximation using moving window estimates with window sizes 3 through 7 several bootstrapped samples return a standard deviation of zero. This results into NaN values for the associated estimated correlation coefficient as the covariance is divided by zero. These NaN values are excluded for calculation of the mean estimate of Pearson and Kendall correlation coefficient over the test set. Thus, as a result of a smaller number of bootstrapped samples used, estimation of Pearson and Kendall correlation coefficient using moving windows with small window sizes are less robust.} 
 
@@ -668,20 +680,6 @@ Fig. \ref{fig:pearson21_bootstrap} and Fig. \ref{fig:kendall21_bootstrap} show t
 \noindent
 Moreover, Pearson and Kendall estimates are very sensitive to the choice of the window length used for correlation estimates. This is illustrated by the bias-variance decomposition of the mean squared error (MSE) between estimated and actual correlations, shown in Fig. \ref{fig:decom_mse_pearson} and Fig. \ref{fig:decom_mse_kendall}. One can observe an inverse relationship between the choice of window length (i.e. the bootstrap sample size) and value of the variance term in the MSE decomposition. This is explained by the fact that as the bootstrap sample size increases with an increase of the window length, the standard error (i.e. the standard deviation of the sampling distribution) decreases. In other words, as the bootstrap sample size increases, the variability of sampling distribution decreases which would show through smaller 99\% confidence intervals. In these figures it is shown through a decrease in de variance term of the bias-variance decomposition of the mean squared error (MSE) between estimated and actual correlations. \\
 
-\noindent
-Concluding, Pearson and Kendall moving window estimates of time-varying correlation satisfy the positive semi-definiteness condition in the time-varying correlation matrix $R_t$ for all time $t$ under all choices of window length. Fig. \ref{fig:det_pearson_kendall} presents the obtained minimum determinants of $R_t$ for all choices of window length. In fact, \cite{ref:Pozzi2012} give proves that Pearson and Kendall correlation matrices generally are positive semi-definite matrices.     
-
-\begin{figure}[H]
-	\centering
-	\begin{subfigure}[b]{0.49 \textwidth}
-		\centering 
-		\includegraphics[width=\textwidth]{det_pearson_kendall} 
-	\end{subfigure}
-	\caption{Minimum det($R_t$) from Pearson and Kendall Moving Window bootstrap estimates.}
-	\label{fig:det_pearson_kendall}
-\end{figure}
-
-
 
 \section{Learning with True Correlation for Response Variable and Proxies for Covariates} \label{sec:true_correlation}
 "In this section, the input variables of the learning algorithms are approximations of actual (unobserved) correlation. Simulation experiments are used to study the effect using approximations of correlations as the input variables on the learning algorithm results, isolating this effect from the approximations of the response variable, which is illustrated in Section \ref{sec:proxy_correlation}. The simulation study will give insight into the (function) approximation capability of the learning algorithms, particularly in comparison with Pearson and Kendall moving window approximations. This will give us some initial information with respect to possible success of these algorithms in the task of modeling time-varying correlation." \\
@@ -694,9 +692,9 @@ Concluding, Pearson and Kendall moving window estimates of time-varying correlat
 
 %%%%%% NEAREST neighbor TRUE COR %%%%%%%%
 \subsection{Nearest Neighbor} \label{sec:knn_true_cor}
-In order to obtain time-varying correlations, $\rho_t$, with k-nearest multivariate neighbor algorithm, the set of covariates is defined by lagged Pearson and Kendall moving window estimates and minimum and maximum asset return values in the last period, denoted by $min_{i,j}(y_{i,j,t-1})$, and $max_{i,j}(y_{i,j,t-1})$, respectively.  \\
+In order to obtain time-varying correlations, $\rho_t$, with k-nearest multivariate neighbor algorithm, the data set is defined as in \eqref{eq:dataset}; covariates are constructed from lagged Pearson and Kendall moving window estimates and minimum and maximum log return of the previous time unit, denoted by $min_{i}(r_{i,t-1})$, and $max_{i}(r_{i,t-1})$, respectively.  \\
 
-\noindent
+\subsubsection{Diagnosing the Generalization Error of KNN}
 The accuracy of KNN estimates with Pearson and Kendall covariates for time-varying correlation is compared by using mean squared error (MSE) between estimated and actual correlations. MSE from KNN with Pearson and Kendall moving window estimates of correlation for covariates are shown in Fig. \ref{fig:mse_knn5_pearson_kendall_true}. Regardless of the choice of window length, MSE from KNN with Pearson and Kendall covariates are between 0.0939 and 0.1071, and 0.0929 and 0.1071, respectively. The variance of MSE from KNN estimates with Pearson covariates is approximately 6.07e-6 while that of KNN estimates with Kendall covariates is approximately 5.66e-6. KNN thus appears to be insensitive to the choice of window length, regardless whether the set of covariates is constructed from Pearson or Kendall moving window estimates of correlation. KNN's property of insensitivity to the choice of window length is preferred over Pearson and Kendall's property of being highly sensitive to the choice of the window length used for correlation estimates as depicted in Fig. \ref{fig:mse_pearson_kendall_bootstrap}.  \\
 
 \noindent
@@ -765,8 +763,7 @@ The MSE decompositions into bias and variance terms from KNN estimates of correl
 	\label{fig:decom_mse_knn5_pearson_kendall_true}
 \end{figure}
 
-
-\noindent
+\subsubsection{Alternative KNN Parameterizations}
 Fig. \ref{fig:decom_mse_pearson_kendall_true} depicted an inverse relationship between the choice of the window length and the uncertainty around Pearson and Kendall moving window estimates of correlation. The KNN algorithm has a similar property: Simulation results in Tabel \ref{tab:mse_decomp_knn_pearson_kendall_true} show an inverse relationship between the choice of the number of nearest neighbors used in the estimation of correlations and the uncertainty around the estimated correlations, regardless whether Pearson or Kendall estimates are used for defining the set of covariates. It is clearly observed that an increase in the number of neighbors $k$ results in a decrease of the variance, and conversely. This observation is in line with our discussion on MSE decomposition for the KNN algorithm and Eq. \eqref{eq:mse_decomposition_knn} from Section \ref{sec:mse_decompose}. Additionally, it was stated that the higher the value of $k$, the lower the model complexity and, as such, the squared bias tends to increase with an increase in $k$. However, simulation results depicted in Tabel \ref{tab:mse_decomp_knn_pearson_kendall_true} indicate no increase in squared bias with an increase in $k$ up to $k=800$. The first increase in squared bias is observed when the number of neighbors is approximately 900. For all $k$ smaller than 900 a decrease in squared bias is observed with an increase in $k$. This statement is more clearly shown through a geometrical representation of the MSE decomposition as a function of the number of neighbors for $k \in \{5, 10, 25, 50, 100\}$ in Fig. \ref{fig:knn5_pearson_kendall_sens_analysis_true}. \\  
 
 
@@ -858,7 +855,10 @@ Eq. \eqref{eq:mse_decomposition_knn} and our discussion from Section \ref{sec:ms
 \end{figure}
 
 \noindent
-Next, two more interesting parameterizations of the KNN learning algorithm are analysed. In both parameterizations, the set of neighbors used for point estimation of time-varying correlation is defined as the entire training set. However, in the first parameterizations, the KNN algorithm uses an uniformly weighted average of correlations, i.e. each of the neighbors contributing equally to the point estimate of time-varying correlation. In the second parameterizations, the KNN algorithm uses an inverse distance weighted average of correlations, as defined in \eqref{eq:IDWfunction}. The MSE decomposition of both parameterizations with Pearson covariates and true correlation is depicted in Fig. \ref{fig:decom_mse_knn_len_train_IDW_pearson_kendall_true}. It is clear that the variance terms becomes negligible small in case the set of neighbors used for point estimation of time-varying correlation is defined as the entire training set, regardless of the weighting function. The red line of the variance is barely observable in the bottom of Fig. \ref{fig:decom_mse_knn_len_train_pearson_true} and Fig. \ref{fig:decom_mse_knn_IDW_pearson_true}. This is in line with results depicted in Tabel \ref{tab:mse_decomp_knn_pearson_kendall_true} where the value of the variance term is negligible small for $k=1000$, regardless whether the set of covariates is constructed from Pearson or Kendall moving window estimates of correlation.          
+Next, two more interesting parameterizations of the KNN learning algorithm are analysed. In both parameterizations, the set of neighbors used for point estimation of time-varying correlation is defined as the entire training set. However, in the first parameterizations, the KNN algorithm uses an uniformly weighted average of correlations, i.e. each of the neighbors contributing equally to the point estimate of time-varying correlation. In the second parameterizations, the KNN algorithm uses an inverse distance weighted average of correlations, as defined in \eqref{eq:IDWfunction}. The MSE decomposition of both parameterizations with Pearson covariates and true correlation is depicted in Fig. \ref{fig:decom_mse_knn_len_train_IDW_pearson_kendall_true}. It is clear that the variance terms becomes negligible small in case the set of neighbors used for point estimation of time-varying correlation is defined as the entire training set, regardless of the weighting function. The red line of the variance is barely observable in the bottom of Fig. \ref{fig:decom_mse_knn_len_train_pearson_true} and Fig. \ref{fig:decom_mse_knn_IDW_pearson_true}. This is in line with results depicted in Tabel \ref{tab:mse_decomp_knn_pearson_kendall_true} where the value of the variance term is negligible small for $k=1000$, regardless whether the set of covariates is constructed from Pearson or Kendall moving window estimates of correlation.    \\      
+
+\noindent
+\textbf{Insert figures of correlation dynamics and state that it resembles assuming constant correlation, which is the exact concept we are trying to improve on with time-varying correlations.}
 
 \begin{figure}[H]  % [h] parameter makes sure figures are located at 'this' location.
 	\centering
@@ -886,7 +886,7 @@ The accuracy of the two different parameterizations is compared by using mean sq
 This section is concluded with a comparison of the function approximation capabilities of the KNN algorithm and Pearson and Kendall moving window estimates. The comparison is based on MSE between estimated and actual correlations. Fig. \ref{fig:mse_knn5_idw_pearson_kendall_true} shows MSE from KNN with default parameterizations, i.e. number of neighbors equals 5, an alternative parameterizations with an inverse distance weighting function as well as Pearson and Kendall moving window estimates of time-varying correlations. According to MSE, parameterizations of the KNN algorithm where the number of neighbors is 5 or 10 perform better than those of Pearson and Kendall moving window estimates for small window sizes. Moreover, parameterizations of the KNN algorithm with an alternative distance weighting function and where the entire training data set is used for estimating correlation result in significantly smaller MSE compared to Pearson and Kendall moving window estimates for all window sizes. In fact, the simulation study shows that the KNN algorithm outperforms Pearson and Kendall moving window estimates of correlation for all window sizes when the number of neighbors $k \in \{25, 50, 100\}$ in addition to both alternative parameterizations. Finally, the variance of MSE from KNN estimates with default parameterizations and with an inverse distance weighting function in Fig. \ref{fig:mse_knn5_idw_pearson_kendall_true} are 6.07e-6 and 8.55e-7, respectively, while that of Pearson and Kendall moving window estimates are 0.0040 and 0.0037, respectively. \\
 
 \noindent
-Concludingly, alternative parameterizations of the KNN algorithm with approximated covariates and response variable also satisfy the positive semi-definiteness condition in the time-varying correlation matrix $R_t$ for all time $t$ under all choices of window length in the interval [0, 100]. Fig. \ref{fig:det_knn_IDW_pearson_kendall_true.png} presents the obtained minimum determinants of $R_t$ for all choices of window length under an inverse distance weighting function\footnote{Usage of an uniform distance weighting function results into an approximately constant minimum determinant of 0.74, for both Pearson and Kendall approximations.}.  
+concluding, alternative parameterizations of the KNN algorithm with approximated covariates and response variable also satisfy the positive semi-definiteness condition in the time-varying correlation matrix $R_t$ for all time $t$ under all choices of window length in the interval [0, 100]. Fig. \ref{fig:det_knn_IDW_pearson_kendall_true.png} presents the obtained minimum determinants of $R_t$ for all choices of window length under an inverse distance weighting function\footnote{Usage of an uniform distance weighting function results into an approximately constant minimum determinant of 0.74, for both Pearson and Kendall approximations.}.  
 
 \begin{figure}[H]  % [h] parameter makes sure figures are located at 'this' location.
 	\centering
@@ -910,9 +910,9 @@ Concludingly, alternative parameterizations of the KNN algorithm with approximat
 
 %%%%%%% RANDOM FOREST TRUE COR %%%%%%%%%%%%%%
 \subsection{Random Forest}  \label{sec:rf_true_cor}
-In order to obtain time-varying correlations, $\rho_t$, with random forests algorithm, the set of covariates is defined by lagged Pearson and Kendall moving window estimates and minimum and maximum asset return values from the last period, denoted by $min_{i,j}(y_{i,j,t-1})$, and $max_{i,j}(y_{i,j,t-1})$, respectively.  \\
+In order to obtain time-varying correlations, $\rho_t$, with random forests algorithm, the set of covariates is defined by lagged Pearson and Kendall moving window estimates and minimum and maximum asset return values from the last period, denoted by $min_{i}(r_{i,t-1})$, and $max_{i}(r_{i,t-1})$, respectively.  \\
 
-\noindent
+\subsubsection{Diagnosing the Generalization Error of RF}
 The accuracy of RF estimates with Pearson and Kendall covariates for time-varying correlation is compared by using mean squared error (MSE) between estimated and actual correlations. MSE from RF with Pearson and Kendall moving window estimates of correlation for covariates are shown in Fig. \ref{fig:mse_rf10_pearson_kendall_true}. Regardless of the choice of window length, MSE from RF with Pearson and Kendall covariates are between 0.0847 and 0.0980, and 0.0830 and 0.0983, respectively. The variance of MSE from RF estimates with Pearson covariates is approximately 8.42e-6 while that of RF estimates with Kendall covariates is approximately 8.92e-6. Analogous to KNN estimates of correlation, RF thus appears to be rather insensitive to the choice of window length, regardless whether the set of covariates is constructed from Pearson or Kendall moving window estimates of correlation. \\
 
 \noindent
@@ -977,6 +977,69 @@ The MSE decompositions into bias and variance terms from RF estimates of correla
 	\label{fig:decom_mse_rf10_pearson_kendall_true}
 \end{figure}
 
+\subsubsection{Alternative RF Parameterizations}
+\textbf{State that we take 100 bootstrapped samples instead of 1000 due to time constraints. This number of bootstrapped samples will however be sufficient for illustrational purposes.} \\
+
+\noindent
+Simulation results in Tabel \ref{tab:mse_decomp_rf_pearson_kendall_true} show an inverse relationship between the choice of the number of estimators (trees) in the random forest used in the estimation of correlations and the uncertainty around the estimated correlations, regardless whether Pearson or Kendall estimates are used for defining the set of covariates. It is clearly observed that an increase in the number of estimators results in a decrease of the variance, and conversely. This observation is in line with our discussion on MSE decomposition for the RF algorithm and Eq. \eqref{eq:variance_rf} from Section \ref{sec:mse_decompose}. For this particular dataset it is observed that the point of diminishing reduction in variance is reached around 300 trees. An increase in number of trees after that does not significantly reduces the variance. \\  
+
+
+
+
+%% TABLE
+\begin{table}[H]
+\centering
+\captionsetup[subtable]{position=below}
+%\captionsetup[table]{position=below}
+\begin{subtable}{0.49\linewidth}
+\centering
+\begin{tabular}{r  c  c  c} 
+\toprule
+\multicolumn{1}{ r }{\textbf{Trees}} &
+\multicolumn{1}{ c }{\textbf{Squared Bias}} &
+\multicolumn{1}{ c }{\textbf{Variance}} &
+\multicolumn{1}{ c }{\textbf{MSE}} \\
+\midrule 
+
+10                                   &   0.0839                       & 0.0144                & 0.0983      \\
+100                                 & 0.0839                         & 0.0077               & 0.0916       \\
+300                                 & 0.0837                         & 0.0071               & 0.0908      \\
+600                                 & 0.0841                         & 0.0070               & 0.0911     \\
+1000                               & 0.0837                         &  0.0069              & 0.0906     \\ [1ex]
+
+\bottomrule
+\end{tabular}
+\caption{MSE for RF estimates with window size 10, Pearson as covariate and true correlation.}
+\label{tab:mse_decomp_rf_pearson_true}
+\end{subtable}
+\hfill
+\begin{subtable}{0.49\linewidth}
+\centering
+\begin{tabular}{r  c  c  c} 
+\toprule
+\multicolumn{1}{ r }{\textbf{Trees}} &
+\multicolumn{1}{ c }{\textbf{Squared Bias}} &
+\multicolumn{1}{ c }{\textbf{Variance}} &
+\multicolumn{1}{ c }{\textbf{MSE}} \\
+\midrule 
+
+10                                   & 0.0817                         & 0.0158               &  0.0976     \\
+100                                 & 0.0815                         & 0.0088               & 0.0903      \\
+300                                 & 0.0813                         & 0.0082               & 0.0895      \\
+600                                 & 0.0817                         & 0.0082               & 0.090     \\
+1000                               &  0.0814                         &  0.0080             & 0.0894     \\ [1ex]
+
+\bottomrule
+\end{tabular}
+\caption{MSE for RF estimates with window size 10, Kendall as covariate and true correlation.}
+\label{tab:mse_decomp_rf_kendall_true}
+\end{subtable}
+\caption{Mean Squared Error (MSE) decomposition as a function of the number of estimators (trees) for RF with proxy for covariates and true correlation.}
+\label{tab:mse_decomp_rf_pearson_kendall_true}
+\end{table}
+
+
+
 
 
 
@@ -995,7 +1058,7 @@ In this section, a more realistic approach is taken to the application of neares
 \subsection{Nearest Neighbor} \label{sec:knn_proxy_cor}
 In this section, results from application of the KNN algorithm will be compared to those obtained by Pearson and Kendall moving window estimation, as depicted in Fig. \ref{fig:decom_mse_pearson_kendall_true}. The uncertainty in the time varying-correlation $\rho_t$, which is illustrated by the 99\% confidence interval, is much smaller compared to MW, even though both the set of covariates and the response variable of the KNN algorithm are based on approximations of correlation instead of actual correlation. \\
 
-\noindent
+\subsubsection{Diagnosing the Generalization Error of KNN}
 The accuracy of KNN estimates with Pearson and Kendall moving window estimates for both covariates and response variable is compared by using mean squared error (MSE) between estimated and actual correlations. MSE from KNN with Pearson and Kendall moving window estimates of correlation is shown in Fig. \ref{fig:mse_knn5_pearson_kendall_proxy}. Regardless of the choice of window length, MSE from KNN with Pearson and Kendall covariates are between 0.0855 and 0.2555, and 0.0952 and 0.2223, respectively. The variance of MSE from KNN estimates with Pearson covariates is approximately 5.70e-4 while that of KNN estimates with Kendall covariates is approximately 2.96e-4. Recall that in Fig. \ref{fig:mse_knn5_pearson_kendall_true} KNN appeared to be insensitive to the choice of window length when true correlation is defined as the response variable. Interestingly, Fig. \ref{fig:mse_knn5_pearson_kendall_proxy} shows that MSE from KNN estimation with Pearson or Kendall approximations for the response variable varies substantially for smaller window sizes. Although, less variation is observed when compared with MSE from Pearson and Kendall moving window estimates depicted in Fig. \ref{fig:mse_pearson_kendall_bootstrap}. A possible explanation for this behaviour will be given towards the end of this section when comparing MSE between KNN estimates and Pearson and Kendall moving window estimates in more detail. \\
 
 \noindent
@@ -1173,7 +1236,7 @@ The accuracy of the two different parameterizations is compared by using mean sq
 Similar to Section \ref{sec:knn_true_cor}, this section is concluded with a comparison of the function approximation capabilities of the KNN algorithm and Pearson and Kendall moving window estimates. The comparison is based on MSE between estimated and actual correlations. Fig. \ref{fig:mse_knn5_len_train_pearson_kendall_proxy} shows MSE from KNN with default parameterizations, i.e. number of neighbors equals 5, an alternative parameterizations with an uniform distance weighting function and the full training set used for estimating time-varying correlations. Additionally Pearson and Kendall moving window estimates of time-varying correlations are shown. According to MSE, parameterizations of the KNN algorithm with approximated covariates and response variable performs significantly better than those of Pearson and Kendall moving window estimates for small window sizes. Moreover, parameterizations of the KNN algorithm with an alternative distance weighting function and full use of training data set results in significantly smaller MSE compared to Pearson and Kendall moving window estimates for all window sizes. Thus, similar to the analysis in Section \ref{sec:knn_true_cor}, KNN estimates with an increase in the number of neighbors have lower MSE, particularly for smaller window sizes. This result follows from the fact that time-varying correlations are then estimated using increased sample information, which positively contributes to capturing time variation in correlations. Finally, the variance of MSE from KNN estimates with default parameterizations and with the combination of an uniform distance weighting function and use of full training set in Fig. \ref{fig:mse_knn5_len_train_pearson_kendall_proxy} are 5.70e-4 and 3.98e-6, respectively, while that of Pearson and Kendall moving window estimates are 0.0040 and 0.0037, respectively. In other words, the KNN algorithm with approximated covariates and response variable is significantly less sensitive to the choice of window length than Pearson and Kendall moving window estimates of correlation.  \\
 
 \noindent
-Concludingly, alternative parameterizations of the KNN algorithm with approximated covariates and response variable also satisfy the positive semi-definiteness condition in the time-varying correlation matrix $R_t$ for all time $t$ under all choices of window length in the interval [0, 100]. Fig. \ref{fig:det_knn_len_train_IDW_pearson_kendall_proxy} presents the obtained minimum determinants of $R_t$ for all choices of window length under the proposed alternative parameterizations.
+Concluding, alternative parameterizations of the KNN algorithm with approximated covariates and response variable also satisfy the positive semi-definiteness condition in the time-varying correlation matrix $R_t$ for all time $t$ under all choices of window length in the interval [0, 100]. Fig. \ref{fig:det_knn_len_train_IDW_pearson_kendall_proxy} presents the obtained minimum determinants of $R_t$ for all choices of window length under the proposed alternative parameterizations.
 
 
 \begin{figure}[H] 
@@ -1203,9 +1266,9 @@ Concludingly, alternative parameterizations of the KNN algorithm with approximat
 
 %%%%%%% RANDOM FOREST PROXY %%%%%%%%%%%%%%
 \subsection{Random Forest} \label{sec:rf_proxy_cor}
-In order to obtain time-varying correlations, $\rho_t$, with random forests algorithm, the set of covariates is defined by lagged Pearson and Kendall moving window estimates and minimum and maximum asset return values from the last period, denoted by $min_{i,j}(y_{i,j,t-1})$, and $max_{i,j}(y_{i,j,t-1})$, respectively.  \\
+In order to obtain time-varying correlations, $\rho_t$, with random forests algorithm, the set of covariates is defined by lagged Pearson and Kendall moving window estimates and minimum and maximum log return from the last period, denoted by $min_{i}(r_{i,t-1})$, and $max_{i}(r_{i,t-1})$, respectively.  \\
 
-\noindent
+\subsubsection{Diagnosing the Generalization Error of RF}
 The accuracy of RF estimates with Pearson and Kendall covariates for time-varying correlation is compared by using mean squared error (MSE) between estimated and actual correlations. MSE from RF with Pearson and Kendall moving window estimates of correlation for covariates and as response variable are shown in Fig. \ref{fig:mse_rf10_pearson_kendall_proxy}. Regardless of the choice of window length, MSE from RF with Pearson and Kendall covariates are between 0.0868 and 0.2318, and 0.0946 and 0.2321, respectively. The variance of MSE from RF estimates with Pearson covariates is approximately 4.54e-4 while that of RF estimates with Kendall covariates is approximately 3.23e-4. Interestingly, Fig. \ref{fig:mse_rf10_pearson_kendall_proxy} shows that MSE from RF estimation with Pearson or Kendall approximations for the response variable varies substantially for smaller window sizes. Although, less variation is observed when compared with MSE from Pearson and Kendall moving window estimates depicted in Fig. \ref{fig:mse_pearson_kendall_bootstrap}. This observation is analogous to the comparison of KNN estimates of correlation for both true correlation and approximated correlation as response variable. \\
 
 \noindent
@@ -1234,7 +1297,7 @@ Moreover, RF estimates of time-varying correlation where both the set of covaria
 A visual inspection of the plots in Fig. \ref{fig:rf_pearson21_bootstrap_proxy} and Fig. \ref{fig:rf_kendall21_bootstrap_proxy} results in an analysis that is analogous to the analysis of KNN estimates with approximations of correlation instead of actual correlation in Section \ref{sec:knn_proxy_cor}. It is clear that the uncertainty in the time-varying correlation $\rho_t$, which is illustrated by the 99\% confidence interval, is smaller for RF estimates compared to Pearson moving window estimates and Kendall moving window estimates, even though both the set of covariates and the response variable of the RF algorithm are based on approximations of correlation instead of actual correlation. These figures also show smaller uncertainty in the time-varying correlation $\rho_t$ when compared with RF estimates with true correlation as the response variable, which are depicted in Fig. \ref{fig:decom_mse_rf10_pearson_kendall_true}; RF estimates of correlation with true correlation as response variable in Fig. \ref{fig:rf_pearson21_bootstrap_true} and Fig. \ref{fig:rf_kendall21_bootstrap_true} are much more volatile. RF estimates with approximated correlation as response variable in Fig. \ref{fig:rf_pearson21_bootstrap_proxy} and Fig. \ref{fig:rf_kendall21_bootstrap_proxy} , however, follow the increases and decreases of the actual correlation smoother, with tighter confidence intervals. This is a more desirable result as it is not expected that correlation between assets changes that drastically at each time unit. \\
 
 \noindent
-The MSE decompositions into bias and variance terms from RF estimates of correlation are shown in Fig. \ref{fig:rf_pearson21_bootstrap_proxy} and Fig. \ref{fig:decom_mse_rf10_pearson_proxy}. These figures indicate that the RF algorithm with approximated output is more sensitive to the choice of the window length for smaller window sizes compared to RF algorithm with true correlation depicted in Fig. \ref{fig:decom_mse_rf10_pearson_kendall_true}. This observation is similar to the observation when comparing the KNN algorithm with different outputs and can be explained by error propagation: the effect of covariates' uncertainties (or errors) on the error of the function based on them. In the case when the RF algorithm uses proxies for response variables, the error associated with approximation of true correlation using moving window estimates is propagated to the output of the RF algorithm. Fig. \ref{fig:decom_mse_rf10_pearson_proxy} and Fig. \ref{fig:decom_mse_rf10_kendall_proxy} show, however, that the RF algorithm with approximated output is considerably less sensitive to the choice of the window length for smaller window sizes when compared to Pearson and Kendall moving window estimates of correlation depicted in Fig. \ref{fig:decom_mse_pearson}  and Fig \ref{fig:decom_mse_kendall}, respectively. Thus, analogous to the KNN algorithm with approximated covariates and response variable, the RF algorithm seems to mitigate the error propagation to some extend for smaller window sizes. A lower bias compared to Pearson and Kendall moving window estimates of correlation implies random forests may be a more suitable model for modeling time-varying correlations. Additionally, lower variance is observed when compared with Pearson and Kendall moving window estimates of correlation. This may be accredited to the internal paperings of the RF algorithm.       
+The MSE decompositions into bias and variance terms from RF estimates of correlation are shown in Fig. \ref{fig:rf_pearson21_bootstrap_proxy} and Fig. \ref{fig:decom_mse_rf10_pearson_proxy}. These figures indicate that the RF algorithm with approximated output is more sensitive to the choice of the window length for smaller window sizes compared to RF algorithm with true correlation depicted in Fig. \ref{fig:decom_mse_rf10_pearson_kendall_true}. This observation is similar to the observation when comparing the KNN algorithm with different outputs and can be explained by error propagation: the effect of covariates' uncertainties (or errors) on the error of the function based on them. In the case when the RF algorithm uses proxies for response variables, the error associated with approximation of true correlation using moving window estimates is propagated to the output of the RF algorithm. Fig. \ref{fig:decom_mse_rf10_pearson_proxy} and Fig. \ref{fig:decom_mse_rf10_kendall_proxy} show, however, that the RF algorithm with approximated output is considerably less sensitive to the choice of the window length for smaller window sizes when compared to Pearson and Kendall moving window estimates of correlation depicted in Fig. \ref{fig:decom_mse_pearson}  and Fig \ref{fig:decom_mse_kendall}, respectively. Thus, analogous to the KNN algorithm with approximated covariates and response variable, the RF algorithm seems to mitigate the error propagation to some extend for smaller window sizes. A lower bias compared to Pearson and Kendall moving window estimates of correlation implies random forests may be a more suitable model for modeling time-varying correlations. Additionally, lower variance is observed when compared with Pearson and Kendall moving window estimates of correlation. This can be accredited to the the bootstrap aggregating method underlying the RF algorithm.       
 
 
 
@@ -1271,6 +1334,70 @@ The MSE decompositions into bias and variance terms from RF estimates of correla
 	\label{fig:decom_mse_rf10_pearson_kendall_proxy}
 \end{figure}
 
+\subsubsection{Alternative RF Parameterizations}
+\textbf{State that we take 100 bootstrapped samples instead of 1000 due to time constraints. This number of bootstrapped samples will however be sufficient for illustrational purposes.} \\
+
+\noindent
+Simulation results in Tabel \ref{tab:mse_decomp_rf_pearson_kendall_proxy} show an inverse relationship between the choice of the number of estimators (trees) in the random forest used for estimation of correlations and the uncertainty around the estimated correlations, regardless whether Pearson or Kendall estimates are used for defining the set of covariates. It is clearly observed that an increase in the number of estimators results in a decrease of the variance, and conversely. This observation is in line with our discussion on MSE decomposition for the RF algorithm and Eq. \eqref{eq:variance_rf} from Section \ref{sec:mse_decompose}. For this particular dataset it is observed that the point of diminishing reduction in variance is reached with a smaller amount of trees compared with the sensitivity analysis of the random forest that has true correlation as the response variable.  \\  
+
+
+
+
+%% TABLE
+\begin{table}[H]
+\centering
+\captionsetup[subtable]{position=below}
+%\captionsetup[table]{position=below}
+\begin{subtable}{0.49\linewidth}
+\centering
+\begin{tabular}{r  c  c  c} 
+\toprule
+\multicolumn{1}{ r }{\textbf{Trees}} &
+\multicolumn{1}{ c }{\textbf{Squared Bias}} &
+\multicolumn{1}{ c }{\textbf{Variance}} &
+\multicolumn{1}{ c }{\textbf{MSE}} \\
+\midrule 
+
+10                                   &   0.1318                       & 0.0026                & 0.1344      \\
+100                                 & 0.1320                         & 0.0016               & 0.1335       \\
+300                                 & 0.1317                         & 0.0015               & 0.1333       \\
+600                                 & 0.1320                         & 0.0015               & 0.1335     \\
+1000                               & 0.1319                         &  0.0015              & 0.1334     \\ [1ex]
+
+\bottomrule
+\end{tabular}
+\caption{MSE for RF estimates with window size 10, Pearson as covariate and correlation.}
+\label{tab:mse_decomp_rf_pearson_proxy}
+\end{subtable}
+\hfill
+\begin{subtable}{0.49\linewidth}
+\centering
+\begin{tabular}{r  c  c  c} 
+\toprule
+\multicolumn{1}{ r }{\textbf{Trees}} &
+\multicolumn{1}{ c }{\textbf{Squared Bias}} &
+\multicolumn{1}{ c }{\textbf{Variance}} &
+\multicolumn{1}{ c }{\textbf{MSE}} \\
+\midrule 
+
+10                                   & 0.1217                         & 0.0027               &  0.1244      \\
+100                                 & 0.1219                          & 0.0018               & 0.1236       \\
+300                                 & 0.1215                         & 0.0017               &  0.1232      \\
+600                                 & 0.1217                         & 0.0017               & 0.1234     \\
+1000                               &  0.1214                         &   0.0017             &  0.1230     \\ [1ex]
+
+\bottomrule
+\end{tabular}
+\caption{MSE for RF estimates with window size 10, Kendall as covariate and correlation.}
+\label{tab:mse_decomp_rf_kendall_proxy}
+\end{subtable}
+\caption{Mean Squared Error (MSE) decomposition as a function of the number of estimators (trees) for RF with approximations for both covariates and response variable.}
+\label{tab:mse_decomp_rf_pearson_kendall_proxy}
+\end{table}
+
+
+
+
 
 
 
@@ -1278,13 +1405,13 @@ The MSE decompositions into bias and variance terms from RF estimates of correla
 \section{Conclusion Simulation Results}
 \begin{enumerate}
 	\item KNN with true correlation AND KNN with approximated output return positive semi-definite correlation matrices.
-	\item KNN outperforms moving window estimates particularly for smaller window sizes but with full training set and potentially inverse distance weighting function for all window sizes in the interval [3, 100].
-	\item MSE decomposition behavior KNN with true correlation exactly as expected/ predicted given MSE decomposition formulas. Except that with an increase in $k$, we initially observe improved squared bias.
 	\item RF with true correlation AND RF with approximated output return positive semi-definite correlation matrices.
-	\item RF exhibits higher bias than KNN. RF thus seems less appropriate model at this point. However, given the very small covariate dimension very little decorrelation of trees is possible which would results in variance reduction and possibly MSE reduction. Given higher dimensional covariate space in context of systems of correlations we continue to opt for RF estimation of time-varying correlations. 
 	\item The difference in accuracy, measured by the MSE, between using Pearson and Kendall approximations of true correlation appear negligible small for the simulation study, regardless whether Nearest Neighbor or Random Forest algorithm was used.  
+	\item KNN outperforms moving window estimates particularly for smaller window sizes but with full training set and potentially inverse distance weighting function for all window sizes in the interval [3, 100]. The latter results however in more or less constant correlation, the very idea we try to improve on by considering correlation to be time-varying.
+	\item MSE decomposition behavior KNN with true correlation exactly as expected  given MSE decomposition formulas. Except that with an increase in $k$, we initially observe improved squared bias. Can be explained by the fact that initially an increase in $k$ results in using more data points with informational value for predicting the response variable. After some $k$, the inclusion of more data points results in incorporating noise in the prediction, and we observe an increase in bias.
+	\item Both KNN and RF estimates with approximated correlation as response variable exhibit lower variance than their parameterizations with true correlation as response variable.
+	\item RF exhibits higher bias than KNN. RF thus seems less appropriate model at this point. However, given the very small covariate dimension very little decorrelation of trees is possible which would results in variance reduction and possibly MSE reduction. Given higher dimensional covariate space in context of systems of correlations we continue to opt for RF estimation of time-varying correlations. 
 	\item Both KNN and RF estimates with approximated correlation as response variable follow the increases and decreases of the actual correlation smoother, with tighter confidence intervals in comparison to KNN and RF estimates with true correlation as the response variable. This is a more desirable result as it is not expected that correlation between assets changes that drastically at each time unit. 
-	\item One source of variance: noise in output and/or covariates as they are approximations. INSERT this somewhere in the analysis.
 \end{enumerate}
 
 

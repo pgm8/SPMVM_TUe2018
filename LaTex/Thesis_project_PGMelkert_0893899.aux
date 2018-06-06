@@ -97,13 +97,17 @@
 \newlabel{ch:simulation_study}{{3}{14}{Simulated Data with Time-Varying Correlation}{chapter.3}{}}
 \newlabel{eq:correlation_simulation}{{3.1}{14}{Simulated Data with Time-Varying Correlation}{equation.3.0.1}{}}
 \citation{ref:Pozzi2012}
+\citation{ref:Pozzi2012}
 \@writefile{lof}{\contentsline {figure}{\numberline {3.1}{\ignorespaces Simulated data and time-varying correlations from \textup  {\hbox {\mathsurround \z@ \normalfont  (\ignorespaces \ref  {eq:correlation_simulation}\unskip \@@italiccorr )}}.\relax }}{15}{figure.caption.6}}
 \newlabel{fig:cholesky_simulation}{{3.1}{15}{Simulated data and time-varying correlations from \eqref {eq:correlation_simulation}.\relax }{figure.caption.6}{}}
 \@writefile{toc}{\contentsline {section}{\numberline {3.1}Moving Window Estimates of Correlation}{15}{section.3.1}}
 \citation{ref:Basturk2016}
-\@writefile{lof}{\contentsline {figure}{\numberline {3.2}{\ignorespaces Comparison MSE for Pearson and Kendall Moving Window bootstrap estimates\footnotemark .\relax }}{16}{figure.caption.7}}
-\newlabel{fig:mse_pearson_kendall_bootstrap}{{3.2}{16}{Comparison MSE for Pearson and Kendall Moving Window bootstrap estimates\protect \footnotemark .\relax }{figure.caption.7}{}}
-\citation{ref:Pozzi2012}
+\newlabel{fig:mse_pearson_kendall_bootstrap}{{3.2a}{16}{MSE for Pearson and Kendall Moving Window bootstrap estimates.\relax }{figure.caption.7}{}}
+\newlabel{sub@fig:mse_pearson_kendall_bootstrap}{{a}{16}{MSE for Pearson and Kendall Moving Window bootstrap estimates.\relax }{figure.caption.7}{}}
+\newlabel{fig:det_pearson_kendall}{{3.2b}{16}{Minimum det($R_t$) from Pearson and Kendall Moving Window bootstrap estimates.\relax }{figure.caption.7}{}}
+\newlabel{sub@fig:det_pearson_kendall}{{b}{16}{Minimum det($R_t$) from Pearson and Kendall Moving Window bootstrap estimates.\relax }{figure.caption.7}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3.2}{\ignorespaces Comparison MSE and minimum determinants for Pearson and Kendall Moving Window bootstrap estimates\footnotemark .\relax }}{16}{figure.caption.7}}
+\newlabel{fig:mse_det_pearson_kendall_bootstrap}{{3.2}{16}{Comparison MSE and minimum determinants for Pearson and Kendall Moving Window bootstrap estimates\protect \footnotemark .\relax }{figure.caption.7}{}}
 \newlabel{fig:pearson21_bootstrap}{{3.3a}{17}{Pearson estimates with window size 21.\relax }{figure.caption.8}{}}
 \newlabel{sub@fig:pearson21_bootstrap}{{a}{17}{Pearson estimates with window size 21.\relax }{figure.caption.8}{}}
 \newlabel{fig:kendall21_bootstrap}{{3.3b}{17}{Kendall estimates with window size 21.\relax }{figure.caption.8}{}}
@@ -114,148 +118,165 @@
 \newlabel{sub@fig:decom_mse_kendall}{{d}{17}{Bias-variance decomposition for Kendall estimates.\relax }{figure.caption.8}{}}
 \@writefile{lof}{\contentsline {figure}{\numberline {3.3}{\ignorespaces MSE for Pearson and Kendall Moving Window bootstrap estimates.\relax }}{17}{figure.caption.8}}
 \newlabel{fig:decom_mse_pearson_kendall_true}{{3.3}{17}{MSE for Pearson and Kendall Moving Window bootstrap estimates.\relax }{figure.caption.8}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {3.4}{\ignorespaces Minimum det($R_t$) from Pearson and Kendall Moving Window bootstrap estimates.\relax }}{18}{figure.caption.9}}
-\newlabel{fig:det_pearson_kendall}{{3.4}{18}{Minimum det($R_t$) from Pearson and Kendall Moving Window bootstrap estimates.\relax }{figure.caption.9}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {3.2}Learning with True Correlation for Response Variable and Proxies for Covariates}{18}{section.3.2}}
-\newlabel{sec:true_correlation}{{3.2}{18}{Learning with True Correlation for Response Variable and Proxies for Covariates}{section.3.2}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {3.2}Learning with True Correlation for Response Variable and Proxies for Covariates}{17}{section.3.2}}
+\newlabel{sec:true_correlation}{{3.2}{17}{Learning with True Correlation for Response Variable and Proxies for Covariates}{section.3.2}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {3.2.1}Nearest Neighbor}{18}{subsection.3.2.1}}
 \newlabel{sec:knn_true_cor}{{3.2.1}{18}{Nearest Neighbor}{subsection.3.2.1}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.2.1.1}Diagnosing the Generalization Error of KNN}{18}{subsubsection.3.2.1.1}}
 \citation{ref:Basturk2016}
-\newlabel{fig:mse_knn5_pearson_kendall_true}{{3.5a}{19}{MSE for KNN with covariates from Pearson and Kendall and true correlation.\relax }{figure.caption.10}{}}
-\newlabel{sub@fig:mse_knn5_pearson_kendall_true}{{a}{19}{MSE for KNN with covariates from Pearson and Kendall and true correlation.\relax }{figure.caption.10}{}}
-\newlabel{fig:det_knn5_pearson_kendall_true}{{3.5b}{19}{Minimum determinants for KNN with covariates from Pearson and Kendall and true correlation.\relax }{figure.caption.10}{}}
-\newlabel{sub@fig:det_knn5_pearson_kendall_true}{{b}{19}{Minimum determinants for KNN with covariates from Pearson and Kendall and true correlation.\relax }{figure.caption.10}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {3.5}{\ignorespaces Comparison MSE and minimum determinants for KNN(n\_neighbors=5) with covariates from Pearson and Kendall and true correlation.\relax }}{19}{figure.caption.10}}
-\newlabel{fig:mse_det_knn5_pearson_kendall_true}{{3.5}{19}{Comparison MSE and minimum determinants for KNN(n\_neighbors=5) with covariates from Pearson and Kendall and true correlation.\relax }{figure.caption.10}{}}
-\newlabel{fig:knn_pearson21_bootstrap_true}{{3.6a}{20}{KNN estimates with window size 21, Pearson as covariate and true correlation.\relax }{figure.caption.11}{}}
-\newlabel{sub@fig:knn_pearson21_bootstrap_true}{{a}{20}{KNN estimates with window size 21, Pearson as covariate and true correlation.\relax }{figure.caption.11}{}}
-\newlabel{fig:knn_kendall21_bootstrap_true}{{3.6b}{20}{KNN estimates with window size 21, Kendall as covariate and true correlation.\relax }{figure.caption.11}{}}
-\newlabel{sub@fig:knn_kendall21_bootstrap_true}{{b}{20}{KNN estimates with window size 21, Kendall as covariate and true correlation.\relax }{figure.caption.11}{}}
-\newlabel{fig:decom_mse_knn5_pearson_true}{{3.6c}{20}{Bias-variance decomposition for KNN estimates with Pearson as covariate and true correlation.\relax }{figure.caption.11}{}}
-\newlabel{sub@fig:decom_mse_knn5_pearson_true}{{c}{20}{Bias-variance decomposition for KNN estimates with Pearson as covariate and true correlation.\relax }{figure.caption.11}{}}
-\newlabel{fig:decom_mse_knn5_kendall_true}{{3.6d}{20}{Bias-variance decomposition for KNN estimates with Kendall as covariate and true correlation.\relax }{figure.caption.11}{}}
-\newlabel{sub@fig:decom_mse_knn5_kendall_true}{{d}{20}{Bias-variance decomposition for KNN estimates with Kendall as covariate and true correlation.\relax }{figure.caption.11}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {3.6}{\ignorespaces MSE for KNN estimates with Pearson and Kendall Moving Window bootstrap estimates as covariates and true correlation.\relax }}{20}{figure.caption.11}}
-\newlabel{fig:decom_mse_knn5_pearson_kendall_true}{{3.6}{20}{MSE for KNN estimates with Pearson and Kendall Moving Window bootstrap estimates as covariates and true correlation.\relax }{figure.caption.11}{}}
-\newlabel{tab:mse_decomp_knn_pearson_true}{{3.1a}{21}{MSE for KNN estimates with window size 10, Pearson as covariate and true correlation.\relax }{table.caption.12}{}}
-\newlabel{sub@tab:mse_decomp_knn_pearson_true}{{a}{21}{MSE for KNN estimates with window size 10, Pearson as covariate and true correlation.\relax }{table.caption.12}{}}
-\newlabel{tab:mse_decomp_knn_kendall_true}{{3.1b}{21}{MSE for KNN estimates with window size 10, Kendall as covariate and true correlation.\relax }{table.caption.12}{}}
-\newlabel{sub@tab:mse_decomp_knn_kendall_true}{{b}{21}{MSE for KNN estimates with window size 10, Kendall as covariate and true correlation.\relax }{table.caption.12}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {3.1}{\ignorespaces Mean Squared Error (MSE) decomposition as a function of the number of neighbors (k) for KNN with proxy for covariates and true correlation.\relax }}{21}{table.caption.12}}
-\newlabel{tab:mse_decomp_knn_pearson_kendall_true}{{3.1}{21}{Mean Squared Error (MSE) decomposition as a function of the number of neighbors (k) for KNN with proxy for covariates and true correlation.\relax }{table.caption.12}{}}
-\newlabel{fig:knn5_pearson_sens_analysis_true}{{3.7a}{21}{KNN estimates with window size 10, Pearson as covariate and true correlation.\relax }{figure.caption.13}{}}
-\newlabel{sub@fig:knn5_pearson_sens_analysis_true}{{a}{21}{KNN estimates with window size 10, Pearson as covariate and true correlation.\relax }{figure.caption.13}{}}
-\newlabel{fig:knn5_kendall_sens_analysis_true}{{3.7b}{21}{KNN estimates window size 10, Kendall as covariate and true correlation.\relax }{figure.caption.13}{}}
-\newlabel{sub@fig:knn5_kendall_sens_analysis_true}{{b}{21}{KNN estimates window size 10, Kendall as covariate and true correlation.\relax }{figure.caption.13}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {3.7}{\ignorespaces MSE as function of number of neighbors for KNN estimates with Pearson and Kendall as covariates and true correlation.\relax }}{21}{figure.caption.13}}
-\newlabel{fig:knn5_pearson_kendall_sens_analysis_true}{{3.7}{21}{MSE as function of number of neighbors for KNN estimates with Pearson and Kendall as covariates and true correlation.\relax }{figure.caption.13}{}}
-\newlabel{fig:decom_mse_knn_len_train_pearson_true}{{3.8a}{22}{Bias-variance decomposition for KNN estimates constructed from uniformly weighted averages.\relax }{figure.caption.14}{}}
-\newlabel{sub@fig:decom_mse_knn_len_train_pearson_true}{{a}{22}{Bias-variance decomposition for KNN estimates constructed from uniformly weighted averages.\relax }{figure.caption.14}{}}
-\newlabel{fig:decom_mse_knn_IDW_pearson_true}{{3.8b}{22}{Bias-variance decomposition for KNN estimates constructed from inverse distance weighted averages.\relax }{figure.caption.14}{}}
-\newlabel{sub@fig:decom_mse_knn_IDW_pearson_true}{{b}{22}{Bias-variance decomposition for KNN estimates constructed from inverse distance weighted averages.\relax }{figure.caption.14}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {3.8}{\ignorespaces MSE for KNN estimates with different weighting functions, Pearson Moving Window bootstrap estimates as covariates and true correlation.\relax }}{22}{figure.caption.14}}
-\newlabel{fig:decom_mse_knn_len_train_IDW_pearson_kendall_true}{{3.8}{22}{MSE for KNN estimates with different weighting functions, Pearson Moving Window bootstrap estimates as covariates and true correlation.\relax }{figure.caption.14}{}}
-\newlabel{fig:mse_knn5_idw_pearson_kendall_true}{{3.9a}{23}{MSE for KNN with Pearson covariates and true correlation, Pearson and Kendall Moving Window bootstrap estimates.\relax }{figure.caption.15}{}}
-\newlabel{sub@fig:mse_knn5_idw_pearson_kendall_true}{{a}{23}{MSE for KNN with Pearson covariates and true correlation, Pearson and Kendall Moving Window bootstrap estimates.\relax }{figure.caption.15}{}}
-\newlabel{fig:det_knn_IDW_pearson_kendall_true.png}{{3.9b}{23}{Minimum determinants for KNN estimates constructed from inverse distance weighting function, Pearson and Kendall covariates and true correlation.\relax }{figure.caption.15}{}}
-\newlabel{sub@fig:det_knn_IDW_pearson_kendall_true.png}{{b}{23}{Minimum determinants for KNN estimates constructed from inverse distance weighting function, Pearson and Kendall covariates and true correlation.\relax }{figure.caption.15}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {3.9}{\ignorespaces Comparison MSE and minimum determinants for KNN with true correlation, Pearson and Kendall Moving Window bootstrap estimates.\relax }}{23}{figure.caption.15}}
-\newlabel{fig:mse_det_knn5_idw_pearson_kendall_true}{{3.9}{23}{Comparison MSE and minimum determinants for KNN with true correlation, Pearson and Kendall Moving Window bootstrap estimates.\relax }{figure.caption.15}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.2.2}Random Forest}{23}{subsection.3.2.2}}
-\newlabel{sec:rf_true_cor}{{3.2.2}{23}{Random Forest}{subsection.3.2.2}{}}
+\newlabel{fig:mse_knn5_pearson_kendall_true}{{3.4a}{19}{MSE for KNN with covariates from Pearson and Kendall and true correlation.\relax }{figure.caption.9}{}}
+\newlabel{sub@fig:mse_knn5_pearson_kendall_true}{{a}{19}{MSE for KNN with covariates from Pearson and Kendall and true correlation.\relax }{figure.caption.9}{}}
+\newlabel{fig:det_knn5_pearson_kendall_true}{{3.4b}{19}{Minimum determinants for KNN with covariates from Pearson and Kendall and true correlation.\relax }{figure.caption.9}{}}
+\newlabel{sub@fig:det_knn5_pearson_kendall_true}{{b}{19}{Minimum determinants for KNN with covariates from Pearson and Kendall and true correlation.\relax }{figure.caption.9}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3.4}{\ignorespaces Comparison MSE and minimum determinants for KNN(n\_neighbors=5) with covariates from Pearson and Kendall and true correlation.\relax }}{19}{figure.caption.9}}
+\newlabel{fig:mse_det_knn5_pearson_kendall_true}{{3.4}{19}{Comparison MSE and minimum determinants for KNN(n\_neighbors=5) with covariates from Pearson and Kendall and true correlation.\relax }{figure.caption.9}{}}
+\newlabel{fig:knn_pearson21_bootstrap_true}{{3.5a}{20}{KNN estimates with window size 21, Pearson as covariate and true correlation.\relax }{figure.caption.10}{}}
+\newlabel{sub@fig:knn_pearson21_bootstrap_true}{{a}{20}{KNN estimates with window size 21, Pearson as covariate and true correlation.\relax }{figure.caption.10}{}}
+\newlabel{fig:knn_kendall21_bootstrap_true}{{3.5b}{20}{KNN estimates with window size 21, Kendall as covariate and true correlation.\relax }{figure.caption.10}{}}
+\newlabel{sub@fig:knn_kendall21_bootstrap_true}{{b}{20}{KNN estimates with window size 21, Kendall as covariate and true correlation.\relax }{figure.caption.10}{}}
+\newlabel{fig:decom_mse_knn5_pearson_true}{{3.5c}{20}{Bias-variance decomposition for KNN estimates with Pearson as covariate and true correlation.\relax }{figure.caption.10}{}}
+\newlabel{sub@fig:decom_mse_knn5_pearson_true}{{c}{20}{Bias-variance decomposition for KNN estimates with Pearson as covariate and true correlation.\relax }{figure.caption.10}{}}
+\newlabel{fig:decom_mse_knn5_kendall_true}{{3.5d}{20}{Bias-variance decomposition for KNN estimates with Kendall as covariate and true correlation.\relax }{figure.caption.10}{}}
+\newlabel{sub@fig:decom_mse_knn5_kendall_true}{{d}{20}{Bias-variance decomposition for KNN estimates with Kendall as covariate and true correlation.\relax }{figure.caption.10}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3.5}{\ignorespaces MSE for KNN estimates with Pearson and Kendall Moving Window bootstrap estimates as covariates and true correlation.\relax }}{20}{figure.caption.10}}
+\newlabel{fig:decom_mse_knn5_pearson_kendall_true}{{3.5}{20}{MSE for KNN estimates with Pearson and Kendall Moving Window bootstrap estimates as covariates and true correlation.\relax }{figure.caption.10}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.2.1.2}Alternative KNN Parameterizations}{20}{subsubsection.3.2.1.2}}
+\newlabel{tab:mse_decomp_knn_pearson_true}{{3.1a}{21}{MSE for KNN estimates with window size 10, Pearson as covariate and true correlation.\relax }{table.caption.11}{}}
+\newlabel{sub@tab:mse_decomp_knn_pearson_true}{{a}{21}{MSE for KNN estimates with window size 10, Pearson as covariate and true correlation.\relax }{table.caption.11}{}}
+\newlabel{tab:mse_decomp_knn_kendall_true}{{3.1b}{21}{MSE for KNN estimates with window size 10, Kendall as covariate and true correlation.\relax }{table.caption.11}{}}
+\newlabel{sub@tab:mse_decomp_knn_kendall_true}{{b}{21}{MSE for KNN estimates with window size 10, Kendall as covariate and true correlation.\relax }{table.caption.11}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {3.1}{\ignorespaces Mean Squared Error (MSE) decomposition as a function of the number of neighbors (k) for KNN with proxy for covariates and true correlation.\relax }}{21}{table.caption.11}}
+\newlabel{tab:mse_decomp_knn_pearson_kendall_true}{{3.1}{21}{Mean Squared Error (MSE) decomposition as a function of the number of neighbors (k) for KNN with proxy for covariates and true correlation.\relax }{table.caption.11}{}}
+\newlabel{fig:knn5_pearson_sens_analysis_true}{{3.6a}{22}{KNN estimates with window size 10, Pearson as covariate and true correlation.\relax }{figure.caption.12}{}}
+\newlabel{sub@fig:knn5_pearson_sens_analysis_true}{{a}{22}{KNN estimates with window size 10, Pearson as covariate and true correlation.\relax }{figure.caption.12}{}}
+\newlabel{fig:knn5_kendall_sens_analysis_true}{{3.6b}{22}{KNN estimates window size 10, Kendall as covariate and true correlation.\relax }{figure.caption.12}{}}
+\newlabel{sub@fig:knn5_kendall_sens_analysis_true}{{b}{22}{KNN estimates window size 10, Kendall as covariate and true correlation.\relax }{figure.caption.12}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3.6}{\ignorespaces MSE as function of number of neighbors for KNN estimates with Pearson and Kendall as covariates and true correlation.\relax }}{22}{figure.caption.12}}
+\newlabel{fig:knn5_pearson_kendall_sens_analysis_true}{{3.6}{22}{MSE as function of number of neighbors for KNN estimates with Pearson and Kendall as covariates and true correlation.\relax }{figure.caption.12}{}}
+\newlabel{fig:decom_mse_knn_len_train_pearson_true}{{3.7a}{23}{Bias-variance decomposition for KNN estimates constructed from uniformly weighted averages.\relax }{figure.caption.13}{}}
+\newlabel{sub@fig:decom_mse_knn_len_train_pearson_true}{{a}{23}{Bias-variance decomposition for KNN estimates constructed from uniformly weighted averages.\relax }{figure.caption.13}{}}
+\newlabel{fig:decom_mse_knn_IDW_pearson_true}{{3.7b}{23}{Bias-variance decomposition for KNN estimates constructed from inverse distance weighted averages.\relax }{figure.caption.13}{}}
+\newlabel{sub@fig:decom_mse_knn_IDW_pearson_true}{{b}{23}{Bias-variance decomposition for KNN estimates constructed from inverse distance weighted averages.\relax }{figure.caption.13}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3.7}{\ignorespaces MSE for KNN estimates with different weighting functions, Pearson Moving Window bootstrap estimates as covariates and true correlation.\relax }}{23}{figure.caption.13}}
+\newlabel{fig:decom_mse_knn_len_train_IDW_pearson_kendall_true}{{3.7}{23}{MSE for KNN estimates with different weighting functions, Pearson Moving Window bootstrap estimates as covariates and true correlation.\relax }{figure.caption.13}{}}
+\newlabel{fig:mse_knn5_idw_pearson_kendall_true}{{3.8a}{24}{MSE for KNN with Pearson covariates and true correlation, Pearson and Kendall Moving Window bootstrap estimates.\relax }{figure.caption.14}{}}
+\newlabel{sub@fig:mse_knn5_idw_pearson_kendall_true}{{a}{24}{MSE for KNN with Pearson covariates and true correlation, Pearson and Kendall Moving Window bootstrap estimates.\relax }{figure.caption.14}{}}
+\newlabel{fig:det_knn_IDW_pearson_kendall_true.png}{{3.8b}{24}{Minimum determinants for KNN estimates constructed from inverse distance weighting function, Pearson and Kendall covariates and true correlation.\relax }{figure.caption.14}{}}
+\newlabel{sub@fig:det_knn_IDW_pearson_kendall_true.png}{{b}{24}{Minimum determinants for KNN estimates constructed from inverse distance weighting function, Pearson and Kendall covariates and true correlation.\relax }{figure.caption.14}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3.8}{\ignorespaces Comparison MSE and minimum determinants for KNN with true correlation, Pearson and Kendall Moving Window bootstrap estimates.\relax }}{24}{figure.caption.14}}
+\newlabel{fig:mse_det_knn5_idw_pearson_kendall_true}{{3.8}{24}{Comparison MSE and minimum determinants for KNN with true correlation, Pearson and Kendall Moving Window bootstrap estimates.\relax }{figure.caption.14}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.2.2}Random Forest}{24}{subsection.3.2.2}}
+\newlabel{sec:rf_true_cor}{{3.2.2}{24}{Random Forest}{subsection.3.2.2}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.2.2.1}Diagnosing the Generalization Error of RF}{24}{subsubsection.3.2.2.1}}
 \citation{ref:Basturk2016}
-\newlabel{fig:mse_rf10_pearson_kendall_true}{{3.10a}{24}{MSE for RF with covariates from Pearson and Kendall and true correlation.\relax }{figure.caption.16}{}}
-\newlabel{sub@fig:mse_rf10_pearson_kendall_true}{{a}{24}{MSE for RF with covariates from Pearson and Kendall and true correlation.\relax }{figure.caption.16}{}}
-\newlabel{fig:det_rf10_pearson_kendall_true}{{3.10b}{24}{Minimum determinants for RF with covariates from Pearson and Kendall and true correlation.\relax }{figure.caption.16}{}}
-\newlabel{sub@fig:det_rf10_pearson_kendall_true}{{b}{24}{Minimum determinants for RF with covariates from Pearson and Kendall and true correlation.\relax }{figure.caption.16}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {3.10}{\ignorespaces Comparison MSE and minimum determinants for RF(n\_estimators=10) with covariates from Pearson and Kendall and true correlation.\relax }}{24}{figure.caption.16}}
-\newlabel{fig:mse_det_rf10_pearson_kendall_true}{{3.10}{24}{Comparison MSE and minimum determinants for RF(n\_estimators=10) with covariates from Pearson and Kendall and true correlation.\relax }{figure.caption.16}{}}
-\newlabel{fig:rf_pearson21_bootstrap_true}{{3.11a}{25}{RF estimates with window size 21, Pearson as covariate and true correlation.\relax }{figure.caption.17}{}}
-\newlabel{sub@fig:rf_pearson21_bootstrap_true}{{a}{25}{RF estimates with window size 21, Pearson as covariate and true correlation.\relax }{figure.caption.17}{}}
-\newlabel{fig:rf_kendall21_bootstrap_true}{{3.11b}{25}{RF estimates with window size 21, Kendall as covariate and true correlation.\relax }{figure.caption.17}{}}
-\newlabel{sub@fig:rf_kendall21_bootstrap_true}{{b}{25}{RF estimates with window size 21, Kendall as covariate and true correlation.\relax }{figure.caption.17}{}}
-\newlabel{fig:decom_mse_rf10_pearson_true}{{3.11c}{25}{Bias-variance decomposition for RF estimates with Pearson as covariate and true correlation.\relax }{figure.caption.17}{}}
-\newlabel{sub@fig:decom_mse_rf10_pearson_true}{{c}{25}{Bias-variance decomposition for RF estimates with Pearson as covariate and true correlation.\relax }{figure.caption.17}{}}
-\newlabel{fig:decom_mse_rf10_kendall_true}{{3.11d}{25}{Bias-variance decomposition for RF estimates with Kendall as covariate and true correlation.\relax }{figure.caption.17}{}}
-\newlabel{sub@fig:decom_mse_rf10_kendall_true}{{d}{25}{Bias-variance decomposition for RF estimates with Kendall as covariate and true correlation.\relax }{figure.caption.17}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {3.11}{\ignorespaces MSE for RF estimates with Pearson and Kendall Moving Window bootstrap estimates as covariates and true correlation.\relax }}{25}{figure.caption.17}}
-\newlabel{fig:decom_mse_rf10_pearson_kendall_true}{{3.11}{25}{MSE for RF estimates with Pearson and Kendall Moving Window bootstrap estimates as covariates and true correlation.\relax }{figure.caption.17}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {3.3}Learning with Proxies for Response Variable and Covariates}{25}{section.3.3}}
-\newlabel{sec:proxy_correlation}{{3.3}{25}{Learning with Proxies for Response Variable and Covariates}{section.3.3}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.3.1}Nearest Neighbor}{26}{subsection.3.3.1}}
-\newlabel{sec:knn_proxy_cor}{{3.3.1}{26}{Nearest Neighbor}{subsection.3.3.1}{}}
-\newlabel{fig:mse_knn5_pearson_kendall_proxy}{{3.12a}{26}{MSE for KNN with covariates from Pearson and Kendall and proxy correlation.\relax }{figure.caption.18}{}}
-\newlabel{sub@fig:mse_knn5_pearson_kendall_proxy}{{a}{26}{MSE for KNN with covariates from Pearson and Kendall and proxy correlation.\relax }{figure.caption.18}{}}
-\newlabel{fig:det_knn5_pearson_kendall_proxy}{{3.12b}{26}{Minimum determinants for KNN with covariates from Pearson and Kendall and proxy correlation.\relax }{figure.caption.18}{}}
-\newlabel{sub@fig:det_knn5_pearson_kendall_proxy}{{b}{26}{Minimum determinants for KNN with covariates from Pearson and Kendall and proxy correlation.\relax }{figure.caption.18}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {3.12}{\ignorespaces Comparison MSE and minimum determinants for KNN(n\_neighbors=5) with covariates from Pearson and Kendall and proxy correlation.\relax }}{26}{figure.caption.18}}
-\newlabel{fig:mse_det_knn5_pearson_kendall_proxy}{{3.12}{26}{Comparison MSE and minimum determinants for KNN(n\_neighbors=5) with covariates from Pearson and Kendall and proxy correlation.\relax }{figure.caption.18}{}}
-\newlabel{fig:knn_pearson21_bootstrap_proxy}{{3.13a}{28}{KNN estimates with window size 21, Pearson as covariate and proxy correlation.\relax }{figure.caption.19}{}}
-\newlabel{sub@fig:knn_pearson21_bootstrap_proxy}{{a}{28}{KNN estimates with window size 21, Pearson as covariate and proxy correlation.\relax }{figure.caption.19}{}}
-\newlabel{fig:knn_kendall21_bootstrap_proxy}{{3.13b}{28}{KNN estimates with window size 21, Kendall as covariate and proxy correlation.\relax }{figure.caption.19}{}}
-\newlabel{sub@fig:knn_kendall21_bootstrap_proxy}{{b}{28}{KNN estimates with window size 21, Kendall as covariate and proxy correlation.\relax }{figure.caption.19}{}}
-\newlabel{fig:decom_mse_knn_pearson_proxy}{{3.13c}{28}{Bias-variance decomposition for KNN estimates with Pearson as covariate and proxy correlation.\relax }{figure.caption.19}{}}
-\newlabel{sub@fig:decom_mse_knn_pearson_proxy}{{c}{28}{Bias-variance decomposition for KNN estimates with Pearson as covariate and proxy correlation.\relax }{figure.caption.19}{}}
-\newlabel{fig:decom_mse_knn_kendall_proxy}{{3.13d}{28}{Bias-variance decomposition for KNN estimates with Kendall as covariate and proxy correlation.\relax }{figure.caption.19}{}}
-\newlabel{sub@fig:decom_mse_knn_kendall_proxy}{{d}{28}{Bias-variance decomposition for KNN estimates with Kendall as covariate and proxy correlation.\relax }{figure.caption.19}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {3.13}{\ignorespaces MSE for KNN estimates with Pearson and Kendall Moving Window bootstrap estimates as covariates and proxy correlation.\relax }}{28}{figure.caption.19}}
-\newlabel{fig:decom_mse_knn5_pearson_kendall_proxy}{{3.13}{28}{MSE for KNN estimates with Pearson and Kendall Moving Window bootstrap estimates as covariates and proxy correlation.\relax }{figure.caption.19}{}}
+\newlabel{fig:mse_rf10_pearson_kendall_true}{{3.9a}{25}{MSE for RF with covariates from Pearson and Kendall and true correlation.\relax }{figure.caption.15}{}}
+\newlabel{sub@fig:mse_rf10_pearson_kendall_true}{{a}{25}{MSE for RF with covariates from Pearson and Kendall and true correlation.\relax }{figure.caption.15}{}}
+\newlabel{fig:det_rf10_pearson_kendall_true}{{3.9b}{25}{Minimum determinants for RF with covariates from Pearson and Kendall and true correlation.\relax }{figure.caption.15}{}}
+\newlabel{sub@fig:det_rf10_pearson_kendall_true}{{b}{25}{Minimum determinants for RF with covariates from Pearson and Kendall and true correlation.\relax }{figure.caption.15}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3.9}{\ignorespaces Comparison MSE and minimum determinants for RF(n\_estimators=10) with covariates from Pearson and Kendall and true correlation.\relax }}{25}{figure.caption.15}}
+\newlabel{fig:mse_det_rf10_pearson_kendall_true}{{3.9}{25}{Comparison MSE and minimum determinants for RF(n\_estimators=10) with covariates from Pearson and Kendall and true correlation.\relax }{figure.caption.15}{}}
+\newlabel{fig:rf_pearson21_bootstrap_true}{{3.10a}{26}{RF estimates with window size 21, Pearson as covariate and true correlation.\relax }{figure.caption.16}{}}
+\newlabel{sub@fig:rf_pearson21_bootstrap_true}{{a}{26}{RF estimates with window size 21, Pearson as covariate and true correlation.\relax }{figure.caption.16}{}}
+\newlabel{fig:rf_kendall21_bootstrap_true}{{3.10b}{26}{RF estimates with window size 21, Kendall as covariate and true correlation.\relax }{figure.caption.16}{}}
+\newlabel{sub@fig:rf_kendall21_bootstrap_true}{{b}{26}{RF estimates with window size 21, Kendall as covariate and true correlation.\relax }{figure.caption.16}{}}
+\newlabel{fig:decom_mse_rf10_pearson_true}{{3.10c}{26}{Bias-variance decomposition for RF estimates with Pearson as covariate and true correlation.\relax }{figure.caption.16}{}}
+\newlabel{sub@fig:decom_mse_rf10_pearson_true}{{c}{26}{Bias-variance decomposition for RF estimates with Pearson as covariate and true correlation.\relax }{figure.caption.16}{}}
+\newlabel{fig:decom_mse_rf10_kendall_true}{{3.10d}{26}{Bias-variance decomposition for RF estimates with Kendall as covariate and true correlation.\relax }{figure.caption.16}{}}
+\newlabel{sub@fig:decom_mse_rf10_kendall_true}{{d}{26}{Bias-variance decomposition for RF estimates with Kendall as covariate and true correlation.\relax }{figure.caption.16}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3.10}{\ignorespaces MSE for RF estimates with Pearson and Kendall Moving Window bootstrap estimates as covariates and true correlation.\relax }}{26}{figure.caption.16}}
+\newlabel{fig:decom_mse_rf10_pearson_kendall_true}{{3.10}{26}{MSE for RF estimates with Pearson and Kendall Moving Window bootstrap estimates as covariates and true correlation.\relax }{figure.caption.16}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.2.2.2}Alternative RF Parameterizations}{26}{subsubsection.3.2.2.2}}
+\newlabel{tab:mse_decomp_rf_pearson_true}{{3.2a}{27}{MSE for RF estimates with window size 10, Pearson as covariate and true correlation.\relax }{table.caption.17}{}}
+\newlabel{sub@tab:mse_decomp_rf_pearson_true}{{a}{27}{MSE for RF estimates with window size 10, Pearson as covariate and true correlation.\relax }{table.caption.17}{}}
+\newlabel{tab:mse_decomp_rf_kendall_true}{{3.2b}{27}{MSE for RF estimates with window size 10, Kendall as covariate and true correlation.\relax }{table.caption.17}{}}
+\newlabel{sub@tab:mse_decomp_rf_kendall_true}{{b}{27}{MSE for RF estimates with window size 10, Kendall as covariate and true correlation.\relax }{table.caption.17}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {3.2}{\ignorespaces Mean Squared Error (MSE) decomposition as a function of the number of estimators (trees) for RF with proxy for covariates and true correlation.\relax }}{27}{table.caption.17}}
+\newlabel{tab:mse_decomp_rf_pearson_kendall_true}{{3.2}{27}{Mean Squared Error (MSE) decomposition as a function of the number of estimators (trees) for RF with proxy for covariates and true correlation.\relax }{table.caption.17}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {3.3}Learning with Proxies for Response Variable and Covariates}{27}{section.3.3}}
+\newlabel{sec:proxy_correlation}{{3.3}{27}{Learning with Proxies for Response Variable and Covariates}{section.3.3}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.3.1}Nearest Neighbor}{27}{subsection.3.3.1}}
+\newlabel{sec:knn_proxy_cor}{{3.3.1}{27}{Nearest Neighbor}{subsection.3.3.1}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.3.1.1}Diagnosing the Generalization Error of KNN}{27}{subsubsection.3.3.1.1}}
+\newlabel{fig:mse_knn5_pearson_kendall_proxy}{{3.11a}{28}{MSE for KNN with covariates from Pearson and Kendall and proxy correlation.\relax }{figure.caption.18}{}}
+\newlabel{sub@fig:mse_knn5_pearson_kendall_proxy}{{a}{28}{MSE for KNN with covariates from Pearson and Kendall and proxy correlation.\relax }{figure.caption.18}{}}
+\newlabel{fig:det_knn5_pearson_kendall_proxy}{{3.11b}{28}{Minimum determinants for KNN with covariates from Pearson and Kendall and proxy correlation.\relax }{figure.caption.18}{}}
+\newlabel{sub@fig:det_knn5_pearson_kendall_proxy}{{b}{28}{Minimum determinants for KNN with covariates from Pearson and Kendall and proxy correlation.\relax }{figure.caption.18}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3.11}{\ignorespaces Comparison MSE and minimum determinants for KNN(n\_neighbors=5) with covariates from Pearson and Kendall and proxy correlation.\relax }}{28}{figure.caption.18}}
+\newlabel{fig:mse_det_knn5_pearson_kendall_proxy}{{3.11}{28}{Comparison MSE and minimum determinants for KNN(n\_neighbors=5) with covariates from Pearson and Kendall and proxy correlation.\relax }{figure.caption.18}{}}
+\newlabel{fig:knn_pearson21_bootstrap_proxy}{{3.12a}{29}{KNN estimates with window size 21, Pearson as covariate and proxy correlation.\relax }{figure.caption.19}{}}
+\newlabel{sub@fig:knn_pearson21_bootstrap_proxy}{{a}{29}{KNN estimates with window size 21, Pearson as covariate and proxy correlation.\relax }{figure.caption.19}{}}
+\newlabel{fig:knn_kendall21_bootstrap_proxy}{{3.12b}{29}{KNN estimates with window size 21, Kendall as covariate and proxy correlation.\relax }{figure.caption.19}{}}
+\newlabel{sub@fig:knn_kendall21_bootstrap_proxy}{{b}{29}{KNN estimates with window size 21, Kendall as covariate and proxy correlation.\relax }{figure.caption.19}{}}
+\newlabel{fig:decom_mse_knn_pearson_proxy}{{3.12c}{29}{Bias-variance decomposition for KNN estimates with Pearson as covariate and proxy correlation.\relax }{figure.caption.19}{}}
+\newlabel{sub@fig:decom_mse_knn_pearson_proxy}{{c}{29}{Bias-variance decomposition for KNN estimates with Pearson as covariate and proxy correlation.\relax }{figure.caption.19}{}}
+\newlabel{fig:decom_mse_knn_kendall_proxy}{{3.12d}{29}{Bias-variance decomposition for KNN estimates with Kendall as covariate and proxy correlation.\relax }{figure.caption.19}{}}
+\newlabel{sub@fig:decom_mse_knn_kendall_proxy}{{d}{29}{Bias-variance decomposition for KNN estimates with Kendall as covariate and proxy correlation.\relax }{figure.caption.19}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3.12}{\ignorespaces MSE for KNN estimates with Pearson and Kendall Moving Window bootstrap estimates as covariates and proxy correlation.\relax }}{29}{figure.caption.19}}
+\newlabel{fig:decom_mse_knn5_pearson_kendall_proxy}{{3.12}{29}{MSE for KNN estimates with Pearson and Kendall Moving Window bootstrap estimates as covariates and proxy correlation.\relax }{figure.caption.19}{}}
 \citation{ref:Shepard1968}
-\newlabel{tab:mse_decomp_knn_pearson_proxy}{{3.2a}{29}{MSE for KNN estimates with window size 10, Pearson as covariate and correlation.\relax }{table.caption.20}{}}
-\newlabel{sub@tab:mse_decomp_knn_pearson_proxy}{{a}{29}{MSE for KNN estimates with window size 10, Pearson as covariate and correlation.\relax }{table.caption.20}{}}
-\newlabel{tab:mse_decomp_knn_kendall_proxy}{{3.2b}{29}{MSE for KNN estimates with window size 10, Kendall as covariate and correlation.\relax }{table.caption.20}{}}
-\newlabel{sub@tab:mse_decomp_knn_kendall_proxy}{{b}{29}{MSE for KNN estimates with window size 10, Kendall as covariate and correlation.\relax }{table.caption.20}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {3.2}{\ignorespaces Mean Squared Error (MSE) decomposition as a function of the number of neighbors (k) for KNN with approximations for both covariates and response variable.\relax }}{29}{table.caption.20}}
-\newlabel{tab:mse_decomp_knn_pearson_kendall_proxy}{{3.2}{29}{Mean Squared Error (MSE) decomposition as a function of the number of neighbors (k) for KNN with approximations for both covariates and response variable.\relax }{table.caption.20}{}}
-\newlabel{fig:decom_mse_knn_len_train_pearson_proxy}{{3.14a}{30}{Bias-variance decomposition for KNN estimates constructed from uniformly weighted averages and Pearson covariates.\relax }{figure.caption.21}{}}
-\newlabel{sub@fig:decom_mse_knn_len_train_pearson_proxy}{{a}{30}{Bias-variance decomposition for KNN estimates constructed from uniformly weighted averages and Pearson covariates.\relax }{figure.caption.21}{}}
-\newlabel{fig:decom_mse_knn_len_train_kendall_proxy}{{3.14b}{30}{Bias-variance decomposition for KNN estimates constructed from uniformly weighted averages and Kendall covariates.\relax }{figure.caption.21}{}}
-\newlabel{sub@fig:decom_mse_knn_len_train_kendall_proxy}{{b}{30}{Bias-variance decomposition for KNN estimates constructed from uniformly weighted averages and Kendall covariates.\relax }{figure.caption.21}{}}
-\newlabel{fig:decom_mse_knn_IDW_pearson_proxy}{{3.14c}{30}{Bias-variance decomposition for KNN estimates constructed from inverse distance weighted averages and Pearson covariates.\relax }{figure.caption.21}{}}
-\newlabel{sub@fig:decom_mse_knn_IDW_pearson_proxy}{{c}{30}{Bias-variance decomposition for KNN estimates constructed from inverse distance weighted averages and Pearson covariates.\relax }{figure.caption.21}{}}
-\newlabel{fig:decom_mse_knn_IDW_kendall_proxy}{{3.14d}{30}{Bias-variance decomposition for KNN estimates constructed from inverse distance weighted averages and Kendall covariates.\relax }{figure.caption.21}{}}
-\newlabel{sub@fig:decom_mse_knn_IDW_kendall_proxy}{{d}{30}{Bias-variance decomposition for KNN estimates constructed from inverse distance weighted averages and Kendall covariates.\relax }{figure.caption.21}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {3.14}{\ignorespaces MSE for KNN estimates with different weighting functions, Pearson and Kendall Moving Window bootstrap estimates as covariates and proxy correlation.\relax }}{30}{figure.caption.21}}
-\newlabel{fig:decom_mse_knn_len_train_IDW_pearson_kendall_proxy}{{3.14}{30}{MSE for KNN estimates with different weighting functions, Pearson and Kendall Moving Window bootstrap estimates as covariates and proxy correlation.\relax }{figure.caption.21}{}}
-\newlabel{fig:mse_knn5_len_train_pearson_kendall_proxy}{{3.15a}{32}{MSE for KNN with Pearson covariates and proxy correlation, Pearson and Kendall Moving Window bootstrap estimates.\relax }{figure.caption.22}{}}
-\newlabel{sub@fig:mse_knn5_len_train_pearson_kendall_proxy}{{a}{32}{MSE for KNN with Pearson covariates and proxy correlation, Pearson and Kendall Moving Window bootstrap estimates.\relax }{figure.caption.22}{}}
-\newlabel{fig:det_knn_len_train_IDW_pearson_kendall_proxy}{{3.15b}{32}{Minimum determinants for KNN using uniform and inverse distance weighting function, Pearson and Kendall covariates and proxy correlation.\relax }{figure.caption.22}{}}
-\newlabel{sub@fig:det_knn_len_train_IDW_pearson_kendall_proxy}{{b}{32}{Minimum determinants for KNN using uniform and inverse distance weighting function, Pearson and Kendall covariates and proxy correlation.\relax }{figure.caption.22}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {3.15}{\ignorespaces Comparison MSE and minimum determinants for KNN with Pearson covariates and proxy correlation, Pearson and Kendall Moving Window bootstrap estimates.\relax }}{32}{figure.caption.22}}
-\newlabel{mse_det_knn5_len_train_pearson_kendall_proxy}{{3.15}{32}{Comparison MSE and minimum determinants for KNN with Pearson covariates and proxy correlation, Pearson and Kendall Moving Window bootstrap estimates.\relax }{figure.caption.22}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.3.2}Random Forest}{32}{subsection.3.3.2}}
-\newlabel{sec:rf_proxy_cor}{{3.3.2}{32}{Random Forest}{subsection.3.3.2}{}}
-\newlabel{fig:mse_rf10_pearson_kendall_proxy}{{3.16a}{33}{MSE for RF with covariates from Pearson and Kendall and proxy correlation.\relax }{figure.caption.23}{}}
-\newlabel{sub@fig:mse_rf10_pearson_kendall_proxy}{{a}{33}{MSE for RF with covariates from Pearson and Kendall and proxy correlation.\relax }{figure.caption.23}{}}
-\newlabel{fig:det_rf10_pearson_kendall_proxy}{{3.16b}{33}{Minimum determinants for RF with covariates from Pearson and Kendall and proxy correlation.\relax }{figure.caption.23}{}}
-\newlabel{sub@fig:det_rf10_pearson_kendall_proxy}{{b}{33}{Minimum determinants for RF with covariates from Pearson and Kendall and proxy correlation.\relax }{figure.caption.23}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {3.16}{\ignorespaces Comparison MSE and minimum determinants for RF(n\_estimators=10) with covariates from Pearson and Kendall and proxy correlation.\relax }}{33}{figure.caption.23}}
-\newlabel{fig:mse_det_rf10_pearson_kendall_proxy}{{3.16}{33}{Comparison MSE and minimum determinants for RF(n\_estimators=10) with covariates from Pearson and Kendall and proxy correlation.\relax }{figure.caption.23}{}}
-\newlabel{fig:rf_pearson21_bootstrap_proxy}{{3.17a}{34}{RF estimates with window size 21, Pearson as covariate and proxy correlation.\relax }{figure.caption.24}{}}
-\newlabel{sub@fig:rf_pearson21_bootstrap_proxy}{{a}{34}{RF estimates with window size 21, Pearson as covariate and proxy correlation.\relax }{figure.caption.24}{}}
-\newlabel{fig:rf_kendall21_bootstrap_proxy}{{3.17b}{34}{RF estimates with window size 21, Kendall as covariate and proxy correlation.\relax }{figure.caption.24}{}}
-\newlabel{sub@fig:rf_kendall21_bootstrap_proxy}{{b}{34}{RF estimates with window size 21, Kendall as covariate and proxy correlation.\relax }{figure.caption.24}{}}
-\newlabel{fig:decom_mse_rf10_pearson_proxy}{{3.17c}{34}{Bias-variance decomposition for RF estimates with Pearson as covariate and proxy correlation.\relax }{figure.caption.24}{}}
-\newlabel{sub@fig:decom_mse_rf10_pearson_proxy}{{c}{34}{Bias-variance decomposition for RF estimates with Pearson as covariate and proxy correlation.\relax }{figure.caption.24}{}}
-\newlabel{fig:decom_mse_rf10_kendall_proxy}{{3.17d}{34}{Bias-variance decomposition for RF estimates with Kendall as covariate and proxy correlation.\relax }{figure.caption.24}{}}
-\newlabel{sub@fig:decom_mse_rf10_kendall_proxy}{{d}{34}{Bias-variance decomposition for RF estimates with Kendall as covariate and proxy correlation.\relax }{figure.caption.24}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {3.17}{\ignorespaces MSE for RF estimates with Pearson and Kendall Moving Window bootstrap estimates as covariates and proxy correlation.\relax }}{34}{figure.caption.24}}
-\newlabel{fig:decom_mse_rf10_pearson_kendall_proxy}{{3.17}{34}{MSE for RF estimates with Pearson and Kendall Moving Window bootstrap estimates as covariates and proxy correlation.\relax }{figure.caption.24}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {3.4}Conclusion Simulation Results}{34}{section.3.4}}
-\@writefile{toc}{\contentsline {chapter}{\numberline {4}Systems of Correlations in Quantitative Financial Risk Management}{36}{chapter.4}}
+\newlabel{tab:mse_decomp_knn_pearson_proxy}{{3.3a}{30}{MSE for KNN estimates with window size 10, Pearson as covariate and correlation.\relax }{table.caption.20}{}}
+\newlabel{sub@tab:mse_decomp_knn_pearson_proxy}{{a}{30}{MSE for KNN estimates with window size 10, Pearson as covariate and correlation.\relax }{table.caption.20}{}}
+\newlabel{tab:mse_decomp_knn_kendall_proxy}{{3.3b}{30}{MSE for KNN estimates with window size 10, Kendall as covariate and correlation.\relax }{table.caption.20}{}}
+\newlabel{sub@tab:mse_decomp_knn_kendall_proxy}{{b}{30}{MSE for KNN estimates with window size 10, Kendall as covariate and correlation.\relax }{table.caption.20}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {3.3}{\ignorespaces Mean Squared Error (MSE) decomposition as a function of the number of neighbors (k) for KNN with approximations for both covariates and response variable.\relax }}{30}{table.caption.20}}
+\newlabel{tab:mse_decomp_knn_pearson_kendall_proxy}{{3.3}{30}{Mean Squared Error (MSE) decomposition as a function of the number of neighbors (k) for KNN with approximations for both covariates and response variable.\relax }{table.caption.20}{}}
+\newlabel{fig:decom_mse_knn_len_train_pearson_proxy}{{3.13a}{31}{Bias-variance decomposition for KNN estimates constructed from uniformly weighted averages and Pearson covariates.\relax }{figure.caption.21}{}}
+\newlabel{sub@fig:decom_mse_knn_len_train_pearson_proxy}{{a}{31}{Bias-variance decomposition for KNN estimates constructed from uniformly weighted averages and Pearson covariates.\relax }{figure.caption.21}{}}
+\newlabel{fig:decom_mse_knn_len_train_kendall_proxy}{{3.13b}{31}{Bias-variance decomposition for KNN estimates constructed from uniformly weighted averages and Kendall covariates.\relax }{figure.caption.21}{}}
+\newlabel{sub@fig:decom_mse_knn_len_train_kendall_proxy}{{b}{31}{Bias-variance decomposition for KNN estimates constructed from uniformly weighted averages and Kendall covariates.\relax }{figure.caption.21}{}}
+\newlabel{fig:decom_mse_knn_IDW_pearson_proxy}{{3.13c}{31}{Bias-variance decomposition for KNN estimates constructed from inverse distance weighted averages and Pearson covariates.\relax }{figure.caption.21}{}}
+\newlabel{sub@fig:decom_mse_knn_IDW_pearson_proxy}{{c}{31}{Bias-variance decomposition for KNN estimates constructed from inverse distance weighted averages and Pearson covariates.\relax }{figure.caption.21}{}}
+\newlabel{fig:decom_mse_knn_IDW_kendall_proxy}{{3.13d}{31}{Bias-variance decomposition for KNN estimates constructed from inverse distance weighted averages and Kendall covariates.\relax }{figure.caption.21}{}}
+\newlabel{sub@fig:decom_mse_knn_IDW_kendall_proxy}{{d}{31}{Bias-variance decomposition for KNN estimates constructed from inverse distance weighted averages and Kendall covariates.\relax }{figure.caption.21}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3.13}{\ignorespaces MSE for KNN estimates with different weighting functions, Pearson and Kendall Moving Window bootstrap estimates as covariates and proxy correlation.\relax }}{31}{figure.caption.21}}
+\newlabel{fig:decom_mse_knn_len_train_IDW_pearson_kendall_proxy}{{3.13}{31}{MSE for KNN estimates with different weighting functions, Pearson and Kendall Moving Window bootstrap estimates as covariates and proxy correlation.\relax }{figure.caption.21}{}}
+\newlabel{fig:mse_knn5_len_train_pearson_kendall_proxy}{{3.14a}{33}{MSE for KNN with Pearson covariates and proxy correlation, Pearson and Kendall Moving Window bootstrap estimates.\relax }{figure.caption.22}{}}
+\newlabel{sub@fig:mse_knn5_len_train_pearson_kendall_proxy}{{a}{33}{MSE for KNN with Pearson covariates and proxy correlation, Pearson and Kendall Moving Window bootstrap estimates.\relax }{figure.caption.22}{}}
+\newlabel{fig:det_knn_len_train_IDW_pearson_kendall_proxy}{{3.14b}{33}{Minimum determinants for KNN using uniform and inverse distance weighting function, Pearson and Kendall covariates and proxy correlation.\relax }{figure.caption.22}{}}
+\newlabel{sub@fig:det_knn_len_train_IDW_pearson_kendall_proxy}{{b}{33}{Minimum determinants for KNN using uniform and inverse distance weighting function, Pearson and Kendall covariates and proxy correlation.\relax }{figure.caption.22}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3.14}{\ignorespaces Comparison MSE and minimum determinants for KNN with Pearson covariates and proxy correlation, Pearson and Kendall Moving Window bootstrap estimates.\relax }}{33}{figure.caption.22}}
+\newlabel{mse_det_knn5_len_train_pearson_kendall_proxy}{{3.14}{33}{Comparison MSE and minimum determinants for KNN with Pearson covariates and proxy correlation, Pearson and Kendall Moving Window bootstrap estimates.\relax }{figure.caption.22}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.3.2}Random Forest}{33}{subsection.3.3.2}}
+\newlabel{sec:rf_proxy_cor}{{3.3.2}{33}{Random Forest}{subsection.3.3.2}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.3.2.1}Diagnosing the Generalization Error of RF}{33}{subsubsection.3.3.2.1}}
+\newlabel{fig:mse_rf10_pearson_kendall_proxy}{{3.15a}{34}{MSE for RF with covariates from Pearson and Kendall and proxy correlation.\relax }{figure.caption.23}{}}
+\newlabel{sub@fig:mse_rf10_pearson_kendall_proxy}{{a}{34}{MSE for RF with covariates from Pearson and Kendall and proxy correlation.\relax }{figure.caption.23}{}}
+\newlabel{fig:det_rf10_pearson_kendall_proxy}{{3.15b}{34}{Minimum determinants for RF with covariates from Pearson and Kendall and proxy correlation.\relax }{figure.caption.23}{}}
+\newlabel{sub@fig:det_rf10_pearson_kendall_proxy}{{b}{34}{Minimum determinants for RF with covariates from Pearson and Kendall and proxy correlation.\relax }{figure.caption.23}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3.15}{\ignorespaces Comparison MSE and minimum determinants for RF(n\_estimators=10) with covariates from Pearson and Kendall and proxy correlation.\relax }}{34}{figure.caption.23}}
+\newlabel{fig:mse_det_rf10_pearson_kendall_proxy}{{3.15}{34}{Comparison MSE and minimum determinants for RF(n\_estimators=10) with covariates from Pearson and Kendall and proxy correlation.\relax }{figure.caption.23}{}}
+\newlabel{fig:rf_pearson21_bootstrap_proxy}{{3.16a}{35}{RF estimates with window size 21, Pearson as covariate and proxy correlation.\relax }{figure.caption.24}{}}
+\newlabel{sub@fig:rf_pearson21_bootstrap_proxy}{{a}{35}{RF estimates with window size 21, Pearson as covariate and proxy correlation.\relax }{figure.caption.24}{}}
+\newlabel{fig:rf_kendall21_bootstrap_proxy}{{3.16b}{35}{RF estimates with window size 21, Kendall as covariate and proxy correlation.\relax }{figure.caption.24}{}}
+\newlabel{sub@fig:rf_kendall21_bootstrap_proxy}{{b}{35}{RF estimates with window size 21, Kendall as covariate and proxy correlation.\relax }{figure.caption.24}{}}
+\newlabel{fig:decom_mse_rf10_pearson_proxy}{{3.16c}{35}{Bias-variance decomposition for RF estimates with Pearson as covariate and proxy correlation.\relax }{figure.caption.24}{}}
+\newlabel{sub@fig:decom_mse_rf10_pearson_proxy}{{c}{35}{Bias-variance decomposition for RF estimates with Pearson as covariate and proxy correlation.\relax }{figure.caption.24}{}}
+\newlabel{fig:decom_mse_rf10_kendall_proxy}{{3.16d}{35}{Bias-variance decomposition for RF estimates with Kendall as covariate and proxy correlation.\relax }{figure.caption.24}{}}
+\newlabel{sub@fig:decom_mse_rf10_kendall_proxy}{{d}{35}{Bias-variance decomposition for RF estimates with Kendall as covariate and proxy correlation.\relax }{figure.caption.24}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3.16}{\ignorespaces MSE for RF estimates with Pearson and Kendall Moving Window bootstrap estimates as covariates and proxy correlation.\relax }}{35}{figure.caption.24}}
+\newlabel{fig:decom_mse_rf10_pearson_kendall_proxy}{{3.16}{35}{MSE for RF estimates with Pearson and Kendall Moving Window bootstrap estimates as covariates and proxy correlation.\relax }{figure.caption.24}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.3.2.2}Alternative RF Parameterizations}{35}{subsubsection.3.3.2.2}}
+\newlabel{tab:mse_decomp_rf_pearson_proxy}{{3.4a}{36}{MSE for RF estimates with window size 10, Pearson as covariate and correlation.\relax }{table.caption.25}{}}
+\newlabel{sub@tab:mse_decomp_rf_pearson_proxy}{{a}{36}{MSE for RF estimates with window size 10, Pearson as covariate and correlation.\relax }{table.caption.25}{}}
+\newlabel{tab:mse_decomp_rf_kendall_proxy}{{3.4b}{36}{MSE for RF estimates with window size 10, Kendall as covariate and correlation.\relax }{table.caption.25}{}}
+\newlabel{sub@tab:mse_decomp_rf_kendall_proxy}{{b}{36}{MSE for RF estimates with window size 10, Kendall as covariate and correlation.\relax }{table.caption.25}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {3.4}{\ignorespaces Mean Squared Error (MSE) decomposition as a function of the number of estimators (trees) for RF with approximations for both covariates and response variable.\relax }}{36}{table.caption.25}}
+\newlabel{tab:mse_decomp_rf_pearson_kendall_proxy}{{3.4}{36}{Mean Squared Error (MSE) decomposition as a function of the number of estimators (trees) for RF with approximations for both covariates and response variable.\relax }{table.caption.25}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {3.4}Conclusion Simulation Results}{36}{section.3.4}}
+\@writefile{toc}{\contentsline {chapter}{\numberline {4}Systems of Correlations in Quantitative Financial Risk Management}{37}{chapter.4}}
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
-\newlabel{chap:multivariate_analysis}{{4}{36}{Systems of Correlations in Quantitative Financial Risk Management}{chapter.4}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {4.1}Value-at-Risk as Measure for Market Risk}{36}{section.4.1}}
+\newlabel{chap:multivariate_analysis}{{4}{37}{Systems of Correlations in Quantitative Financial Risk Management}{chapter.4}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {4.1}Value-at-Risk as Measure for Market Risk}{37}{section.4.1}}
 \citation{ref:QRM2015}
 \citation{ref:Plyakha2012}
-\@writefile{toc}{\contentsline {section}{\numberline {4.2}Dynamic Conditional Correlation Model}{37}{section.4.2}}
+\@writefile{toc}{\contentsline {section}{\numberline {4.2}Dynamic Conditional Correlation Model}{38}{section.4.2}}
 \citation{ref:Engle2002}
 \citation{ref:Engle2002}
 \citation{ref:Engle2002}
 \citation{ref:Engle2002}
-\newlabel{eq:DCC_Q}{{4.10}{38}{Dynamic Conditional Correlation Model}{equation.4.2.10}{}}
-\newlabel{eq:DCC_R}{{4.11}{38}{Dynamic Conditional Correlation Model}{equation.4.2.11}{}}
+\newlabel{eq:DCC_Q}{{4.10}{39}{Dynamic Conditional Correlation Model}{equation.4.2.10}{}}
+\newlabel{eq:DCC_R}{{4.11}{39}{Dynamic Conditional Correlation Model}{equation.4.2.11}{}}
 \citation{ref:Engle2001}
 \citation{ref:Christoffersen1998}
 \citation{ref:Kupiec1995}
@@ -266,32 +287,32 @@
 \citation{ref:Christoffersen1998}
 \citation{ref:Campbell2005}
 \citation{ref:Christoffersen1998}
-\@writefile{toc}{\contentsline {section}{\numberline {4.3}Backtesting Methodology}{39}{section.4.3}}
-\newlabel{eq:Kupiec_test}{{4.12}{39}{Backtesting Methodology}{equation.4.3.12}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {4.3}Backtesting Methodology}{40}{section.4.3}}
+\newlabel{eq:Kupiec_test}{{4.12}{40}{Backtesting Methodology}{equation.4.3.12}{}}
 \citation{ref:Christoffersen1998}
-\newlabel{eq:Christoffersen_test}{{4.13}{40}{Backtesting Methodology}{equation.4.3.13}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {4.4}Data and Descriptive Statistics}{40}{section.4.4}}
-\@writefile{lot}{\contentsline {table}{\numberline {4.1}{\ignorespaces Descriptive statistics of Dow Jones Industrial Average daily log returns.}}{41}{table.caption.25}}
-\newlabel{tab:stats_data}{{4.1}{41}{Descriptive statistics of Dow Jones Industrial Average daily log returns}{table.caption.25}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {4.5}Empirical Results}{42}{section.4.5}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.5.1}Tranquil Market Conditions: Mid-1990's}{42}{subsection.4.5.1}}
-\@writefile{lot}{\contentsline {table}{\numberline {4.2}{\ignorespaces Kupiec test with Gaussian distributed conditional innovations for tranquil market conditions.}}{42}{table.caption.26}}
-\newlabel{tab:kupiec_test_norm_tranquil_table}{{4.2}{42}{Kupiec test with Gaussian distributed conditional innovations for tranquil market conditions}{table.caption.26}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {4.3}{\ignorespaces Kupiec test with Student's t-distributed conditional innovations for tranquil market conditions.}}{43}{table.caption.27}}
-\newlabel{tab:christoffersen_test_std_tranquil_table}{{4.3}{43}{Kupiec test with Student's t-distributed conditional innovations for tranquil market conditions}{table.caption.27}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {4.4}{\ignorespaces Christoffersen Markov test with Gaussian distributed conditional innovations for tranquil market conditions.}}{43}{table.caption.28}}
-\newlabel{tab:christoffersen_test_norm_tranquil_table}{{4.4}{43}{Christoffersen Markov test with Gaussian distributed conditional innovations for tranquil market conditions}{table.caption.28}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {4.5}{\ignorespaces Christoffersen Markov test with Student's t-distributed conditional innovations for tranquil market conditions.}}{44}{table.caption.29}}
-\newlabel{tab:christoffersen_test_std_tranquil_table}{{4.5}{44}{Christoffersen Markov test with Student's t-distributed conditional innovations for tranquil market conditions}{table.caption.29}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.5.2}Volatile Market Conditions: 2000-2001 Dot-com Bubble}{44}{subsection.4.5.2}}
-\@writefile{lot}{\contentsline {table}{\numberline {4.6}{\ignorespaces Kupiec test with Student's t-distributed conditional innovations for volatile market conditions.}}{44}{table.caption.30}}
-\newlabel{tab:christoffersen_test_std_volatile_table}{{4.6}{44}{Kupiec test with Student's t-distributed conditional innovations for volatile market conditions}{table.caption.30}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {4.7}{\ignorespaces Christoffersen Markov test with Student's t-distributed conditional innovations for volatile market conditions.}}{45}{table.caption.31}}
-\newlabel{tab:christoffersen_test_std_volatile_table}{{4.7}{45}{Christoffersen Markov test with Student's t-distributed conditional innovations for volatile market conditions}{table.caption.31}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {4.6}Conclusion Empirical Results}{45}{section.4.6}}
+\newlabel{eq:Christoffersen_test}{{4.13}{41}{Backtesting Methodology}{equation.4.3.13}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {4.4}Data and Descriptive Statistics}{41}{section.4.4}}
+\@writefile{lot}{\contentsline {table}{\numberline {4.1}{\ignorespaces Descriptive statistics of Dow Jones Industrial Average daily log returns.}}{42}{table.caption.26}}
+\newlabel{tab:stats_data}{{4.1}{42}{Descriptive statistics of Dow Jones Industrial Average daily log returns}{table.caption.26}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {4.5}Empirical Results}{43}{section.4.5}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.5.1}Tranquil Market Conditions: Mid-1990's}{43}{subsection.4.5.1}}
+\@writefile{lot}{\contentsline {table}{\numberline {4.2}{\ignorespaces Kupiec test with Gaussian distributed conditional innovations for tranquil market conditions.}}{43}{table.caption.27}}
+\newlabel{tab:kupiec_test_norm_tranquil_table}{{4.2}{43}{Kupiec test with Gaussian distributed conditional innovations for tranquil market conditions}{table.caption.27}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {4.3}{\ignorespaces Kupiec test with Student's t-distributed conditional innovations for tranquil market conditions.}}{44}{table.caption.28}}
+\newlabel{tab:christoffersen_test_std_tranquil_table}{{4.3}{44}{Kupiec test with Student's t-distributed conditional innovations for tranquil market conditions}{table.caption.28}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {4.4}{\ignorespaces Christoffersen Markov test with Gaussian distributed conditional innovations for tranquil market conditions.}}{44}{table.caption.29}}
+\newlabel{tab:christoffersen_test_norm_tranquil_table}{{4.4}{44}{Christoffersen Markov test with Gaussian distributed conditional innovations for tranquil market conditions}{table.caption.29}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {4.5}{\ignorespaces Christoffersen Markov test with Student's t-distributed conditional innovations for tranquil market conditions.}}{45}{table.caption.30}}
+\newlabel{tab:christoffersen_test_std_tranquil_table}{{4.5}{45}{Christoffersen Markov test with Student's t-distributed conditional innovations for tranquil market conditions}{table.caption.30}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.5.2}Volatile Market Conditions: 2000-2001 Dot-com Bubble}{45}{subsection.4.5.2}}
+\@writefile{lot}{\contentsline {table}{\numberline {4.6}{\ignorespaces Kupiec test with Student's t-distributed conditional innovations for volatile market conditions.}}{45}{table.caption.31}}
+\newlabel{tab:christoffersen_test_std_volatile_table}{{4.6}{45}{Kupiec test with Student's t-distributed conditional innovations for volatile market conditions}{table.caption.31}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {4.7}{\ignorespaces Christoffersen Markov test with Student's t-distributed conditional innovations for volatile market conditions.}}{46}{table.caption.32}}
+\newlabel{tab:christoffersen_test_std_volatile_table}{{4.7}{46}{Christoffersen Markov test with Student's t-distributed conditional innovations for volatile market conditions}{table.caption.32}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {4.6}Conclusion Empirical Results}{46}{section.4.6}}
 \bibstyle{plainnat}
 \bibdata{refThesis}
-\@writefile{toc}{\contentsline {chapter}{\numberline {5}Conclusion and Future Research}{46}{chapter.5}}
+\@writefile{toc}{\contentsline {chapter}{\numberline {5}Conclusion and Future Research}{47}{chapter.5}}
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
 \bibcite{ref:Basturk2016}{{1}{2016}{{Ba{\c {s}}t{\"u}rk et~al.}}{{Ba{\c {s}}t{\"u}rk, Almeida, Golan, and Kaymak}}}
@@ -313,16 +334,16 @@
 \bibcite{ref:Pozzi2012}{{17}{2012}{{Pozzi et~al.}}{{Pozzi, Di~Matteo, and Aste}}}
 \bibcite{ref:Shepard1968}{{18}{1968}{{Shepard}}{{}}}
 \citation{ref:Engle2002}
-\@writefile{toc}{\contentsline {chapter}{\numberline {A}Theoretical Analysis Value-at-Risk Forecasting}{49}{appendix.A}}
+\@writefile{toc}{\contentsline {chapter}{\numberline {A}Theoretical Analysis Value-at-Risk Forecasting}{50}{appendix.A}}
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
-\@writefile{toc}{\contentsline {section}{\numberline {A.1}Tranquil Market Conditions: Mid-1990's}{49}{section.A.1}}
-\@writefile{lot}{\contentsline {table}{\numberline {A.1}{\ignorespaces Kupiec test with Gaussian distributed conditional innovations for tranquil market conditions.}}{49}{table.caption.33}}
-\newlabel{tab:kupiec_test_norm_lower_q_table}{{A.1}{49}{Kupiec test with Gaussian distributed conditional innovations for tranquil market conditions}{table.caption.33}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {A.2}{\ignorespaces Christoffersen Markov test with Gaussian distributed conditional innovations for tranquil market conditions.}}{50}{table.caption.34}}
-\newlabel{tab:christoffersen_test_norm_lower_q_table}{{A.2}{50}{Christoffersen Markov test with Gaussian distributed conditional innovations for tranquil market conditions}{table.caption.34}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {A.3}{\ignorespaces Kupiec test with Student's t-distributed conditional innovations for tranquil market conditions.}}{50}{table.caption.35}}
-\newlabel{tab:kupiec_test_std_lower_q_table}{{A.3}{50}{Kupiec test with Student's t-distributed conditional innovations for tranquil market conditions}{table.caption.35}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {A.4}{\ignorespaces Christoffersen Markov test with Student's t-distributed conditional innovations for tranquil market conditions.}}{51}{table.caption.36}}
-\newlabel{tab:christoffersen_test_std_lower_q_table}{{A.4}{51}{Christoffersen Markov test with Student's t-distributed conditional innovations for tranquil market conditions}{table.caption.36}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {A.2}Volatile Market Conditions: 2000-2001 Dot-com Bubble}{51}{section.A.2}}
+\@writefile{toc}{\contentsline {section}{\numberline {A.1}Tranquil Market Conditions: Mid-1990's}{50}{section.A.1}}
+\@writefile{lot}{\contentsline {table}{\numberline {A.1}{\ignorespaces Kupiec test with Gaussian distributed conditional innovations for tranquil market conditions.}}{50}{table.caption.34}}
+\newlabel{tab:kupiec_test_norm_lower_q_table}{{A.1}{50}{Kupiec test with Gaussian distributed conditional innovations for tranquil market conditions}{table.caption.34}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {A.2}{\ignorespaces Christoffersen Markov test with Gaussian distributed conditional innovations for tranquil market conditions.}}{51}{table.caption.35}}
+\newlabel{tab:christoffersen_test_norm_lower_q_table}{{A.2}{51}{Christoffersen Markov test with Gaussian distributed conditional innovations for tranquil market conditions}{table.caption.35}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {A.3}{\ignorespaces Kupiec test with Student's t-distributed conditional innovations for tranquil market conditions.}}{51}{table.caption.36}}
+\newlabel{tab:kupiec_test_std_lower_q_table}{{A.3}{51}{Kupiec test with Student's t-distributed conditional innovations for tranquil market conditions}{table.caption.36}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {A.4}{\ignorespaces Christoffersen Markov test with Student's t-distributed conditional innovations for tranquil market conditions.}}{52}{table.caption.37}}
+\newlabel{tab:christoffersen_test_std_lower_q_table}{{A.4}{52}{Christoffersen Markov test with Student's t-distributed conditional innovations for tranquil market conditions}{table.caption.37}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {A.2}Volatile Market Conditions: 2000-2001 Dot-com Bubble}{52}{section.A.2}}
