@@ -428,7 +428,7 @@ def main():
     #plt.plot(mse_knn100_pearson_proxy['MSE'], label='KNN(100)', linewidth=1)
     plt.plot(mse_knn_IDW_pearson_true['MSE'], label='KNN_pearson_IDW', color='black', linewidth=1)
     #plt.plot(mse_knn_IDW_kendall_true['MSE'], label='KNN_kendall_idw', linewidth=1, color='xkcd:azure')
-    plt.plot(mse_knn_len_train_pearson_true['MSE'], label='KNN_pearson_len_train', linewidth=1)
+    #plt.plot(mse_knn_len_train_pearson_true['MSE'], label='KNN_pearson_len_train', linewidth=1)
     #plt.plot(mse_knn_len_train_pearson_proxy['MSE'], label='KNN_pearson_len_train', color='black', linewidth=1)
     #plt.plot(mse_knn_IDW_pearson_proxy['MSE'], label='KNN_pearson_IDW', color='black', linewidth=1)
 
