@@ -139,38 +139,56 @@ Essentially, all models are wrong, but some are useful - Box and Draper (1987, p
 
 %NEW CHAPTER 
 \chapter{Introduction}\label{sec:intro} 
-"Correlations are critical inputs for many of the common tasks of Ž financial management. Hedges require estimates of the correlation between the returns of the assets in the hedge. If the correlations and volatilities are changing, then the hedge ratio should be adjusted to account for the most recent information. Similarly, structured products such as rainbow options that are designed with more than one underlying asset have prices that are sensitive to the correlation between the underlying returns. A forecast of future correlations and volatilities is the basis of any pricing formula.
+\textbf{Topic: importance of (time-varying) correlations}\\
+\noindent
+"Correlations are critical inputs for many of the common tasks of Ž financial management. Hedges require estimates of the correlation between the returns of the assets in the hedge. If the correlations and volatilities are changing, then the hedge ratio should be adjusted to account for the most recent information. Similarly, structured products such as rainbow options that are designed with more than one underlying asset have prices that are sensitive to the correlation between the underlying returns. A forecast of future correlations and volatilities is the basis of any pricing formula. \\
 
-Asset allocation and risk assessment also rely on correlations; however, in this case a large number of correlations is often required. Construction of an optimal portfolio with a set of constraints requires a forecast of the covariance matrix of the returns. Similarly, the calculation of the standard deviation of today's portfolio requires a covariance matrix of all the assets in the portfolio. These functions entail estimation and forecasting of large covariance matrices, potentially with thousands of assets.
+\noindent
+\textbf{Topic: systems of (time-varying) correlations in multivariate volatility modeling}\\
+\noindent
+Asset allocation and risk assessment also rely on correlations; however, in this case a large number of correlations is often required. Construction of an optimal portfolio with a set of constraints requires a forecast of the covariance matrix of the returns. Similarly, the calculation of the standard deviation of today's portfolio requires a covariance matrix of all the assets in the portfolio. These functions entail estimation and forecasting of large covariance matrices, potentially with thousands of assets. \\
 
-The quest for reliable estimates of correlations between Ž financial variables has been the motivation for countless academic articles and practitioner conferences and much Wall Street research. Simple methods such as rolling historical correlations and exponential smoothing are widely used. More complex methods, such as varieties of multivariate generalized autoregressive conditional heteroskedasticity (GARCH) or stochastic volatility, have been extensively investigated in the econometric literature and are used by a few sophisticated practitioners. To see some interesting applications, examine the paper of Bollerslev, Engle, and Wooldridge (1988), Bollerslev (1990), Kroner and Claessens (1991), Engle and Mezrich (1996), Engle, Ng, and Rothschild (1990), Bollerslev, Chou, and Kroner (1992), Bollerslev, Engle, and Nelson (1994), and Ding and Engle (2001). In very few of these articles are more than Ž five assets considered, despite the apparent
-need for bigger correlation matrices. In most cases, the number of parameters in large models is too big for easy optimization. 
+\noindent
+\textbf{Topic: types of multivariate volatility models with previous research reference}\\
+\noindent
+The quest for reliable estimates of correlations between Žfinancial variables has been the motivation for countless academic articles and practitioner conferences and much Wall Street research. Simple methods such as rolling historical correlations and exponential smoothing are widely used. More complex methods, such as varieties of multivariate generalized autoregressive conditional heteroskedasticity (GARCH) or stochastic volatility, have been extensively investigated in the econometric literature and are used by a few sophisticated practitioners. To see some interesting applications, examine the paper of Bollerslev, Engle, and Wooldridge (1988), Bollerslev (1990), Kroner and Claessens (1991), Engle and Mezrich (1996), Engle, Ng, and Rothschild (1990), Bollerslev, Chou, and Kroner (1992), Bollerslev, Engle, and Nelson (1994), and Ding and Engle (2001). In very few of these articles are more than Ž five assets considered, despite the apparent need for bigger correlation matrices. In most cases, the number of parameters in large models is too big for easy optimization. \\
 
-In this article, dynamic conditional correlation (DCC) estimators are proposed that have the flexibility of univariate GARCH but not the complexity of conventional multivariate GARCH. These models, which parameterize the conditional correlations directly, are naturally estimated in two steps? a series of univariate GARCH estimates and the correlation estimate. These methods have clear computational advantages over multivariate GARCH models in that the number of parameters to be estimated in the correlation process is independent of the number of series to be correlated. Thus potentially very large correlation matrices can be estimated. 
+\noindent
+\textbf{Add topic: nonparametric multivariate volatility models with previous research reference}\\
+\noindent
+\textit{Mention nonparametric model classes and their advantages such as the lack of distributional assumptions or the lack of any imposed structure on the correlation dynamics. Then move to field of machine learning which in the base avoid distributional assumptions.} In the past decade, machine learning has been responsible for significant advances in self-driving cars, speech and facial recognition, effective web search, and in a vast amount of medical diagnostic procedures. However, the approach of using machine learning for the estimation of correlation between financial variables has not been extensively investigated in scientific literature. In fact, there is a limited number of studies on this type of machine learning uses. \textit{Mention papers using machine learning for estimation of time varying correlations such as two papers by Rui.}   \\
 
-In this article, the accuracy of the correlations estimated by a variety of methods is compared in bivariate settings where many methods are feasible. An analysis of the performance of the DCC methods for large covariance matrices was considered by Engle and Sheppard (2001). 
-
-Section 2 gives a brief overview of various models for estimating correlations. Section 3 introduces the new method and compares it with some of the cited approaches. Section 4 investigates some statistical properties of the method. Section 5 describes a Monte Carlo experiment and results are presented in Section 6. Section 7 presents empirical results for several pairs of daily time series, and Section 8 concludes." (Engle, 2001)
-
-"Financial markets respond to information virtually instantaneously. Each new piece of information influences the prices of assets and their correlations with each other, and as the system rapidly changes, so too do correlation forecasts. This fast-evolving environment presents econometricians with the challenge of forecasting dynamic correlations, which are essential inputs to risk measurement, portfolio allocation, derivative pricing, and many other critical financial activities." \\
+\noindent
+\textbf{Topic: explain topic of this paper, i.e. stochastic correlation modeling using machine learning algorithms}\\
+\noindent
+In this article, dynamic conditional correlation (DCC) estimators are proposed that have the flexibility of univariate GARCH but not the complexity of conventional multivariate GARCH. These models, which parameterize the conditional correlations directly, are naturally estimated in two steps -- a series of univariate GARCH estimates and the correlation estimate. These methods have clear computational advantages over multivariate GARCH models in that the number of parameters to be estimated in the correlation process is independent of the number of series to be correlated. Thus potentially very large correlation matrices can be estimated. \\
 
 
 \noindent
-The computational framework development using nearest neighbor and random forest for estimating time-varying correlation was motivated by 1) the simplicity of knn 2) performance of random forest on a variety of supervised learning problems. \\
+\textbf{Mention two major sections of paper: bivariate and multivariate setting}\\
+\noindent
+In this article, the accuracy of the correlations estimated by a variety of methods is compared in bivariate settings where many methods are feasible. An analysis of the performance of the DCC methods for large covariance matrices was considered by \cite{ref:Engle2001}. \\
+
+\noindent
+\textbf{Topic: overview of topics addressed in this paper. Potentially move to section "outline"}\\
+\noindent
+Section 2 gives a brief overview of various models for estimating correlations. Section 3 introduces the new method and compares it with some of the cited approaches. Section 4 investigates some statistical properties of the method. Section 5 describes a Monte Carlo experiment and results are presented in Section 6. Section 7 presents empirical results for several pairs of daily time series, and Section 8 concludes." \citep{ref:Engle2002} \\
+
+\iffalse
+\noindent
+"Financial markets respond to information virtually instantaneously. Each new piece of information influences the prices of assets and their correlations with each other, and as the system rapidly changes, so too do correlation forecasts. This fast-evolving environment presents econometricians with the challenge of forecasting dynamic correlations, which are essential inputs to risk measurement, portfolio allocation, derivative pricing, and many other critical financial activities." \\
+
 
 \noindent
 "Understanding and quantifying dependence is at the core of all modeling efforts in financial econometrics. The linear correlation coefficient (Pearson correlation coefficient), which is the far most used measure to test dependence in the financial community and also elsewhere, is only a measure of linear dependence. This means that it is a meaningful measure of dependence if asset returns are well represented by an elliptical distribution. Outside the world of elliptical distributions, however, using the linear correlation coefficient as a measure of dependence may lead to misleading conclusions. In financial markets, there is often a non-linear dependence between returns." \\
 
 
-We illustrate the model capabilities using synthetic datasets exhibiting different data properties (and subsequently real data on asset returns). \\
-
 \noindent
-"In our empirical illustration for a portfolio of 15 U.S. financial assets, the parameter estimates
-imply that the realized measures receive more weight than the outer-product of the vector of
-daily returns. We confirm that the realized measure is a more accurate measure of the covariance
-matrix as it exploits intra-day high-frequency data. In an out-of-sample study we show that
-our modeling framepaper can lead to accuracy improvements in forecasting, especially those for
-the density in daily returns."
+The computational framework development using nearest neighbor and random forest for estimating time-varying correlation was motivated by 1) the simplicity of knn 2) performance of random forest on a variety of supervised learning problems. We illustrate the model capabilities using synthetic datasets exhibiting different data properties. Subsequently, model capabilities are illustrated for a portfolio consisting of Dow Jones Industrial Average constituents.  
+\fi
+
+
+
 
   
 
@@ -184,49 +202,58 @@ Now, these density functions are obviously unknown for real-world data. However,
 
 
 \section{Problem Statement}
+\textbf{Insert: introductory text, potentially adapt points below.} \\
 
 
 \noindent
-State difficulties in asset return correlation modeling:
+Some difficulties in asset return correlation modeling:
 \begin{enumerate}
-	\item Correlation is not directly observable: solve with approximations but this introduces an error. 
-	\item High dimensionality: a portfolio with $n$ stocks has dimensionality $d = n(n-1)/2$ pairwise correlations.
-	\item Requirement of positive semi-definiteness. Always check requirement is satisfied after obtaining parameters.   
-	\item Existing models impose additional restrictions on/ rely on distributional assumptions on the process being forecasted, i.e. correlation process. 
+	\item Correlation is not directly observable.
+	\item Curse of dimensionality: a portfolio with $k$ stocks has dimensionality $d = k(k-1)/2$ pairwise correlations.
+	\item Time-varying correlation matrix needs to to satisfy positive semi-definiteness property.
+	\item Existing models impose additional restrictions on the dependence structure/ rely on distributional assumptions with respect to the process being modeled, i.e. the correlation process. 
 \end{enumerate}
 
 \noindent
-This paper is intended to address the last deficiency by clearly defining... machine learning gives us an approach that enables us to extract correlation information without relying on any distributional assumptions on the process being forecasted, i.e. the correlation process. "This is important in most applications in economics where any kind of  distributional assumption is highly questionable. In value-at-risk (VAR) applications,  the underlying returns series is nonstationary by construction, since the portfolio is  typically changing over time. Furthermore, VAR forecasts are often plagued by  misspecification due to time-varying covariances and options risk approximations, so  that abstaining from distributional assumptions is crucial \citep{ref:Christoffersen1998}." \\
+This paper will address the last issue by defining the estimation of time-varying correlation between financial returns as a supervised learning problem. However, in defining the task of estimating time-varying correlations as a supervised learning problem, the unobservability of correlation, the curse of dimensionality, and the positive semi-definiteness requirement are explicitly dealt with. Machine learning provides an approach that enables us to extract correlation information without relying on any distributional assumptions on the process being forecasted, i.e the correlation process. Abstaining from distributional assumptions is crucial in applications where any kind of distributional assumption is highly questionable. Understanding and quantification of time-varying correlation between financial returns is an example of such an application \citep{ref:Christoffersen1998}.   \\
 
+
+\section{Research Objectives}
+"The goal of this paper is to provide a comprehensive and self-contained analysis of a class of algorithms known as" nearest neighbors and random forests \citep{ref:Breiman2001} and their aptness as estimators of time-varying correlation between financial returns. As such, we can formulate the following research objectives:  \\
+
+\begin{enumerate}
+	\item Formulate the task of estimating time-varying correlation between financial returns as a supervised learning problem.
+	\item According to the supervised learning problem formulation, design and implement a K-Nearest Neighbor and Random Forest estimator with support for (multivariate) regression output problems.  
+	\item Evaluate the machine learning estimators against conventional methods for estimating time-varying correlation.  
+\end{enumerate}
+
+\iffalse
 \noindent
 \begin{enumerate}
 	\item What can we say about the performance of the ml models using simulated data and compare the results with MW estimates of correlation? 
 	\item Moreover, what can we say about the sensitivity of these machine learning algorithms with respect to the window size of the moving window estimates, which serve as covariates as well as the response variable?
 	\item What is the effect of different parameterizations on the bias-variance decomposition under noisy covariates and response variable? Noise is introduced as approximations error when using moving window estimates as approximation of true correlation. 
 \end{enumerate}
-
-
-
-\section{Research Objectives}
-"The goal of this thesis is to provide a comprehensive and self-contained analysis of a class of algorithms known as" nearest neighbors and random forests \citep{ref:Breiman2001} and their aptness as estimators of time-varying correlation between financial returns.  \\
-
-\noindent 
-"In this context, the goal of this paper is to propose a simple approach to modeling multivariate volatility. The proposed model is kept parsimonious in parameterization to overcome the difficulty of curse of dimensionality." In addition, no distributional assumption is made on the correlation dynamics, i.e. no structure equation is imposed. Consequently, the proposed model is very flexible. On the other hand, lack of imposed structure does not guarantee the resulting time-varying covariance matrices are positive semi-definite such that this must be verified with obtained parameters.  \\
+\fi
 
 \noindent
-We show that the KNN and RF learning algorithms improve over the conventional moving window approximation of time-varying correlation by decreasing the sensitivity of the results to the selection of the window length. Moreover, through an empirical evaluation it is shown that both learning algorithms improve over a widely used class of multivariate volatility models, i.e. Dynamic Conditional Correlation model.  \\
+First, through implementation of a simulation study, we aim to verify whether proposed learning algorithms have any capability of estimating time-varying correlation between financial returns in a bivariate setting; two asset return paths with a predefined correlation structure. More precisely, we seek to verify whether KNN and RF learning algorithms improve over conventional moving window approximation of time-varying correlation. Moreover, the controlled setting of a simulation study allows us to observe the effect of different foundational model properties (parameterizations) on the generalization error. By defining the generalization error as the Mean Squared Error loss, we will be able to observe the effect of incorporating approximation error due to defining the set of covariates and response variable using moving window estimates of correlation. \\
 
 \noindent
-Goal of the simulation part is to see if proposed learning algorithms are useful to try and whether the effect of different parameterizations on the bias-variance decomposition still holds when the response variable incorporate errors because they are approximated. 
-
+Next, we extend the empirical evaluation of time-varying correlation modeling to a multivariate setting. The focus will be on systems of correlations rather than individual correlations. "In this context, we propose a simple approach to modeling multivariate volatility. The proposed model is kept parsimonious in parameterization to overcome the difficulty of curse of dimensionality." No distributional assumption is made on the correlation dynamics, i.e. no structure equation is imposed. Consequently, the proposed model is very flexible. Though, lack of imposed structure does not guarantee the resulting time-varying covariance matrix to be positive semi-definite such that this must be verified with obtained parameters. The volatilities and correlations of 30 Dow Jones Industrial Average constituents are evaluated based on the proposed machine learning algorithms and a widely used class of multivariate volatility models, i.e. Dynamic Conditional Correlation model \citep{ref:Engle2002}. Evaluation is based on backtesting one-day ahead Value-at-Risk forecasts. Models producing the Value-at-Risk forecasts will be statistically compared on two properties: unconditional coverage property and independence property.   
 
 
 
 \section{Outline and Contributions}
 We present the first KNN and RF application where estimation and forecasting capability of
-these algorithms is assessed based on point forecasts of time-varying correlations. Furthermore, we will analyze the function approximation capabilities of KNN and RF under different parameterizations and report the effect of parameterizations on the accuracy of the obtained function approximation. \\
+these algorithms is assessed based on point forecasts of time-varying correlations. Furthermore, we analyze the function approximation capabilities of KNN and RF under different parameterizations and report the effect of parameterizations on the generalization error of the obtained function approximation. \\
 
+\noindent
+In this paper we show that the KNN and RF learning algorithms improve over conventional moving window approximation of time-varying correlation by decreasing the sensitivity of the results to the selection of the window length. "Moreover, through an empirical evaluation it is shown that both learning algorithms improve over a widely used class of multivariate volatility models, i.e. Dynamic Conditional Correlation model."  \\
+
+\iffalse
 \textit{We start with a comprehensive review of the algorithms at the core of k-nearest neighbors and random forests. We discuss the learning capabilities of these models and carefully study all parts of the algorithm and their complementary effects. In particular, Chapter 4 includes original contributions on the bias-variance analysis of ensemble methods, highlighting how randomization can help improve performance. Chapter 5 concludes this first part with an original space and time complexity analysis of k-nearest neighbors and random forests (and 4 introduction their variants)}. \\
+\fi
 
 
 
@@ -641,7 +668,7 @@ Pearson and Kendall moving window estimates of time-varying correlation satisfy 
 Fig. \ref{fig:pearson21_bootstrap} and Fig. \ref{fig:kendall21_bootstrap} show that both Pearson moving window estimates and Kendall moving window estimates of correlation change substantially over time indicating the capture of changing correlation levels. Additionally, it is observed that the obtained 99\% confidence intervals around these estimates are rather wide, covering all values in the range $[-1,1]$, which imply that the uncertainty around the estimated values are high \citep{ref:Basturk2016}. \\
 
 \noindent
-\textbf{Say something on difference between smoothness/ peaks Pearson/Kendall estimates?} \\  
+\textbf{Say something on difference between smoothness/ peaks Pearson/Kendall estimates: potentially that kendall seems less volatile, which may be explained by the fact that Kendall is insensitive to outliers?} \\  
 
 
 \begin{figure}[H]  % [h] parameter makes sure figures are located at 'this' location.
@@ -694,7 +721,7 @@ Moreover, Pearson and Kendall estimates are very sensitive to the choice of the 
 \subsection{Nearest Neighbor} \label{sec:knn_true_cor}
 In order to obtain time-varying correlations, $\rho_t$, with k-nearest multivariate neighbor algorithm, the data set is defined as in \eqref{eq:dataset}; covariates are constructed from lagged Pearson and Kendall moving window estimates and minimum and maximum log return of the previous time unit, denoted by $min_{i}(r_{i,t-1})$, and $max_{i}(r_{i,t-1})$, respectively.  \\
 
-\subsubsection{Diagnosing the Generalization Error of KNN}
+\subsubsection{Diagnosing the Generalization Error of Nearest Neighbors}
 The accuracy of KNN estimates with Pearson and Kendall covariates for time-varying correlation is compared by using mean squared error (MSE) between estimated and actual correlations. MSE from KNN with Pearson and Kendall moving window estimates of correlation for covariates are shown in Fig. \ref{fig:mse_knn5_pearson_kendall_true}. Regardless of the choice of window length, MSE from KNN with Pearson and Kendall covariates are between 0.0939 and 0.1071, and 0.0929 and 0.1071, respectively. The variance of MSE from KNN estimates with Pearson covariates is approximately 6.07e-6 while that of KNN estimates with Kendall covariates is approximately 5.66e-6. KNN thus appears to be insensitive to the choice of window length, regardless whether the set of covariates is constructed from Pearson or Kendall moving window estimates of correlation. KNN's property of insensitivity to the choice of window length is preferred over Pearson and Kendall's property of being highly sensitive to the choice of the window length used for correlation estimates as depicted in Fig. \ref{fig:mse_pearson_kendall_bootstrap}.  \\
 
 \noindent
@@ -763,7 +790,7 @@ The MSE decompositions into bias and variance terms from KNN estimates of correl
 	\label{fig:decom_mse_knn5_pearson_kendall_true}
 \end{figure}
 
-\subsubsection{Alternative KNN Parameterizations}
+\subsubsection{Alternative Parameterizations of Nearest Neighbor Algorithm}
 Fig. \ref{fig:decom_mse_pearson_kendall_true} depicted an inverse relationship between the choice of the window length and the uncertainty around Pearson and Kendall moving window estimates of correlation. The KNN algorithm has a similar property: Simulation results in Tabel \ref{tab:mse_decomp_knn_pearson_kendall_true} show an inverse relationship between the choice of the number of nearest neighbors used in the estimation of correlations and the uncertainty around the estimated correlations, regardless whether Pearson or Kendall estimates are used for defining the set of covariates. It is clearly observed that an increase in the number of neighbors $k$ results in a decrease of the variance, and conversely. This observation is in line with our discussion on MSE decomposition for the KNN algorithm and Eq. \eqref{eq:mse_decomposition_knn} from Section \ref{sec:mse_decompose}. Additionally, it was stated that the higher the value of $k$, the lower the model complexity and, as such, the squared bias tends to increase with an increase in $k$. However, simulation results depicted in Tabel \ref{tab:mse_decomp_knn_pearson_kendall_true} indicate no increase in squared bias with an increase in $k$ up to $k=800$. The first increase in squared bias is observed when the number of neighbors is approximately 900. For all $k$ smaller than 900 a decrease in squared bias is observed with an increase in $k$. This statement is more clearly shown through a geometrical representation of the MSE decomposition as a function of the number of neighbors for $k \in \{5, 10, 25, 50, 100\}$ in Fig. \ref{fig:knn5_pearson_kendall_sens_analysis_true}. \\  
 
 
@@ -858,10 +885,24 @@ Eq. \eqref{eq:mse_decomposition_knn} and our discussion from Section \ref{sec:ms
 Next, two more interesting parameterizations of the KNN learning algorithm are analysed. In both parameterizations, the set of neighbors used for point estimation of time-varying correlation is defined as the entire training set. However, in the first parameterizations, the KNN algorithm uses an uniformly weighted average of correlations, i.e. each of the neighbors contributing equally to the point estimate of time-varying correlation. In the second parameterizations, the KNN algorithm uses an inverse distance weighted average of correlations, as defined in \eqref{eq:IDWfunction}. The MSE decomposition of both parameterizations with Pearson covariates and true correlation is depicted in Fig. \ref{fig:decom_mse_knn_len_train_IDW_pearson_kendall_true}. It is clear that the variance terms becomes negligible small in case the set of neighbors used for point estimation of time-varying correlation is defined as the entire training set, regardless of the weighting function. The red line of the variance is barely observable in the bottom of Fig. \ref{fig:decom_mse_knn_len_train_pearson_true} and Fig. \ref{fig:decom_mse_knn_IDW_pearson_true}. This is in line with results depicted in Tabel \ref{tab:mse_decomp_knn_pearson_kendall_true} where the value of the variance term is negligible small for $k=1000$, regardless whether the set of covariates is constructed from Pearson or Kendall moving window estimates of correlation.    \\      
 
 \noindent
-\textbf{Insert figures of correlation dynamics and state that it resembles assuming constant correlation, which is the exact concept we are trying to improve on with time-varying correlations.}
+\textbf{Comment on Figures containing correlation dynamics and state that it resembles assuming constant correlation when number of neighbours equals the trianing set, which is the exact concept we are trying to improve on with time-varying correlations. With an inverse distance weighting we do capture time-varying dynamics of correlation. Low volatility and smoothness and very small variance; properties that are preferred. Maybe too low volatility? Fine, then optimize over $k$, which is only one parameter and could be done by optimizing over some grid of values.}
 
 \begin{figure}[H]  % [h] parameter makes sure figures are located at 'this' location.
 	\centering
+	\begin{subfigure}[b]{0.49 \textwidth}
+		\centering 
+		\includegraphics[width=\textwidth]{knn_pearson_21_len_train_estimates_bootstrap_true.png} 
+		\caption{KNN estimates as uniformly weighted averages, with window size 21 and Pearson covariates.} 	
+		\label{fig:knn_pearson21_len_train_bootstrap_true}
+	\end{subfigure}
+	\hfill  
+	\begin{subfigure}[b]{0.49 \textwidth}
+		\centering 
+		\includegraphics[width=\textwidth]{knn_pearson_21_IDW_estimates_bootstrap_true.png} 
+		\caption{KNN estimates as inverse distance weighted averages, with window size 21 and Pearson covariates.} 
+		\label{fig:knn_pearson21_IDW_bootstrap_true}
+	\end{subfigure}
+
 	\begin{subfigure}[b]{0.49 \textwidth}
 		\centering 
 		\includegraphics[width=\textwidth]{decom_mse_knn_len_train_pearson_true.png} 
@@ -880,7 +921,7 @@ Next, two more interesting parameterizations of the KNN learning algorithm are a
 \end{figure}
 
 \noindent
-The accuracy of the two different parameterizations is compared by using mean squared error (MSE) between estimated and actual correlations. MSE from KNN with an uniform weighting function is approximately 0.0785, regardless of the choice of window length and whether Pearson or Kendall moving window estimates are use for constructing the set of covariates. MSE from KNN with an inverse distance weighting function is approximately between 0.0721 and 0.0774, and between 0.0727 and 0.0771 when Pearson and Kendall moving window estimates are used as covariates, respectively. This implies that slightly lower MSE values are obtained with an inverse distance weighting function as opposed to an uniform weighting function, which is line with our discussion from Section \ref{sec:knn}. It makes sense to have training instances with a higher amount of proximity to the test instance contribute more to the value of the response variable than training instances with a lower amount of proximity to the test instance. Moreover, Fig. \ref{fig:decom_mse_knn_len_train_IDW_pearson_kendall_true} shows that both parameterizations are insensitive to the choice of window length, regardless of the weighting function and choice of covariate. In fact, the variance of MSE from KNN with uniform weighting function and inverse distance weighting function are 5.00e-11 and 8.55e-7, respectively, i.e. hardly significantly different from one another. \\
+The accuracy of the two different parameterizations is compared by using mean squared error (MSE) between estimated and actual correlations. In Fig. \ref{fig:decom_mse_knn_len_train_pearson_true}, MSE from KNN with an uniform weighting function is approximately 0.0785, regardless of the choice of window length and whether Pearson or Kendall moving window estimates are use for constructing the set of covariates. In Fig. \ref{fig:decom_mse_knn_IDW_pearson_true} MSE from KNN with an inverse distance weighting function is approximately between 0.0721 and 0.0774, and between 0.0727 and 0.0771 when Pearson and Kendall moving window estimates are used as covariates, respectively. This implies that slightly lower MSE values are obtained with an inverse distance weighting function as opposed to an uniform weighting function, which is line with our discussion from Section \ref{sec:knn}. It makes sense to have training instances with a higher amount of proximity to the test instance contribute more to the value of the response variable than training instances with a lower amount of proximity to the test instance. Moreover, Fig. \ref{fig:decom_mse_knn_len_train_IDW_pearson_kendall_true} shows that both parameterizations are insensitive to the choice of window length, regardless of the weighting function and choice of covariate. In fact, the variance of MSE from KNN with uniform weighting function and inverse distance weighting function are 5.00e-11 and 8.55e-7, respectively, i.e. hardly significantly different from one another. \\
 
 \noindent
 The alternative parameterizations of the KNN algorithm with approximated covariates and response variable also satisfy the positive semi-definiteness condition in the time-varying correlation matrix $R_t$ for all time $t$ under all choices of window length in the interval [0, 100]. Fig. \ref{fig:det_knn_IDW_pearson_kendall_true.png} presents the obtained minimum determinants of $R_t$ for all choices of window length under an inverse distance weighting function\footnote{Usage of an uniform distance weighting function results into an approximately constant minimum determinant of 0.74, for both Pearson and Kendall approximations.}.  \\ 
@@ -913,7 +954,7 @@ This section is concluded with a comparison of the function approximation capabi
 \subsection{Random Forest}  \label{sec:rf_true_cor}
 In order to obtain time-varying correlations, $\rho_t$, with random forests algorithm, the set of covariates is defined by lagged Pearson and Kendall moving window estimates and minimum and maximum asset return values from the last period, denoted by $min_{i}(r_{i,t-1})$, and $max_{i}(r_{i,t-1})$, respectively.  \\
 
-\subsubsection{Diagnosing the Generalization Error of RF}
+\subsubsection{Diagnosing the Generalization Error of Random Forest}
 The accuracy of RF estimates with Pearson and Kendall covariates for time-varying correlation is compared by using mean squared error (MSE) between estimated and actual correlations. MSE from RF with Pearson and Kendall moving window estimates of correlation for covariates are shown in Fig. \ref{fig:mse_rf10_pearson_kendall_true}. Regardless of the choice of window length, MSE from RF with Pearson and Kendall covariates are between 0.0847 and 0.0980, and 0.0830 and 0.0983, respectively. The variance of MSE from RF estimates with Pearson covariates is approximately 8.42e-6 while that of RF estimates with Kendall covariates is approximately 8.92e-6. Analogous to KNN estimates of correlation, RF thus appears to be rather insensitive to the choice of window length, regardless whether the set of covariates is constructed from Pearson or Kendall moving window estimates of correlation. \\
 
 \noindent
@@ -978,8 +1019,8 @@ The MSE decompositions into bias and variance terms from RF estimates of correla
 	\label{fig:decom_mse_rf10_pearson_kendall_true}
 \end{figure}
 
-\subsubsection{Alternative RF Parameterizations}
-\textbf{State that we take 100 bootstrapped samples instead of 1000 due to time constraints. This number of bootstrapped samples will however be sufficient for illustrational purposes.} \\
+\subsubsection{Alternative Parameterizations of Random Forest Algorithm}
+\textbf{State that we take 100 bootstrapped samples instead of 1000 due to computational constraints. This number of bootstrapped samples will however be sufficient for illustrational purposes.} \\
 
 \noindent
 Simulation results in Tabel \ref{tab:mse_decomp_rf_pearson_kendall_true} show an inverse relationship between the choice of the number of estimators (trees) in the random forest used in the estimation of correlations and the uncertainty around the estimated correlations, regardless whether Pearson or Kendall estimates are used for defining the set of covariates. It is clearly observed that an increase in the number of estimators results in a decrease of the variance, and conversely. This observation is in line with our discussion on MSE decomposition for the RF algorithm and Eq. \eqref{eq:variance_rf} from Section \ref{sec:mse_decompose}. For this particular dataset it is observed that the point of diminishing reduction in variance is reached around 300 trees. An increase in number of trees after that does not significantly reduces the variance. \\  
@@ -1040,6 +1081,10 @@ Simulation results in Tabel \ref{tab:mse_decomp_rf_pearson_kendall_true} show an
 \end{table}
 
 \noindent
+\textbf{Insert sensitivity  analysis where MSE is a function of number of covariates used in the tree construction process of random forest algorithm.}  \\
+
+
+\noindent
 This section is concluded with a comparison of the function approximation capabilities of the RF algorithm and Pearson and Kendall moving window estimates. The comparison is based on MSE between estimated and actual correlations. Fig. \ref{fig:mse_rf10_pearson_kendall_comp_true.png} shows MSE from RF with default parameterization, i.e. number of estimators equals 10, as well as Pearson and Kendall moving window estimates of time-varying correlations. According to MSE, default parameterizations of the RF algorithm where the random forest is constructed from 10 estimators (trees) results in significantly smaller MSE compared to Pearson and Kendall moving window estimates for all window sizes. Finally, the variance of MSE from RF estimates with default parameterization and Pearson and Kendall approximations of true correlation in Fig. \ref{fig:mse_rf10_pearson_kendall_comp_true.png} are 8.42e-6 and 8.92e-6, respectively, while that of Pearson and Kendall moving window estimates are 0.0040 and 0.0037, respectively. \\
 
 
@@ -1072,11 +1117,11 @@ In this section, a more realistic approach is taken to the application of neares
 \noindent
 \textit{A fourth issue is the degree of noise in the desired output values (the supervisory target variables). If the desired output values are often incorrect (because of human error or sensor errors), then the learning algorithm should not attempt to find a function that exactly matches the training examples. Attempting to fit the data too carefully leads to overfitting. You can overfit even when there are no measurement errors (stochastic noise) if the function you are trying to learn is too complex for your learning algorithm. In such a situation, the part of the target function that cannot be modeled "corrupts" your training data - this phenomenon has been called deterministic noise. When either type of noise is present, it is better to go with a higher bias, lower variance estimator.}
 
-%%%%%% NEAREST neighbor PROXY 	%%%%%%%%
+%%%%%% NEAREST NEIGHBOR PROXY 	%%%%%%%%
 \subsection{Nearest Neighbor} \label{sec:knn_proxy_cor}
 In this section, results from application of the KNN algorithm will be compared to those obtained by Pearson and Kendall moving window estimation, as depicted in Fig. \ref{fig:decom_mse_pearson_kendall_true}. The uncertainty in the time varying-correlation $\rho_t$, which is illustrated by the 99\% confidence interval, is much smaller compared to MW, even though both the set of covariates and the response variable of the KNN algorithm are based on approximations of correlation instead of actual correlation. \\
 
-\subsubsection{Diagnosing the Generalization Error of KNN}
+\subsubsection{Diagnosing the Generalization Error of Nearest Neighbor}
 The accuracy of KNN estimates with Pearson and Kendall moving window estimates for both covariates and response variable is compared by using mean squared error (MSE) between estimated and actual correlations. MSE from KNN with Pearson and Kendall moving window estimates of correlation is shown in Fig. \ref{fig:mse_knn5_pearson_kendall_proxy}. Regardless of the choice of window length, MSE from KNN with Pearson and Kendall covariates are between 0.0855 and 0.2555, and 0.0952 and 0.2223, respectively. The variance of MSE from KNN estimates with Pearson covariates is approximately 5.70e-4 while that of KNN estimates with Kendall covariates is approximately 2.96e-4. Recall that in Fig. \ref{fig:mse_knn5_pearson_kendall_true} KNN appeared to be insensitive to the choice of window length when true correlation is defined as the response variable. Interestingly, Fig. \ref{fig:mse_knn5_pearson_kendall_proxy} shows that MSE from KNN estimation with Pearson or Kendall approximations for the response variable varies substantially for smaller window sizes. Although, less variation is observed when compared with MSE from Pearson and Kendall moving window estimates depicted in Fig. \ref{fig:mse_pearson_kendall_bootstrap}. A possible explanation for this behaviour will be given towards the end of this section when comparing MSE between KNN estimates and Pearson and Kendall moving window estimates in more detail. \\
 
 \noindent
@@ -1143,7 +1188,7 @@ The MSE decompositions into bias and variance terms from KNN estimates of correl
 	\label{fig:decom_mse_knn5_pearson_kendall_proxy}
 \end{figure}
 
-\noindent
+\subsubsection{Alternative Parameterizations of Nearest Neighbor Algorithm}
 Tabel \ref{tab:mse_decomp_knn_pearson_kendall_proxy} presents MSE decomposition as a function of number of neighbors $k$ for KNN estimates with approximations for both covariates and response variable. Similar results are observed for $k \in \{5, 10, 25, 50, 100\}$ when compared with KNN estimates with approximated covariates and true correlation in Tabel \ref{tab:mse_decomp_knn_pearson_kendall_true}; both squared bias and variance decrease with an increase in $k$, and conversely, regardless whether Pearson or Kendall estimates are used for defining the set of covariates. Given Eq. \eqref{eq:mse_decomposition_knn} and our discussion from Section \ref{sec:mse_decompose} one might have expected an increase in squared bias with an increase in $k$. A possible explanation for this behaviour may be that up to some $k$, an increase in $k$ implies additional neighbors containing informational value are used for the estimation of time-varying correlations. Logically, the inclusion of additional neighbors containing informational value results into more accurate estimates of correlation, i.e. a decrease in squared bias. As of some $k$, however, additional neighbors only add noise to the estimation process which results into increased squared bias. For KNN estimates with Kendall covariate and proxy correlation this is for $k = 900$ whereas squared bias still decreases for $k = 1000$ in the case of KNN estimates with Pearson covariate and proxy correlation. Given our discussion from Section \ref{sec:mse_decompose} and results from KNN estimates with approximated covariates and true correlation in Tabel \ref{tab:mse_decomp_knn_pearson_kendall_true}, one might have expected a continuing decrease in variance with an increase in $k$. Interestingly, Tabel \ref{tab:mse_decomp_knn_pearson_kendall_proxy} shows an increase in variance from $k = 800$ and $k = 900$ onwards for KNN estimates with Pearson and Kendall covariates, respectively.          
 
 
@@ -1210,24 +1255,26 @@ Tabel \ref{tab:mse_decomp_knn_pearson_kendall_proxy} presents MSE decomposition 
 \end{table}
 
 \noindent
-As in Section \ref{sec:knn_true_cor}, two more parameterizations of the KNN learning algorithm are analyzed where the set of neighbors used for point estimation of time-varying correlation is defined as the entire training set. The KNN algorithm uses an uniformly weighted average of correlations and an inverse distance weighted average of correlations, as defined in \eqref{eq:IDWfunction} \citep{ref:Shepard1968} in the first and second parameterizations, respectively. The MSE decompositions of both parameterizations with proxies for covariates and the response variable is depicted in Fig. \ref{fig:decom_mse_knn_len_train_IDW_pearson_kendall_proxy}. The variance term becomes negligible small in case the set of neighbors used for point estimation of time-varying correlation is defined as the entire training set, regardless of the weighting function. The red line of the variance is barely observable in the bottom of Fig. \ref{fig:decom_mse_knn_len_train_pearson_proxy}-\ref{fig:decom_mse_knn_IDW_kendall_proxy}. This is in line with results presented in Tabel \ref{tab:mse_decomp_knn_pearson_kendall_proxy} where the value of the variance term is negligible small for larger $k$, regardless whether the set of covariates is constructed from Pearson or Kendall moving window estimates of correlation.
-     
+As in Section \ref{sec:knn_true_cor}, two more parameterizations of the KNN learning algorithm are analyzed where the set of neighbors used for point estimation of time-varying correlation is defined as the entire training set. The KNN algorithm uses an uniformly weighted average of correlations and an inverse distance weighted average of correlations, as defined in \eqref{eq:IDWfunction}, in the first and second parameterizations, respectively. However, the choice of an uniform distance weighting function results in approximately constant correlation, as depicted in Fig. \ref{fig:knn_pearson21_len_train_bootstrap_true} where the true correlation was considered as the response variable. The concept of assuming constant correlation is exactly what we are trying to improve on by considering correlation to be time-varying. As such, the remainder of this section will primarily focus on results from KNN estimates considering an inverse distance weighting function. \\
+  
+\noindent
+Again, the accuracy of the two different parameterizations is compared by using mean squared error (MSE) between estimated and actual correlations. The MSE decomposition of KNN estimates under inverse distance weighting function and proxies for covariates and the response variable is depicted in Fig. \ref{fig:decom_mse_knn_IDW_pearson_kendall_proxy}. The variance term becomes negligible small in case the set of neighbors used for point estimation of time-varying correlation is defined as the entire training set. The red line of the variance is barely observable in the bottom of Fig. \ref{fig:decom_mse_knn_IDW_pearson_proxy}-\ref{fig:decom_mse_knn_IDW_kendall_proxy}. This is in line with results presented in Tabel \ref{tab:mse_decomp_knn_pearson_kendall_proxy} where the value of the variance term is negligible small for larger $k$, regardless whether the set of covariates is constructed from Pearson or Kendall moving window estimates of correlation. \\
 
 
 \begin{figure}[H]  % [h] parameter makes sure figures are located at 'this' location.
 	\centering
 	\begin{subfigure}[b]{0.49 \textwidth}
 		\centering 
-		\includegraphics[width=\textwidth]{decom_mse_knn_len_train_pearson_proxy.png} 
-		\caption{Bias-variance decomposition for KNN estimates constructed from uniformly weighted averages and Pearson covariates.} 	
-		\label{fig:decom_mse_knn_len_train_pearson_proxy}
+		\includegraphics[width=\textwidth]{knn_pearson_21_IDW_estimates_bootstrap_proxy.png} 
+		\caption{KNN estimates as inverse distance weighted averages, with window size 21 and Pearson covariates.} 	
+		\label{fig:knn_pearson_21_IDW_estimates_bootstrap_proxy}
 	\end{subfigure}
 	\hfill  
 	\begin{subfigure}[b]{0.49 \textwidth}
 		\centering 
-		\includegraphics[width=\textwidth]{decom_mse_knn_len_train_kendall_proxy.png} 
-		\caption{Bias-variance decomposition for KNN estimates constructed from uniformly weighted averages  and Kendall covariates.} 
-		\label{fig:decom_mse_knn_len_train_kendall_proxy}
+		\includegraphics[width=\textwidth]{knn_kendall_21_IDW_estimates_bootstrap_proxy.png} 
+		\caption{KNN estimates as inverse distance weighted averages, with window size 21 and Kendall covariates.} 
+		\label{fig:knn_kendall_21_IDW_estimates_bootstrap_proxy}
 	\end{subfigure}
 	\hfill  
 	\begin{subfigure}[b]{0.49 \textwidth}
@@ -1243,27 +1290,29 @@ As in Section \ref{sec:knn_true_cor}, two more parameterizations of the KNN lear
 		\caption{Bias-variance decomposition for KNN estimates constructed from inverse distance weighted averages and Kendall covariates.} 
 		\label{fig:decom_mse_knn_IDW_kendall_proxy}
 	\end{subfigure}
-	\caption{MSE for KNN estimates with different weighting functions, Pearson and Kendall Moving Window bootstrap estimates as covariates and proxy correlation.}
-	\label{fig:decom_mse_knn_len_train_IDW_pearson_kendall_proxy}
+	\caption{MSE for KNN estimates with inverse weighting function, Pearson and Kendall Moving Window bootstrap estimates as covariates and response variable.}
+	\label{fig:decom_mse_knn_IDW_pearson_kendall_proxy}
 \end{figure}
 
+
 \noindent
-The accuracy of the two different parameterizations is compared by using mean squared error (MSE) between estimated and actual correlations. Regardless of the choice of window length, MSE from KNN with an uniform weighting function and the set of covariates and response variable constructed from Pearson and Kendall moving window estimates are approximately between 0.0774 and 0.0923, and 0.1054 and 0.1118, respectively. MSE from KNN with an inverse distance weighting function is approximately between 0.0778 and 0.1024, and between 0.0919 and 0.1127 when Pearson and Kendall moving window estimates are used as covariates and response variable, respectively. This implies that Pearson moving window estimates as covariates and approximation of true correlation in KNN seems more appropriate for the simulated data than Kendall moving window estimates, regardless of the weighting function; Fig. \ref{fig:decom_mse_knn_len_train_pearson_proxy} depicts a lower MSE for all window sizes compared with MSE in Fig. \ref{fig:decom_mse_knn_len_train_kendall_proxy} and Fig. \ref{fig:decom_mse_knn_IDW_pearson_proxy} depicts a lower MSE for all window sizes compared with MSE in Fig. \ref{fig:decom_mse_knn_IDW_kendall_proxy}. An explanation for this observation is given along the same lines as for Pearson and Kendall moving window estimates in Section \ref{sec:true_correlation}; the simulated asset returns follow a multivariate normal distribution, i.e. an elliptical distribution. Therefore, it makes sense that lower MSE values are obtained when true correlation in KNN is approximated using a linear correlation coefficient such as Pearson. Moreover, the choice for an inverse distance weighting function seems to have no performance advantage over an uniform weighting function in the case true correlation is approximated using moving window estimates. Interestingly, this is in contrast with results obtained from KNN estimates with true correlation in Section \ref{sec:knn_true_cor}. Finally, the variance of MSE from KNN with uniform weighting function and the set of covariates constructed from Pearson and Kendall moving window estimates are approximately 3.98e-6 and 9.26e-7, respectively. The variance of MSE from KNN with inverse distance weighting function and the set of covariates constructed from Pearson and Kendall moving window estimates are approximately 8.46e-6 and 8.61e-6, respectively. The difference in sensitivity to the choice of window length between the different parameterizations is negligible small if significant at all. \\
+Regardless of the choice of window length, MSE from KNN with an uniform weighting function and the set of covariates and response variable constructed from Pearson and Kendall moving window estimates are approximately between 0.0774 and 0.0923, and 0.1054 and 0.1118, respectively. 
+MSE from KNN with an inverse distance weighting function is approximately between 0.0778 and 0.1024, and between 0.0919 and 0.1127 when Pearson and Kendall moving window estimates are used as covariates and response variable, respectively. This implies that Pearson moving window estimates as covariates and approximation of true correlation in KNN seems more appropriate for the simulated data than Kendall moving window estimates, regardless of the weighting function; Fig. \ref{fig:decom_mse_knn_IDW_pearson_proxy} depicts a lower MSE for all window sizes compared with MSE in Fig. \ref{fig:decom_mse_knn_IDW_kendall_proxy}. An explanation for this observation is given along the same lines as for Pearson and Kendall moving window estimates in Section \ref{sec:true_correlation}; the simulated asset returns follow a multivariate normal distribution, i.e. an elliptical distribution. Therefore, it makes sense that lower MSE values are obtained when true correlation in KNN is approximated using a linear correlation coefficient such as Pearson. Moreover, the choice for an inverse distance weighting function seems to have no real performance advantage over an uniform weighting function when true correlation is approximated using moving window estimates and MSE serves as the performance measures MSE. Interestingly, this is in contrast with results obtained from KNN estimates with true correlation in Section \ref{sec:knn_true_cor}. More importantly however, using a uniform weighting function with the entire training set results in approximately constant correlation, which is the exact concept we are intending to improve with a more realistic assumption of time-varying correlation. The latter is better captured under an inverse distance weighting function. Finally, the variance of MSE from KNN with uniform weighting function and the set of covariates constructed from Pearson and Kendall moving window estimates are approximately 3.98e-6 and 9.26e-7, respectively. The variance of MSE from KNN with inverse distance weighting function and the set of covariates constructed from Pearson and Kendall moving window estimates are approximately 8.46e-6 and 8.61e-6, respectively. The difference in sensitivity to the choice of window length between the different parameterizations is negligible small if significant at all. \\
 
 
 \noindent
 The alternative parameterizations of the KNN algorithm with approximated covariates and response variable also satisfy the positive semi-definiteness condition in the time-varying correlation matrix $R_t$ for all time $t$ under all choices of window length in the interval [0, 100]. Fig. \ref{fig:det_knn_len_train_IDW_pearson_kendall_proxy} presents the obtained minimum determinants of $R_t$ for all choices of window length under the proposed alternative parameterizations.\\
 
 \noindent 
-Similar to Section \ref{sec:knn_true_cor}, this section is concluded with a comparison of the function approximation capabilities of the KNN algorithm and Pearson and Kendall moving window estimates. The comparison is based on MSE between estimated and actual correlations. Fig. \ref{fig:mse_knn5_len_train_pearson_kendall_proxy} shows MSE from KNN with default parameterizations, i.e. number of neighbors equals 5, an alternative parameterizations with an uniform distance weighting function and the full training set used for estimating time-varying correlations. Additionally Pearson and Kendall moving window estimates of time-varying correlations are shown. According to MSE, parameterizations of the KNN algorithm with approximated covariates and response variable performs significantly better than those of Pearson and Kendall moving window estimates for small window sizes. Moreover, parameterizations of the KNN algorithm with an alternative distance weighting function and full use of training data set results in significantly smaller MSE compared to Pearson and Kendall moving window estimates for all window sizes. Thus, similar to the analysis in Section \ref{sec:knn_true_cor}, KNN estimates with an increase in the number of neighbors have lower MSE, particularly for smaller window sizes. This result follows from the fact that time-varying correlations are then estimated using increased sample information, which positively contributes to capturing time variation in correlations. Finally, the variance of MSE from KNN estimates with default parameterizations and with the combination of an uniform distance weighting function and use of full training set in Fig. \ref{fig:mse_knn5_len_train_pearson_kendall_proxy} are 5.70e-4 and 3.98e-6, respectively, while that of Pearson and Kendall moving window estimates are 0.0040 and 0.0037, respectively. In other words, the KNN algorithm with approximated covariates and response variable is significantly less sensitive to the choice of window length than Pearson and Kendall moving window estimates of correlation.  \\
+Similar to Section \ref{sec:knn_true_cor}, this section is concluded with a comparison of the function approximation capabilities of the KNN algorithm and Pearson and Kendall moving window estimates. The comparison is based on MSE between estimated and actual correlations. Fig. \ref{fig:mse_knn5_IDW_pearson_kendall_proxy} shows MSE from KNN with default parameterizations, i.e. number of neighbors equals 5, an alternative parameterizations with an inverse distance weighting function and the full training set used for estimating time-varying correlations. Additionally Pearson and Kendall moving window estimates of time-varying correlations are shown. According to MSE, parameterizations of the KNN algorithm with approximated covariates and response variable performs significantly better than those of Pearson and Kendall moving window estimates for small window sizes. Moreover, parameterizations of the KNN algorithm with an alternative distance weighting function and full use of training data set results in significantly smaller MSE compared to Pearson and Kendall moving window estimates for all window sizes. Thus, similar to the analysis in Section \ref{sec:knn_true_cor}, KNN estimates with an increase in the number of neighbors have lower MSE, particularly for smaller window sizes. This result follows from the fact that time-varying correlations are then estimated using increased sample information, which positively contributes to accurately capturing time variation in correlations. Finally, the variance of MSE from KNN estimates with default parameterizations and with the combination of an inverse distance weighting function and use of full training set in Fig. \ref{fig:mse_knn5_IDW_pearson_kendall_proxy} are 5.70e-4 and 8.46e-6, respectively, while that of Pearson and Kendall moving window estimates are 0.0040 and 0.0037, respectively. In other words, the KNN algorithm with approximated covariates and response variable is significantly less sensitive to the choice of window length than Pearson and Kendall moving window estimates of correlation.  \\
 
 \begin{figure}[H] 
 	\centering
 	\begin{subfigure}[b]{0.49 \textwidth}
 		\centering 
-		\includegraphics[width=\textwidth]{mse_knn5_len_train_pearson_kendall_proxy} 
+		\includegraphics[width=\textwidth]{mse_knn5_IDW_pearson_kendall_proxy} 
 		\caption{MSE for KNN with Pearson covariates and proxy correlation, Pearson and Kendall Moving Window bootstrap estimates.}
-		\label{fig:mse_knn5_len_train_pearson_kendall_proxy}
+		\label{fig:mse_knn5_IDW_pearson_kendall_proxy}
 	\end{subfigure}
 	\hfill
 	\begin{subfigure}[b]{0.49 \textwidth} 
@@ -1273,7 +1322,7 @@ Similar to Section \ref{sec:knn_true_cor}, this section is concluded with a comp
 		\label{fig:det_knn_len_train_IDW_pearson_kendall_proxy}
 	\end{subfigure}	
 	\caption{Comparison MSE and minimum determinants for KNN with Pearson covariates and proxy correlation, Pearson and Kendall Moving Window bootstrap estimates.}
-	\label{mse_det_knn5_len_train_pearson_kendall_proxy}
+	\label{mse_det_knn5_IDW_pearson_kendall_proxy}
 \end{figure}
 
 
@@ -1286,7 +1335,7 @@ Similar to Section \ref{sec:knn_true_cor}, this section is concluded with a comp
 \subsection{Random Forest} \label{sec:rf_proxy_cor}
 In order to obtain time-varying correlations, $\rho_t$, with random forests algorithm, the set of covariates is defined by lagged Pearson and Kendall moving window estimates and minimum and maximum log return from the last period, denoted by $min_{i}(r_{i,t-1})$, and $max_{i}(r_{i,t-1})$, respectively.  \\
 
-\subsubsection{Diagnosing the Generalization Error of RF}
+\subsubsection{Diagnosing the Generalization Error of Random Forest}
 The accuracy of RF estimates with Pearson and Kendall covariates for time-varying correlation is compared by using mean squared error (MSE) between estimated and actual correlations. MSE from RF with Pearson and Kendall moving window estimates of correlation for covariates and as response variable are shown in Fig. \ref{fig:mse_rf10_pearson_kendall_proxy}. Regardless of the choice of window length, MSE from RF with Pearson and Kendall covariates are between 0.0868 and 0.2318, and 0.0946 and 0.2321, respectively. The variance of MSE from RF estimates with Pearson covariates is approximately 4.54e-4 while that of RF estimates with Kendall covariates is approximately 3.23e-4. Interestingly, Fig. \ref{fig:mse_rf10_pearson_kendall_proxy} shows that MSE from RF estimation with Pearson or Kendall approximations for the response variable varies substantially for smaller window sizes. Although, less variation is observed when compared with MSE from Pearson and Kendall moving window estimates depicted in Fig. \ref{fig:mse_pearson_kendall_bootstrap}. This observation is analogous to the comparison of KNN estimates of correlation for both true correlation and approximated correlation as response variable. \\
 
 \noindent
@@ -1352,7 +1401,7 @@ The MSE decompositions into bias and variance terms from RF estimates of correla
 	\label{fig:decom_mse_rf10_pearson_kendall_proxy}
 \end{figure}
 
-\subsubsection{Alternative RF Parameterizations}
+\subsubsection{Alternative Parameterizations of Random Forest Algorithm}
 \textbf{State that we take 100 bootstrapped samples instead of 1000 due to time constraints. This number of bootstrapped samples will however be sufficient for illustrational purposes.} \\
 
 \noindent
@@ -1414,7 +1463,10 @@ Simulation results in Tabel \ref{tab:mse_decomp_rf_pearson_kendall_proxy} show a
 \end{table}
 
 \noindent
-This section is concluded with a comparison of the function approximation capabilities of the RF algorithm and Pearson and Kendall moving window estimates. The comparison is based on MSE between estimated and actual correlations. Fig. \ref{fig:mse_rf10_pearson_kendall_comp_proxy.png} shows MSE from RF with default parameterization, i.e. number of estimators equals 10, as well as Pearson and Kendall moving window estimates of time-varying correlations. According to MSE, default parameterizations of the RF algorithm where the random forest is constructed from 10 estimators (trees) results in significantly smaller MSE compared to Pearson and Kendall moving window estimates for smaller window sizes. Finally, the variance of MSE from RF estimates with default parameterization and Pearson and Kendall approximations of true correlation in Fig. \ref{fig:mse_rf10_pearson_kendall_comp_proxy.png} are 4.54-4 and 3.23e-4, respectively, while that of Pearson and Kendall moving window estimates are 0.0040 and 0.0037, respectively. \\
+\textbf{Insert sensitivity  analysis where MSE is a function of number of covariates used in the tree construction process of random forest algorithm.} \\
+
+\noindent
+This section is concluded with a comparison of the function approximation capabilities of the RF algorithm and Pearson and Kendall moving window estimates. The comparison is based on MSE between estimated and actual correlations. Fig. \ref{fig:mse_rf10_pearson_kendall_comp_proxy.png} shows MSE from RF with default parameterization, i.e. number of estimators equals 10, as well as Pearson and Kendall moving window estimates of time-varying correlations. According to MSE, default parameterizations of the RF algorithm results in significantly smaller MSE compared to Pearson and Kendall moving window estimates for smaller window sizes. Finally, the variance of MSE from RF estimates with default parameterization and Pearson and Kendall approximations of true correlation in Fig. \ref{fig:mse_rf10_pearson_kendall_comp_proxy.png} are 4.54-4 and 3.23e-4, respectively, while that of Pearson and Kendall moving window estimates are 0.0040 and 0.0037, respectively. \\
 
 
 \begin{figure}[H]
@@ -1442,18 +1494,21 @@ This section is concluded with a comparison of the function approximation capabi
 
 
 \section{Conclusion Simulation Results}
+All summarized results cq. conclusions hold for the particular data generated by the data generating process defined in  \eqref{eq:correlation_simulation}.
+
 \begin{enumerate}
 	\item KNN with true correlation AND KNN with approximated output return positive semi-definite correlation matrices.
 	\item RF with true correlation AND RF with approximated output return positive semi-definite correlation matrices.
 	\item The difference in accuracy, measured by the MSE, between using Pearson and Kendall approximations of true correlation appear negligible small for the simulation study, regardless whether Nearest Neighbor or Random Forest algorithm was used.  
-	\item KNN with true correlation outperforms moving window estimates particularly for smaller window sizes but with full training set and potentially inverse distance weighting function for all window sizes in the interval [3, 100]. The latter results however in more or less constant correlation, the very idea we try to improve on by considering correlation to be time-varying. Optimization over hyperparameter $k$ shows that with an increase in $k$ variance is reduced (and bias initially) and correlation estimates become increasingly smooth.
+	\item KNN with true correlation outperforms moving window estimates particularly for smaller window sizes but with full training set and preferably inverse distance weighting function for all window sizes in the interval [3, 100]. A uniform weighting function results in more or less constant correlation, the very idea we try to improve on by considering correlation to be time-varying. This result is also obtained when response variable is approximated. Optimization over hyperparameter $k$ shows that with an increase in $k$ variance is reduced (and bias initially) and correlation estimates become increasingly smooth.
 	\item RF with true correlation outperforms, even with default parameterization, moving window estimates for all window sizes sizes in the interval [3, 100]. This shows through lower MSE. In addition, RF is far less sensitive to the choice of window length than moving window estimates, which shows through significantly lower variance of MSE. 
+	\item Both KNN and RF estimates with true correlation as response variable are rather volatile for under default parameterizations. With an increase in the number of neighbours and trees, the correlation estimates follow follow the increases and decreases of the actual correlation smoother, with tighter confidence intervals.
 	\item MSE decomposition behavior KNN with true correlation exactly as expected  given MSE decomposition formulas. Except that with an increase in $k$, we initially observe improved squared bias. Can be explained by the fact that initially an increase in $k$ results in using more data points with informational value for predicting the response variable. After some $k$, the inclusion of more data points results in incorporating noise in the prediction, and we observe an increase in bias.
 	\item MSE decomposition behavior RF with true correlation exactly as expected  given MSE decomposition formulas. An increase in number of trees results into diminishing reduction of variance (and, consequently, a decrease in MSE).
 	\item Both KNN and RF estimates with approximated correlation as response variable exhibit lower variance than their parameterizations with true correlation as response variable.
 	\item RF exhibits higher bias than KNN. RF thus seems less appropriate model at this point. However, given the very small covariate dimension very little decorrelation of trees is possible which would results in variance reduction and possibly MSE reduction (if bias increase is not too big). Given higher dimensional covariate space in context of systems of correlations we continue to opt for RF estimation of time-varying correlations. 
 	\item Both KNN and RF estimates with approximated correlation as response variable follow the increases and decreases of the actual correlation smoother, with tighter confidence intervals in comparison to KNN and RF estimates with true correlation as the response variable. This is a more desirable result as it is not expected that correlation between assets changes that drastically at each time unit. 
-	\item TAKE ALL THE RESULTS FROM ABOVE AND WE HAVE A MAIN RESULT FROM THE SIMULATION STUDY: parsimonious nearest neighbor and random forest models, where the set of covariates and response variable(s) are constructed from approximation of true correlation using Pearson and Kendall moving window estimates, improve on predictive capability of time-varying correlation compared with Pearson and Kendall moving window estimates. This gives enough reason to extend our problem to higher dimensional dataset constructed using real time series data.   
+	\item TAKE ALL THE RESULTS FROM ABOVE AND WE HAVE A MAIN RESULT FROM THE SIMULATION STUDY: parsimonious nearest neighbor and random forest models, where the set of covariates and response variable(s) are constructed from approximation of true correlation using Pearson and Kendall moving window estimates, improve on predictive capability of time-varying correlation compared with Pearson and Kendall moving window estimates. Moreover, the resulting time-varying correlation matrix $R_t$ satisfy the positive semi-definite criterion. This gives enough reason to extend our problem to higher dimensional dataset constructed from real time series data.   
 \end{enumerate}
 
 
@@ -1463,12 +1518,12 @@ This section is concluded with a comparison of the function approximation capabi
 %%%%%%%%				      SYSTEMS OF CORRELATIONS							%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \chapter{Systems of Correlations in Quantitative Financial Risk Management} \label{chap:multivariate_analysis}
-This part of the analysis concerns modeling the dependence structure in a multivariate setting. We continue to opt for correlation as a measure for dependency. However, the focus of analysis in a multivariate setting is a \textit{system of correlations} rather than \textit{individual correlations}.  \\
+This part of the analysis concerns modeling the dependence structure in a multivariate setting. We continue to opt for Pearson's linear coefficient of correlation and Kendall's $\tau$ coefficient of correlation as a measure for dependency. However, the focus of analysis in a multivariate setting is a \textit{system of correlations} rather than \textit{individual correlations}.  \\
 
 
 
 \noindent
-\textbf{Say we will look at VaR forecasting, relate Basel to this, and say we take 30 DJIA constituents as asset universe. Then add a Figure with the sample period 1987-2001 of the log returns of the DJIA index. Then the setting is set.} \\
+\textbf{Insert text covering: we will look at one-step ahead VaR forecasting, relate this to Basel, and say we take 30 DJIA constituents as asset universe. Then add a Figure with the sample period 1987-2001 of the log returns of the DJIA index. Then the setting is set.} \\
 
 
 \noindent
@@ -1478,7 +1533,7 @@ We will now demonstrate the role of correlations in financial decision making. S
 \textbf{Idea: VaR performance under normality assumption (backtesting strategies). It is ok to assume normality assumption solely for the purpose of comparing algorithms for correlation estimation. Moreover, major assumption parametric VaR is that asset returns are multivariate Gaussian distributed and serial independence.} \\
 
 \noindent
-Value-at-Risk is the mandated risk measure in a lot of regulations (e.g. Basel ).
+Value-at-Risk is the mandated risk measure in a lot of regulations (e.g. Basel).
 
 \begin{enumerate}
 	\item Use decomposition of conditional variance-covariance matrix $H_t = D_t R_t D_t$
@@ -1489,7 +1544,7 @@ Value-at-Risk is the mandated risk measure in a lot of regulations (e.g. Basel )
 \end{enumerate}
 
 \noindent
-For analysis of the conditional correlations forecasting accuracy implied by different conditional volatility models, the one-day-ahead out-of-sample Value-at-Risk (henceforth VaR) is computed and a backtesting analysis is performed. The idea is to consider a  $k$-dimensional asset return series, estimate the model parameters using a training set and apply the proposed models to obtain out-of-sample one-step-ahead forecasts of the conditional variance-covariance matrix of all assets, $H_t$, where the conditional correlation matrix $R_t$ is estimated through learning algorithms and benchmark DCC. Then it is possible to compute one-day-ahead out-of-sample VaR and perform a backtesting analysis.  \\
+For analysis of the conditional correlations forecasting accuracy implied by different conditional volatility models, the one-day-ahead out-of-sample Value-at-Risk (henceforth VaR) is computed and a backtesting analysis is performed. The idea is to consider a  $k$-dimensional asset return series, estimate the model parameters using a training set and apply the proposed models to obtain out-of-sample one-step-ahead forecasts of the conditional variance-covariance matrix, $H_t$, where the conditional correlation matrix $R_t$ is estimated through learning algorithms and DCC model. Then it is possible to compute one-day-ahead out-of-sample VaR and perform a backtesting analysis.  \\
 
 \noindent
 One definition of VaR is the maximum loss which is not exceeded at a given confidence level $\alpha$, which is by saying  VaR is the loss value for which the probability of observing a larger loss is equal to $1-\alpha$. A more formal definition in terms of the $\alpha$-quantile of the loss distribution is given by \citep{ref:QRM2015}, that is \\
@@ -1536,7 +1591,7 @@ The portfolio VaR for one day horizon at $\alpha$ confidence level is then given
 \end{align}
 
 \noindent 
-where $\Phi$ denotes the standard Gaussian distribution. %and $t_\nu$ denotes the distribution function of the Student t with $\nu$ degrees of freedom. 
+where $\Phi$ denotes the cumulative distribution function of standard Gaussian distribution. %and $t_\nu$ denotes the distribution function of the Student t with $\nu$ degrees of freedom. 
 \\
 
 \noindent
@@ -1544,7 +1599,7 @@ In the backtesting analysis, VaR is computed at different quantiles. For simplic
 
 
 \section{Dynamic Conditional Correlation Model}
-The dynamic conditional correlation (DCC) model is a class of models that generalizes univariate generalized autoregressive conditional heteroskedasticity (GARCH) models to the multivariate case. The DCC models capture the advantages of GARCH models and simplifies the computation of multivariate GARCH models such as VEC-GARCH and BEKK. Reparametrization of covariance matrices lets the DCC model take advantage of the fact that correlation matrices are generally easier to model than the direct modeling of the covariance matrices. In the DCC models, time series of daily mean-corrected log returns on k assets $y_t=a_t$ is given by
+The dynamic conditional correlation (henceforth DCC) model \citep{ref:Engle2002} is a class of models that generalizes univariate generalized autoregressive conditional heteroskedasticity (GARCH) models to the multivariate case. The DCC models capture the advantages of GARCH models and simplifies the computation of multivariate GARCH models such as VEC-GARCH and BEKK. Reparameterization of covariance matrices lets the DCC model take advantage of the fact that correlation matrices are generally easier to model than the direct modeling of the covariance matrices. In the DCC models, time series of daily mean-corrected log returns on k assets $y_t=a_t$ is given by
 
 \begin{align}
 	y_t &= H_t^{\frac{1}{2}}z_t \\
