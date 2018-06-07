@@ -77,10 +77,11 @@ def main():
     ##################################################################################################################
     # Moving window estimates as approximation for true correlation constructing set of covariates and output variable
     # Dataframe with DJI 30 constituents
-    """
+    """"
     dt = 10
-    proxy_type = ['pearson, ''kendall']    
+    proxy_type = ['pearson', 'kendall']    
     data = mm.load_data('multivariate_analysis/DJI30_returns_1987_2001.pkl')
+    dates = data['Date'].iloc[10:]
     dates = data['Date']
     dates.reset_index(drop=True, inplace=True)
     data.drop(['Date'], axis=1, inplace=True)
@@ -90,6 +91,7 @@ def main():
         result = pd.concat([dates, dataset], axis=1, join='inner')
         result.dropna(axis=0, inplace=True)
         result.reset_index(drop=True, inplace=True)
+        print(result.head())
         mm.save_data('multivariate_analysis/%s/data/dataset_DJI30_%s_%i_1987_2001.pkl'
                      % (proxy_type, proxy_type, dt), result)
         mm.transform_pickle_to_csv('multivariate_analysis/%s/data/dataset_DJI30_%s_%i_1987_2001.pkl'
@@ -98,14 +100,14 @@ def main():
     ##################################################################################################################
     ###                  Time-varying pair wise correlation estimation using machine learning                      ###
     ##################################################################################################################
-    # Estimate correlations for tranquil market conditions: 03/01/1994 - 29/12/1995
-    # Estimate correlations for volatile market conditions: 03/01/2000 - 31/12/2001
+    # Estimate correlations for stable market conditions: 03/01/1995 - 31/12/1999
+    # Estimate correlations for volatile market conditions: 02/01/2004 - 31/12/2008
     """
     dt = 10
     n = 30  # Number of assets under consideration
     n_corr = int((n*(n-1)) / 2)
     #T = 504   # length of out-of-sample test set tranquil market conditions 1994-1995
-    T = 500    # length of out-of-sample test set volatile market conditions 2000-2001
+    T = 499    # length of out-of-sample test set volatile market conditions 2000-2001
     proxy_type = ['pearson', 'kendall']
     n_neighbors = 5
     n_estimators = [10]     # [10, 100]
