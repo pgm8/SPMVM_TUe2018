@@ -1,34 +1,28 @@
 import numpy as np
 import pandas as pd
 import itertools as IT
-from scipy.stats.stats import kendalltau, pearsonr
+from scipy.stats.stats import kendalltau
 
 
 class TechnicalAnalyzer(object):
-    """Technical analysis class. This class has the responsibility to engineer the covariate space
-    using Pearson and Kendall moving window approximations as well as the output space."""
+    """Technical analysis class. This class has the responsibility to engineer the feature space."""
 
     def __init__(self):
         """Initializer TechnicalAnalyzer object."""
 
     @staticmethod
-    def moving_window_correlation_estimation(data, dt, proxy_type='pearson'):
-        """Method for rolling window estimation of pairwise time-varying Kendall correlation coefficients.
-        :param data: data frame containing log return paths
+    def kendall_correlation_estimation(data, dt):
+        """Method for estimation of pairwise time-varying Kendall correlation coefficients.
+        :param data: data frame containing asset price paths
         :param dt: window length
-        :param proxy_type: type definition of proxy for estimates of true correlation
-        :return: cor_estimates_frame: data frame containing pairwise Pearson/ Kendall correlation estimates."""
-        cor_estimates_frame = pd.DataFrame()
-        for col1, col2, in IT.combinations(data.columns, 2):
-            def my_cor(idx):
-                df_cor = data[[col1, col2]].iloc[idx]
-                if proxy_type is 'kendall':
-                    return kendalltau(df_cor[col1], df_cor[col2])[0]
-                else:
-                    return pearsonr(df_cor[col1], df_cor[col2])[0]
-            cor_estimates = pd.Series(pd.rolling_apply(np.arange(len(data)), dt, my_cor))
-            cor_estimates_frame[col1 + '_' + col2] = cor_estimates
-        return cor_estimates_frame
+        :return: kendall_estimates: data frame containing pairwise Kendall correlation estimates."""
+        for col1, col2, in IT.combinations(data.columns[:-1], 2):  # All columns but last this is true correlation in bivariate case
+            def my_tau(idx):
+                df_tau = data[[col1, col2]].iloc[idx]
+                return kendalltau(df_tau[col1], df_tau[col2])[0]
+            kendall_estimates = pd.rolling_apply(np.arange(len(data)), dt, my_tau)
+        kendall_estimates = pd.Series(kendall_estimates)
+        return kendall_estimates
 
     @staticmethod
     def exponential_weights(dt, theta):
@@ -87,4 +81,11 @@ class TechnicalAnalyzer(object):
             rho_weighted = sd_ij_weighted / (sd_i_weighted * sd_j_weighted)
         return rho_weighted
 
+    def daily_log_return(self, data):
+        """Method for computing daily asset return.
+        :param data:
+        :return:
+        """
+        data['log return'] = np.log(data['Close']).diff()
+        return data
 
