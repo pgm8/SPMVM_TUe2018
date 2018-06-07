@@ -81,8 +81,7 @@ def main():
     dt = 10
     proxy_type = ['pearson, ''kendall']
     data = mm.load_data('multivariate_analysis/DJI30_returns_1987_2001.pkl')
-    dates = data['Date'].iloc[10:]
-    data.drop(['Date'], axis=1, inplace=True) 
+    dates = data['Date'].iloc[10:] 
     for proxy_type in proxy_type:
         dataset = preprocesser.generate_multivariate_dataset(ta, data=data, dt=dt, proxy_type=proxy_type)
         result = pd.concat([dates, dataset], axis=1, join='inner')
