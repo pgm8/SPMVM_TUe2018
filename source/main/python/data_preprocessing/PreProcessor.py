@@ -1,9 +1,9 @@
 import pandas as pd
 import numpy as np
-from scipy.stats.stats import pearsonr
+from scipy.stats.stats import pearsonr, kendalltau
 
 from TechnicalAnalyzer import TechnicalAnalyzer
-from ModuleManager import ModuleManager
+from ModuleManager import ModuleManager 
 from sklearn.neighbors import KNeighborsRegressor
 from sklearn.ensemble import RandomForestRegressor
 
@@ -35,29 +35,6 @@ class PreProcessor(object):
             eta = np.random.normal(0, 0.2)
             random_corr[t] = np.maximum(-1 + eps, np.minimum(1 - eps, a0 + a1 * random_corr[t-1] + eta))
         return random_corr
-
-    def simulate_random_correlation_garch(self, T, a0, a1, b1):
-        """Simulate a random correlation process following a GARCH(1,1)-like process. The parameter values used are in
-        line with those found empirically in stock return series.
-        :param T: simulation length
-        :param a0: 0.02
-        :param a1: 0.2
-        :param b1: 0.78
-        :return: random_corr_garch: correlation process following specified dynamics.
-        :return: sigma: volatility process."""
-        eps = 1e-5
-        random_corr_garch = np.empty(T)
-        sigma = np.empty(T)
-        #sigma[0] = sqrt(a0 / (1 - a1 - b1))  # parameter initialisation
-        sigma[0] = 0.03  # parameter initialisation
-        for t in range(1, T):
-            eta = np.random.normal(0, 0.2)
-            # Draw next correlation_t
-            random_corr_garch[t-1] = np.maximum(-1 + eps, np.minimum(1 - eps, sigma[t-1] * eta))
-            # Draw next sigma_t
-            sigma_squared = a0 * sigma[0]**2 + a1 * random_corr_garch[t-1]**2 + b1 * sigma[t-1]**2
-            sigma[t] = np.sqrt(sigma_squared)
-        return random_corr_garch, sigma
 
     def simulate_correlated_asset_paths(self, corr_vector, vol_matrix, T):
         """Simulate asset paths with specified time-varying correlation dynamics.
@@ -118,36 +95,26 @@ class PreProcessor(object):
         return det
 
     def generate_bivariate_dataset(self, ta, simulated_data_process, dt, proxy_type='pearson', T=500):
-        """Method for generating a dataset with proxies (exponentially weighted) moving window correlation estimates
-        for feature set and true correlation as the response variables.
+        """Method for generating a bivariate dataset with proxies moving window correlation estimates for covariate set
+        and true correlation as the output variables.
         :param ta: technical analyzer object
         :param simulated_data_process: bivariate asset process with predefined correlation dynamics.
         :param dt: window length
         :param proxy_type: type definition of proxy for estimates of true correlation
         :param T: length test set
-        :return: datasets with true correlation and proxy for target."""
-        if proxy_type is 'emw':
-            emw_estimates = ta.pearson_weighted_correlation_estimation(simulated_data_process[0],
-                                                                       simulated_data_process[1], dt)
-            emw_estimates = pd.Series(emw_estimates)
-            # Feature set consists of lagged asset price and mw correlation estimate, e.g. x_t = EMW_t-1
-            dataset = simulated_data_process.iloc[:, :2].shift(periods=1, axis='index')  # Dataframe
-            dataset['EMW_t-1'] = emw_estimates.shift(periods=1, axis='index')
-            dataset_proxy = dataset.copy()      # copy feature matrix
-            # Dataset with true correlations as target variable and proxies
-            dataset['rho_true'] = simulated_data_process['rho']
-            dataset_proxy['rho_proxy'] = emw_estimates
-        elif proxy_type is 'pearson':
-            mw_estimates = simulated_data_process[0].rolling(window=dt).corr(other=simulated_data_process[1])
+        :return: datasets with true correlation and proxy for output variable."""
+        if proxy_type is 'pearson':
+            pearson_estimates = ta.moving_window_correlation_estimation(simulated_data_process.iloc[:, :2], dt)
             # Feature set consists of lagged asset price and mw correlation estimate, e.g. x_t = MW_t-1
             dataset = simulated_data_process.iloc[:, :2].shift(periods=1, axis='index')  # Dataframe
-            dataset['MW_t-1'] = mw_estimates.shift(periods=1, axis='index')
+            dataset['MW_t-1'] = pearson_estimates.shift(periods=1, axis='index')
             dataset_proxy = dataset.copy()       # copy feature matrix
             # Dataset with true correlations as target variable and proxies
             dataset['rho_true'] = simulated_data_process['rho']
-            dataset_proxy['rho_proxy'] = mw_estimates
+            dataset_proxy['rho_proxy'] = pearson_estimates
         else:  # Kendall as proxy
-            kendall_estimates = ta.kendall_correlation_estimation(simulated_data_process, dt)
+            kendall_estimates = ta.moving_window_correlation_estimation(simulated_data_process.iloc[:, :2], dt,
+                                                                        proxy_type='kendall')
             # Feature set consists of lagged asset price and kendall correlation estimate, e.g. x_t = kendall_t-1
             dataset = simulated_data_process.iloc[:, :2].shift(periods=1, axis='index')  # Dataframe
             dataset['Kendall_t-1'] = kendall_estimates.shift(periods=1, axis='index')
@@ -156,6 +123,23 @@ class PreProcessor(object):
             dataset['rho_true'] = simulated_data_process['rho']
             dataset_proxy['rho_proxy'] = kendall_estimates
         return dataset, dataset_proxy
+
+    def generate_multivariate_dataset(self, ta, data, dt, proxy_type='pearson'):
+        """Method for generating a multivariate dataset with moving window estimates as approximation for true
+        correlation constructing the set of covariates and output variable.
+        :param ta: technical analyzer object
+        :param data: dataframe with log returns
+        :param dt: window length
+        :param proxy_type: type definition of proxy for estimates of true correlation
+        :return: dataset with approximated covariates and output variable."""
+        correlation_estimates = ta.moving_window_correlation_estimation(data, dt, proxy_type=proxy_type)
+        # Feature set consists of lagged kendall correlation estimate amd lagged min. and max. asset returns
+        dataset = correlation_estimates.shift(periods=1, axis='index')
+        dataset['r_min'] = np.min(data, axis=1).shift(periods=1, axis='index')
+        dataset['r_max'] = np.max(data, axis=1).shift(periods=1, axis='index')
+        # Dataset with proxies
+        result = pd.concat([dataset, correlation_estimates], axis=1, join='inner')
+        return result
 
     def bootstrap_moving_window_estimate(self, data, delta_t, T=500, reps=1000, ciw=99, proxy_type='pearson'):
         """Method for measuring the estimation uncertainty associated to the correlation coefficients when moving
@@ -200,7 +184,7 @@ class PreProcessor(object):
                     rho_bootstrapped[rep] = kendalltau(sample[:, 0], sample[:, 1])[0]
                 else:
                     print('Please, choose an option from the supported set of proxies for true correlations (Pearson '
-                          'moving window, Pearson exponentially weighted moving window, Kendall moving window')
+                          'moving window or Kendall moving window')
             lower, upper = np.nanpercentile(rho_bootstrapped, [p_low, p_high])
             lower_percentiles[j] = lower
             upper_percentiles[j] = upper
@@ -300,24 +284,49 @@ class PreProcessor(object):
                                    'MSE': rho_mse_vec})
         return data_frame
 
-    def mse_rf_sensitivity_analysis(self, proxy_type='pearson', output_type='true'):
+    def mse_rf_sensitivity_analysis(self, rho_true, proxy_type='pearson', output_type='true', type='trees'):
         """Method for creation of a dataframe containing information on MSE decomposition as a function of different
         parameterizations for rf learner model.
+        :param rho_true: vector containing true correlation
         :param proxy_type: type of moving window estimator used as covariate.
         :param output_type: output variable true correlation or proxy.
         :return: dataframe."""
-        rho_bias_squared = np.full(4, np.nan)
-        rho_var_vec = np.full(4, np.nan)
-        rho_mse_vec = np.full(4, np.nan)
-        # Load mse decomposition data
-        mse_rf300_1_to_3 = self.mm.load_data('bivariate_analysis/%s_cor/mse_results_%s_cor/'
-                            'mse_rf300_1_to_3_%s_%s_cor.pkl' % (output_type, output_type, proxy_type, output_type))
-        rho_mse_vec[1], rho_bias_squared[1], rho_var_vec[1] = mse_rf300_1_to_3.iloc[1, :]
-        rho_mse_vec[2], rho_bias_squared[2], rho_var_vec[2] = mse_rf300_1_to_3.iloc[2, :]
-        rho_mse_vec[3], rho_bias_squared[3], rho_var_vec[3] = mse_rf300_1_to_3.iloc[3, :]
-        # Dataframe with information on MSE decomposition as a function of different learner parameterizations
-        data_frame = pd.DataFrame({'bias_squared': rho_bias_squared, 'variance': rho_var_vec,
-                                   'MSE': rho_mse_vec})
+        if type is 'trees':
+            rho_bias_squared = np.full(1001, np.nan)
+            rho_var_vec = np.full(1001, np.nan)
+            rho_mse_vec = np.full(1001, np.nan)
+            trees = [10, 100, 300, 600, 1000]
+            # Load mse decomposition data
+            for tree in trees:
+                data = self.mm.load_data('bivariate_analysis/%s_cor/%s/results_rf_%s_%s_cor/'
+                                      'rf%i_%s_10_estimate_uncertainty_rep_100_%s_corr.pkl'
+                                      % (output_type, proxy_type, proxy_type, output_type,
+                                         tree, proxy_type, output_type))
+                rho_estimates = data['Rho_estimate']
+                rho_bias_squared[tree] = np.mean(np.power(rho_estimates-rho_true, 2))
+                rho_var_vec[tree] = np.power(np.mean(data['std rho estimate']), 2)
+            rho_mse_vec = np.array([np.sum(pair) for pair in zip(rho_bias_squared, rho_var_vec)])
+            data_frame = pd.DataFrame({'bias_squared': rho_bias_squared, 'variance': rho_var_vec,
+                                           'MSE': rho_mse_vec})
+            filename_save = 'mse_rf_%s_%s_cor_sensitivity_analysis_trees.pkl' % (proxy_type, output_type)
+            self.mm.save_data('bivariate_analysis/%s_cor/mse_results_%s_cor/' %
+                              (output_type, output_type) + filename_save, data_frame)
+        else:
+            rho_bias_squared = np.full(4, np.nan)
+            rho_var_vec = np.full(4, np.nan)
+            rho_mse_vec = np.full(4, np.nan)
+            # Load mse decomposition data
+            mse_rf300_1_to_3 = self.mm.load_data('bivariate_analysis/%s_cor/mse_results_%s_cor/'
+                                'mse_rf300_1_to_3_%s_%s_cor.pkl' % (output_type, output_type, proxy_type, output_type))
+            rho_mse_vec[1], rho_bias_squared[1], rho_var_vec[1] = mse_rf300_1_to_3.iloc[1, :]
+            rho_mse_vec[2], rho_bias_squared[2], rho_var_vec[2] = mse_rf300_1_to_3.iloc[2, :]
+            rho_mse_vec[3], rho_bias_squared[3], rho_var_vec[3] = mse_rf300_1_to_3.iloc[3, :]
+            # Dataframe with information on MSE decomposition as a function of different learner parameterizations
+            data_frame = pd.DataFrame({'bias_squared': rho_bias_squared, 'variance': rho_var_vec,
+                                       'MSE': rho_mse_vec})
+            filename_save = 'mse_rf_%s_%s_cor_sensitivity_analysis_covariates.pkl' % (proxy_type, output_type)
+            self.mm.save_data('bivariate_analysis/%s_cor/mse_results_%s_cor/' %
+                              (output_type, output_type) + filename_save, data_frame)
         return data_frame
 
 
