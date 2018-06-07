@@ -272,13 +272,12 @@ def main():
                                                                              output_type) + filename, data_frame)
         print("%s: %f" % ('Execution time', (time.time() - start_time)))
     """
-
     """
     # Figure with bootstrap uncertainty Nearest Neighbors
     for dt, proxy_type in [(x, y) for x in delta_t for y in proxy_type]:
         print('(%s, %i)' % (proxy_type, dt))
         data = mm.load_data('bivariate_analysis/proxy_cor/%s/results_knn_%s_proxy_cor/'
-                            'knn5_%s_%i_estimate_uncertainty_proxy_corr.pkl' % (proxy_type, proxy_type, proxy_type, dt))
+                            'knn_%s_%i_IDW_estimate_uncertainty_proxy_corr.pkl' % (proxy_type, proxy_type, proxy_type, dt))
         rho_estimates = data['Rho_estimate']
         lower_percentiles = data['Percentile_low']
         upper_percentiles = data['Percentile_up']
@@ -416,19 +415,18 @@ def main():
 
     mse_rf10_kendall_proxy = mm.load_data('bivariate_analysis/proxy_cor/mse_results_proxy_cor/mse_rf10_kendall_proxy_cor.pkl')
 
-
     """
     # Figure without interpolation MSE
     plt.figure(1)
     plt.plot(mse_pearson_vec['MSE'], label='Pearson', color='indigo', linewidth=1)
     plt.plot(mse_kendall_vec['MSE'], label='Kendall', color='cyan', linestyle='--', linewidth=1)
     plt.plot(mse_knn5_pearson_proxy['MSE'], label='KNN(5)_pearson', linewidth=1, color='brown')
-    plt.plot(mse_knn5_kendall_proxy['MSE'], label='KNN_kendall', linewidth=1, color='xkcd:azure')
+    #plt.plot(mse_knn5_kendall_proxy['MSE'], label='KNN_kendall', linewidth=1, color='xkcd:azure')
     #plt.plot(mse_knn10_pearson_proxy['MSE'], label='KNN(10)', linewidth=1)
     #plt.plot(mse_knn25_pearson_proxy['MSE'], label='KNN(25)', linewidth=1)
     #plt.plot(mse_knn50_pearson_proxy['MSE'], label='KNN(50)', linewidth=1)
     #plt.plot(mse_knn100_pearson_proxy['MSE'], label='KNN(100)', linewidth=1)
-    #plt.plot(mse_knn_IDW_pearson_true['MSE'], label='KNN_pearson_IDW', color='black', linewidth=1)
+    plt.plot(mse_knn_IDW_pearson_true['MSE'], label='KNN_pearson_IDW', color='black', linewidth=1)
     #plt.plot(mse_knn_IDW_kendall_true['MSE'], label='KNN_kendall_idw', linewidth=1, color='xkcd:azure')
     #plt.plot(mse_knn_len_train_pearson_true['MSE'], label='KNN_pearson_len_train', linewidth=1)
     #plt.plot(mse_knn_len_train_pearson_proxy['MSE'], label='KNN_pearson_len_train', color='black', linewidth=1)
@@ -443,6 +441,7 @@ def main():
     plt.ylim(0, 0.60)
     plt.show()
     """
+
     # Figure without interpolation MSE decomposition
     """
     plt.figure(2)
