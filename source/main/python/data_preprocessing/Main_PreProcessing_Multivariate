@@ -79,11 +79,9 @@ def main():
     # Dataframe with DJI 30 constituents
     """"
     dt = 10
-    proxy_type = ['pearson', 'kendall']    
+    proxy_type = ['pearson, ''kendall']
     data = mm.load_data('multivariate_analysis/DJI30_returns_1987_2001.pkl')
     dates = data['Date'].iloc[10:]
-    dates = data['Date']
-    dates.reset_index(drop=True, inplace=True)
     data.drop(['Date'], axis=1, inplace=True)
     
     for proxy_type in proxy_type:
@@ -94,8 +92,7 @@ def main():
         print(result.head())
         mm.save_data('multivariate_analysis/%s/data/dataset_DJI30_%s_%i_1987_2001.pkl'
                      % (proxy_type, proxy_type, dt), result)
-        mm.transform_pickle_to_csv('multivariate_analysis/%s/data/dataset_DJI30_%s_%i_1987_2001.pkl'
-                                   % (proxy_type, proxy_type, dt))
+        
     """
     ##################################################################################################################
     ###                  Time-varying pair wise correlation estimation using machine learning                      ###
