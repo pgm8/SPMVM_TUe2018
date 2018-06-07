@@ -13,7 +13,7 @@ class TechnicalAnalyzer(object):
 
     @staticmethod
     def moving_window_correlation_estimation(data, dt, proxy_type='pearson'):
-        """Method for estimation of pairwise time-varying Kendall correlation coefficients.
+        """Method for rolling window estimation of pairwise time-varying Kendall correlation coefficients.
         :param data: data frame containing log return paths
         :param dt: window length
         :param proxy_type: type definition of proxy for estimates of true correlation
