@@ -47,6 +47,20 @@
 \usepackage {algpseudocode}
 \usepackage{cases}
 
+% Research question preamble
+\newtheorem{question}{Question} 
+\newcounter{subq} 
+\newcommand{\subq}{ 
+  \setcounter{subq}{0} 
+  \renewcommand\thequestion{\protect\stepcounter{subq}% 
+  \arabic{question}\alph{subq}\protect\addtocounter{question}{-1}} 
+} 
+
+\newcommand{\normquestion}{ 
+  \renewcommand\thequestion{\arabic{question}} 
+  \stepcounter{question} 
+} 
+
 \begin{document}
 
 \begin{titlepage}
@@ -156,7 +170,8 @@ The quest for reliable estimates of correlations between Žfinancial variables ha
 \noindent
 \textbf{Add topic: nonparametric multivariate volatility models with previous research reference}\\
 \noindent
-\textit{Mention nonparametric model classes and their advantages such as the lack of distributional assumptions or the lack of any imposed structure on the correlation dynamics. Then move to field of machine learning which in the base avoid distributional assumptions.} In the past decade, machine learning has been responsible for significant advances in self-driving cars, speech and facial recognition, effective web search, and in a vast amount of medical diagnostic procedures. However, the approach of using machine learning for the estimation of correlation between financial variables has not been extensively investigated in scientific literature. In fact, there is a limited number of studies on this type of machine learning uses. \textit{Mention papers using machine learning for estimation of time varying correlations such as two papers by Rui.}   \\
+\textit{Mention nonparametric model classes and their advantages such as the lack of distributional assumptions or the lack of any imposed structure on the correlation dynamics. Then move to field of machine learning which in the base avoid distributional assumptions.} Non- and semiparametric models form an alternative to parametric estimation of the conditional covariance structure. These approaches have the advantage of not imposing a particular
+(possibly misspecified) structure on the data. Semiparametric models combine the advantages of a parametric model in that they reach consistency and sustain the interpretability, and those of a nonparametric model which is robust against distributional misspecification. Nonparametric models, however, suffer from the ?curse of dimensionality?: due to the lack of data in all directions of the multidimensional space, the performance of the local smoothing estimator deteriorates quickly as the dimension of the conditioning variable increases, see Stone (1980)." In the past decade, machine learning has been responsible for significant advances in self-driving cars, speech and facial recognition, effective web search, and in a vast amount of medical diagnostic procedures. However, the approach of using machine learning for the estimation of correlation between financial variables has not been extensively investigated in scientific literature. In fact, there is a limited number of studies on this type of machine learning uses. \textit{Mention papers using machine learning for estimation of time varying correlations such as two papers by Rui.}   \\
 
 \noindent
 \textbf{Topic: explain topic of this paper, i.e. stochastic correlation modeling using machine learning algorithms}\\
@@ -219,7 +234,7 @@ This paper will address the last issue by defining the estimation of time-varyin
 
 
 \section{Research Objectives}
-"The goal of this paper is to provide a comprehensive and self-contained analysis of a class of algorithms known as" nearest neighbors and random forests \citep{ref:Breiman2001} and their aptness as estimators of time-varying correlation between financial returns. As such, we can formulate the following research objectives:  \\
+"The goal of this paper is to provide a comprehensive and self-contained analysis of a class of algorithms known as nearest neighbors and random forests \citep{ref:Breiman2001} and their aptness as estimators of time-varying correlation between financial returns. As such, we can formulate the following research objectives:  \\
 
 \begin{enumerate}
 	\item Formulate the task of estimating time-varying correlation between financial returns as a supervised learning problem.
@@ -236,6 +251,16 @@ This paper will address the last issue by defining the estimation of time-varyin
 \end{enumerate}
 \fi
 
+\iffalse
+\subq
+\begin{question}
+	How do we define the set of covariates and the response variable(s)?  
+\end{question}
+\begin{question}
+	How do we del with the fact that correlation is not directly observable?
+\end{question}
+\fi
+
 \noindent
 First, through implementation of a simulation study, we aim to verify whether proposed learning algorithms have any capability of estimating time-varying correlation between financial returns in a bivariate setting; two asset return paths with a predefined correlation structure. More precisely, we seek to verify whether KNN and RF learning algorithms improve over conventional moving window approximation of time-varying correlation. Moreover, the controlled setting of a simulation study allows us to observe the effect of different foundational model properties (parameterizations) on the generalization error. By defining the generalization error as the Mean Squared Error loss, we will be able to observe the effect of incorporating approximation error due to defining the set of covariates and response variable using moving window estimates of correlation. \\
 
@@ -245,11 +270,25 @@ Next, we extend the empirical evaluation of time-varying correlation modeling to
 
 
 \section{Outline and Contributions}
-We present the first KNN and RF application where estimation and forecasting capability of
-these algorithms is assessed based on point forecasts of time-varying correlations. Furthermore, we analyze the function approximation capabilities of KNN and RF under different parameterizations and report the effect of parameterizations on the generalization error of the obtained function approximation. \\
+The main contribution of this paper is the development of a computational framework using nearest neighbor and random forest algorithms for the task of estimating time-varying correlation between financial returns.  
+
+\iffalse
+first presentation of KNN and RF application where estimation and forecasting capability of these algorithms is assessed based on point forecasts of time-varying correlation between financial returns. Furthermore, we analyze the function approximation capabilities of KNN and RF under different parameterizations and report the effect of parameterizations on the generalization error of the obtained function approximation. \\
+\fi
 
 \noindent
-In this paper we show that the KNN and RF learning algorithms improve over conventional moving window approximation of time-varying correlation by decreasing the sensitivity of the results to the selection of the window length. "Moreover, through an empirical evaluation it is shown that both learning algorithms improve over a widely used class of multivariate volatility models, i.e. Dynamic Conditional Correlation model."  \\
+Chapter \ref{ch:methodology} presents the methodological framework. The conceptual underpinnings of machine learning (algorithms) and multivariate volatility modeling are discussed. Moreover, an approach is presented to successfully address supervised learning in the context of estimating time-varying correlation between financial returns. Given that correlation is not directly observable, construction of the set of covariates and response variables is done by approximation of true correlation using Pearson and Kendall sample correlations from moving windows. The result is a generic and parsimonious supervised learning problem formulation for the task of estimating time-varying correlation; it serves as basis for the first presentation of nearest neighbor and random forest estimators of time-varying correlation between financial returns. \\
+
+\noindent
+Chapter \ref{ch:simulation_study} examines the accuracy of nearest neighbor and random forest estimators of correlation in a bivariate setting; two asset return paths with a predefined pairwise correlation structure. The controlled setting of a simulation study allows us to observe the effect of different foundational model properties on the generalization error, which is defined as the Mean Squared Error loss. It is shown that the learning estimators improve over conventional moving window approximation of time-varying correlation through lower mean squared error and by decreasing the sensitivity of the results to the choice of window length in the moving window approximations of time-varying correlation. Furthermore, it is shown that \textbf{Insert more detailed summary of simulation results: learning estimates results in semi positive-definite correlation matrix, the effect of incorporating approximation error due to defining the set of covariates and response variable using moving window estimates of correlation.}. In summary, the simulation study provides initial evidence on the aptness of nearest neighbour and random forest algorithms as estimators of time-varying correlation between financial returns.  \\
+
+\noindent
+We then extend the empirical evaluation of correlation estimates using machine learning to a multivariate setting in Chapter \ref{chap:multivariate_analysis}. The focus of analysis is \textit{systems of correlations} in a quantitative financial risk management context rather than \textit{individual correlations}. It provides further evidence on the aptness of nearest neighbors and random forests in time-varying correlation estimation and risk management. The volatilities and correlations of 30 Dow Jones Industrial Average constituents are estimated using    
+
+
+"Through an empirical evaluation it is shown that both learning algorithms improve over a widely used class of multivariate volatility models, i.e. Dynamic Conditional Correlation model." 
+
+
 
 \iffalse
 \textit{We start with a comprehensive review of the algorithms at the core of k-nearest neighbors and random forests. We discuss the learning capabilities of these models and carefully study all parts of the algorithm and their complementary effects. In particular, Chapter 4 includes original contributions on the bias-variance analysis of ensemble methods, highlighting how randomization can help improve performance. Chapter 5 concludes this first part with an original space and time complexity analysis of k-nearest neighbors and random forests (and 4 introduction their variants)}. \\
@@ -259,7 +298,7 @@ In this paper we show that the KNN and RF learning algorithms improve over conve
 
 
 
-\chapter{Methodology}
+\chapter{Methodology} \label{ch:methodology}
 Section \ref{sec:ml_supervised} introduces the concepts of machine learning and supervised learning. Theoretical background is given of the learning algorithms that lie at the core of k-nearest neighbor and random forest as well as the effect of foundational learner properties on the generalization error. The latter is done through discussion of an important issue in machine learning, i.e. the tradeoff between bias and variance. Next, Section \ref{sec:mvm} introduces the conceptual underpinnings of multivariate volatility modeling and the decomposition of the variance-covariance matrix that is used in this paper to identify variances and correlation coefficients. Finally, Section \ref{sec:cor_ml} brings the topics of the preceeding two sections together; we will discuss what approach to take to successfully address supervised learning in the context of estimating time-varying correlation between financial returns.
    
 
@@ -267,7 +306,7 @@ Section \ref{sec:ml_supervised} introduces the concepts of machine learning and 
 Machine learning is the science of getting computers to gain the ability to learn from data without any user imposed conditions, i.e. without being explicitly programmed. In the past decade, machine learning has been responsible for significant advances in self-driving cars, speech and facial recognition, effective web search, and in a vast amount of medical diagnostic procedures. In a typical machine learning setting, one has an outcome measurement, generally quantitative (e.g. asset price) or categorical (e.g. septic/ not septic) in nature, that one wishes to predict based on a set of predictor variables or covariates (e.g. blood pressure, body temperature and heart rate). One possesses a training set of data, in which the outcome and covariate measurements for a set of objects (e.g. people or days in case of time series analysis) is observed. Then, this data serves to build a prediction model, or learner, which will have the purpose of enabling one to predict the outcome for new unseen objects. An adequate learner is one that is capable of accurately predicting such an outcome. The goal of the learning process is to progressively improve the learner's performance on a specific task.  \\
 
 \noindent
-The example above describes a particular type of machine learning problem, namely a \textit{supervised learning problem}. The qualification \textit{supervised} comes from the fact that the outcome variable is present to guide the learning process. More formally: a supervised learning problem is concerned with the prediction of one or more outputs or response variables $Y = (Y_1, Y_2, \dots, Y_m)$ given some set of covariates $X^T = (X_1, X_2, \dots, X_p)$. Let the covariates for the $i$th training instance be denoted by $x_i = (x_{i,1}, x_{i,2}, \dots, x_{i,p})$ and let $y_i$ denote the corresponding response measurement. The predictions of the response variables are then based on a training data sample $(x_1, y_1), (x_2, y_2), \dots, (x_N, y_N)$, of which the joint values of covariate response tuples are known \citep{ref:Hastie2009}. \\              
+The example above describes a particular type of machine learning problem, namely a \textit{supervised learning problem}. The qualification \textit{supervised} comes from the fact that the outcome variable is present to guide the learning process. More formally: a supervised learning problem is concerned with the prediction of one or more outputs or response variables $Y = (Y_1, Y_2, \dots, Y_m)$ given some set of covariates $X^T = (X_1, X_2, \dots, X_p)$. Let the covariates for the $i$th training instance be denoted by $x_i = (x_{i,1}, x_{i,2}, \dots, x_{i,p})$ and let $y_i$ denote the corresponding response measurement. The predictions of the response variables are then based on a training data sample $(x_1, y_1), (x_2, y_2), \dots, (x_N, y_N)$, of which the joint values of covariate response tuples are known \citep{ref:Hastie2009}. Supervised learning is the type of learning that is considered throughout this paper. \\              
 
 
 \subsection{Nearest Neighbors Algorithm} \label{sec:knn}  

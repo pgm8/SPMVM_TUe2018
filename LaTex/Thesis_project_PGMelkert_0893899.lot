@@ -2,21 +2,21 @@
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {table}{\numberline {3.1}{\ignorespaces Mean Squared Error (MSE) decomposition as a function of the number of neighbors (k) for KNN with proxy for covariates and true correlation.\relax }}{21}{table.caption.11}
-\contentsline {table}{\numberline {3.2}{\ignorespaces Mean Squared Error (MSE) decomposition as a function of the number of estimators (trees) for RF with proxy for covariates and true correlation.\relax }}{27}{table.caption.17}
-\contentsline {table}{\numberline {3.3}{\ignorespaces Mean Squared Error (MSE) decomposition as a function of the number of neighbors (k) for KNN with approximations for both covariates and response variable.\relax }}{31}{table.caption.21}
-\contentsline {table}{\numberline {3.4}{\ignorespaces Mean Squared Error (MSE) decomposition as a function of the number of estimators (trees) for RF with approximations for both covariates and response variable.\relax }}{37}{table.caption.26}
+\contentsline {table}{\numberline {3.1}{\ignorespaces Mean Squared Error (MSE) decomposition as a function of the number of neighbors (k) for KNN with proxy for covariates and true correlation.\relax }}{22}{table.caption.11}
+\contentsline {table}{\numberline {3.2}{\ignorespaces Mean Squared Error (MSE) decomposition as a function of the number of estimators (trees) for RF with proxy for covariates and true correlation.\relax }}{28}{table.caption.17}
+\contentsline {table}{\numberline {3.3}{\ignorespaces Mean Squared Error (MSE) decomposition as a function of the number of neighbors (k) for KNN with approximations for both covariates and response variable.\relax }}{32}{table.caption.21}
+\contentsline {table}{\numberline {3.4}{\ignorespaces Mean Squared Error (MSE) decomposition as a function of the number of estimators (trees) for RF with approximations for both covariates and response variable.\relax }}{38}{table.caption.26}
 \addvspace {10\p@ }
-\contentsline {table}{\numberline {4.1}{\ignorespaces Descriptive statistics of Dow Jones Industrial Average daily log returns.}}{45}{table.caption.28}
-\contentsline {table}{\numberline {4.2}{\ignorespaces Kupiec test with Gaussian distributed conditional innovations for tranquil market conditions.}}{46}{table.caption.29}
-\contentsline {table}{\numberline {4.3}{\ignorespaces Kupiec test with Student's t-distributed conditional innovations for tranquil market conditions.}}{47}{table.caption.30}
-\contentsline {table}{\numberline {4.4}{\ignorespaces Christoffersen Markov test with Gaussian distributed conditional innovations for tranquil market conditions.}}{47}{table.caption.31}
-\contentsline {table}{\numberline {4.5}{\ignorespaces Christoffersen Markov test with Student's t-distributed conditional innovations for tranquil market conditions.}}{48}{table.caption.32}
-\contentsline {table}{\numberline {4.6}{\ignorespaces Kupiec test with Student's t-distributed conditional innovations for volatile market conditions.}}{48}{table.caption.33}
-\contentsline {table}{\numberline {4.7}{\ignorespaces Christoffersen Markov test with Student's t-distributed conditional innovations for volatile market conditions.}}{49}{table.caption.34}
+\contentsline {table}{\numberline {4.1}{\ignorespaces Descriptive statistics of Dow Jones Industrial Average daily log returns.}}{46}{table.caption.28}
+\contentsline {table}{\numberline {4.2}{\ignorespaces Kupiec test with Gaussian distributed conditional innovations for tranquil market conditions.}}{47}{table.caption.29}
+\contentsline {table}{\numberline {4.3}{\ignorespaces Kupiec test with Student's t-distributed conditional innovations for tranquil market conditions.}}{48}{table.caption.30}
+\contentsline {table}{\numberline {4.4}{\ignorespaces Christoffersen Markov test with Gaussian distributed conditional innovations for tranquil market conditions.}}{48}{table.caption.31}
+\contentsline {table}{\numberline {4.5}{\ignorespaces Christoffersen Markov test with Student's t-distributed conditional innovations for tranquil market conditions.}}{49}{table.caption.32}
+\contentsline {table}{\numberline {4.6}{\ignorespaces Kupiec test with Student's t-distributed conditional innovations for volatile market conditions.}}{49}{table.caption.33}
+\contentsline {table}{\numberline {4.7}{\ignorespaces Christoffersen Markov test with Student's t-distributed conditional innovations for volatile market conditions.}}{50}{table.caption.34}
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {table}{\numberline {A.1}{\ignorespaces Kupiec test with Gaussian distributed conditional innovations for tranquil market conditions.}}{53}{table.caption.36}
-\contentsline {table}{\numberline {A.2}{\ignorespaces Christoffersen Markov test with Gaussian distributed conditional innovations for tranquil market conditions.}}{54}{table.caption.37}
-\contentsline {table}{\numberline {A.3}{\ignorespaces Kupiec test with Student's t-distributed conditional innovations for tranquil market conditions.}}{54}{table.caption.38}
-\contentsline {table}{\numberline {A.4}{\ignorespaces Christoffersen Markov test with Student's t-distributed conditional innovations for tranquil market conditions.}}{55}{table.caption.39}
+\contentsline {table}{\numberline {A.1}{\ignorespaces Kupiec test with Gaussian distributed conditional innovations for tranquil market conditions.}}{54}{table.caption.36}
+\contentsline {table}{\numberline {A.2}{\ignorespaces Christoffersen Markov test with Gaussian distributed conditional innovations for tranquil market conditions.}}{55}{table.caption.37}
+\contentsline {table}{\numberline {A.3}{\ignorespaces Kupiec test with Student's t-distributed conditional innovations for tranquil market conditions.}}{55}{table.caption.38}
+\contentsline {table}{\numberline {A.4}{\ignorespaces Christoffersen Markov test with Student's t-distributed conditional innovations for tranquil market conditions.}}{56}{table.caption.39}
