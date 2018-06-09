@@ -1,8 +1,8 @@
 \select@language {british}
 \contentsline {section}{\hbox to\@tempdima {\hfil }Abstract}{i}{section*.1}
 \contentsline {section}{\hbox to\@tempdima {\hfil }Acknowledgments}{ii}{section*.2}
-\contentsline {section}{\hbox to\@tempdima {\hfil }List of Figures}{v}{chapter*.4}
-\contentsline {section}{\hbox to\@tempdima {\hfil }List of Tables}{vi}{chapter*.5}
+\contentsline {section}{\hbox to\@tempdima {\hfil }List of Figures}{iv}{chapter*.4}
+\contentsline {section}{\hbox to\@tempdima {\hfil }List of Tables}{v}{chapter*.5}
 \contentsline {chapter}{\numberline {1}Introduction}{1}{chapter.1}
 \contentsline {section}{\numberline {1.1}Problem Statement}{2}{section.1.1}
 \contentsline {section}{\numberline {1.2}Research Objectives}{3}{section.1.2}
