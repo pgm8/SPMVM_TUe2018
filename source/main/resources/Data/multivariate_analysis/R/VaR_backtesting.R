@@ -5,11 +5,11 @@ install.packages("rmgarch")
 library(rugarch)
 library(rmgarch)
 library(parallel)
+setwd("~/Documents/Python/PycharmProjects/ml_tue2017/source/main/resources/Data/multivariate_analysis")
 source("R/fun_VaR_backtesting.R")
 set.seed(42)  # 42:The answer to life, the universe and everything.
 
 # Data sample import 
-setwd("~/Documents/Python/PycharmProjects/thesisOML/ml_tue2017/source/main/resources/Data/multivariate_analysis")
 df <- read.csv("DJI30_returns_1987_2001.csv", row.names=1, header=T)
 
 ####################################################################################################
@@ -158,14 +158,7 @@ write.csv(backtest_RF10_pearson_tranquil_mvt, file="backtest/backtest_RF10_pears
 write.csv(backtest_RF10_kendall_tranquil_mvt, file="backtest/backtest_RF10_kendall_mvt_1994_1995.csv") 
 write.csv(backtest_RF100_pearson_tranquil_mvt, file="backtest/backtest_RF100_pearson_mvt_1994_1995.csv") 
 write.csv(backtest_RF100_kendall_tranquil_mvt, file="backtest/backtest_RF100_kendall_mvt_1994_1995.csv")
-# View backtest results
-View(backtest_dccGarch_tranquil_mvnorm)
-View(backtest_KNN5_pearson_tranquil_mvnorm)
-View(backtest_KNN5_kendall_tranquil_mvnorm)
-View(backtest_KNN_idw_pearson_tranquil_mvnorm)
-View(backtest_KNN_idw_kendall_tranquil_mvnorm)
 
-View(backtest_dccGarch_tranquil_mvt)
 # Non-rejection regions volatile market conditions
 for (a in alpha){
   print(sprintf("CI %f: (%i,%i)",a, regions_uc_test(T=T, alpha=a)$lb, regions_uc_test(T=T, alpha=a)$ub))
@@ -201,10 +194,10 @@ alpha <- c(0.99, 0.975, 0.95, 0.9, 0.8, 0.6, 0.4, 0.2, 0.1, 0.05, 0.025, 0.01)
 mu_portfolio_loss <- w%*%colMeans(data)  # Expected portfolio return (assumed constant through sample mean)
 
 ## Load conditional correlations and volatilities data
-vol_data_vol_mvt<- read.csv(file="volatilities_mvt_DJI30_2000_2001_ext.csv", row.names=1)
-vol_data_vol_mvnorm<- read.csv(file="volatilities_mvnorm_DJI30_2000_2001_ext.csv", row.names=1)
-cor_DCCgarch_vol_mvnorm <- read.csv(file="cor_DCC_mvnorm_DJI30_2000_2001_ext.csv", row.names=1)
-cor_DCCgarch_vol_mvt <- read.csv(file="cor_DCC_mvt_DJI30_2000_2001_ext.csv", row.names=1)
+vol_data_vol_mvt<- read.csv(file="volatilities_mvt_DJI30_2000_2001.csv", row.names=1)
+vol_data_vol_mvnorm<- read.csv(file="volatilities_mvnorm_DJI30_2000_2001.csv", row.names=1)
+cor_DCCgarch_vol_mvnorm <- read.csv(file="cor_DCC_mvnorm_DJI30_2000_2001.csv", row.names=1)
+cor_DCCgarch_vol_mvt <- read.csv(file="cor_DCC_mvt_DJI30_2000_2001.csv", row.names=1)
 cor_KNN5_pearson_vol <- read.csv(file="pearson/pearson_cor_estimates/cor_knn5_pearson_10_DJI30_2000_2001.csv", row.names=1)
 cor_KNN5_kendall_vol <- read.csv(file="kendall/kendall_cor_estimates/cor_knn5_kendall_10_DJI30_2000_2001.csv", row.names=1)
 cor_KNN_idw_pearson_vol <- read.csv(file="pearson/pearson_cor_estimates/cor_knn_idw_pearson_10_DJI30_2000_2001.csv", row.names=1)
@@ -218,7 +211,7 @@ sigma_KNN5_kendall_vol_mvnorm <- sigma_vec_portfolio(vol_data_vol_mvnorm, cor_KN
 sigma_KNN_idw_pearson_vol_mvnorm <- sigma_vec_portfolio(vol_data_vol_mvnorm, cor_KNN_idw_pearson_vol, T=T, w=w)
 sigma_KNN_idw_kendall_vol_mvnorm <- sigma_vec_portfolio(vol_data_vol_mvnorm, cor_KNN_idw_kendall_vol, T=T, w=w)
 # Multivariate Student t-distributed errors
-sigma_DCCgarch_vol_mvt <- sigma_vec_portfolio(vol_data_vol_mvt, cor_DCCgarch_vol_mvt, T=T, w=w) 
+sigma_DCCgarch_vol_mvt <- sigma_vec_portfolio(vol_data_vol_mvnorm, cor_DCCgarch_vol_mvt, T=T, w=w) 
 sigma_KNN5_pearson_vol_mvt <- sigma_vec_portfolio(vol_data_vol_mvt, cor_KNN5_pearson_vol, T=T, w=w)
 sigma_KNN5_kendall_vol_mvt <- sigma_vec_portfolio(vol_data_vol_mvt, cor_KNN5_kendall_vol, T=T, w=w)
 sigma_KNN_idw_pearson_vol_mvt <- sigma_vec_portfolio(vol_data_vol_mvt, cor_KNN_idw_pearson_vol, T=T, w=w)
