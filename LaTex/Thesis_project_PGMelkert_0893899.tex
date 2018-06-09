@@ -283,10 +283,12 @@ Chapter \ref{ch:methodology} presents the methodological framework. The conceptu
 Chapter \ref{ch:simulation_study} examines the accuracy of nearest neighbor and random forest estimators of correlation in a bivariate setting; two asset return paths with a predefined pairwise correlation structure. The controlled setting of a simulation study allows us to observe the effect of different foundational model properties on the generalization error, which is defined as the Mean Squared Error loss. It is shown that the learning estimators improve over conventional moving window approximation of time-varying correlation through lower mean squared error and by decreasing the sensitivity of the results to the choice of window length in the moving window approximations of time-varying correlation. Furthermore, it is shown that \textbf{Insert more detailed summary of simulation results: learning estimates results in semi positive-definite correlation matrix, the effect of incorporating approximation error due to defining the set of covariates and response variable using moving window estimates of correlation.}. In summary, the simulation study provides initial evidence on the aptness of nearest neighbour and random forest algorithms as estimators of time-varying correlation between financial returns.  \\
 
 \noindent
-We then extend the empirical evaluation of correlation estimates using machine learning to a multivariate setting in Chapter \ref{chap:multivariate_analysis}. The focus of analysis is \textit{systems of correlations} in a quantitative financial risk management context rather than \textit{individual correlations}. It provides further evidence on the aptness of nearest neighbors and random forests in time-varying correlation estimation and risk management. The volatilities and correlations of 30 Dow Jones Industrial Average constituents are estimated using    
+We then extend the empirical evaluation of correlation estimates using machine learning to a multivariate setting in Chapter \ref{chap:multivariate_analysis}. The focus of analysis is \textit{systems of correlations} in a quantitative financial risk management context rather than \textit{individual correlations}. It provides further evidence on the aptness of nearest neighbors and random forests in time-varying correlation estimation and risk management. The volatilities and correlations of 30 Dow Jones Industrial Average constituents are estimated using proposed learning estimators and a widely used class of multivariate volatility models, i.e. Dynamic Conditional Correlation model \citep{ref:Engle2002}. \textbf{Insert more detailled summary of empirical results: tranquil market conditions and volatile market conditions, unconditional coverage and independence test + main result.}    
 
 
-"Through an empirical evaluation it is shown that both learning algorithms improve over a widely used class of multivariate volatility models, i.e. Dynamic Conditional Correlation model." 
+\bigskip
+\noindent
+"Hopefully: through an empirical evaluation it is shown that both learning algorithms improve over a widely used class of multivariate volatility models, i.e. Dynamic Conditional Correlation model." 
 
 
 
@@ -1813,16 +1815,16 @@ driving a dynamic volatility process can be better modeled using the Student's t
 \midrule 
 
 
-
-DCC-GARCH		&\textbf{14}		&\textbf{11}		&7		&2		\\
-KNN(5)\_pearson	&\textbf{34}		&17				&11		&7		\\
-KNN(5)\_kendall	&48		&25		&15		&10		 \\
+%%% Multivariate Gaussian Assumption  %%%%%
+DCC-GARCH		&\textbf{14}		&\textbf{11}		&7		&2			\\
+KNN(5)\_pearson	&\textbf{34}		&17				&11		&7			\\
+KNN(5)\_kendall	&48		&25		&15		&10		 					\\
 KNN(idw)\_pearson	&\textbf{14}		&\textbf{11}		&\textbf{6}		&2		\\
-KNN(idw)\_kendall    &\textbf{27}		&\textbf{12}		&10		&6		\\
-RF(10)\_pearson                                 						  \\ 
-RF(10)\_kendall										  \\ 
-RF(100)\_pearson										  \\
-RF(100)\_kendall										\\ [1ex]
+KNN(idw)\_kendall    &\textbf{27}		&\textbf{12}		&10		&6			\\
+RF(10)\_pearson	&\textbf{26}		&17		&10		&3					  \\ 
+RF(10)\_kendall	&42		&18		&12		&8							  \\ 
+RF(100)\_pearson	&\textbf{25}	&\textbf{11}	&9		&3						  \\
+RF(100)\_kendall	&42		&17		&12		&8							\\ [1ex]
 \bottomrule
 \end{tabular}
 \caption[Kupiec test with Gaussian distributed conditional innovations for tranquil market conditions.]{Kupiec test with Gaussian distributed conditional innovations for tranquil market conditions. Bold face indicates rejection. Non-rejection regions: 37$<$I(0.90)$<$64, 16$<$I(0.95)$<$35, 6$<$I(0.975)$<$20 and 1$<$I(0.99)$<$10.}
@@ -1830,7 +1832,7 @@ RF(100)\_kendall										\\ [1ex]
 \end{table}
 
 
-
+%%% Multivariate Student's t-distributional Assumption  %%%%%
 \begin{table}[H]
 \centering
 \captionsetup[subtable]{position=below}
@@ -1844,15 +1846,15 @@ RF(100)\_kendall										\\ [1ex]
 \multicolumn{1}{ r }{\textbf{I(0.99)}}   \\
 \midrule 
 
-DCC-GARCH		&\textbf{14}	&\textbf{11}	&7		&2		\\
+DCC-GARCH		&\textbf{14}	&\textbf{11}	&\textbf{6}		&2		\\
 KNN(5)\_pearson	&38		&18		&12		&7		\\
 KNN(5)\_kendall	&49		&25		&16		&\textbf{11}		 \\
 KNN(idw)\_pearson	&\textbf{15}	&\textbf{11}	&7		&2		\\
 KNN(idw)\_kendall    &\textbf{29}	&\textbf{13}	&11		&7		\\
-RF(10)\_pearson                                 						  \\ 
-RF(10)\_kendall										  \\ 
-RF(100)\_pearson										  \\
-RF(100)\_kendall										\\ [1ex]
+RF(10)\_pearson	&\textbf{28}	&17		&11		&3         		  \\ 
+RF(10)\_kendall	&45		&21		&12		&10				  \\ 
+RF(100)\_pearson	&\textbf{30}	&\textbf{12}	&10		&4		  \\
+RF(100)\_kendall	&46		&21		&12		&10				\\ [1ex]
 \bottomrule
 \end{tabular}
 \caption[Kupiec test with Student's t-distributed conditional innovations for tranquil market conditions.]{Kupiec test with Student's t-distributed conditional innovations for tranquil market conditions. Bold face indicates rejection. Non-rejection regions: 37$<$I(0.90)$<$64, 16$<$I(0.95)$<$35, 6$<$I(0.975)$<$20 and 1$<$I(0.99)$<$10.}
@@ -2055,20 +2057,21 @@ This appendix presents a discussion on the Value-at-Risk (VaR) forecasting perfo
 \multicolumn{1}{ r }{\textbf{I(0.80)}}  \\
 \midrule 
 
-DCC-GARCH		  &\textbf{504}	&\textbf{501}	&\textbf{495}		&\textbf{476}		&\textbf{444}	&320		&164		&48	\\
-KNN(5)\_pearson	  &498	&491		&476		&450		&420		&302		&184		&\textbf{77}     \\
+DCC-GARCH		  &\textbf{504}	&\textbf{501}	&\textbf{495}		&\textbf{476}		&\textbf{444}	&320		&\textbf{164}		&\textbf{48}	\\
+KNN(5)\_pearson	  &498	&491		&476		&450		&420		&303		&184		&\textbf{77}     \\
 KNN(5)\_kendall	  &\textbf{491}		&\textbf{482}		&\textbf{467}		&444		&408		&294		&193		&92   \\
-KNN(idw)\_pearson     &\textbf{504}		&\textbf{501}		&\textbf{495}		&\textbf{476}		&\textbf{444}		&320		   &\textbf{164}		&\textbf{50}	\\
-KNN(idw)\_kendall 	   &501		&497		&487		&\textbf{467}		&\textbf{432}		&308		&\textbf{175}		&\textbf{61} \\
-RF(10)\_pearson                                 								         \\ 
-RF(10)\_kendall													  \\ 
-RF(100)\_pearson													\\
-RF(100)\_kendall													\\ [1ex]
+KNN(idw)\_pearson     &\textbf{504}		&\textbf{501}		&\textbf{495}		&\textbf{476}		&\textbf{444}		&320		   &\textbf{164}		&\textbf{49}	\\
+KNN(idw)\_kendall 	   &501		&496		&487		&\textbf{467}		&\textbf{432}		&308		&\textbf{175}		&\textbf{61} \\
+RF(10)\_pearson	   &\textbf{503}		&\textbf{499}	&482		&\textbf{467}		&\textbf{429}		&305			&\textbf{178}		&\textbf{72}                                 								         \\ 
+RF(10)\_kendall	   &498		&488		&473		&452		&411		&295		&192		&\textbf{83}													  \\ 
+RF(100)\_pearson	&\textbf{504}	&\textbf{499}		&483		&466		&\textbf{427}		&308		&\textbf{178}		&\textbf{68}	\\
+RF(100)\_kendall	&500		&486		&473		&454		&407		&296		&191		&85						\\ [1ex]
 \bottomrule
 \end{tabular}
-\caption[Kupiec test with Gaussian distributed conditional innovations for tranquil market conditions.]{Kupiec test with Gaussian distributed conditional innovations for tranquil market conditions. Bold face indicates rejection. Non-rejection regions:}
-\label{tab:kupiec_test_norm_lower_q_table}
+\caption[Kupiec test with Gaussian distributed conditional innovations for tranquil market conditions.]{Kupiec test with Gaussian distributed conditional innovations for tranquil market conditions. Bold face indicates rejection. Non-rejection regions: 495$<$I(0.01)$<$504, 485$<$I(0.025)$<$499, 469$<$I(0.05)$<$489, 440$<$I(0.10)$<$467, 386$<$I(0.20)$<$421, 281$<$I(0.40)$<$324, 180$<$I(0.60)$<$224 and 83$<$I(0.80)$<$10.}
+\label{tab:kupiec_test_norm_lower_q_tranquil}
 \end{table}
+
 
 \begin{table}[H]
 \centering
@@ -2107,7 +2110,7 @@ RF(100)\_kendall													\\ [1ex]
                                                         \bottomrule
 \end{tabular}
 \caption[Christoffersen Markov test with Gaussian distributed conditional innovations for tranquil market conditions.]{Christoffersen Markov test with Gaussian distributed conditional innovations for tranquil market conditions.}
-\label{tab:christoffersen_test_norm_lower_q_table}
+\label{tab:christoffersen_test_norm_lower_q_tranquil}
 \end{table}
 
 
@@ -2128,19 +2131,19 @@ RF(100)\_kendall													\\ [1ex]
 \multicolumn{1}{ r }{\textbf{I(0.80)}}  \\
 \midrule 
 
-DCC-GARCH		  &\textbf{504}	&\textbf{500}	&\textbf{495}	&\textbf{475}	&\textbf{443}	&321 	&\textbf{164}	&\textbf{49}	\\
+DCC-GARCH		  &\textbf{504}	&\textbf{501}	&\textbf{496}	&\textbf{476}	&\textbf{446}	&321 	&\textbf{164}	&\textbf{48}	\\
 KNN(5)\_pearson	  &498	&491		&474		&449		&416		&299		&185		&\textbf{81}  \\
 KNN(5)\_kendall	  &\textbf{489}		&\textbf{480}		&\textbf{463}		&441		&404		&289		&194		&95   \\
 KNN(idw)\_pearson     &\textbf{504}		&\textbf{500}		&\textbf{495}		&\textbf{475}		&\textbf{443}		&318		&\textbf{165}		&\textbf{51}	\\
 KNN(idw)\_kendall 	   &500	&496		&484		&464		&\textbf{430}		&304		&\textbf{177}		&\textbf{67} \\
-RF(10)\_pearson                                 								         \\ 
-RF(10)\_kendall													  \\ 
-RF(100)\_pearson													\\
-RF(100)\_kendall													\\ [1ex]
+RF(10)\_pearson	   &\textbf{503}		&496		&479		&465		&\textbf{422}		&303		&\textbf{180}		&\textbf{77}       \\ 
+RF(10)\_kendall	   &497	&484		&471		&448		&407		&292		&193		&86				  \\ 
+RF(100)\_pearson	   &\textbf{503}		&497		&479		&464		&\textbf{423}		&303		&181		&\textbf{72}													\\
+RF(100)\_kendall	   &498	&485		&470		&452		&406		&292		&192		&86						\\ [1ex]
 \bottomrule
 \end{tabular}
-\caption[Kupiec test with Student's t-distributed conditional innovations for tranquil market conditions.]{Kupiec test with Student's t-distributed conditional innovations for tranquil market conditions. Bold face indicates rejection. Non-rejection regions:}
-\label{tab:kupiec_test_std_lower_q_table}
+\caption[Kupiec test with Student's t-distributed conditional innovations for tranquil market conditions.]{Kupiec test with Student's t-distributed conditional innovations for tranquil market conditions. Bold face indicates rejection. Non-rejection regions: 495$<$I(0.01)$<$504, 485$<$I(0.025)$<$499, 469$<$I(0.05)$<$489, 440$<$I(0.10)$<$467, 386$<$I(0.20)$<$421, 281$<$I(0.40)$<$324, 180$<$I(0.60)$<$224 and 83$<$I(0.80)$<$10.}
+\label{tab:kupiec_test_std_lower_q_tranquil}
 \end{table}
 
 \begin{table}[H]
@@ -2180,11 +2183,161 @@ RF(100)\_kendall													\\ [1ex]
                                                         \bottomrule
 \end{tabular}
 \caption[Christoffersen Markov test with Student's t-distributed conditional innovations for tranquil market conditions.]{Christoffersen Markov test with Student's t-distributed conditional innovations for tranquil market conditions.}
-\label{tab:christoffersen_test_std_lower_q_table}
+\label{tab:christoffersen_test_std_lower_q_tranquil}
+\end{table}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%  			  VOLATILE MARKET CONDITIONS 			   %%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Volatile Market Conditions: 2000-2001 Dot-com Bubble}
+
+\begin{table}[H]
+\centering
+\captionsetup[subtable]{position=below}
+%\captionsetup[table]{position=below}
+\begin{tabular}{l  c  c  c c c c c c} 
+\toprule
+\multicolumn{1}{ c }{\textbf{Model}} &
+\multicolumn{1}{ r }{\textbf{I(0.01)}} &
+\multicolumn{1}{ r }{\textbf{I(0.025)}} &
+\multicolumn{1}{ r }{\textbf{I(0.05)}} &
+\multicolumn{1}{ r }{\textbf{I(0.10)}} &
+\multicolumn{1}{ r }{\textbf{I(0.20)}} &
+\multicolumn{1}{ r }{\textbf{I(0.40)}} &
+\multicolumn{1}{ r }{\textbf{I(0.60)}} &
+\multicolumn{1}{ r }{\textbf{I(0.80)}}  \\
+\midrule 
+
+DCC-GARCH		  &\textbf{504}	&\textbf{501}	&\textbf{495}		&\textbf{476}		&\textbf{444}	&320		&\textbf{164}		&\textbf{48}	\\
+KNN(5)\_pearson	  &498	&491		&476		&450		&420		&303		&184		&\textbf{77}     \\
+KNN(5)\_kendall	  &\textbf{491}		&\textbf{482}		&\textbf{467}		&444		&408		&294		&193		&92   \\
+KNN(idw)\_pearson     &\textbf{504}		&\textbf{501}		&\textbf{495}		&\textbf{476}		&\textbf{444}		&320		   &\textbf{164}		&\textbf{49}	\\
+KNN(idw)\_kendall 	   &501		&496		&487		&\textbf{467}		&\textbf{432}		&308		&\textbf{175}		&\textbf{61} \\
+RF(10)\_pearson	   &\textbf{503}		&\textbf{499}	&482		&\textbf{467}		&\textbf{429}		&305			&\textbf{178}		&\textbf{72}                                 								         \\ 
+RF(10)\_kendall	   &498		&488		&473		&452		&411		&295		&192		&\textbf{83}													  \\ 
+RF(100)\_pearson	&\textbf{504}	&\textbf{499}		&483		&466		&\textbf{427}		&308		&\textbf{178}		&\textbf{68}	\\
+RF(100)\_kendall	&500		&486		&473		&454		&407		&296		&191		&85						\\ [1ex]
+\bottomrule
+\end{tabular}
+\caption[Kupiec test with Gaussian distributed conditional innovations for volatile market conditions.]{Kupiec test with Gaussian distributed conditional innovations for volatile market conditions. Bold face indicates rejection. Non-rejection regions: 495$<$I(0.01)$<$504, 485$<$I(0.025)$<$499, 469$<$I(0.05)$<$489, 440$<$I(0.10)$<$467, 386$<$I(0.20)$<$421, 281$<$I(0.40)$<$324, 180$<$I(0.60)$<$224 and 83$<$I(0.80)$<$10.}
+\label{tab:kupiec_test_norm_lower_q_volatile}
 \end{table}
 
 
-\section{Volatile Market Conditions: 2000-2001 Dot-com Bubble}
+\begin{table}[H]
+\centering
+\captionsetup[subtable]{position=below}
+\begin{tabular}{llllllllll}
+\toprule
+\multicolumn{1}{c}{\textbf{Model}} & 
+\multicolumn{1}{c}{\boldmath$\pi_{ij}$} & 
+\multicolumn{1}{ l }{\textbf{0.01}} &
+\multicolumn{1}{ l }{\textbf{0.025}} &
+\multicolumn{1}{ l }{\textbf{0.05}} &
+\multicolumn{1}{ l }{\textbf{0.10}} &
+\multicolumn{1}{ l }{\textbf{0.20}} &
+\multicolumn{1}{ l }{\textbf{0.40}} &
+\multicolumn{1}{ l }{\textbf{0.60}} &
+\multicolumn{1}{ l }{\textbf{0.80}}   \\
+\midrule 
+\multirow{2}{*}{DCC-GARCH}         & \boldmath$\pi_{01}$   &1	&1	&1	&0.917	&0.822	&0.652	&0.438	&0.172 \\
+                                   		      & \boldmath$\pi_{11}$   &0.992	&0.98	&0.95	&0.903	&0.82	&0.636	&0.39	&0.143 \\ \midrule 
+\multirow{2}{*}{KNN(5)\_pearson}   & \boldmath$\pi_{01}$   &1	&1	&0.941	&0.897	&0.86	&0.652	&0.468	&0.186\\
+                                   		      & \boldmath$\pi_{11}$   &0.984	&0.959	&0.932	&0.883	&0.786	&0.636	&0.4  &0.191   \\ \midrule 
+\multirow{2}{*}{KNN(5)\_kendall}   & \boldmath$\pi_{01}$   &1	&1	&0.913	&0.889	&0.839	&0.641	&0.468	&0.214  \\
+                                   		      & \boldmath$\pi_{11}$  &0.967	&0.941	&0.908	&0.851	&0.759	&0.623	&0.42	&0.236   \\ \midrule 		      
+\multirow{2}{*}{KNN(idw)\_pearson} & \boldmath$\pi_{01}$  &1	&1	&1	&0.885	&0.837	&0.644	&0.441	&0.179 \\
+                                   		      & \boldmath$\pi_{11}$   &0.992	&0.971	&0.932	&0.898	&0.797	&0.634	&0.396	&0.159 \\ \midrule 
+\multirow{2}{*}{KNN(idw)\_kendall} & \boldmath$\pi_{01}$  &1	&1	&0.9		&0.857	&0.827	&0.648	&0.468	&0.203 \\
+                                   		      & \boldmath$\pi_{11}$  &0.971	&0.945	&0.922	&0.861	&0.784	&0.625	&0.4	&0.259 \\ \midrule 
+\multirow{2}{*}{RF(10)\_pearson}    &  \boldmath$\pi_{01}$   &     	&		&		&     &&&& \\
+                                   		      & \boldmath$\pi_{11}$    &      	&		&		&     &&&& \\ \midrule 
+\multirow{2}{*}{RF(10)\_kendall}    &  \boldmath$\pi_{01}$   &     	&		&		&     &&&& \\
+                                   		      & \boldmath$\pi_{11}$    &      	&		&		&      &&&&\\ \midrule 
+\multirow{2}{*}{RF(100)\_pearson}  &  \boldmath$\pi_{01}$   &      	&		&		&     &&&& \\
+                                   		      & \boldmath$\pi_{11}$    &      	&		&		&    &&&& \\ \midrule 
+\multirow{2}{*}{RF(100)\_kendall}   &  \boldmath$\pi_{01}$   &      	&		&		&    &&&& \\
+                                                        & \boldmath$\pi_{11}$    &      	&		&		&    &&&& \\ [1ex]
+                                                        \bottomrule
+\end{tabular}
+\caption[Christoffersen Markov test with Gaussian distributed conditional innovations for volatile market conditions.]{Christoffersen Markov test with Gaussian distributed conditional innovations for volatile market conditions.}
+\label{tab:christoffersen_test_norm_lower_q_volatile}
+\end{table}
+
+
+\begin{table}[H]
+\centering
+\captionsetup[subtable]{position=below}
+%\captionsetup[table]{position=below}
+\begin{tabular}{l  c  c  c c c c c c} 
+\toprule
+\multicolumn{1}{ c }{\textbf{Model}} &
+\multicolumn{1}{ r }{\textbf{I(0.01)}} &
+\multicolumn{1}{ r }{\textbf{I(0.025)}} &
+\multicolumn{1}{ r }{\textbf{I(0.05)}} &
+\multicolumn{1}{ r }{\textbf{I(0.10)}} &
+\multicolumn{1}{ r }{\textbf{I(0.20)}} &
+\multicolumn{1}{ r }{\textbf{I(0.40)}} &
+\multicolumn{1}{ r }{\textbf{I(0.60)}} &
+\multicolumn{1}{ r }{\textbf{I(0.80)}}  \\
+\midrule 
+
+DCC-GARCH		  &\textbf{504}	&\textbf{501}	&\textbf{496}	&\textbf{476}	&\textbf{446}	&321 	&\textbf{164}	&\textbf{48}	\\
+KNN(5)\_pearson	  &498	&491		&474		&449		&416		&299		&185		&\textbf{81}  \\
+KNN(5)\_kendall	  &\textbf{489}		&\textbf{480}		&\textbf{463}		&441		&404		&289		&194		&95   \\
+KNN(idw)\_pearson     &\textbf{504}		&\textbf{500}		&\textbf{495}		&\textbf{475}		&\textbf{443}		&318		&\textbf{165}		&\textbf{51}	\\
+KNN(idw)\_kendall 	   &500	&496		&484		&464		&\textbf{430}		&304		&\textbf{177}		&\textbf{67} \\
+RF(10)\_pearson	   &\textbf{503}		&496		&479		&465		&\textbf{422}		&303		&\textbf{180}		&\textbf{77}       \\ 
+RF(10)\_kendall	   &497	&484		&471		&448		&407		&292		&193		&86				  \\ 
+RF(100)\_pearson	   &\textbf{503}		&497		&479		&464		&\textbf{423}		&303		&181		&\textbf{72}													\\
+RF(100)\_kendall	   &498	&485		&470		&452		&406		&292		&192		&86						\\ [1ex]
+\bottomrule
+\end{tabular}
+\caption[Kupiec test with Student's t-distributed conditional innovations for volatile market conditions.]{Kupiec test with Student's t-distributed conditional innovations for volatile market conditions. Bold face indicates rejection. Non-rejection regions: 495$<$I(0.01)$<$504, 485$<$I(0.025)$<$499, 469$<$I(0.05)$<$489, 440$<$I(0.10)$<$467, 386$<$I(0.20)$<$421, 281$<$I(0.40)$<$324, 180$<$I(0.60)$<$224 and 83$<$I(0.80)$<$10.}
+\label{tab:kupiec_test_std_lower_q_volatile}
+\end{table}
+
+\begin{table}[H]
+\centering
+\captionsetup[subtable]{position=below}
+\begin{tabular}{llllllllll}
+\toprule
+\multicolumn{1}{c}{\textbf{Model}} & 
+\multicolumn{1}{c}{\boldmath$\pi_{ij}$} & 
+\multicolumn{1}{ l }{\textbf{0.01}} &
+\multicolumn{1}{ l }{\textbf{0.025}} &
+\multicolumn{1}{ l }{\textbf{0.05}} &
+\multicolumn{1}{ l }{\textbf{0.10}} &
+\multicolumn{1}{ l }{\textbf{0.20}} &
+\multicolumn{1}{ l }{\textbf{0.40}} &
+\multicolumn{1}{ l }{\textbf{0.60}} &
+\multicolumn{1}{ l }{\textbf{0.80}} \\ 
+\midrule 
+\multirow{2}{*}{DCC-GARCH}         & \boldmath$\pi_{01}$   &1	&1	&1	&0.917	&0.826	&0.644	&0.438	&0.172   \\
+                                   		      & \boldmath$\pi_{11}$   &0.996	&0.98	&0.95	&0.903	&0.815	&0.634	&0.39	&0.143  \\ \midrule 
+\multirow{2}{*}{KNN(5)\_pearson}   & \boldmath$\pi_{01}$   &1	&1	&1	&0.897	&0.86	&0.652	&0.468	&0.185  \\
+                                   		      & \boldmath$\pi_{11}$   &0.988	&0.959	&0.932	&0.883	&0.786	&0.636	&0.4	&0.174  \\ \midrule 
+\multirow{2}{*}{KNN(5)\_kendall}   & \boldmath$\pi_{01}$    &1	&1	&0.913	&0.889	&0.825	&0.641	&0.468	&0.214 \\
+                                   		      & \boldmath$\pi_{11}$   &0.967	&0.941	&0.908	&0.851	&0.758	&0.623	&0.42	&0.236  \\ \midrule 		      
+\multirow{2}{*}{KNN(idw)\_pearson} & \boldmath$\pi_{01}$  &1	&1	&1	&0.885	&0.837	&0.644	&0.441	&0.175 \\
+                                   		      & \boldmath$\pi_{11}$   &0.992	&0.971	&0.932	&0.898	&0.797	&0.634	&0.396	&0.2  \\ \midrule 
+\multirow{2}{*}{KNN(idw)\_kendall} & \boldmath$\pi_{01}$   &1	&1	&0.9	&0.857	&0.811	&0.648	&0.468	&0.203  \\
+                                   		      & \boldmath$\pi_{11}$   &0.971	&0.945	&0.922	&0.861	&0.783	&0.625	&0.4	&0.259 \\ \midrule 
+\multirow{2}{*}{RF(10)\_pearson}    &  \boldmath$\pi_{01}$   &     	&		&		&    &&&& \\
+                                   			      & \boldmath$\pi_{11}$    &      	&		&		&   &&&&  \\ \midrule 
+\multirow{2}{*}{RF(10)\_kendall}    &  \boldmath$\pi_{01}$   &     	&		&		&    &&&& \\
+                                   		      & \boldmath$\pi_{11}$    &      	&		&		&    &&&& \\ \midrule 
+\multirow{2}{*}{RF(100)\_pearson}  &  \boldmath$\pi_{01}$   &      	&		&		&    &&&& \\
+                                   		      & \boldmath$\pi_{11}$    &      	&		&		&   &&&& \\ \midrule 
+\multirow{2}{*}{RF(100)\_kendall}   &  \boldmath$\pi_{01}$   &      	&		&		&   &&&& \\
+                                                        & \boldmath$\pi_{11}$    &      	&		&		&   &&&&\\ [1ex]
+                                                        \bottomrule
+\end{tabular}
+\caption[Christoffersen Markov test with Student's t-distributed conditional innovations for volatile market conditions.]{Christoffersen Markov test with Student's t-distributed conditional innovations for volatile market conditions.}
+\label{tab:christoffersen_test_std_lower_q_volatile}
+\end{table}
+
+
 
 
 
