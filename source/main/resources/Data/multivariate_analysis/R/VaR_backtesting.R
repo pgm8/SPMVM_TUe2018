@@ -2,8 +2,10 @@
 rm(list=ls())  # remove all variables in R
 install.packages("rugarch")
 install.packages("rmgarch")
+install.packages("rootSolve")
 library(rugarch)
 library(rmgarch)
+library(rootSolve)
 library(parallel)
 setwd("~/Documents/Python/PycharmProjects/ml_tue2017/source/main/resources/Data/multivariate_analysis")
 source("R/fun_VaR_backtesting.R")
@@ -161,7 +163,7 @@ write.csv(backtest_RF100_kendall_tranquil_mvt, file="backtest/backtest_RF100_ken
 
 # Non-rejection regions volatile market conditions
 for (a in alpha){
-  print(sprintf("CI %f: (%i,%i)",a, regions_uc_test(T=T, alpha=a)$lb, regions_uc_test(T=T, alpha=a)$ub))
+  print(sprintf("CI %f: [%i,%i]",a, regions_uc_test(T=T, alpha=a)$lb, regions_uc_test(T=T, alpha=a)$ub))
 }
 
 ####################################################################################################
@@ -242,7 +244,6 @@ knn5_kendall_VaR_vol_mvnorm <- VaR_estimates(sigma_portfolio=sigma_KNN5_kendall_
 knn_idw_pearson_VaR_vol_mvnorm <- VaR_estimates(sigma_portfolio=sigma_KNN_idw_pearson_vol_mvnorm, mu=mu_portfolio_loss, cl=alpha)
 knn_idw_kendall_VaR_vol_mvnorm <- VaR_estimates(sigma_portfolio=sigma_KNN_idw_kendall_vol_mvnorm, mu=mu_portfolio_loss, cl=alpha)
 
-
 rf10_pearson_VaR_vol_mvnorm <- VaR_estimates(sigma_portfolio=sigma_RF10_pearson_volatile_mvnorm,mu= mu_portfolio_loss, cl=alpha)
 rf10_kendall_VaR_vol_mvnorm <- VaR_estimates(sigma_portfolio=sigma_RF10_kendall_volatile_mvnorm, mu=mu_portfolio_loss, cl=alpha)
 rf100_pearson_VaR_vol_mvnorm <- VaR_estimates(sigma_portfolio=sigma_RF100_pearson_volatile_mvnorm, mu=mu_portfolio_loss, cl=alpha)
@@ -257,10 +258,10 @@ knn5_kendall_VaR_vol_mvt <- VaR_estimates(sigma_portfolio=sigma_KNN5_kendall_vol
 knn_idw_pearson_VaR_vol_mvt <- VaR_estimates(sigma_portfolio=sigma_KNN_idw_pearson_vol_mvt, mu=mu_portfolio_loss, cl=alpha)
 knn_idw_kendall_VaR_vol_mvt <- VaR_estimates(sigma_portfolio=sigma_KNN_idw_kendall_vol_mvt, mu=mu_portfolio_loss, cl=alpha)
 
-rf10_pearson_VaR_vol_mvt <- VaR_estimates(sigma_portfolio=sigma_RF10_pearson_volatile_mvt,mu= mu_portfolio_loss, cl=alpha)
-rf10_kendall_VaR_vol_mvt <- VaR_estimates(sigma_portfolio=sigma_RF10_kendall_volatile_mvt, mu=mu_portfolio_loss, cl=alpha)
-rf100_pearson_VaR_vol_mvt <- VaR_estimates(sigma_portfolio=sigma_RF100_pearson_volatile_mvt, mu=mu_portfolio_loss, cl=alpha)
-rf100_kendall_VaR_vol_mvt <- VaR_estimates(sigma_portfolio=sigma_RF100_kendall_volatile_mvt, mu=mu_portfolio_loss, cl=alpha)
+rf10_pearson_VaR_vol_mvt <- VaR_estimates(sigma_portfolio=sigma_RF10_pearson_vol_mvt,mu= mu_portfolio_loss, cl=alpha)
+rf10_kendall_VaR_vol_mvt <- VaR_estimates(sigma_portfolio=sigma_RF10_kendall_vol_mvt, mu=mu_portfolio_loss, cl=alpha)
+rf100_pearson_VaR_vol_mvt <- VaR_estimates(sigma_portfolio=sigma_RF100_pearson_vol_mvt, mu=mu_portfolio_loss, cl=alpha)
+rf100_kendall_VaR_vol_mvt <- VaR_estimates(sigma_portfolio=sigma_RF100_kendall_vol_mvt, mu=mu_portfolio_loss, cl=alpha)
 
 ## Value-at-Risk Backtesting   
 VaR_true <- as.matrix(tail(data, T))%*%w  #  Out-of-sample realized returns assuming equally weighted portfolio
@@ -276,8 +277,6 @@ backtest_RF10_kendall_vol_mvnorm <- uc_ind_test(VaR_est=rf10_kendall_VaR_vol_mvn
 backtest_RF100_pearson_vol_mvnorm <- uc_ind_test(VaR_est=rf100_pearson_VaR_vol_mvnorm, cl=alpha)
 backtest_RF100_kendall_vol_mvnorm <- uc_ind_test(VaR_est=rf100_kendall_VaR_vol_mvnorm, cl=alpha)
 
-
-
 # Multivariate Student t-distributed errors
 backtest_dccGarch_vol_mvt <- uc_ind_test(VaR_est=dcc_VaR_vol_mvt, cl=alpha)
 backtest_KNN5_pearson_vol_mvt <- uc_ind_test(VaR_est=knn5_pearson_VaR_vol_mvt, cl=alpha)
@@ -291,11 +290,11 @@ backtest_RF100_pearson_vol_mvt <- uc_ind_test(VaR_est=rf100_pearson_VaR_vol_mvt,
 backtest_RF100_kendall_vol_mvt <- uc_ind_test(VaR_est=rf100_kendall_VaR_vol_mvt, cl=alpha)
 
 # Write backtest results to csv file
-write.csv(backtest_dccGarch_vol_mvnorm, file="backtest_dccGarch_mvnorm_2000_2001.csv") 
-write.csv(backtest_KNN5_pearson_vol_mvnorm, file="backtest_KNN5_pearson_mvnorm_2000_2001.csv") 
-write.csv(backtest_KNN5_kendall_vol_mvnorm, file="backtest_KNN5_kendall_mvnorm_2000_2001.csv") 
-write.csv(backtest_KNN_idw_pearson_vol_mvnorm, file="backtest_KNN_idw_pearson_mvnorm_2000_2001.csv") 
-write.csv(backtest_KNN_idw_kendall_vol_mvnorm, file="backtest_KNN_idw_kendall_mvnorm_2000_2001.csv")
+write.csv(backtest_dccGarch_vol_mvnorm, file="backtest/backtest_dccGarch_mvnorm_2000_2001.csv") 
+write.csv(backtest_KNN5_pearson_vol_mvnorm, file="backtest/backtest_KNN5_pearson_mvnorm_2000_2001.csv") 
+write.csv(backtest_KNN5_kendall_vol_mvnorm, file="backtest/backtest_KNN5_kendall_mvnorm_2000_2001.csv") 
+write.csv(backtest_KNN_idw_pearson_vol_mvnorm, file="backtest/backtest_KNN_idw_pearson_mvnorm_2000_2001.csv") 
+write.csv(backtest_KNN_idw_kendall_vol_mvnorm, file="backtest/backtest_KNN_idw_kendall_mvnorm_2000_2001.csv")
 
 write.csv(backtest_RF10_pearson_vol_mvnorm, file="backtest/backtest_RF10_pearson_mvnorm_2000_2001.csv") 
 write.csv(backtest_RF10_kendall_vol_mvnorm, file="backtest/backtest_RF10_kendall_mvnorm_2000_2001.csv") 
@@ -303,11 +302,11 @@ write.csv(backtest_RF100_pearson_vol_mvnorm, file="backtest/backtest_RF100_pears
 write.csv(backtest_RF100_kendall_vol_mvnorm, file="backtest/backtest_RF100_kendall_mvnorm_2000_2001.csv") 
 
 
-write.csv(backtest_dccGarch_vol_mvt, file="backtest_dccGarch_mvt_2000_2001.csv") 
-write.csv(backtest_KNN5_pearson_vol_mvt, file="backtest_KNN5_pearson_mvt_2000_2001.csv") 
-write.csv(backtest_KNN5_kendall_vol_mvt, file="backtest_KNN5_kendall_mvt_2000_2001.csv") 
-write.csv(backtest_KNN_idw_pearson_vol_mvt, file="backtest_KNN_idw_pearson_mvt_2000_2001.csv") 
-write.csv(backtest_KNN_idw_kendall_vol_mvt, file="backtest_KNN_idw_kendall_mvt_2000_2001.csv") 
+write.csv(backtest_dccGarch_vol_mvt, file="backtest/backtest_dccGarch_mvt_2000_2001.csv") 
+write.csv(backtest_KNN5_pearson_vol_mvt, file="backtest/backtest_KNN5_pearson_mvt_2000_2001.csv") 
+write.csv(backtest_KNN5_kendall_vol_mvt, file="backtest/backtest_KNN5_kendall_mvt_2000_2001.csv") 
+write.csv(backtest_KNN_idw_pearson_vol_mvt, file="backtest/backtest_KNN_idw_pearson_mvt_2000_2001.csv") 
+write.csv(backtest_KNN_idw_kendall_vol_mvt, file="backtest/backtest_KNN_idw_kendall_mvt_2000_2001.csv") 
 
 
 write.csv(backtest_RF10_pearson_vol_mvt, file="backtest/backtest_RF10_pearson_mvt_2000_2001.csv") 
@@ -316,12 +315,11 @@ write.csv(backtest_RF100_pearson_vol_mvt, file="backtest/backtest_RF100_pearson_
 write.csv(backtest_RF100_kendall_vol_mvt, file="backtest/backtest_RF100_kendall_mvt_2000_2001.csv") 
 
 
-
-
 # Non-rejection regions volatile market conditions
 for (a in alpha){
-  print(sprintf("CI %f: (%i,%i)",a, regions_uc_test(T=T, alpha=a)$lb, regions_uc_test(T=T, alpha=a)$ub))
+  print(sprintf("CI %f: [%i,%i]",a, regions_uc_test(T=T, alpha=a)$lb, regions_uc_test(T=T, alpha=a)$ub))
 }
+
 
 
 
