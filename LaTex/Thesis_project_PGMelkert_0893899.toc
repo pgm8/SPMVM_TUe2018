@@ -1,8 +1,8 @@
 \select@language {british}
 \contentsline {section}{\hbox to\@tempdima {\hfil }Abstract}{i}{section*.1}
 \contentsline {section}{\hbox to\@tempdima {\hfil }Acknowledgments}{ii}{section*.2}
-\contentsline {section}{\hbox to\@tempdima {\hfil }List of Figures}{iv}{chapter*.4}
-\contentsline {section}{\hbox to\@tempdima {\hfil }List of Tables}{v}{chapter*.5}
+\contentsline {section}{\hbox to\@tempdima {\hfil }List of Figures}{v}{chapter*.4}
+\contentsline {section}{\hbox to\@tempdima {\hfil }List of Tables}{vii}{chapter*.5}
 \contentsline {chapter}{\numberline {1}Introduction}{1}{chapter.1}
 \contentsline {section}{\numberline {1.1}Problem Statement}{2}{section.1.1}
 \contentsline {section}{\numberline {1.2}Research Objectives}{3}{section.1.2}
@@ -45,8 +45,8 @@
 \contentsline {section}{\numberline {4.5}Empirical Results}{47}{section.4.5}
 \contentsline {subsection}{\numberline {4.5.1}Tranquil Market Conditions: Mid-1990's}{47}{subsection.4.5.1}
 \contentsline {subsection}{\numberline {4.5.2}Volatile Market Conditions: 2000-2001 Dot-com Bubble}{49}{subsection.4.5.2}
-\contentsline {section}{\numberline {4.6}Conclusion Empirical Results}{50}{section.4.6}
-\contentsline {chapter}{\numberline {5}Conclusion and Future Research}{51}{chapter.5}
-\contentsline {chapter}{\numberline {A}Theoretical Analysis Value-at-Risk Forecasting}{54}{appendix.A}
-\contentsline {section}{\numberline {A.1}Tranquil Market Conditions: Mid-1990's}{54}{section.A.1}
-\contentsline {section}{\numberline {A.2}Volatile Market Conditions: 2000-2001 Dot-com Bubble}{56}{section.A.2}
+\contentsline {section}{\numberline {4.6}Conclusion Empirical Results}{51}{section.4.6}
+\contentsline {chapter}{\numberline {5}Conclusion and Future Research}{52}{chapter.5}
+\contentsline {chapter}{\numberline {A}Theoretical Analysis Value-at-Risk Forecasting}{55}{appendix.A}
+\contentsline {section}{\numberline {A.1}Tranquil Market Conditions: Mid-1990's}{55}{section.A.1}
+\contentsline {section}{\numberline {A.2}Volatile Market Conditions: 2000-2001 Dot-com Bubble}{57}{section.A.2}
