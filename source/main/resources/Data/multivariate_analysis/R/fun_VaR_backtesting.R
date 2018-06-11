@@ -118,13 +118,56 @@ uc_ind_test <- function(VaR_est, cl=alpha) {
 }
 
 
-# Non-rejection regions Kupiec test
-regions_uc_test <- function(T=T, alpha=alpha) {
-  # alpha: quantile of the loss distribution
-  c <- -qnorm(0.025)  # two sided test with confidence level 95%
-  lb <- T*(1-alpha)-c*sqrt(T*alpha*(1-alpha))
-  ub <- T*(1-alpha)+c*sqrt(T*alpha*(1-alpha))
-  return(list("lb"=round(lb), "ub"=ceiling(ub)))
+regions_uc_test_approx <- function(T, alpha) {
+  "Kupiec test uses Binomial distribution to construct a likelihood ratio, which is APPROXIMATELY
+  centrally chi-squared with one degree of freedom, assuming H0. By considering the -2Log() of the
+  likelihood ratio and setting this equal to epsilon quantile of chi^2(1,0), denoted by y, one can 
+  find the roots of the function. Finding the roots equals finding the non-rejection interval values,
+  approximately."
+  # T: length backtest period
+  # alpha: confidence level VaR
+  # y: significance level test = 95th percentile of the Chi-Squared distribution with 1 degree of freedom
+  y <- qchisq(.95, df=1)
+  result <- uniroot.all(function(x, y, t=T, a=alpha) {2*log(((t-x)/(a*T))^(t-x)*((x/((1-a)*t))^x))-y}, 
+          y=y, lower=0, upper=T)
+  return(list("lb"=floor(result[1]), "ub"=ceiling(result[2])))
 }
+  
 
-
+# X ~ Binomial(500, 0.05) 
+regions_uc_test <- function(T=T, alpha=alpha, eps=0.05) {
+  " Use binomial distribution (hit sequence) to construct non-rejection regions."
+  # T: length backtest period
+  # alpha: confidence level VaR
+  # eps: significance level test 
+  q <- 1-alpha
+  lb_init <- qbinom(p=(eps/2), size=T, prob=q)  # 1: P(X < lb_init) <= eps/2
+  # Find maximum x1 for which (1) holds 
+  if(pbinom(q=lb_init, size=T, prob=q) > (eps/2)) {
+    lb_init <- lb_init-1
+  }
+  ub_init <- qbinom(p=(eps/2), size=T, prob=q, lower.tail=FALSE)  # 35
+  if(pbinom(q=ub_init, size=T, prob=q, lower.tail=FALSE) > (eps/2)) {
+    ub_init <- ub_init+1
+  }
+  # [a, b]
+  op_1 <- pbinom(q=lb_init, size=T, prob=q) + pbinom(q=ub_init, size=T, prob=q, lower.tail=FALSE)
+  lb_opt <- lb_init
+  ub_opt <- ub_init
+  op_opt <- op_1
+  # [a+1, b]
+  op_2 <- pbinom(q=lb_init+1, size=T, prob=q) + pbinom(q=ub_init, size=T, prob=q, lower.tail=FALSE)
+  if ((op_2 <= eps) & (eps-op_2 <= eps-op_opt)) {
+    lb_opt <- lb_init+1
+    ub_opt <- ub_init
+    op_opt <- op_2
+  }
+  # [a, b-1]
+  op_3 <- pbinom(q=lb_init, size=T, prob=q) + pbinom(q=ub_init-1, size=T, prob=q, lower.tail=FALSE)
+  if ((op_3 <= eps) & (eps-op_3 <= eps-op_opt)) {  
+    lb_opt <- lb_init
+    ub_opt <- ub_init-1
+    op_opt <- op_3
+  }
+  return(list("lb"=lb_opt+1, "ub"=ub_opt))
+}
