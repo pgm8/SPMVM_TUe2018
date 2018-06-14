@@ -7,8 +7,7 @@
 \usepackage[hidelinks]{hyperref}  % Allows for clickable reference
 \hypersetup{colorlinks = true, linkcolor=blue, citecolor = {blue}, urlcolor=blue,}
 \usepackage{enumitem}
-
-
+\usepackage[absolute]{textpos}
 
 
 % Graphics preamble
@@ -61,35 +60,81 @@
   \stepcounter{question} 
 } 
 
+
 \begin{document}
 
 \begin{titlepage}
-	\begin{center}	      % center text
-	\line(1,0){300} \\     % double backslash: next line
-	[2mm]                     % create space between horizontal black line and next line
-	\huge{\bfseries Stochastic Correlation Modeling and Value-at-Risk Estimation by Multivariate GARCH and Machine Learning } \\  
-	[2mm]
-	\line(1,0){300} \\	
-	\textsc{\Large Thesis Project} \\
-	[5cm]
-	\textsc{\LARGE Eindhoven University of Technology} \\
-	[8cm]
-	\end{center}
-	\begin{flushleft}
-	\textsc{\large P.G. Melkert \\
-	0893899 \\
-	September, 2017 \\
-	Supervisor 1: dr. A. Chockalingam \\
-	Supervisor 2: dr. R.J. Almeida}
-	\end{flushleft}
-\end{titlepage}
+\begin{center}
+\includegraphics[height=2cm]{tue-logo-high}\\
 
-% Front matter: stuff in front of table of contents (toc)
+\large
+Department of Industrial Engineering and Innovation Sciences  \\
+Operations, Planning, Accounting and Control Research Group
+
+\vspace*{10cm}
+
+\setlength{\TPHorizModule}{1mm}
+\setlength{\TPVertModule}{\TPHorizModule}
+% Set the Paragraph Indent to zero, so the first line is not Indented
+% Back-up the current value so it can be put back at the end of the title page
+\newlength{\backupparindent}
+\setlength{\backupparindent}{\parindent}
+\setlength{\parindent}{0mm}			
+% Begins a textbox at 72 mm from the left of the edge of the paper and 89 mm from the top
+% The width of the textbox is 95 mm (167 - 72 mm)
+\begin{textblock}{165}(30,89)
+    \vspace*{1mm}
+    \huge
+    \textbf{Stochastic Correlation Modeling and Value-at-Risk Estimation using Multivariate GARCH and Machine Learning \\}
+    \Large
+    \vspace*{10mm}
+    in partial fulfillment of the requirements for the degree of \\
+     \vspace*{5mm}\textbf{Master of Science in \\ Operations Management and Logistics}\\
+    \vspace*{10mm}
+    \Large
+    P.G. Melkert \\
+    0893899	
+\end{textblock}
+
+\vfill
+Draft
+\vfill
+
+\setlength{\parindent}{\backupparindent}
+\end{center}
+
+\mbox{}
+\vfill
+\noindent
+Advisors:\\
+Dr. A. Chockalingam, Eindhoven University of Technology, OPAC \\
+Dr. R.J. de Almeida e Santos Nogueira, Maastricht University, Quantitative Economics
+
+
+\clearpage
+
+\noindent
+TUE. School of Industrial Engineering. \\
+\noindentSeries Master Theses Operations Management and Logistics
+\vfill
+\noindent
+Subject headings: Stochastic Correlation, Semiparametric Multivariate GARCH, Nearest Neighbor, Random Forest, Value-at-Risk 
+\vspace{0.5\textheight}
+
+\pagenumbering{gobble}
+\end{titlepage} 
+
 
 \pagenumbering{roman}
 
 \section*{Abstract}    % Asterisk is to remove header numbering (and toc)
 \addcontentsline{toc}{section}{\numberline{}Abstract}  % Gets summary in toc
+"In this paper we develop a new semiparametric model for conditional correlations, which combines parametric univariate Generalized Auto Regressive Conditional Heteroskedasticity specifications for the individual conditional volatilities with nonparametric machine learning regressors in the form of nearest neighbor and random forest for the conditional correlations. This approach not only avoids the proliferation of parameters as the number of assets becomes large, which typically happens in conventional multivariate conditional volatility models, but also the rigid structure imposed by more parsimonious models, such as the dynamic conditional correlation model. An empirical application to the 30 constituents included in the Dow Jones Industrial Average index demonstrates that the model is able to capture interesting asymmetries in correlations and that it is competitive with standard parametric models in terms of estimating risk measures such as Value-at-Risk."
+
+\iffalse
+ref:Hafner2006: "In this paper we develop a new semi-parametric model for conditional correlations, which combines parametric univariate Generalized Auto Regressive Conditional Heteroskedasticity specifications for the individual conditional volatilities with nonparametric kernel regression for the conditional correlations. This approach not only avoids the proliferation of parameters as the number of assets becomes large, which typically happens in conventional multivariate conditional volatility models, but also the rigid structure imposed by more parsimonious models, such as the dynamic conditional correlation model. An empirical application to the 30 Dow Jones stocks demonstrates that the model is able to capture interesting asymmetries in correlations and that it is competitive with standard parametric models in terms of constructing minimum variance portfolios and minimum tracking error portfolios."
+\fi
+
 \iffalse
 "In this paper, we propose the first KNN and RF for modeling time-varying correlations of financial market returns and to improve moving window correlation estimates. The methods capture time varying correlation and conditional volatility without an underlying restricted statistical model for the correlations. " \\
 
@@ -120,7 +165,7 @@ Stochastic correlation forecasts are evaluated within the context of risk manage
 
 \section*{Acknowledgments}    % Asterisk is to remove header numbering (and toc)
 \addcontentsline{toc}{section}{\numberline{}Acknowledgments}  % Gets summary in toc
-This paper would certainly not have come to its successful conclusion without the support and trust of colleagues, friends and family. First and foremost, I would like to sincerely thank my supervisors Arun Chockalingam and Rui Almeida for their help, guidance and  the freedom I was granted throughout these months. I am grateful to them for their interest in this work and for taking the time to evaluate this paper.
+This paper would certainly not have come to its successful conclusion without the support and trust of my university advisors. Therefore, I would like to sincerely thank Dr. Arun Chockalingam and Dr. Rui Almeida for their help, guidance and  the freedom I was granted throughout these months. I am grateful to them for their interest in this work and for reserving the time to asses it.
 
 \cleardoublepage
 
@@ -140,7 +185,13 @@ This paper would certainly not have come to its successful conclusion without th
 \addcontentsline{toc}{section}{\numberline{}List of Tables}
 \cleardoublepage
 
-Essentially, all models are wrong, but some are useful - Box and Draper (1987, p. 424)
+\vspace*{\fill} 
+\begin{quote} 
+\centering 
+Essentially, all models are wrong, but some are useful. - \cite{ref:Box1987} 
+\end{quote}
+\vspace*{\fill}
+
 
 \cleardoublepage 
 
@@ -153,49 +204,68 @@ Essentially, all models are wrong, but some are useful - Box and Draper (1987, p
 
 %NEW CHAPTER 
 \chapter{Introduction}\label{sec:intro} 
-\textbf{Topic: importance of (time-varying) correlations}\\
-\noindent
-"Correlations are critical inputs for many of the common tasks of Ž financial management. Hedges require estimates of the correlation between the returns of the assets in the hedge. If the correlations and volatilities are changing, then the hedge ratio should be adjusted to account for the most recent information. Similarly, structured products such as rainbow options that are designed with more than one underlying asset have prices that are sensitive to the correlation between the underlying returns. A forecast of future correlations and volatilities is the basis of any pricing formula. \\
+Correlations are essential inputs for many of the core modeling problems in financial econometrics. Hedges, for example, call for estimates of correlation between the asset returns comprising the hedge. When correlations and volatilities change with the revealing of new information, a proper hedge should reflect the most recent information by adjustment of the hedge ratio. Analogously, derivatives such as rainbow options that comprise two or more underlying assets have prices that are dependent on the correlation between the underlying asset returns. In fact, any pricing formula is premised on estimates of future correlations and volatilities. \\   
+
+\iffalse
+"Correlations are critical inputs for many of the common tasks of Ž financial management. Hedges require estimates of the correlation between the returns of the assets in the hedge. If the correlations and volatilities are changing, then the hedge ratio should be adjusted to account for the most recent information. Similarly, structured products such as rainbow options that are designed with more than one underlying asset have prices that are sensitive to the correlation between the underlying returns. A forecast of future correlations and volatilities is the basis of any pricing formula. 
+\fi
 
 \noindent
-\textbf{Topic: systems of (time-varying) correlations in multivariate volatility modeling}\\
-\noindent
+Correlations are also essential inputs for the tasks of asset allocation and risk management. In this context, however, large systems of correlations are generally required. Portfolio optimization methods used for finding an optimal portfolio given a set of constraints require an estimate of the variance-covariance matrix of future returns. Analogously, calculation of common risk measures such as the standard deviation or Value-at-Risk require estimates of the variance-covariance matrix. These tasks involve estimation of high dimensional variance-covariance matrices, potentially comprising thousands of assets.   \\  
+
+\iffalse
 Asset allocation and risk assessment also rely on correlations; however, in this case a large number of correlations is often required. Construction of an optimal portfolio with a set of constraints requires a forecast of the covariance matrix of the returns. Similarly, the calculation of the standard deviation of today's portfolio requires a covariance matrix of all the assets in the portfolio. These functions entail estimation and forecasting of large covariance matrices, potentially with thousands of assets. \\
+\fi
 
 \noindent
-\textbf{Topic: types of multivariate volatility models with previous research reference}\\
-\noindent
+Modeling of correlations between financial variables has been the object of academic research for decades. Basic methods such as sample correlations from moving windows and exponential smoothing are commonly used. More involved methods such as univariate generalized autoregressive conditional heteroskedasticity (GARCH) models have been proven rather adequate to capture certain statistical properties of conditional volatility. In a parametric framework, a variety of multivariate GARCH models has been developed to model the  conditional covariance and correlations. For some foundational applications, see the work of \cite{ref:Bollerslev1988}, \cite{ref:Engle1995}, \cite{ref:Engle1990}, \cite{ref:Ding2001}, \cite{ref:Alexander1997}, \cite{ref:Weide2002}, \cite{cite:Bollerslev1990}, and \cite{ref:Engle2002}\footnote{VEC-GARCH, BEKK, Factor-ARCH, Orthogonal GARCH, Generalized Orthogonal GARCH, Diagonal-ARCH, Constant Conditional Correlation and Dynamic Conditional Correlation, respectively.}. A number of studies has provided empirical evidence on the use of multivariate GARCH models for modeling time-varying covariance in asset allocation and risk measurement. For examples on high dimensional problems, examine the papers of \cite{ref:Engle2008} and \cite{ref:Laurent2012}. Parametric multivariate GARCH models, however, impose arbitrary assumptions on the distribution and functional form of the conditional covariance matrix and conditional correlation matrix. Misspecification of either potentially results in inefficient or inconsistent models.          \\
+
+\iffalse
 The quest for reliable estimates of correlations between Žfinancial variables has been the motivation for countless academic articles and practitioner conferences and much Wall Street research. Simple methods such as rolling historical correlations and exponential smoothing are widely used. More complex methods, such as varieties of multivariate generalized autoregressive conditional heteroskedasticity (GARCH) or stochastic volatility, have been extensively investigated in the econometric literature and are used by a few sophisticated practitioners. To see some interesting applications, examine the paper of Bollerslev, Engle, and Wooldridge (1988), Bollerslev (1990), Kroner and Claessens (1991), Engle and Mezrich (1996), Engle, Ng, and Rothschild (1990), Bollerslev, Chou, and Kroner (1992), Bollerslev, Engle, and Nelson (1994), and Ding and Engle (2001). In very few of these articles are more than Ž five assets considered, despite the apparent need for bigger correlation matrices. In most cases, the number of parameters in large models is too big for easy optimization. \\
+\fi
 
 \noindent
-\textbf{Topic: parsimonious parametric models CCC/DCC/Orthogonal GARCH + Complexity}\\
-\noindent \\
+An alternative to the parametric estimation of the conditional covariance matrix and conditional correlation matrix is provided by non- and semiparametric models. In contrast to parametric estimation, nonparametric models do not impose (potentially misspecified) arbitrary assumptions on the distribution or functional form of the object being estimated. Semiparametric models comprise methods that contain both fully parametric components and fully nonparametric components, and may prove to be appropriate in cases nonparametric models are not;  for example, in case of implications of the curse of dimensionality or a lack of knowledge on the distribution of errors \citep{ref:Li2006}. Although semiparametric models may inherit desirable properties of a nonparametric model in that they are robust against misspecification on distributional assumption and functional form, the reliance on parametric assumptions does not exclude semiparametric models from inconsistency and inefficiency due to misspecification. A semiparametric multivariate volatility models may consider a finite-dimensional parameter functional form for the conditional covariance matrix but estimate the error distribution nonparametrically. Compared to parametric multivariate GARCH models, there is a limited number of papers on non- and semiparametric multivariate volatility models. For some interesting applications, see the works of \cite{ref:Long2005}, \cite{ref:Hafner2006}\footnote{Instead of a priori imposing a certain parametric specification for the correlation functions, they suggest a nonparametric estimator where a Nadaraya-Watson kernel regression is applied to each conditional correlation individually.}, and \cite{ref:Hafner2007}.    
+
+
+
+\bigskip
+\noindent
+In the past decade, machine learning has been responsible for significant advances in self-driving cars, speech and facial recognition, effective web search, and in a vast amount of medical diagnostic procedures. However, the approach of using machine learning for the estimation of conditional correlation between financial variables has not been extensively investigated in scientific literature. In fact, there is a limited number of papers on this type of machine learning applications. For initial applications, see the papers of \cite{ref:Basturk2016_1} and \cite{ref:Basturk2016}. \\
 
 \noindent
-\textbf{Add topic: nonparametric multivariate volatility models with previous research reference}\\
-\noindent
-\textit{Mention nonparametric model classes and their advantages such as the lack of distributional assumptions or the lack of any imposed structure on the correlation dynamics. Then move to field of machine learning which in the base avoid distributional assumptions.} Non- and semiparametric models form an alternative to parametric estimation of the conditional covariance structure. These approaches have the advantage of not imposing a particular
-(possibly misspecified) structure on the data. Semiparametric models combine the advantages of a parametric model in that they reach consistency and sustain the interpretability, and those of a nonparametric model which is robust against distributional misspecification. Nonparametric models, however, suffer from the ?curse of dimensionality?: due to the lack of data in all directions of the multidimensional space, the performance of the local smoothing estimator deteriorates quickly as the dimension of the conditioning variable increases, see Stone (1980)." In the past decade, machine learning has been responsible for significant advances in self-driving cars, speech and facial recognition, effective web search, and in a vast amount of medical diagnostic procedures. However, the approach of using machine learning for the estimation of correlation between financial variables has not been extensively investigated in scientific literature. In fact, there is a limited number of studies on this type of machine learning uses. \textit{Mention papers using machine learning for estimation of time varying correlations such as two papers by Rui.}   \\
+\textit{nearest neighbor and random forests are considered as non-parametric learning algorithms since the number of parameters grows with the size of the training set.} \\
+
+
 
 \noindent
-\textbf{Topic: explain topic of this paper, i.e. stochastic correlation modeling using machine learning algorithms}\\
+"In this paper, we put forward a new semi-parametric model for the conditional covariance matrix that is flexible yet easy to estimate even in high dimensions. The model is semi-parametric, in the sense that the conditional variances are described parametrically, for example, using standard univariate GARCH-type models, while the conditional correlations are estimated using nonparametric techniques." The conditional correlations are assumed to depend on past approximations of correlation. "For example, we model the correlations between the 30 individual stocks included in the Dow Jones Industrial Average (DJIA) index, and allow these to depend on past approximations of correlation. These variables are motivated by" the wish of keeping the model parsimonious in nature.  \\
+
 \noindent
+In this paper, machine learning estimators are proposed for modeling time-varying correlation between financial returns. Two nonparametric learning algorithms, nearest neighbor and random forest, are used to point estimate  conditional correlations directly and independently of conditional volatilities. These learning methods have a clear advantage over multivariate GARCH models in that arbitrary (potentially misspecified) assumptions on the distribution and functional form of the conditional correlation matrix are avoided. \textbf{Any computational advantages that shows applicability to large correlation matrices? What about curse of dimensionality and application of new models to study the volatility and correlation of large-size portfolios, potentially comprising thousands of assets, which is of interest to banks and hedge funds.}  \\
+ 
+
+
+\iffalse
 In this article, dynamic conditional correlation (DCC) estimators are proposed that have the flexibility of univariate GARCH but not the complexity of conventional multivariate GARCH. These models, which parameterize the conditional correlations directly, are naturally estimated in two steps -- a series of univariate GARCH estimates and the correlation estimate. These methods have clear computational advantages over multivariate GARCH models in that the number of parameters to be estimated in the correlation process is independent of the number of series to be correlated. Thus potentially very large correlation matrices can be estimated. \\
+\fi
 
 
 \noindent
 \textbf{Mention two major sections of paper: bivariate and multivariate setting}\\
 \noindent
-In this article, the accuracy of the correlations estimated by a variety of methods is compared in bivariate settings where many methods are feasible. An analysis of the performance of the DCC methods for large covariance matrices was considered by \cite{ref:Engle2001}. \\
+In this paper, the accuracy of the time-varying correlations estimated by proposed learning methods and conventional moving windows is compared in a bivariate setting where many methods are feasible. An analysis of the performance of the DCC methods for large covariance matrices was considered by \cite{ref:Engle2001}. \\
 
 \noindent
 \textbf{Topic: overview of topics addressed in this paper. Potentially move to section "outline"}\\
 \noindent
-Section 2 gives a brief overview of various models for estimating correlations. Section 3 introduces the new method and compares it with some of the cited approaches. Section 4 investigates some statistical properties of the method. Section 5 describes a Monte Carlo experiment and results are presented in Section 6. Section 7 presents empirical results for several pairs of daily time series, and Section 8 concludes." \citep{ref:Engle2002} \\
+Section 2 gives a brief overview of various models for estimating correlations. Section 3 introduces the new method and compares it with some of the cited approaches. Section 4 investigates some statistical properties of the method. Section 5 describes a Monte Carlo experiment and results are presented in Section 6. Section 7 presents empirical results for several pairs of daily time series, and Section 8 concludes." \citep{ref:Engle2002} 
+Finally, conclusions and directions for future research are provided in Section.... \\
 
 \iffalse
 \noindent
-"Financial markets respond to information virtually instantaneously. Each new piece of information influences the prices of assets and their correlations with each other, and as the system rapidly changes, so too do correlation forecasts. This fast-evolving environment presents econometricians with the challenge of forecasting dynamic correlations, which are essential inputs to risk measurement, portfolio allocation, derivative pricing, and many other critical financial activities." \\
+"First, popular parametric models are rarely, if ever, correctly specified The ?horse race? is therefore between misspecified and therefore inconsistent parametric models and relatively inefficient but
+consistent nonparametric models." \\
 
 
 \noindent
@@ -230,20 +300,21 @@ Some difficulties in asset return correlation modeling:
 	\item Correlation is not directly observable.
 	\item Curse of dimensionality: a portfolio with $k$ stocks has dimensionality $d = k(k-1)/2$ pairwise correlations.
 	\item Time-varying correlation matrix needs to to satisfy positive semi-definiteness property.
-	\item Existing models impose additional restrictions on the dependence structure/ rely on distributional assumptions with respect to the process being modeled, i.e. the correlation process. 
+	\item Existing models impose arbitrary assumptions on the distribution and functional form of the process being modeled, i.e. the correlation process. 
 \end{enumerate}
 
 \noindent
-This paper will address the last issue by defining the estimation of time-varying correlation between financial returns as a supervised learning problem. However, in defining the task of estimating time-varying correlations as a supervised learning problem, the unobservability of correlation, the curse of dimensionality, and the positive semi-definiteness requirement are explicitly dealt with. Machine learning provides an approach that enables us to extract correlation information without relying on any distributional assumptions on the process being forecasted, i.e the correlation process. Abstaining from distributional assumptions is crucial in applications where any kind of distributional assumption is highly questionable. Understanding and quantification of time-varying correlation between financial returns is an example of such an application \citep{ref:Christoffersen1998}.   \\
+This paper will address the last issue by defining the estimation of time-varying correlation between financial returns as a supervised learning problem. However, in defining the task of estimating time-varying correlations as a supervised learning problem, the unobservability of correlation, the curse of dimensionality, and the positive semi-definiteness requirement are explicitly dealt with. Machine learning provides an approach that enables us to extract correlation information without the imposition of arbitrary assumptions on the distribution and functional form of the process being forecasted, i.e the correlation process. Abstaining from distributional assumptions is crucial in applications where any kind of distributional assumption is highly questionable. Understanding and quantification of time-varying correlation between financial returns is an example of such an application \citep{ref:Christoffersen1998}.   \\
 
 
 \section{Research Objectives}
-"The goal of this paper is to provide a comprehensive and self-contained analysis of a class of algorithms known as nearest neighbors and random forests \citep{ref:Breiman2001} and their aptness as estimators of time-varying correlation between financial returns. As such, we can formulate the following research objectives:  \\
+"The goal of this paper is to provide a comprehensive and self-contained analysis of a class of algorithms known as nearest neighbors and random forests \citep{ref:Breiman2001} and their aptness as estimators of time-varying correlation between financial returns. As such, we can formulate the following research aims:  \\
 
 \begin{enumerate}
-	\item Formulate the task of estimating time-varying correlation between financial returns as a supervised learning problem.
+	\item Formulate the task of estimating conditional correlation between financial returns as a supervised learning problem.
 	\item Given the supervised learning problem formulation, design and implement a Nearest Neighbor and Random Forest estimator with support for (multivariate) regression output problems.  
-	\item Evaluate the machine learning estimators against conventional methods for estimating time-varying correlation.  
+	\item Evaluate the machine learning estimators against conventional methods for estimating conditional correlation.  
+	\item Evaluate the proposed semi-parametric model for the conditional covariance matrix against conventional methods for estimating multivariate volatility.  
 \end{enumerate}
 
 
@@ -276,7 +347,7 @@ Next, we extend the empirical evaluation of time-varying correlation modeling to
 
 
 \section{Outline and Contributions}
-The main contribution of this paper is the development of a computational framework using nearest neighbor and random forest algorithms for the task of estimating time-varying correlation between financial returns.  
+The main contribution of this paper is the development of a computational framework using nearest neighbor and random forest algorithms for the task of estimating time-varying correlation between financial returns. Moreover, we show that the integration of statistical models for capturing conditional volatility, such as univariate GARCH, with proposed learning estimators provides a flexible, semiparametric way of formulating multivariate volatility models that avoid strong distributional assumptions nor impose any (misspecified) structure on the correlation process.  \\
 
 \iffalse
 first presentation of KNN and RF application where estimation and forecasting capability of these algorithms is assessed based on point forecasts of time-varying correlation between financial returns. Furthermore, we analyze the function approximation capabilities of KNN and RF under different parameterizations and report the effect of parameterizations on the generalization error of the obtained function approximation. \\
@@ -307,7 +378,7 @@ We then extend the empirical evaluation of correlation estimates using machine l
 
 
 \chapter{Methodology} \label{ch:methodology}
-Section \ref{sec:ml_supervised} introduces the concepts of machine learning and supervised learning. Theoretical background is given of the learning algorithms that lie at the core of k-nearest neighbor and random forest as well as the effect of foundational learner properties on the generalization error. The latter is done through discussion of an important issue in machine learning, i.e. the tradeoff between bias and variance. Next, Section \ref{sec:mvm} introduces the conceptual underpinnings of multivariate volatility modeling and the decomposition of the variance-covariance matrix that is used in this paper to identify variances and correlation coefficients. Finally, Section \ref{sec:cor_ml} brings the topics of the preceeding two sections together; we will discuss what approach to take to successfully address supervised learning in the context of estimating time-varying correlation between financial returns.
+In this chapter we will develop some notation and basic approaches which will provide us with the foundational concepts used throughout this paper. As such, Section \ref{sec:ml_supervised} introduces the concepts of machine learning and supervised learning. Theoretical background is given of the learning algorithms that lie at the core of k-nearest neighbor and random forest as well as the effect of foundational learner properties on the generalization error. The latter is done through discussion of an important issue in machine learning, i.e. the tradeoff between bias and variance. Next, Section \ref{sec:mvm} introduces the conceptual underpinnings of multivariate volatility modeling and the decomposition of the variance-covariance matrix that is used in this paper to identify variances and correlation coefficients. Finally, Section \ref{sec:cor_ml} brings the topics of the preceding two sections together; we will discuss what approach to take to successfully address supervised learning in the context of estimating time-varying correlation between financial returns.
    
 
 \section{Machine Learning and the Concept of Supervised learning} \label{sec:ml_supervised}
@@ -516,9 +587,20 @@ In summary, the expected prediction error of a random forest regression fit $\ha
 		&=\sigma_{\epsilon}^2 + [f(x_0) - E_ZE_{\Theta|Z}T(x_0;\Theta(Z))]^2 + [\rho(x_0)\sigma^2(x_0) + \frac{1-\rho(x_0)}{B}\sigma^2(x_0)]	 
 \end{align}
 
-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%% 				     Multivariate Volatility Methodology 					%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Multivariate Volatility Modeling} \label{sec:mvm}
-\textbf{Write introductory text where you mention: the essence of multivariate volatility modeling, different classes of multivariate volatility models, the model class that is considered in our work (covariance matrix decomposition) and how this enables us to leverage the strengths of machine learning and univariate garch models.} \\
+\textbf{Write introductory text where you mention: the essence of multivariate volatility modeling, different classes of multivariate volatility models. State strengths and weaknesses cq. complexities; first: VEC-garch and BEKK, then to overcome optimization problems in higher dimensions Factor and orthogonal models followed by Conditional Correlations models. The latter is the model class that is considered in our work (covariance matrix decomposition) because this enables us to leverage the strengths of machine learning and univariate garch models.} \\
+
+\noindent
+"The conventional parametric multivariate GARCH models could be classified into three groups: the first group models conditional covariance matrix directly, such as VEC model of \cite{ref:Bollerslev1988} and BEKK model of \cite{ref:Engle1995}; the second group traces back to factors of conditional covariance matrix, such as the Factor GARCH model of \cite{ref:Engle1990}; and the third group decomposes conditional covariance matrix into conditional variance and conditional correlation and models them separately, for example, dynamic conditional correlation (DCC) model of \cite{ref:Engle2002} and \cite{ref:Engle2001}". \\
+
+\noindent
+" The first generation of models, for example the vector error correction (VEC) model of \cite{ref:Bollerslev1988}  and the BEKK model of \cite{ref:Engle1995}, are direct extensions of the univariate GARCH model of \cite{ref:Bollerslev1986}. These models are very general and allow for rich and flexible dynamics for the conditional variance matrix. However, being heavily parameterized, they are tractable only for a small number of series, typically lower than four. Both the number of parameters and the complexity of the likelihood function tend to explode rapidly with the number of series. Alternative approaches for achieving more manageable and parsimonious specifications have been proposed. Feasible specifications can be obtained by imposing strong parameter restrictions on the BEKK model, which includes the diagonal and scalar BEKK models. Alternatively, factor structures as in Engle et al. (1990), the orthogonal models of Alexander and Chibumba (1997), Alexander (2000), van der Weide (2002), Lanne and Saikkonen (2007), and Fan et al. (2008) have been proposed. Furthermore, increasing attention has been devoted to conditional correlation models because they can be easily estimated using a multi?step procedure. These models were first introduced by Engle (2002) and Tse and Tsui (2002). Extensions are the asymmetric conditional correlation model of Cappiello et al. (2006), the consistent DCC of Aielli (2006) and the sequential DCC model of Palandri (2009). \\
+
+\noindent
+The difficulty when estimating a VEC or even a BEKK model is the high number of unknown parameters, even after imposing several restrictions. It is thus not surprising that these models are rarely used when the number of series is larger than 3 or 4. Factor and orthogonal models circumvent this difficulty by imposing a common dynamic structure on all the elements of Ht, which results in less parameterized models." \\
 
 \noindent
 In this paper, a $k$-dimensional asset return series, $y_t = (y_{1,t}, \dots, y_{k,t})'$, is considered such that
@@ -544,8 +626,7 @@ The time-varying variance-covariances of returns $y_t$ are represented by the $k
 where $D_t$ is a diagonal matrix with variances of each component series on its diagonal and matrix $R_t$ includes all pairwise correlations $\rho_{i,j,t}$, with $\rho_{i,j,t} = \rho_{j,i,t}$ (by definition). \\
 
 \noindent
-The diagonal elements of the matrix $D_t$ can be estimated using a any conditional volatility model, for example by using an univariate GARCH model for each component series. Estimation of the diagonal elements of the matrix $D_t$ 
-is independent of the estimation of pairwise correlations, $\rho_{i,j,t}$, in $R_t$. This is explained by the fact that $D_t$ defines the unconditional variance of each component series at time unit t, which is independent of correlations $R_t$  by definition \citep{ref:Basturk2016}. In order to ensure positive semi-definiteness of the conditional variance-covariance matrix $H_t$ at each time unit $t$, two necessary conditions need to be satisfied when specifying $R_t$  
+The semiparametric character of the model for $H_t$ now becomes apparent: the diagonal elements of the matrix $D_t$ are modeled parametrically using, for example, standard univariate GARCH-type models, whereas the conditional correlation matrix $R_t$ is estimated in a nonparametric manner using nonparametric machine learning algorithms. Estimation of $D_t$  is independent of the estimation of pairwise correlations, $\rho_{i,j,t}$, in $R_t$. This is explained by the fact that $D_t$ defines the unconditional variance of each component series at time unit t, which is independent of correlations $R_t$  by definition \citep{ref:Basturk2016}. In order to ensure positive semi-definiteness of the conditional variance-covariance matrix $H_t$ at each time unit $t$, two necessary conditions need to be satisfied when specifying $R_t$, that is,  
 
 \begin{enumerate}
 	\item $R_t$ has to be positive semi-definite with det($R_t) \geq$ 0. ($D_t$ is positive semi-definite as all its diagonal elements are positive).
@@ -553,7 +634,7 @@ is independent of the estimation of pairwise correlations, $\rho_{i,j,t}$, in $R
 \end{enumerate}
 
 \noindent
-These necessary conditions for satisfying a positive semi-definite matrix $R_t$ may be obtained through additional parameter restrictions. In this paper, however, the necessary conditions will not be explicitly dealt with when using learning algorithms for estimation of time-varying correlations. Rather, satisfaction of the conditions is verified with the obtained correlation matrices. \\
+These necessary conditions for satisfying a positive semi-definite matrix $R_t$ are generally obtained by the imposition of arbitrary assumptions on the the distribution and functional form of the conditional correlation matrix. In view of the fact that many nonparametric estimators of covariance matrices are developed without explicit satisfaction of the positive semi-definiteness condition during estimation, satisfaction of the conditions is in this paper verified with the obtained conditional correlation matrices. \\     
 
 \subsection{Pearson Product-Moment Correlation Coefficient}
 To model the pairwise correlation coefficients $\rho_{i,j,t}$ in $R_t$, moving window correlation estimates perform well due to the methodology's advantage of avoiding strong distributional assumptions. Following \cite{ref:Basturk2016}, the sample correlation at a selected time window $\Delta t$ is used as a proxy for approximation of time-varying correlations using Pearson's linear correlation coefficient, that is,
@@ -605,9 +686,7 @@ where $d^k = sgn (y_u^k - y_v^k)$ for $k = i, j$ and $n^k$ is the total number o
 \noindent
 Kendall's $\tau$ rank correlation has some desirable theoretical properties over Pearson product-moment correlation such as: Kendall's $\tau$ rank correlation is able to capture nonlinear relationships and it is a distribution free measure, i.e. not dependent on the statistical distribution of the variables. It is robust to outliers and even defined if the variable's variances are infinite. Moreover, Kendall's correlation matrix is generally characterized by greater rank and maintaining positive semi-definiteness. A limit to the use of Kendall's $\tau$ rank correlation on large samples is its computational complexity of $O(\Delta t \ log \ \Delta t)$ \citep{ref:Pozzi2012}\footnote{This will not be an issue as the sample sizes do not qualify as problematic large in this paper.}.      \\
 
-\iffalse
-Kendall's rank correlation can be thought of as the percentage increase that the set of concordant pairs have over the set of discordant pairs?which can be negative if the set of discordant pairs is larger. Of the two, Kendall's $\tau$ is more frequently encountered when dealing with copulæ as there is a direct functional relationship between its value and that of both the generating function of Archimedean copulæ and the correlation of any elliptical copula, which both the multivariate normal and multivariate t copulæ are members. The relationship for elliptical copulæ is $\tau = \frac{2}{\pi}\arcsin \rho$, so given the Kendall $\tau$ value we can calculate the needed correlation as $\rho = \sin\left(\frac{\pi}{2}\tau\right)$. This allows us to calculate pairwise Kendall $\tau$ values for each of the variables and convert them to the corresponding $\rho$ for use in the elliptical copula we choose. \\
-\fi
+
 
 \noindent
 Similar to Pearson moving window estimates of correlation, Kendall's $\tau$ correlation coefficient between two random variables take values in the interval [$-1$, $1$]. Values close to $1$ indicate strong similarity wheras values close to $-1$ indicate strong dissimilarity. In addition to Pearson moving window correlation estimates in \eqref{eq:mw_mu}-\eqref{eq:mw_rho}, the learning algorithms proposed in this paper make use of the moving window correlation estimates in \eqref{eq:mw_kendall} to define the set of covariates and response variable. \\
@@ -639,7 +718,17 @@ Hence, the dataset can be formulated as a $T\times (k^2-k+2)$ matrix, that is,
 where the response variable of day $t$, $Y_t$, is defined as a $k(k-1)/2$-dimensional vector containing pairwise correlation estimates of day $t+1$, i.e. $Y_t = (\hat{\rho}_{1,2,t+1}, \hat{\rho}_{1,3,t+1}, \dots, \hat{\rho}_{2,3,t+1}, \hat{\rho}_{2,4,t+1}, \dots,  \hat{\rho}_{k,k(k-1)/2,t+1})$. \\ 
 
 \noindent
-One should note that the set of covariates and response variable in the dataset of \eqref{eq:dataset} contain noise in the form of approximation error as both are approximations of correlation and not true correlation. A consequence of noisy data is the risk of overfitting and this is something to take into consideration during the simulation study, which will be discussed in Chapter \ref{ch:simulation_study}.   
+One should note that the set of covariates and response variable in the dataset of \eqref{eq:dataset} contain noise in the form of approximation error as both are approximations of correlation due to the unobservability of true correlation. A consequence of noisy data is the risk of overfitting and this is an important issue to consider in a supervised learning context; this is taken into consideration during the simulation study of Chapter \ref{ch:simulation_study}.  \\
+
+\noindent
+\textbf{Note that estimation of conditional correlations in our semiparametric model can be done in parallel with estimating conditional volatility matrix $D_t$. This differs from other non- and semiparametric methods which nonparametrically estimate conditional correlations given standardized residuals.} \\
+
+\noindent
+\textit{Moreover, can we state the following? "Unlike many of the early-stage multivariate GARCH models and
+unlike many estimation problems in nonparametric analysis, our semi-parametric model does not suffer from the curse of dimensionality. We do not assume any particular parametric form for the dependence between $Y_t$ and $X_t$.}
+
+
+
 
 
 
@@ -1567,6 +1656,13 @@ All summarized results cq. conclusions hold for the particular data generated by
 \chapter{Systems of Correlations in Quantitative Financial Risk Management} \label{chap:multivariate_analysis}
 This part of the analysis concerns modeling the dependence structure in a multivariate setting. We continue to opt for Pearson's linear coefficient of correlation and Kendall's $\tau$ coefficient of correlation as a measure for dependency. However, the focus of analysis in a multivariate setting is a \textit{system of correlations} rather than \textit{individual correlations}.  \\
 
+\textit{If a multivariate GARCH model is fitted, the multivariate distribution of the returns can be used directly to compute the implied distribution of any portfolio. There is no need to re?estimate the model for different weight vectors. The multivariate approach is illustrated by Giot and Laurent (2003) using a trivariate example with a time?varying correlation model.}
+
+\noindent
+\textbf{Once we can estimate conditional CDFs, estimating conditional quantiles follows naturally. That is,
+having estimated the conditional CDF we simply invert it at the desired quantile as described in Nonparametric Econometrics: A Primer, Racine (2008), page 28. So: how do we obtain nonparametric conditional CDF estimate for every return given we have conditional covariance estimates and under the assumption that returns follow multivariate Gaussian distribution.}  
+
+
 
 
 \noindent
@@ -1688,6 +1784,9 @@ In \eqref{eq:DCC_Q}, $Q_t$ is a positive semi-definite matrix defining the struc
 \noindent
 Eq. \eqref{eq:DCC_Q} shows that the DCC model of \cite{ref:Engle2002} is very parsimonious as the dynamics of all conditional correlations are driven with only two parameters, $\theta_1$ and $\theta_2$, regardless of the number of assets $k$. Consequently, the DCC model is relatively efficient to estimate. However, the assumption that the evolution of all correlations follows the same dynamic structure, regardless of the assets involved, can be considered a weakness of the DCC model. \\
 
+\noindent
+\textit{"Interestingly, DCC models can be estimated consistently in two steps (see Section 3.2), which makes this approach feasible when N is high. Of course, when N is large, the restriction of common dynamics gets tighter, but for large N the problem of maintaining tractability also gets harder. In this respect, several variants of the DCC model are proposed in the literature."}
+
 
 \noindent
 \textbf{The approximation used for one-step-ahead forecasts can be found in \cite{ref:Engle2001}}. \\
@@ -1726,8 +1825,11 @@ The main assumption underlying Christoffersen's Markov test is that the indicato
 
 
 \section{Data and Descriptive Statistics}
-The dataset comprises 30 univariate time series of the log returns from the 30 Dow Jones Industrial Average index constituents. The return series cover data from March 1987 to December 2001. During these periods, financial markets witnessed tranquil periods with low volatility such as the mid-1990's as periods of crisis with high volatility, including the collapse of the Dot-com bubble that began in spring 2000 and the collapse of Enron and WorldCom companies in 2001.
+The dataset comprises 30 univariate time series of the log returns from the 30 Dow Jones Industrial Average index constituents. The return series cover data from March 1987 to December 2001. During these periods, financial markets witnessed tranquil periods with low volatility such as the mid-1990's as periods of crisis with high volatility, including the collapse of the Dot-com bubble that began in spring 2000 and the collapse of Enron and WorldCom companies in 2001. \\
 
+\iffalse
+The first 500 samples were used as the training set. The remaining 500 samples are used as the test set.
+\fi
 
 
 \begin{table}[H]
@@ -1779,6 +1881,9 @@ XOM   & 0.0511 & 0.0250    & -1.0537  & 30.83           & -26.77  & 16.54   \\ [
 \label{tab:stats_data}
 \end{table}
 
+"the assumption  of multivariate normal distribution on et is not consistent with the characteristics of financial
+data, such as fat tail and asymmetric dependence. " \\
+
 " It illustrates that the distribution is clearly not symmetric. In fact it has a very noticeable negative skew (i.e. leans to the right) as well as excess kurtosis (i.e. is more peaked than a normal distribution; it has a kurtosis value of 4.15, which is above the ?normal? value of 3.0). \textbf{ADD Jarque-Bera test.  Jarque?Bera statistics and the Ex. kurtosis coefficients which are all > 0. Thus, the leptokurtic or fat-tailed characteristic common in financial markets appears in our samples?} " \\
 
 \noindent
@@ -1803,6 +1908,7 @@ driving a dynamic volatility process can be better modeled using the Student's t
 \textbf{When commenting on the test results, do this from a perspective of rejecting the corresponding null hypothesis and whether the models underestimate risk or are overly conservative. And the practical implications from a regulatory perspective and a hedge fun/ bank perspective: a high-level capital reserve or low-level capital reserve. When commenting on figures with VaR functions talk about underestimation/ overestimation of sudden change in volatilities.}
 
 \subsection{Tranquil Market Conditions: Mid-1990's}
+http://lagrange.math.siu.edu/Olive/pphdrpred.pdf : for computing VaR as sample quantiles (high density regions) of multivariate Gaussian distribution.  
 
 
 
@@ -1833,10 +1939,14 @@ RF(100)\_pearson	&\textbf{25}	&\textbf{11}	&9		&3						  \\
 RF(100)\_kendall	&42		&17		&12		&8							\\ [1ex]
 \bottomrule
 \end{tabular}
-\caption[Kupiec test with Gaussian distributed conditional innovations under tranquil market conditions.]{Kupiec test with Gaussian distributed conditional innovations under tranquil market conditions. Bold face indicates rejection. Non-rejection regions: 37$<$I(0.90)$<$65, 15$<$I(0.95)$<$36, 6$<$I(0.975)$<$21 and 0$<$I(0.99)$<$11.}
+\caption[Kupiec test at higher quantiles under Gaussian distributed conditional innovations and tranquil market conditions.]{Kupiec test at higher quantiles under Gaussian distributed conditional innovations and tranquil market conditions. Bold face indicates rejection. Non-rejection regions: 37$<$I(0.90)$<$65, 15$<$I(0.95)$<$36, 6$<$I(0.975)$<$21 and 0$<$I(0.99)$<$11.}
 \label{tab:kupiec_test_norm_tranquil_table}
 \end{table}
 
+\begin{itemize}
+	\item Nearest Neighbor with $k=5$ and Random forest with n\_estimators=10 and 100 and kendall covariates are not rejected for any confidence level. 
+	\item KNN(5) and RF(10), regardless of pearson or kendall approximations, and RF(100)\_kendall outperform DCC on Kupiec test for unconditional coverage.
+\end{itemize}
 
 
 %%% Multivariate Student's t-distributional Assumption  %%%%%
@@ -1864,9 +1974,14 @@ RF(100)\_pearson	&\textbf{30}	&\textbf{12}	&10		&4		  \\
 RF(100)\_kendall	&46		&21		&12		&10				\\ [1ex]
 \bottomrule
 \end{tabular}
-\caption[Kupiec test with Student's t-distributed conditional innovations under tranquil market conditions.]{Kupiec test with Student's t-distributed conditional innovations under tranquil market conditions. Bold face indicates rejection. Non-rejection regions: 37$<$I(0.90)$<$65, 15$<$I(0.95)$<$36, 6$<$I(0.975)$<$21 and 0$<$I(0.99)$<$11.}
+\caption[Kupiec test at higher quantiles under Student's t-distributed conditional innovations and tranquil market conditions.]{Kupiec test at higher quantiles under Student's t-distributed conditional innovations and tranquil market conditions. Bold face indicates rejection. Non-rejection regions: 37$<$I(0.90)$<$65, 15$<$I(0.95)$<$36, 6$<$I(0.975)$<$21 and 0$<$I(0.99)$<$11.}
 \label{tab:kupiec_test_std_tranquil_table}
 \end{table}
+
+\begin{itemize}
+	\item Nearest Neighbor with $k=5$ and pearson covariates and Random forest with n\_estimators=10 and 100 and kendall covariates are not rejected for any confidence level. 
+	\item KNN(5), KNN(idw), RF(10), RF(100), regardless of pearson or kendall approximations, outperform DCC on Kupiec test for unconditional coverage.
+\end{itemize}
 
 \begin{table}[H]
 \centering
@@ -1900,7 +2015,7 @@ RF(100)\_kendall	&46		&21		&12		&10				\\ [1ex]
                                                         & \boldmath$\pi_{11}$    &      	&		&		&   \\ [1ex]
                                                         \bottomrule
 \end{tabular}
-\caption[Christoffersen Markov test with Gaussian distributed conditional innovations under tranquil market conditions.]{Christoffersen Markov test with Gaussian distributed conditional innovations under tranquil market conditions.}
+\caption[Christoffersen Markov test at higher quantiles under Gaussian distributed conditional innovations and tranquil market conditions.]{Christoffersen Markov test at higher quantiles under Gaussian distributed conditional innovations and tranquil market conditions.}
 \label{tab:christoffersen_test_norm_tranquil_table}
 \end{table}
 
@@ -1938,7 +2053,7 @@ RF(100)\_kendall	&46		&21		&12		&10				\\ [1ex]
                                                         & \boldmath$\pi_{11}$    &      	&		&		&   \\ [1ex]
                                                         \bottomrule
 \end{tabular}
-\caption[Christoffersen Markov test with Student's t-distributed conditional innovations under tranquil market conditions.]{Christoffersen Markov test with Student's t-distributed conditional innovations under tranquil market conditions.}
+\caption[Christoffersen Markov test at higher quantiles under Student's t-distributed conditional innovations and tranquil market conditions.]{Christoffersen Markov test at higher quantiles under Student's t-distributed conditional innovations and tranquil market conditions.}
 \label{tab:christoffersen_test_std_tranquil_table}
 \end{table}
 
@@ -1971,10 +2086,14 @@ RF(100)\_pearson	&60	&33		&\textbf{21}	&\textbf{10}	  \\
 RF(100)\_kendall	&\textbf{77}	&\textbf{53}	&\textbf{32}	&\textbf{18}	\\ [1ex]
 \bottomrule
 \end{tabular}
-\caption[Kupiec test with Gaussian distributed conditional innovations under volatile market conditions.]{Kupiec test with Gaussian distributed conditional innovations under volatile market conditions. Bold face indicates rejection. Non-rejection regions: 37$<$I(0.90)$<$65, 15$<$I(0.95)$<$36, 6$<$I(0.975)$<$21 and 0$<$I(0.99)$<$10.}
+\caption[Kupiec test at higher quantiles under Gaussian distributed conditional innovations and volatile market conditions.]{Kupiec test at higher quantiles under Gaussian distributed conditional innovations and volatile market conditions. Bold face indicates rejection. Non-rejection regions: 37$<$I(0.90)$<$65, 15$<$I(0.95)$<$36, 6$<$I(0.975)$<$21 and 0$<$I(0.99)$<$10.}
 \label{tab:kupiec_test_norm_volatile_table}
 \end{table}
 
+
+\begin{itemize}
+	\item DCC and KNN(idw) with pearson covariates are not rejected for any confidence level. 
+\end{itemize}
 
 \begin{table}[H]
 \centering
@@ -2008,7 +2127,7 @@ RF(100)\_kendall	&\textbf{77}	&\textbf{53}	&\textbf{32}	&\textbf{18}	\\ [1ex]
                                                         & \boldmath$\pi_{11}$    &      	&		&		&   \\ [1ex]
                                                         \bottomrule
 \end{tabular}
-\caption[Christoffersen Markov test with Gaussian distributed conditional innovations under volatile market conditions.]{Christoffersen Markov test with Gaussian distributed conditional innovations under volatile market conditions.}
+\caption[Christoffersen Markov test at higher quantiles under Gaussian distributed conditional innovations and volatile market conditions.]{Christoffersen Markov test at higher quantiles under Gaussian distributed conditional innovations and volatile market conditions.}
 \label{tab:christoffersen_test_norm_volatile_table}
 \end{table}
 
@@ -2039,11 +2158,15 @@ RF(100)\_pearson	&60	&31	&\textbf{21}	&\textbf{10}			   \\
 RF(100)\_kendall	&\textbf{77}	&\textbf{53}	&\textbf{32}	&\textbf{18}	   \\ [1ex]
 \bottomrule
 \end{tabular}
-\caption[Kupiec test with Student's t-distributed conditional innovations under volatile market conditions.]{Kupiec test with Student's t-distributed conditional innovations under volatile market conditions. Bold face indicates rejection. Non-rejection regions: 37$<$I(0.90)$<$65, 15$<$I(0.95)$<$36, 6$<$I(0.975)$<$21 and 0$<$I(0.99)$<$10.}
+\caption[Kupiec test at higher quantiles under Student's t-distributed conditional innovations and volatile market conditions.]{Kupiec test at higher quantiles under Student's t-distributed conditional innovations and volatile market conditions. Bold face indicates rejection. Non-rejection regions: 37$<$I(0.90)$<$65, 15$<$I(0.95)$<$36, 6$<$I(0.975)$<$21 and 0$<$I(0.99)$<$10.}
 \label{tab:kupiec_test_std_volatile_table}
 \end{table}
 
 
+
+\begin{itemize}
+	\item DCC and KNN(idw) with pearson covariates are not rejected for any confidence level. 
+\end{itemize}
 
 \begin{table}[H]
 \centering
@@ -2077,7 +2200,7 @@ RF(100)\_kendall	&\textbf{77}	&\textbf{53}	&\textbf{32}	&\textbf{18}	   \\ [1ex]
                                                         & \boldmath$\pi_{11}$    &      	&		&		&   \\ [1ex]
                                                         \bottomrule
 \end{tabular}
-\caption[Christoffersen Markov test with Student's t-distributed conditional innovations under volatile market conditions.]{Christoffersen Markov test with Student's t-distributed conditional innovations under volatile market conditions.}
+\caption[Christoffersen Markov test at higher quantiles under Student's t-distributed conditional innovations and volatile market conditions.]{Christoffersen Markov test at higher quantiles under Student's t-distributed conditional innovations and volatile market conditions.}
 \label{tab:christoffersen_test_std_volatile_table}
 \end{table}
 
@@ -2086,12 +2209,20 @@ RF(100)\_kendall	&\textbf{77}	&\textbf{53}	&\textbf{32}	&\textbf{18}	   \\ [1ex]
 
 
 \section{Conclusion Empirical Results}
-Our learning algorithms have demonstrated the ability to perform well in times of market stress, such as the 2000-2001 Dot-com bubble, as well as in more tranquil market conditions with low volatility, such as the mid-1990's (1994-1995).
+Our learning algorithms have demonstrated the ability to perform well in times of market stress, such as the 2000-2001 Dot-com bubble, as well as in more tranquil market conditions with low volatility, such as the mid-1990's (1994-1995). \\
+
+\iffalse
+"We find that over the dot-com bubble-burst and aftermath period the set of superior models is composed of rather sophisticated models such as DCC and orthogonal, both with leverage effect in the conditional variances of returns and principal components respectively. Over calm periods, a simple assumption like constant conditional correlation and symmetry in the conditional variances cannot be rejected. Finally, over the 2007?2008 financial crisis, accounting for non-stationarity in the conditional variance process significantly improves models? forecasting performances."
+\fi
 
 
 
 \chapter{Conclusion and Future Research}
 Conclusions: \\
+In this paper, we examined the performance of a new semiparametric multivariate volatility model using nearest neighbor and random forest estimators of time-varying correlation. The semiparametric model performs quite well when compared with standard parametric DCC-type models in terms of Value-at-Risk forecasting accuracy.
+\iffalse
+MARS volatility model is data-adaptive and the user specifies the number of lags to be used to estimate the true volatility function. We simulated observations from ARCH(1) through ARCH(5) models. Using mean squared error (MSE) and mean absolute deviation (MAD) as goodness-of-fit measures, we were able to quantify the performance of the MARS model. As a benchmark model and comparison, we used GARCH(1,1) model and two other nonparametric volatility estimators from Audrino (2005). 
+\fi
 Future research: \\
 \noindent
 "In statistics and machine learning, ensemble methods use multiple learning algorithms to obtain better predictive performance than could be obtained from any of the constituent learning algorithms alone." Let's say DCC and some learning algorithm make up the set of superior models in MCS approach. Then it might be interesting to have a look at combining predictions from these superior models, i.e. ensemble learning.  \\
@@ -2144,7 +2275,7 @@ RF(100)\_pearson	&\textbf{504}	&\textbf{499}		&483		&466		&\textbf{427}		&308		&
 RF(100)\_kendall	&500		&486		&473		&454		&407		&296		&191		&85						\\ [1ex]
 \bottomrule
 \end{tabular}
-\caption[Kupiec test with Gaussian distributed conditional innovations under tranquil market conditions.]{Kupiec test with Gaussian distributed conditional innovations under tranquil market conditions. Bold face indicates rejection. Non-rejection regions: 494$<$I(0.01)$<$503, 483$<$I(0.025)$<$498, 468$<$I(0.05)$<$489, 439$<$I(0.10)$<$467, 384$<$I(0.20)$<$421, 280$<$I(0.40)$<$325, 180$<$I(0.60)$<$224 and 83$<$I(0.80)$<$120.}
+\caption[Kupiec test at lower quantiles under Gaussian distributed conditional innovations and tranquil market conditions.]{Kupiec test at lower quantiles under Gaussian distributed conditional innovations and tranquil market conditions. Bold face indicates rejection. Non-rejection regions: 494$<$I(0.01)$<$503, 483$<$I(0.025)$<$498, 468$<$I(0.05)$<$489, 439$<$I(0.10)$<$467, 384$<$I(0.20)$<$421, 280$<$I(0.40)$<$325, 180$<$I(0.60)$<$224 and 83$<$I(0.80)$<$120.}
 \label{tab:kupiec_test_norm_lower_q_tranquil}
 \end{table}
 
@@ -2185,7 +2316,7 @@ RF(100)\_kendall	&500		&486		&473		&454		&407		&296		&191		&85						\\ [1ex]
                                                         & \boldmath$\pi_{11}$    &      	&		&		&    &&&& \\ [1ex]
                                                         \bottomrule
 \end{tabular}
-\caption[Christoffersen Markov test with Gaussian distributed conditional innovations under tranquil market conditions.]{Christoffersen Markov test with Gaussian distributed conditional innovations under tranquil market conditions.}
+\caption[Christoffersen Markov test at lower quantiles under Gaussian distributed conditional innovations and tranquil market conditions.]{Christoffersen Markov at lower quantitest with Gaussian distributed conditional innovations under tranquil market conditions.}
 \label{tab:christoffersen_test_norm_lower_q_tranquil}
 \end{table}
 
@@ -2218,7 +2349,7 @@ RF(100)\_pearson	   &\textbf{503}		&497		&479		&464		&\textbf{423}		&303		&181		
 RF(100)\_kendall	   &498	&485		&470		&452		&406		&292		&192		&86						\\ [1ex]
 \bottomrule
 \end{tabular}
-\caption[Kupiec test with Student's t-distributed conditional innovations under tranquil market conditions.]{Kupiec test with Student's t-distributed conditional innovations under tranquil market conditions. Bold face indicates rejection. Non-rejection regions: 494$<$I(0.01)$<$503, 483$<$I(0.025)$<$498, 468$<$I(0.05)$<$489, 439$<$I(0.10)$<$467, 384$<$I(0.20)$<$421, 280$<$I(0.40)$<$325, 180$<$I(0.60)$<$224 and 83$<$I(0.80)$<$120.}
+\caption[Kupiec test at lower quantiles under Student's t-distributed conditional innovations and tranquil market conditions.]{Kupiec test at lower quantiles under Student's t-distributed conditional innovations and tranquil market conditions. Bold face indicates rejection. Non-rejection regions: 494$<$I(0.01)$<$503, 483$<$I(0.025)$<$498, 468$<$I(0.05)$<$489, 439$<$I(0.10)$<$467, 384$<$I(0.20)$<$421, 280$<$I(0.40)$<$325, 180$<$I(0.60)$<$224 and 83$<$I(0.80)$<$120.}
 \label{tab:kupiec_test_std_lower_q_tranquil}
 \end{table}
 
@@ -2258,7 +2389,7 @@ RF(100)\_kendall	   &498	&485		&470		&452		&406		&292		&192		&86						\\ [1ex]
                                                         & \boldmath$\pi_{11}$    &      	&		&		&   &&&&\\ [1ex]
                                                         \bottomrule
 \end{tabular}
-\caption[Christoffersen Markov test with Student's t-distributed conditional innovations under tranquil market conditions.]{Christoffersen Markov test with Student's t-distributed conditional innovations under tranquil market conditions.}
+\caption[Christoffersen Markov test at lower quantiles under Student's t-distributed conditional innovations and tranquil market conditions.]{Christoffersen Markov test at lower quantiles under Student's t-distributed conditional innovations and tranquil market conditions.}
 \label{tab:christoffersen_test_std_lower_q_tranquil}
 \end{table}
 
@@ -2296,7 +2427,7 @@ RF(100)\_pearson	   &492	&486		&482		&459		&411		&311		&210		&106 \\
 RF(100)\_kendall	   &\textbf{489}	&483		&472		&445		&396		&305		&214		&\textbf{120}						\\ [1ex]
 \bottomrule
 \end{tabular}
-\caption[Kupiec test with Gaussian distributed conditional innovations under volatile market conditions.]{Kupiec test with Gaussian distributed conditional innovations under volatile market conditions. Bold face indicates rejection. Non-rejection regions: 490$<$I(0.01)$<$500, 479$<$I(0.025)$<$494, 464$<$I(0.05)$<$484, 435$<$I(0.10)$<$463, 381$<$I(0.20)$<$418, 278$<$I(0.40)$<$322, 178$<$I(0.60)$<$222 and 82$<$I(0.80)$<$119.}
+\caption[Kupiec test at lower quantiles under Gaussian distributed conditional innovations and volatile market conditions.]{Kupiec test at lower quantiles under Gaussian distributed conditional innovations and volatile market conditions. Bold face indicates rejection. Non-rejection regions: 490$<$I(0.01)$<$500, 479$<$I(0.025)$<$494, 464$<$I(0.05)$<$484, 435$<$I(0.10)$<$463, 381$<$I(0.20)$<$418, 278$<$I(0.40)$<$322, 178$<$I(0.60)$<$222 and 82$<$I(0.80)$<$119.}
 \label{tab:kupiec_test_norm_lower_q_volatile}
 \end{table}
 
@@ -2337,7 +2468,7 @@ RF(100)\_kendall	   &\textbf{489}	&483		&472		&445		&396		&305		&214		&\textbf{1
                                                         & \boldmath$\pi_{11}$    &      	&		&		&    &&&& \\ [1ex]
                                                         \bottomrule
 \end{tabular}
-\caption[Christoffersen Markov test with Gaussian distributed conditional innovations under volatile market conditions.]{Christoffersen Markov test with Gaussian distributed conditional innovations under volatile market conditions.}
+\caption[Christoffersen Markov test at lower quantiles under Gaussian distributed conditional innovations and volatile market conditions.]{Christoffersen Markov test at lower quantiles under Gaussian distributed conditional innovations and volatile market conditions.}
 \label{tab:christoffersen_test_norm_lower_q_volatile}
 \end{table}
 
@@ -2370,7 +2501,7 @@ RF(100)\_pearson	   &491	&487		&482		&462		&410		&312		&209		&103		\\
 RF(100)\_kendall	   &\textbf{488}	&483		&472		&445		&395		&306		&213		&\textbf{120}			\\ [1ex]
 \bottomrule
 \end{tabular}
-\caption[Kupiec test with Student's t-distributed conditional innovations under volatile market conditions.]{Kupiec test with Student's t-distributed conditional innovations under volatile market conditions. Bold face indicates rejection.  Non-rejection regions: 490$<$I(0.01)$<$500, 479$<$I(0.025)$<$494, 464$<$I(0.05)$<$484, 435$<$I(0.10)$<$463, 381$<$I(0.20)$<$418, 278$<$I(0.40)$<$322, 178$<$I(0.60)$<$222 and 82$<$I(0.80)$<$119.}
+\caption[Kupiec test at lower quantiles under Student's t-distributed conditional innovations and volatile market conditions.]{Kupiec test at lower quantiles under Student's t-distributed conditional innovations and volatile market conditions. Bold face indicates rejection.  Non-rejection regions: 490$<$I(0.01)$<$500, 479$<$I(0.025)$<$494, 464$<$I(0.05)$<$484, 435$<$I(0.10)$<$463, 381$<$I(0.20)$<$418, 278$<$I(0.40)$<$322, 178$<$I(0.60)$<$222 and 82$<$I(0.80)$<$119.}
 \label{tab:kupiec_test_std_lower_q_volatile}
 \end{table}
 
@@ -2410,7 +2541,7 @@ RF(100)\_kendall	   &\textbf{488}	&483		&472		&445		&395		&306		&213		&\textbf{1
                                                         & \boldmath$\pi_{11}$    &      	&		&		&   &&&&\\ [1ex]
                                                         \bottomrule
 \end{tabular}
-\caption[Christoffersen Markov test with Student's t-distributed conditional innovations under volatile market conditions.]{Christoffersen Markov test with Student's t-distributed conditional innovations under volatile market conditions.}
+\caption[Christoffersen Markov test at lower quantiles under Student's t-distributed conditional innovations and volatile market conditions.]{Christoffersen Markov test at lower quantiles under Student's t-distributed conditional innovations and volatile market conditions.}
 \label{tab:christoffersen_test_std_lower_q_volatile}
 \end{table}
 
