@@ -3,44 +3,44 @@ Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
 The top-level auxiliary file: Thesis_project_PGMelkert_0893899.aux
 The style file: plainnat.bst
 Database file #1: refThesis.bib
-You've used 34 entries,
+You've used 43 entries,
             2773 wiz_defined-function locations,
-            829 strings with 10610 characters,
-and the built_in function-call counts, 14292 in all, are:
-= -- 1287
-> -- 708
-< -- 30
-+ -- 244
-- -- 210
-* -- 1089
-:= -- 2217
-add.period$ -- 110
-call.type$ -- 34
-change.case$ -- 166
-chr.to.int$ -- 34
-cite$ -- 68
-duplicate$ -- 715
-empty$ -- 1238
-format.name$ -- 264
-if$ -- 3048
+            888 strings with 12270 characters,
+and the built_in function-call counts, 18971 in all, are:
+= -- 1696
+> -- 1001
+< -- 39
++ -- 343
+- -- 300
+* -- 1475
+:= -- 2931
+add.period$ -- 137
+call.type$ -- 43
+change.case$ -- 223
+chr.to.int$ -- 43
+cite$ -- 86
+duplicate$ -- 909
+empty$ -- 1607
+format.name$ -- 375
+if$ -- 4041
 int.to.chr$ -- 1
 int.to.str$ -- 1
-missing$ -- 35
-newline$ -- 178
-num.names$ -- 136
-pop$ -- 320
+missing$ -- 44
+newline$ -- 223
+num.names$ -- 172
+pop$ -- 425
 preamble$ -- 1
-purify$ -- 138
+purify$ -- 186
 quote$ -- 0
-skip$ -- 532
+skip$ -- 697
 stack$ -- 0
-substring$ -- 480
-swap$ -- 76
-text.length$ -- 8
+substring$ -- 690
+swap$ -- 98
+text.length$ -- 9
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 344
+type$ -- 443
 warning$ -- 0
-while$ -- 129
+while$ -- 165
 width$ -- 0
-write$ -- 451
+write$ -- 567

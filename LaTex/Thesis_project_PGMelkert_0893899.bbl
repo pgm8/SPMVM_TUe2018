@@ -1,4 +1,4 @@
-\begin{thebibliography}{34}
+\begin{thebibliography}{43}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
@@ -9,6 +9,12 @@
 C.~Alexander and A.~Chiumba.
 \newblock Multivariate orthogonal factor garch.
 \newblock \emph{University of Sussex, Discussion Papers in Mathematics}, 1997.
+
+\bibitem[Ausin and Lopes(2010)]{ref:Ausin2010}
+M.~Concepcion Ausin and Hedibert~F. Lopes.
+\newblock Time-varying joint distribution through copulas.
+\newblock \emph{Computational Statistics \& Data Analysis}, 54\penalty0
+  (11):\penalty0 2383--2399, 2010.
 
 \bibitem[Ba{\c{s}}t{\"u}rk and Almeida(2016)]{ref:Basturk2016_1}
 Nalan Ba{\c{s}}t{\"u}rk and Rui~Jorge Almeida.
@@ -81,6 +87,13 @@ Sean~D. Campbell.
 \newblock Finance and Economics Discussion Series 2005-21, Board of Governors
   of the Federal Reserve System (U.S.), 2005.
 
+\bibitem[Chen and Fan(2006)]{ref:Chen2006}
+Xiaohong Chen and Yanqin Fan.
+\newblock Estimation and model selection of semiparametric copula-based
+  multivariate dynamic models under copula misspecification.
+\newblock \emph{Journal of Econometrics}, 135\penalty0 (1):\penalty0 125--154,
+  2006.
+
 \bibitem[Christoffersen(1998)]{ref:Christoffersen1998}
 Peter~F Christoffersen.
 \newblock Evaluating interval forecasts.
@@ -124,6 +137,11 @@ Robert~F. Engle, Victor~K. Ng, and Michael Rothschild.
 \newblock \emph{Journal of Econometrics}, 45\penalty0 (1):\penalty0 213--237,
   1990.
 
+\bibitem[Fox and Dunson(2011)]{ref:Fox2011}
+Emily Fox and David Dunson.
+\newblock Bayesian nonparametric covariance regression.
+\newblock \emph{Arxiv preprint arXiv: 1101.2017}, jan 2011.
+
 \bibitem[Goodrich et~al.(2015)Goodrich, Tamassia, and
   Goldwasser]{ref:Goodrich2015}
 Michael~T Goodrich, Roberto Tamassia, and Michael~H Goldwasser.
@@ -153,11 +171,24 @@ Tin~Kam Ho.
 \newblock \emph{IEEE Transactions on Pattern Analysis and Machine
   Intelligence}, 20\penalty0 (8):\penalty0 832--844, 1998.
 
+\bibitem[Jondeau and Rockinger(2006)]{ref:Jondeau2006}
+Eric Jondeau and Michael Rockinger.
+\newblock The copula-garch model of conditional dependencies: An international
+  stock market application.
+\newblock \emph{Journal of International Money and Finance}, 25\penalty0
+  (5):\penalty0 827--853, 2006.
+
 \bibitem[Kupiec(1995)]{ref:Kupiec1995}
 Paul~H Kupiec.
 \newblock Techniques for verifying the accuracy of risk measurement models.
 \newblock \emph{The journal of Derivatives}, 3\penalty0 (2):\penalty0 73--84,
   1995.
+
+\bibitem[Lanne and Saikkonen(2007)]{ref:Lanne2007}
+Markku Lanne and Pentti Saikkonen.
+\newblock A multivariate generalized orthogonal factor garch model.
+\newblock \emph{Journal of Business \& Economic Statistics}, 25\penalty0
+  (1):\penalty0 61--75, 2007.
 
 \bibitem[Laurent et~al.(2012)Laurent, Rombouts, and Violante]{ref:Laurent2012}
 S{\'e}bastien Laurent, Jeroen V.~K. Rombouts, and Francesco Violante.
@@ -185,6 +216,28 @@ Alexander~J. McNeil, R{\"u}diger Frey, and Paul Embrechts.
 \newblock \emph{Quantative Risk Management: Concepts, Techniques and Tools}.
 \newblock Princeton University Press, 2015.
 
+\bibitem[Nene and Nayar(1997)]{ref:Nene1997}
+S.~A. Nene and S.~K. Nayar.
+\newblock A simple algorithm for nearest neighbor search in high dimensions.
+\newblock \emph{IEEE Transactions on Pattern Analysis and Machine
+  Intelligence}, 19\penalty0 (9):\penalty0 989--1003, 1997.
+
+\bibitem[Patton(2006)]{ref:Patton2006}
+Andrew~J. Patton.
+\newblock Modelling asymmetric exchange rate dependence.
+\newblock \emph{International Economic Review}, 47\penalty0 (2):\penalty0
+  527--556, 2006.
+
+\bibitem[Pedregosa et~al.(2011)Pedregosa, Varoquaux, Gramfort, Michel, Thirion,
+  Grisel, Blondel, Prettenhofer, Weiss, Dubourg, Vanderplas, Passos,
+  Cournapeau, Brucher, Perrot, and Duchesnay]{ref:Pedregosa2011}
+F.~Pedregosa, G.~Varoquaux, A.~Gramfort, V.~Michel, B.~Thirion, O.~Grisel,
+  M.~Blondel, P.~Prettenhofer, R.~Weiss, V.~Dubourg, J.~Vanderplas, A.~Passos,
+  D.~Cournapeau, M.~Brucher, M.~Perrot, and E.~Duchesnay.
+\newblock Scikit-learn: Machine learning in python.
+\newblock \emph{Journal of Machine Learning Research}, 12:\penalty0 2825--2830,
+  2011.
+
 \bibitem[Plyakha et~al.(2012)Plyakha, Uppal, and Vilkov]{ref:Plyakha2012}
 Yuliya Plyakha, Raman Uppal, and Grigory Vilkov.
 \newblock Why does an equal-weighted portfolio outperform value-and
@@ -208,5 +261,12 @@ Roy van~der Weide.
 \newblock Go-garch: a multivariate generalized orthogonal garch model.
 \newblock \emph{Journal of Applied Econometrics}, 17\penalty0 (5):\penalty0
   549--564, 2002.
+
+\bibitem[Wang(2011)]{ref:Wang2011}
+X.~Wang.
+\newblock A fast exact k-nearest neighbors algorithm for high dimensional
+  search using k-means clustering and triangle inequality.
+\newblock In \emph{The 2011 International Joint Conference on Neural Networks},
+  pages 1293--1299, 2011.
 
 \end{thebibliography}

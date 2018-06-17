@@ -85,7 +85,7 @@ Operations, Planning, Accounting and Control Research Group
 \begin{textblock}{165}(30,89)
     \vspace*{1mm}
     \huge
-    \textbf{Stochastic Correlation Modeling and Value-at-Risk Estimation using Multivariate GARCH and Machine Learning \\}
+    \textbf{Stochastic Correlation Modeling using Multivariate GARCH and Machine Learning \\}
     \Large
     \vspace*{10mm}
     in partial fulfillment of the requirements for the degree of \\
@@ -118,7 +118,7 @@ TUE. School of Industrial Engineering. \\
 \noindentSeries Master Theses Operations Management and Logistics
 \vfill
 \noindent
-Subject headings: Stochastic Correlation, Semiparametric Multivariate GARCH, Nearest Neighbor, Random Forest, Value-at-Risk 
+Subject headings: Dynamic Conditional Correlation; Semiparametric Multivariate GARCH; Nearest Neighbor; Random Forest; time-varying covariances.  
 \vspace{0.5\textheight}
 
 \pagenumbering{gobble}
@@ -129,7 +129,7 @@ Subject headings: Stochastic Correlation, Semiparametric Multivariate GARCH, Nea
 
 \section*{Abstract}    % Asterisk is to remove header numbering (and toc)
 \addcontentsline{toc}{section}{\numberline{}Abstract}  % Gets summary in toc
-"In this paper we develop a new semiparametric model for conditional correlations, which combines parametric univariate Generalized Auto Regressive Conditional Heteroskedasticity specifications for the individual conditional volatilities with nonparametric machine learning regressors in the form of nearest neighbor and random forest for the conditional correlations. This approach not only avoids the proliferation of parameters as the number of assets becomes large, which typically happens in conventional multivariate conditional volatility models, but also the rigid structure imposed by more parsimonious models, such as the dynamic conditional correlation model. An empirical application to the 30 constituents included in the Dow Jones Industrial Average index demonstrates that the model is able to capture interesting asymmetries in correlations and that it is competitive with standard parametric models in terms of estimating risk measures such as Value-at-Risk."
+"In this paper we develop a new semiparametric model for conditional correlations, which combines parametric univariate Generalized Auto Regressive Conditional Heteroskedasticity specifications for the individual conditional volatilities with nonparametric machine learning regressors nearest neighbor and random forest for the conditional correlations. This approach not only avoids the rapid increase in parameters as the number of assets becomes large, which typically happens in conventional multivariate conditional volatility models, but also the rigid structure imposed by more parsimonious models, such as the dynamic conditional correlation model. An empirical application to the 30 constituents included in the Dow Jones Industrial Average index demonstrates that the model is able to capture interesting time-varying properties in correlations and that it is competitive with standard parametric models in terms of risk assessment through estimation of a common risk measure such as Value-at-Risk."
 
 \iffalse
 ref:Hafner2006: "In this paper we develop a new semi-parametric model for conditional correlations, which combines parametric univariate Generalized Auto Regressive Conditional Heteroskedasticity specifications for the individual conditional volatilities with nonparametric kernel regression for the conditional correlations. This approach not only avoids the proliferation of parameters as the number of assets becomes large, which typically happens in conventional multivariate conditional volatility models, but also the rigid structure imposed by more parsimonious models, such as the dynamic conditional correlation model. An empirical application to the 30 Dow Jones stocks demonstrates that the model is able to capture interesting asymmetries in correlations and that it is competitive with standard parametric models in terms of constructing minimum variance portfolios and minimum tracking error portfolios."
@@ -218,23 +218,43 @@ Asset allocation and risk assessment also rely on correlations; however, in this
 \fi
 
 \noindent
-Modeling of correlations between financial variables has been the object of academic research for decades. Basic methods such as sample correlations from moving windows and exponential smoothing are commonly used. More involved methods such as univariate generalized autoregressive conditional heteroskedasticity (GARCH) models have been proven rather adequate to capture certain statistical properties of conditional volatility. In a parametric framework, a variety of multivariate GARCH models has been developed to model the  conditional covariance and correlations. For some foundational applications, see the work of \cite{ref:Bollerslev1988}, \cite{ref:Engle1995}, \cite{ref:Engle1990}, \cite{ref:Ding2001}, \cite{ref:Alexander1997}, \cite{ref:Weide2002}, \cite{cite:Bollerslev1990}, and \cite{ref:Engle2002}\footnote{VEC-GARCH, BEKK, Factor-ARCH, Orthogonal GARCH, Generalized Orthogonal GARCH, Diagonal-ARCH, Constant Conditional Correlation and Dynamic Conditional Correlation, respectively.}. A number of studies has provided empirical evidence on the use of multivariate GARCH models for modeling time-varying covariance in asset allocation and risk measurement. For examples on high dimensional problems, examine the papers of \cite{ref:Engle2008} and \cite{ref:Laurent2012}. Parametric multivariate GARCH models, however, impose arbitrary assumptions on the distribution and functional form of the conditional covariance matrix and conditional correlation matrix. Misspecification of either potentially results in inefficient or inconsistent models.          \\
+Modeling of correlations between financial variables has been the object of academic research for decades. Basic methods such as sample correlations from moving windows and exponential smoothing are commonly used. More involved methods such as univariate generalized autoregressive conditional heteroskedasticity (GARCH) models have been proven rather adequate to capture certain statistical properties of conditional volatility. In a parametric framework, a variety of multivariate GARCH models has been developed to model the  conditional covariance and correlations. For some interesting specifications of multivariate GARCH models, see the work of \cite{ref:Bollerslev1988}, \cite{ref:Engle1995}, \cite{ref:Engle1990}, \cite{ref:Ding2001}, \cite{ref:Alexander1997}, \cite{ref:Weide2002}, \cite{cite:Bollerslev1990}, \cite{ref:Engle2002}, and \cite{ref:Lanne2007}\footnote{VEC-GARCH, BEKK, Factor-ARCH, Orthogonal GARCH, Generalized Orthogonal GARCH, Diagonal-ARCH, Constant Conditional Correlation and Dynamic Conditional Correlation, Generalized Orthogonal Factor GARCH, respectively.}. A number of studies has provided empirical evidence on the use of multivariate GARCH models for modeling time-varying covariance in asset allocation and risk measurement. For examples on high dimensional problems, examine the paper of \cite{ref:Engle2008} and \cite{ref:Laurent2012}. Parametric multivariate GARCH models, however, impose arbitrary assumptions on the distribution and functional form of the conditional covariance matrix and conditional correlation matrix. Misspecification of either potentially results in inefficient or inconsistent models.    \\
 
 \iffalse
 The quest for reliable estimates of correlations between Žfinancial variables has been the motivation for countless academic articles and practitioner conferences and much Wall Street research. Simple methods such as rolling historical correlations and exponential smoothing are widely used. More complex methods, such as varieties of multivariate generalized autoregressive conditional heteroskedasticity (GARCH) or stochastic volatility, have been extensively investigated in the econometric literature and are used by a few sophisticated practitioners. To see some interesting applications, examine the paper of Bollerslev, Engle, and Wooldridge (1988), Bollerslev (1990), Kroner and Claessens (1991), Engle and Mezrich (1996), Engle, Ng, and Rothschild (1990), Bollerslev, Chou, and Kroner (1992), Bollerslev, Engle, and Nelson (1994), and Ding and Engle (2001). In very few of these articles are more than Ž five assets considered, despite the apparent need for bigger correlation matrices. In most cases, the number of parameters in large models is too big for easy optimization. \\
 \fi
 
 \noindent
-An alternative to the parametric estimation of the conditional covariance matrix and conditional correlation matrix is provided by non- and semiparametric models. In contrast to parametric estimation, nonparametric models do not impose (potentially misspecified) arbitrary assumptions on the distribution or functional form of the object being estimated. Semiparametric models comprise methods that contain both fully parametric components and fully nonparametric components, and may prove to be appropriate in cases nonparametric models are not;  for example, in case of implications of the curse of dimensionality or a lack of knowledge on the distribution of errors \citep{ref:Li2006}. Although semiparametric models may inherit desirable properties of a nonparametric model in that they are robust against misspecification on distributional assumption and functional form, the reliance on parametric assumptions does not exclude semiparametric models from inconsistency and inefficiency due to misspecification. A semiparametric multivariate volatility models may consider a finite-dimensional parameter functional form for the conditional covariance matrix but estimate the error distribution nonparametrically. Compared to parametric multivariate GARCH models, there is a limited number of papers on non- and semiparametric multivariate volatility models. For some interesting applications, see the works of \cite{ref:Long2005}, \cite{ref:Hafner2006}\footnote{Instead of a priori imposing a certain parametric specification for the correlation functions, they suggest a nonparametric estimator where a Nadaraya-Watson kernel regression is applied to each conditional correlation individually.}, and \cite{ref:Hafner2007}.    
+An alternative to the parametric estimation of the conditional covariance matrix and conditional correlation matrix is provided by non- and semiparametric models. In contrast to parametric estimation, nonparametric models do not impose (potentially misspecified) arbitrary assumptions on the distribution or functional form of the object being estimated. Semiparametric models comprise methods that contain both fully parametric components and fully nonparametric components, and may prove to be appropriate in cases nonparametric models are not;  for example, in case of implications of the curse of dimensionality or lack of knowledge on the distribution of errors \citep{ref:Li2006}. Although semiparametric models may inherit desirable properties of a nonparametric model in that they are robust against misspecification on distributional assumption and functional form, the reliance on parametric assumptions does not exclude semiparametric models from inconsistency due to misspecification. Although there are numerous papers on nonparametric models for the conditional variance, there is a limited number of papers on nonparametric multivariate volatility models\footnote{There are a number of papers that consider nonparametric estimation of the conditional mean and/ or conditional volatility in univariate settings. This is not the focus of our paper though, therefore these are not mentioned.}. Existing semiparametric multivariate volatility approaches may be based on the premise of a finite-dimensional parameter functional form for the conditional covariance matrix while the error distribution is estimated nonparametrically, or on the premise of a finite-dimensional parameter functional form for the conditional variance while the conditional correlations are estimated nonparametrically. For some interesting semiparametric (time-varying) copula-based multivariate GARCH models belonging to the first category\footnote{This class of models considers the conditional variance of each marginal time series to be specified parametrically through univariate GARCH-type models where non? or semi?parametric estimation of the univariate marginal distributions is followed by a parametric estimation of the copula function parameters, which specifies the dependence structure between the marginal series.\iffalse the multivariate distribution of the standardized innovation are specified semiparametrically as a parametric copula evaluated at nonparametric marginals.\fi}, examine the work of  \cite{ref:Chen2006}, \cite{ref:Patton2006}, \cite{ref:Jondeau2006}, \cite{ref:Ausin2010}, and \textbf{Add some more recent ones}. For some applications where the error distribution is estimated nonparametrically using kernel density estimation, examine the work of \cite{ref:Hafner2007}\footnote{An infinite-dimensional parameter functional form is considered for the error distribution, which is estimated nonparametrically using kernel density estimation.},  
+ 
+\bigskip
+\noindent
+For some interesting applications belonging to the second category, examine the work of \cite{ref:Hafner2006}\footnote{A nonparametric estimator is considered for the correlation function where a Nadaraya-Watson kernel regression is applied to each conditional correlation individually.}     
 
 
 
 \bigskip
 \noindent
-In the past decade, machine learning has been responsible for significant advances in self-driving cars, speech and facial recognition, effective web search, and in a vast amount of medical diagnostic procedures. However, the approach of using machine learning for the estimation of conditional correlation between financial variables has not been extensively investigated in scientific literature. In fact, there is a limited number of papers on this type of machine learning applications. For initial applications, see the papers of \cite{ref:Basturk2016_1} and \cite{ref:Basturk2016}. \\
+Make a distinction in semi-parametric models between: \\
+- nonparametrically multivariate error distribution:  , \cite{ref:Hafner2007}  \\
+	+ copula based  \cite{ref:Chen2006} \\
+	+ kernel density estimation \\
+- semi/non parametrically conditional correlations:  \cite{ref:Hafner2006}
+
+
+\bigskip
+
+\noindent
+For some interesting applications, see the work of \cite{ref:Long2005}, \cite{ref:Hafner2006}\footnote{Instead of a priori imposing a certain parametric specification for the correlation functions, they suggest a nonparametric estimator where a Nadaraya-Watson kernel regression is applied to each conditional correlation individually.}, \cite{ref:Hafner2007}\footnote{A semiparametric multivariate volatility model is proposed that considers a finite-dimensional parameter functional form for the conditional covariance matrix and an infinite-dimensional parameter functional form for the error distribution. Distribution of errors is considered nonparametrically using kernel density estimation.}, \cite{ref:Chen2006}\footnote{}, and \cite{ref:Fox2011}.   \\
+
+\noindent
+The aim of this paper is to develop a new semiparametric model for the conditional covariance matrix that is flexible and remains easy to estimate in high dimensional systems. The model is semiparametric in that it combines parametric univariate Generalized Auto Regressive Conditional Heteroskedasticity specifications for the individual conditional volatilities with nonparametric machine learning regressors for the conditional correlations. In the past decade, machine learning has been responsible for significant advances in self-driving cars, speech and facial recognition, effective web search, and in a vast amount of medical diagnostic procedures. However, the approach of using machine learning for the estimation of conditional correlation between financial variables has not been extensively investigated in scientific literature. In fact, there is a limited number of papers on this type of machine learning applications; for initial applications, see the papers of \cite{ref:Basturk2016_1} and \cite{ref:Basturk2016}.  \\
 
 \noindent
 \textit{nearest neighbor and random forests are considered as non-parametric learning algorithms since the number of parameters grows with the size of the training set.} \\
+
+\noindent
+\textbf{Speak of curse of dimensionality and how knn and rf deal with this}\textit{knn with exhaustive search does not suffer from curse of dimensionality. RF has also a reduced risk of overfitting compared to other machine learning methods, which is crucial for situations where the dataset has many more features than samples. These situations suffer from the ?curse of dimensionality,? and RF overcomes this by building independent decision trees each trained on a sub-sampled range of the dataset with the global decision based on all ensemble of trees. Random Forests can handle high dimensional data by building large number of trees using only a subset of features. This combined with the fact that the random selection of features for a split seeks to minimize the correlation between the trees in the ensemble, certainly helps in building an ensemble classifier with high generalization accuracy for high dimensional data problems.} \\
 
 
 
@@ -254,40 +274,24 @@ In this article, dynamic conditional correlation (DCC) estimators are proposed t
 \noindent
 \textbf{Mention two major sections of paper: bivariate and multivariate setting}\\
 \noindent
-In this paper, the accuracy of the time-varying correlations estimated by proposed learning methods and conventional moving windows is compared in a bivariate setting where many methods are feasible. An analysis of the performance of the DCC methods for large covariance matrices was considered by \cite{ref:Engle2001}. \\
+In this paper, using simulation, the performance of the time-varying correlations estimated by proposed learning methods and conventional moving windows is compared in terms of a statistical loss function, the Mean Squared Error (MSE). \textbf{Insert key result of simulation here.}  \\
 
 \noindent
-\textbf{Topic: overview of topics addressed in this paper. Potentially move to section "outline"}\\
+In an empirical application, the proposed semiparametric multivariate volatility model is applied to the 30 constituents included in the Dow Jones Industrial Average index. Performance is verified in terms of an economic loss function, the Value-at-Risk, as the true conditional covariance matrix is unobservable. It is demonstrated that our semiparametric model is able to capture interesting time-varying properties in correlations and that it is \textit{competitive with a parametric counterpart, the Dynamic Conditional Correlation model of \cite{ref:Engle2002}}.  \\
+
+
+
+
 \noindent
-Section 2 gives a brief overview of various models for estimating correlations. Section 3 introduces the new method and compares it with some of the cited approaches. Section 4 investigates some statistical properties of the method. Section 5 describes a Monte Carlo experiment and results are presented in Section 6. Section 7 presents empirical results for several pairs of daily time series, and Section 8 concludes." \citep{ref:Engle2002} 
-Finally, conclusions and directions for future research are provided in Section.... \\
+The remained of the paper is organized as follows. Chapter 2 gives an overview of the methodological underpinnings of multivariate volatility modeling and machine learning. Chapter 3 describes a simulation experiment and results are presented. Section 4 presents results of an empirical application to the 30 constituents included in the Dow Jones Industrial Average index. Finally, conclusions and directions for future research are provided in Chapter 5. \\
 
 \iffalse
 \noindent
 "First, popular parametric models are rarely, if ever, correctly specified The ?horse race? is therefore between misspecified and therefore inconsistent parametric models and relatively inefficient but
 consistent nonparametric models." \\
-
-
-\noindent
-"Understanding and quantifying dependence is at the core of all modeling efforts in financial econometrics. The linear correlation coefficient (Pearson correlation coefficient), which is the far most used measure to test dependence in the financial community and also elsewhere, is only a measure of linear dependence. This means that it is a meaningful measure of dependence if asset returns are well represented by an elliptical distribution. Outside the world of elliptical distributions, however, using the linear correlation coefficient as a measure of dependence may lead to misleading conclusions. In financial markets, there is often a non-linear dependence between returns." \\
-
-
-\noindent
-The computational framework development using nearest neighbor and random forest for estimating time-varying correlation was motivated by 1) the simplicity of knn 2) performance of random forest on a variety of supervised learning problems. We illustrate the model capabilities using synthetic datasets exhibiting different data properties. Subsequently, model capabilities are illustrated for a portfolio consisting of Dow Jones Industrial Average constituents.  
 \fi
 
 
-
-
-  
-
-\iffalse
-\noindent
-Density estimation: \\
-Conditional density estimation makes it possible to quantify and visualize the uncertainty associated with the prediction of a continuous target variable. Given an observed vector of attribute values, a conditional density estimator provides an entire density function for the target variable, rather than a point estimate consisting of a single value. This function can then be visualized, or it can be summarized in prediction intervals that contain the true target value with a certain pre-specified probability. \\
-
-Now, these density functions are obviously unknown for real-world data. However, if they were available, we could use them to quantify predictive uncertainty, e.g. in the form of prediction intervals. The aim of conditional density estimation is to accurately estimate conditional density functions like these.
-\fi
 
 
 \section{Problem Statement}
@@ -378,10 +382,171 @@ We then extend the empirical evaluation of correlation estimates using machine l
 
 
 \chapter{Methodology} \label{ch:methodology}
-In this chapter we will develop some notation and basic approaches which will provide us with the foundational concepts used throughout this paper. As such, Section \ref{sec:ml_supervised} introduces the concepts of machine learning and supervised learning. Theoretical background is given of the learning algorithms that lie at the core of k-nearest neighbor and random forest as well as the effect of foundational learner properties on the generalization error. The latter is done through discussion of an important issue in machine learning, i.e. the tradeoff between bias and variance. Next, Section \ref{sec:mvm} introduces the conceptual underpinnings of multivariate volatility modeling and the decomposition of the variance-covariance matrix that is used in this paper to identify variances and correlation coefficients. Finally, Section \ref{sec:cor_ml} brings the topics of the preceding two sections together; we will discuss what approach to take to successfully address supervised learning in the context of estimating time-varying correlation between financial returns.
+In this chapter we will develop some notation and basic approaches that will provide us with the foundational concepts used throughout this paper. As such, Section \ref{sec:ml_supervised} introduces the concepts of machine learning and supervised learning. Theoretical background is given of the learning algorithms that lie at the core of k-nearest neighbor and random forest as well as the effect of foundational model properties on the generalization error. The latter is done through discussion of an important issue in machine learning, i.e. the tradeoff between bias and variance. Next, Section \ref{sec:mvm} introduces the conceptual underpinnings of multivariate volatility modeling and the decomposition of the variance-covariance matrix that is used in this paper to identify conditional variances and correlation. Finally, Section \ref{sec:cor_ml} brings the topics of the preceding two sections together; we will discuss what approach to take to successfully address supervised learning in the context of estimating time-varying correlation between financial returns.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%% 				     Multivariate Volatility Methodology 					%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Multivariate Volatility Modeling} \label{sec:mvm}
+\textbf{Write introductory text where you mention: the essence of multivariate volatility modeling, different classes of multivariate volatility models. State strengths and weaknesses cq. complexities; first: VEC-garch and BEKK, then to overcome optimization problems in higher dimensions Factor and orthogonal models followed by Conditional Correlations models. The latter is the model class that is considered in our work (covariance matrix decomposition) because this enables us to leverage the strengths of machine learning and univariate garch models.} \\
+
+\noindent
+"The conventional parametric multivariate GARCH models could be classified into three groups: the first group models conditional covariance matrix directly, such as VEC model of \cite{ref:Bollerslev1988} and BEKK model of \cite{ref:Engle1995}; the second group traces back to factors of conditional covariance matrix, such as the Factor GARCH model of \cite{ref:Engle1990}; and the third group decomposes conditional covariance matrix into conditional variance and conditional correlation and models them separately, for example, dynamic conditional correlation (DCC) model of \cite{ref:Engle2002} and \cite{ref:Engle2001}". \\
+
+\noindent
+" The first generation of models, for example the vector error correction (VEC) model of \cite{ref:Bollerslev1988}  and the BEKK model of \cite{ref:Engle1995}, are direct extensions of the univariate GARCH model of \cite{ref:Bollerslev1986}. These models are very general and allow for rich and flexible dynamics for the conditional variance matrix. However, being heavily parameterized, they are tractable only for a small number of series, typically lower than four. Both the number of parameters and the complexity of the likelihood function tend to explode rapidly with the number of series. Alternative approaches for achieving more manageable and parsimonious specifications have been proposed. Feasible specifications can be obtained by imposing strong parameter restrictions on the BEKK model, which includes the diagonal and scalar BEKK models. Alternatively, factor structures as in Engle et al. (1990), the orthogonal models of Alexander and Chibumba (1997), Alexander (2000), van der Weide (2002), Lanne and Saikkonen (2007), and Fan et al. (2008) have been proposed. Furthermore, increasing attention has been devoted to conditional correlation models because they can be easily estimated using a multi?step procedure. These models were first introduced by Engle (2002) and Tse and Tsui (2002). Extensions are the asymmetric conditional correlation model of Cappiello et al. (2006), the consistent DCC of Aielli (2006) and the sequential DCC model of Palandri (2009). \\
+
+\noindent
+The difficulty when estimating a VEC or even a BEKK model is the high number of unknown parameters, even after imposing several restrictions. It is thus not surprising that these models are rarely used when the number of series is larger than 3 or 4. Factor and orthogonal models circumvent this difficulty by imposing a common dynamic structure on all the elements of Ht, which results in less parameterized models." \\
+
+\noindent
+In this paper, a $k$-dimensional asset return series, $y_t = (y_{1,t}, \dots, y_{k,t})'$, is considered such that
+
+\begin{align} 
+	y_t = H^{1/2}_t z_t \label{eq:returns_model}
+\end{align}
+
+\noindent
+where $t \in \{1, \dots,T\}$ indicates the time unit, $z_t$ is a $k \times 1$ vector of i.i.d random variables with mean zero and unit variance, $H_t$ is a $k\times k$ positive definite matrix, and $H_t^{1/2}$  denotes the Cholesky decomposition of $H_t$. \\
+
+\noindent
+The time-varying variance-covariances of returns $y_t$ are represented by the $k \times k$ matrix $\mathrm {Var}(y_t) = H^{1/2}_t H^{\prime 1/2}_t = H_t$, which by construction is not observable \citep{ref:Basturk2016}. A plethora of models has been proposed to model the time-varying conditional variance-covariance matrix $H_t$ and a reparameterizations of $H_t$ is a common approach for the identification of variances and correlation coefficients \citep{ref:Bauwens2006}, that is, 
+
+\begin{align} \label{eq:covariance_decomposition} 
+	H_{t}=D_{t}R_{t}D_{t} = 
+		\begin{pmatrix} h_{1,1,t}^{1/2} &&0 \\ &\ddots \\ 0 &&h_{k,k,t}^{1/2} \end{pmatrix} 
+		\begin{pmatrix} 1 &\rho_{1,2,t} &\cdots &\rho_{1,k, t} \\ \rho_{2,1,t} &1 & &\rho_{2,k, t} \\ \vdots &&\ddots &\vdots \\ \rho_{k, 1,t} &\rho_{k, 2,t} &\cdots &1 \end{pmatrix} 
+		\begin{pmatrix} h_{1,1,t}^{1/2} &&0 \\ &\ddots \\ 0 &&h_{k,k,t}^{1/2} \end{pmatrix} 
+\end{align}
+
+\noindent
+where $D_t$ is a diagonal matrix with variances of each marginalseries on its diagonal and matrix $R_t$ includes all pairwise correlations $\rho_{i,j,t}$, with $\rho_{i,j,t} = \rho_{j,i,t}$ (by definition). \\
+
+\noindent
+The semiparametric character of the model for $H_t$ now becomes apparent: the diagonal elements of the matrix $D_t$ are modeled parametrically using, for example, standard univariate GARCH-type models, whereas the conditional correlation matrix $R_t$ is estimated in a nonparametric manner using nonparametric machine learning algorithms. Estimation of $D_t$  is independent of the estimation of pairwise correlations, $\rho_{i,j,t}$, in $R_t$. This is explained by the fact that $D_t$ defines the unconditional variance of each marginalseries at time unit t, which is independent of correlations $R_t$  by definition \citep{ref:Basturk2016}. In order to ensure positive semi-definiteness of the conditional variance-covariance matrix $H_t$ at each time unit $t$, two necessary conditions need to be satisfied when specifying $R_t$, that is,  
+
+\begin{enumerate}
+	\item $R_t$ has to be positive semi-definite with det($R_t) \geq$ 0. ($D_t$ is positive semi-definite as all its diagonal elements are positive).
+	\item The absolute value of all elements in the conditional correlation matrix $R_t$ need to be equal or less than one by definition. 
+\end{enumerate}
+
+\noindent
+These necessary conditions for satisfying a positive semi-definite matrix $R_t$ are generally obtained by the imposition of arbitrary assumptions on the the distribution and functional form of the conditional correlation matrix. In view of the fact that many nonparametric estimators of covariance matrices are developed without explicit satisfaction of the positive semi-definiteness condition during estimation, satisfaction of the conditions is in this paper verified with the obtained conditional correlation matrices. \\     
+
+\noindent
+We examine the DCC model further in detail in the next section as the DCC model will be compared with our semiparametric multivariate volatility model in Chapter \ref{chap:multivariate_analysis}.
+
+\subsection{Dynamic Conditional Correlation Model}
+The dynamic conditional correlation (henceforth DCC) model \citep{ref:Engle2002} is a class of models that generalizes univariate generalized autoregressive conditional heteroskedasticity (GARCH) models to the multivariate case. The DCC models capture the advantages of GARCH models and simplifies the computation of multivariate GARCH models such as VEC-GARCH and BEKK. Reparameterization of covariance matrices lets the DCC model take advantage of the fact that correlation matrices are generally easier to model than the direct modeling of the covariance matrices. In the DCC models, time series of daily mean-corrected log returns on k assets $y_t=a_t$ is given by
+
+\begin{align}
+	y_t &= H_t^{\frac{1}{2}}z_t \\
+	H_t &= D_t R_t D_t \\
+	D_t &= diag(\sigma_{11,t}, \dots, \sigma_{kk,t})
+\end{align}
+
+\noindent
+where $H_t$ is the conditional covariance matrix and $R_t$ is the conditional correlation matrix. $D_t$ is a diagonal matrix with $\sigma_{11,t}, \dots, \sigma_{kk,t}$ on the main diagonal, which can be estimated though univariate GARCH models.\\
+
+\noindent
+The idea behind DCC models is that multivariate volatility modeling can be divided into two estimation steps. Under assumption of conditional normality in the daily mean-corrected log returns $y_t$, the estimator gives rise to a log likelihood function. Without this assumption, an expected Quasi-Maximum Likelihood function is calculated \citep{ref:Engle2002}. As such, the first step is to estimate the conditional volatility series, $\sigma_{ii,t}$, which is done under the assumption that each asset volatility series follows a univariate GARCH(1,1) process with normal distributed errors, that is,
+
+\begin{align}
+	\sigma_{ii,t}^2 &= \omega_i + \beta_i\sigma_{ii,t-1}^2 + \alpha_i a_{i,t-1}^2 
+\end{align}
+
+\noindent
+Then, in the second step, one can use the estimated conditional volatilities $\sigma_{ii, t}$ to model the dynamics of the conditional correlation matrix $R_t$, that is,
+
+\begin{align}
+	R_t &= D_t^{-1} H_t D_t^{-1}
+\end{align}     
+ 
+\noindent
+$R_t$, as noted by \cite{ref:Engle2002}, is the conditional volatility matrix of the marginally standardized residuals $\epsilon_t = (\epsilon_{1,t}, \epsilon_{2,t}, \dots, \epsilon_{k,t})$, where $\epsilon_{i,t} = a_{i,t} / \sigma_{ii,t}$. In this paper, the multivariate standard normal and the multivariate standard Student t-distribution are considered for the conditional distribution $\epsilon_t$. \\
+
+\noindent
+In the DCC model of \cite{ref:Engle2002}, the conditional volatility matrix of the marginally standardized residuals, $\epsilon_t$, is modeled using a GARCH(1,1) structure and reparameterization of $R_t$ ensures necessary conditions for $R_t$ are satisfied, that is,
+
+\begin{align}  
+	Q_t &= (1-\theta_1-\theta_2) \bar{Q} + \theta_1 Q_{t-1} \theta_2 \epsilon_{t-1} \epsilon'_{t-1} \label{eq:DCC_Q} \\
+	R_t &= diag(Q_t)^{-1} Q_t \ diag(Q_t)^{-1} \label{eq:DCC_R}
+\end{align}
+
+\noindent
+In \eqref{eq:DCC_Q}, $Q_t$ is a positive semi-definite matrix defining the structure of the correlation dynamics and $\bar{Q} = Cov(\epsilon_t \epsilon'_t) = \mathbb{E}[\epsilon_t \epsilon'_t]$ is the unconditional covariance matrix of the standardized residuals $\epsilon_t$\footnote{$\bar{Q}$ can be thought of as representing the long-run correlation structure and can be estimated by: $\bar{Q} = \frac{1}{T} \sum_{t=1}^T \epsilon_t \epsilon'_t$.}. In \eqref{eq:DCC_R}, $diag(Q)_t$ is a diagonal matrix with the square root of the diagonal elements of $Q_t$ at its diagonal. It is simply a normalization matrix to ensure the requirement that all elements in the conditional correlation matrix $R_t$ are bounded by -1 and 1. Parameters $\theta_1$, $\theta_2$ are non-negative real numbers satisfying $ 0 < \theta_1 + \theta_2 < 1$, which ensures $Q_t$ to satisfy the condition of a positive semi-definiteness and consequently positive semi-definiteness for $H_t$ under the condition that $D_t$ is also positive semi-definite.\\ 
+
+\noindent
+Eq. \eqref{eq:DCC_Q} shows that the DCC model of \cite{ref:Engle2002} is very parsimonious as the dynamics of all conditional correlations are driven with only two parameters, $\theta_1$ and $\theta_2$, regardless of the number of assets $k$. Consequently, the DCC model is relatively efficient to estimate. However, the assumption that the evolution of all correlations follows the same dynamic structure, regardless of the assets involved, can be considered a weakness of the DCC model. \\
+
+\noindent
+\textit{"Interestingly, DCC models can be estimated consistently in two steps (see Section 3.2), which makes this approach feasible when N is high. Of course, when N is large, the restriction of common dynamics gets tighter, but for large N the problem of maintaining tractability also gets harder. In this respect, several variants of the DCC model are proposed in the literature."}
+
+
+\noindent
+\textbf{The approximation used for one-step-ahead forecasts can be found in \cite{ref:Engle2001}}. \\
+
+
+
+\subsection{Pearson Product-Moment Correlation Coefficient}
+To model the pairwise correlation coefficients $\rho_{i,j,t}$ in $R_t$, moving window correlation estimates perform well due to the methodology's advantage of avoiding strong distributional assumptions. Following \cite{ref:Basturk2016}, the sample correlation at a selected time window $\Delta t$ is used as a proxy for approximation of time-varying correlations using Pearson's linear correlation coefficient, that is,
+
+\begin{align}
+	\hat{\mu}_{i,t} &= \frac{1}{\Delta t}\sum\nolimits_{t'=t-\Delta t+1}^t y_{i,t'}, \; \; \forall i \in \{1, \dots, k\} \label{eq:mw_mu} \\
+	\hat{\sigma}_{i,t} &= \sqrt{\frac{1}{\Delta t}\sum\nolimits_{t'=t-\Delta t+1}^t (y_{i,t'}-\hat{\mu}_{i,t})^2}, \; \; \forall i \in \{1, \dots, k\}   \label{eq:mw_sigma} \\ 
+	\hat{\sigma}_{i,j,t} &= \frac{1}{\Delta t} \sum\nolimits_{t'=t-\Delta t+1}^t (y_{i,t'}-\hat{\mu}_{i,t})(y_{j,t'}-\hat{\mu}_{j,t})  \; \; \forall i,j \in \{1, \dots, k\}   \label{eq:mw_cov} \\ 
+	\hat{\rho}_{i,j,t} &= \frac{\hat{\sigma}_{i,j,t}}{\hat{\sigma}_{i,t} \hat{\sigma}_{j,t}} \label{eq:mw_rho} 
+\end{align}   
+
+\noindent
+where $\hat{\mu}_{i,t}$ defines the mean estimate for random variable $i$ at time $t$, $\hat{\sigma}_{i,t}$ defines an estimate of the standard deviation for random variable $i$ at time $t$, and $\hat{\sigma}_{i,j,t}$ defines the covariance between random variables $i$ and $j$ at time $t$. Consequently, the Pearson product-moment correlation coefficient between random variables $i$ and $j$ at time $t$ is defined by $\hat{\rho}_{i,j,t}$. \\
+
+\noindent
+Note that the correlation coefficient is dimensionless and in general -for non-constant random variables- takes values between $-1$ and $1$. If the correlation between two random variables is close to $|1|$, then that is an indication of a strong linear relationship between corresponding random variables. The learning algorithms proposed in this paper make use of the moving window correlation estimates in \eqref{eq:mw_mu}-\eqref{eq:mw_rho} to define the set of covariates and response variable.
+
+\iffalse
+Additionally, exponential weighting of correlation coefficients $\rho_{i,j,t}$ is included in the analysis. Introduction of exponential weighting, where present observations are given more weight than past measurements, potentially better characterizes the dynamics of evolving dependency structures between asset return paths. From an informational point of view it makes sense to assume recent events more valuable than remote ones. For the computation of weighted Pearson correlation coefficients a weight structure, $w_t \ge 0$, is introduced under the constraint $\sum_{t'=t-\Delta t+1}^t w_t = 1$, operating on sample means, variances and covariances according to \cite{ref:Pozzi2012}:
+
+\begin{align}
+	\hat{\mu}_{i,t}^w &= \sum_{t'=t-\Delta t+1}^t w_{t'} y_{i,t'}, \; \; \forall i \in \{1, \dots, k\} \label{eq:mw_mu_w} \\
+	\hat{\sigma}_{i,t}^w &= \sqrt{\sum\nolimits_{t'=t-\Delta t+1}^t w_{t'} (y_{i,t'}-\hat{\mu}_{i,t}^w)^2}, \; \; \forall i \in \{1, \dots, k\}   \label{eq:mw_sigma_w} \\ 
+	\hat{\sigma}_{i,j,t}^w &= \sum\nolimits_{t'=t-\Delta t+1}^t w_{t'} (y_{i,t'}-\hat{\mu}_{i,t}^w)(y_{j,t'}-\hat{\mu}_{j,t}^w)  \; \; \forall i,j \in \{1, \dots, k\}   \label{eq:mw_cov_w} \\   
+	\hat{\rho}_{i,j,t}^w &= \frac{\hat{\sigma}_{i,j,t}^w}{\hat{\sigma}_{i,t}^w\hat{\sigma}_{j,t}^w} \label{eq:mw_rho_w} 
+\end{align}  
+
+\noindent
+\cite{ref:Pozzi2012} use the exponential function as functional form for the weights, i.e. exponential smoothing. This is the kind of weighting also used in this paper such that the weights in \eqref{eq:mw_mu_w}-\eqref{eq:mw_rho_w} are defined as:
+
+\begin{align} \label{eq:pearson_weights}
+	w_{t'} = w_0 \; e^{\alpha(t'- \Delta t)}, \; \; \forall t' \in \{t-\Delta t+1, t-\Delta t, \cdots, t\} 
+\end{align}   
+
+\noindent
+where $\alpha = \frac{1}{\theta}$ denotes the exponential decay factor, with $\alpha \in \mathbb{R}$ and $\alpha \ge 0$, and $w_0(\alpha) = \frac{1-e^{-\alpha}}{1-e^{-\alpha\Delta t}}$. Intuitively, when the parameter $\theta$ gets arbitrarily large, i.e. as $\theta \rightarrow \infty$, the weights are uniform and no distinction is made between the informational value of recent events and more remote ones. Conversely, lower values for $\theta$ indicate remote events to become increasingly irrelevant and more recent ones become ever more relevant from an informational point of view \citep{ref:Pozzi2012}. In this paper $\theta = \frac{\Delta t}{3}$ following the statement of \cite{ref:Pozzi2012} that "it is a reasonable choice for their data-set."  \\
+\fi
+
+\subsection{Capturing Nonlinear Relations: Kendall's $\tau$} 
+The Pearson product-moment correlation coefficient is the most frequent used measure for testing dependency between variables. It is, however, only a measure of linear dependence and using a linear correlation coefficient as a measure of dependence may lead to unreliable results outside the world of elliptical distributions. Given the fact that asset returns are generally not well represented by an elliptical distribution but exhibit non-linear dependence, alternative methods for capturing co-dependency are considered in this paper. One such alternative method is Kendall rank correlation coefficient, commonly referred to as Kendall's $\tau$ correlation coefficient, which measures the degree of similarity between two random variables through counting the concordant and discordant pairs. Kendall's $\tau$ accounting for tied pairs is formulated as
+
+\begin{align} \label{eq:mw_kendall}
+	\hat{\tau}_{i,j} = \frac{\sum_{u=1}^{\Delta t -1} \sum_{v=u+1}^{\Delta t} d_{uv}^i d_{uv}^j}{\sqrt{[\frac{1}{2}\Delta t (\Delta t -1)-n^i][\frac{1}{2}\Delta t(\Delta t - 1)-n^j]}}
+\end{align}
+
+\noindent
+where $d^k = sgn (y_u^k - y_v^k)$ for $k = i, j$ and $n^k$ is the total number of tied pairs for variable $k$. \\
+
+\noindent
+Kendall's $\tau$ rank correlation has some desirable theoretical properties over Pearson product-moment correlation such as: Kendall's $\tau$ rank correlation is able to capture nonlinear relationships and it is a distribution free measure, i.e. not dependent on the statistical distribution of the variables. It is robust to outliers and even defined if the variable's variances are infinite. Moreover, Kendall's correlation matrix is generally characterized by greater rank and maintaining positive semi-definiteness. A limit to the use of Kendall's $\tau$ rank correlation on large samples is its computational complexity of $O(\Delta t \ log \ \Delta t)$ \citep{ref:Pozzi2012}\footnote{This will not be an issue as the sample sizes do not qualify as problematic large in this paper.}.      \\
+
+
+
+\noindent
+Similar to Pearson moving window estimates of correlation, Kendall's $\tau$ correlation coefficient between two random variables take values in the interval [$-1$, $1$]. Values close to $1$ indicate strong similarity wheras values close to $-1$ indicate strong dissimilarity. In addition to Pearson moving window correlation estimates in \eqref{eq:mw_mu}-\eqref{eq:mw_rho}, the learning algorithms proposed in this paper make use of the moving window correlation estimates in \eqref{eq:mw_kendall} to define the set of covariates and response variable. \\
+
+
    
 
-\section{Machine Learning and the Concept of Supervised learning} \label{sec:ml_supervised}
+\section{Machine Learning} \label{sec:ml_supervised}
 Machine learning is the science of getting computers to gain the ability to learn from data without any user imposed conditions, i.e. without being explicitly programmed. In the past decade, machine learning has been responsible for significant advances in self-driving cars, speech and facial recognition, effective web search, and in a vast amount of medical diagnostic procedures. In a typical machine learning setting, one has an outcome measurement, generally quantitative (e.g. asset price) or categorical (e.g. septic/ not septic) in nature, that one wishes to predict based on a set of predictor variables or covariates (e.g. blood pressure, body temperature and heart rate). One possesses a training set of data, in which the outcome and covariate measurements for a set of objects (e.g. people or days in case of time series analysis) is observed. Then, this data serves to build a prediction model, or learner, which will have the purpose of enabling one to predict the outcome for new unseen objects. An adequate learner is one that is capable of accurately predicting such an outcome. The goal of the learning process is to progressively improve the learner's performance on a specific task.  \\
 
 \noindent
@@ -587,110 +752,6 @@ In summary, the expected prediction error of a random forest regression fit $\ha
 		&=\sigma_{\epsilon}^2 + [f(x_0) - E_ZE_{\Theta|Z}T(x_0;\Theta(Z))]^2 + [\rho(x_0)\sigma^2(x_0) + \frac{1-\rho(x_0)}{B}\sigma^2(x_0)]	 
 \end{align}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%% 				     Multivariate Volatility Methodology 					%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Multivariate Volatility Modeling} \label{sec:mvm}
-\textbf{Write introductory text where you mention: the essence of multivariate volatility modeling, different classes of multivariate volatility models. State strengths and weaknesses cq. complexities; first: VEC-garch and BEKK, then to overcome optimization problems in higher dimensions Factor and orthogonal models followed by Conditional Correlations models. The latter is the model class that is considered in our work (covariance matrix decomposition) because this enables us to leverage the strengths of machine learning and univariate garch models.} \\
-
-\noindent
-"The conventional parametric multivariate GARCH models could be classified into three groups: the first group models conditional covariance matrix directly, such as VEC model of \cite{ref:Bollerslev1988} and BEKK model of \cite{ref:Engle1995}; the second group traces back to factors of conditional covariance matrix, such as the Factor GARCH model of \cite{ref:Engle1990}; and the third group decomposes conditional covariance matrix into conditional variance and conditional correlation and models them separately, for example, dynamic conditional correlation (DCC) model of \cite{ref:Engle2002} and \cite{ref:Engle2001}". \\
-
-\noindent
-" The first generation of models, for example the vector error correction (VEC) model of \cite{ref:Bollerslev1988}  and the BEKK model of \cite{ref:Engle1995}, are direct extensions of the univariate GARCH model of \cite{ref:Bollerslev1986}. These models are very general and allow for rich and flexible dynamics for the conditional variance matrix. However, being heavily parameterized, they are tractable only for a small number of series, typically lower than four. Both the number of parameters and the complexity of the likelihood function tend to explode rapidly with the number of series. Alternative approaches for achieving more manageable and parsimonious specifications have been proposed. Feasible specifications can be obtained by imposing strong parameter restrictions on the BEKK model, which includes the diagonal and scalar BEKK models. Alternatively, factor structures as in Engle et al. (1990), the orthogonal models of Alexander and Chibumba (1997), Alexander (2000), van der Weide (2002), Lanne and Saikkonen (2007), and Fan et al. (2008) have been proposed. Furthermore, increasing attention has been devoted to conditional correlation models because they can be easily estimated using a multi?step procedure. These models were first introduced by Engle (2002) and Tse and Tsui (2002). Extensions are the asymmetric conditional correlation model of Cappiello et al. (2006), the consistent DCC of Aielli (2006) and the sequential DCC model of Palandri (2009). \\
-
-\noindent
-The difficulty when estimating a VEC or even a BEKK model is the high number of unknown parameters, even after imposing several restrictions. It is thus not surprising that these models are rarely used when the number of series is larger than 3 or 4. Factor and orthogonal models circumvent this difficulty by imposing a common dynamic structure on all the elements of Ht, which results in less parameterized models." \\
-
-\noindent
-In this paper, a $k$-dimensional asset return series, $y_t = (y_{1,t}, \dots, y_{k,t})'$, is considered such that
-
-\begin{align} 
-	y_t = H^{1/2}_t z_t \label{eq:returns_model}
-\end{align}
-
-\noindent
-where $t \in \{1, \dots,T\}$ indicates the time unit, $z_t$ is a $k \times 1$ vector of i.i.d random variables with mean zero and unit variance, $H_t$ is a $k\times k$ positive definite matrix, and $H_t^{1/2}$  denotes the Cholesky decomposition of $H_t$. \\
-
-\noindent
-The time-varying variance-covariances of returns $y_t$ are represented by the $k \times k$ matrix $\mathrm {Var}(y_t) = H^{1/2}_t H^{\prime 1/2}_t = H_t$, which by construction is not observable \citep{ref:Basturk2016}. A plethora of models has been proposed to model the time-varying conditional variance-covariance matrix $H_t$ and a reparameterizations of $H_t$ is a common approach for the identification of variances and correlation coefficients \citep{ref:Bauwens2006}, that is, 
-
-\begin{align} \label{eq:covariance_decomposition} 
-	H_{t}=D_{t}R_{t}D_{t} = 
-		\begin{pmatrix} h_{1,1,t}^{1/2} &&0 \\ &\ddots \\ 0 &&h_{k,k,t}^{1/2} \end{pmatrix} 
-		\begin{pmatrix} 1 &\rho_{1,2,t} &\cdots &\rho_{1,k, t} \\ \rho_{2,1,t} &1 & &\rho_{2,k, t} \\ \vdots &&\ddots &\vdots \\ \rho_{k, 1,t} &\rho_{k, 2,t} &\cdots &1 \end{pmatrix} 
-		\begin{pmatrix} h_{1,1,t}^{1/2} &&0 \\ &\ddots \\ 0 &&h_{k,k,t}^{1/2} \end{pmatrix} 
-\end{align}
-
-\noindent
-where $D_t$ is a diagonal matrix with variances of each component series on its diagonal and matrix $R_t$ includes all pairwise correlations $\rho_{i,j,t}$, with $\rho_{i,j,t} = \rho_{j,i,t}$ (by definition). \\
-
-\noindent
-The semiparametric character of the model for $H_t$ now becomes apparent: the diagonal elements of the matrix $D_t$ are modeled parametrically using, for example, standard univariate GARCH-type models, whereas the conditional correlation matrix $R_t$ is estimated in a nonparametric manner using nonparametric machine learning algorithms. Estimation of $D_t$  is independent of the estimation of pairwise correlations, $\rho_{i,j,t}$, in $R_t$. This is explained by the fact that $D_t$ defines the unconditional variance of each component series at time unit t, which is independent of correlations $R_t$  by definition \citep{ref:Basturk2016}. In order to ensure positive semi-definiteness of the conditional variance-covariance matrix $H_t$ at each time unit $t$, two necessary conditions need to be satisfied when specifying $R_t$, that is,  
-
-\begin{enumerate}
-	\item $R_t$ has to be positive semi-definite with det($R_t) \geq$ 0. ($D_t$ is positive semi-definite as all its diagonal elements are positive).
-	\item The absolute value of all elements in the conditional correlation matrix $R_t$ need to be equal or less than one by definition. 
-\end{enumerate}
-
-\noindent
-These necessary conditions for satisfying a positive semi-definite matrix $R_t$ are generally obtained by the imposition of arbitrary assumptions on the the distribution and functional form of the conditional correlation matrix. In view of the fact that many nonparametric estimators of covariance matrices are developed without explicit satisfaction of the positive semi-definiteness condition during estimation, satisfaction of the conditions is in this paper verified with the obtained conditional correlation matrices. \\     
-
-\subsection{Pearson Product-Moment Correlation Coefficient}
-To model the pairwise correlation coefficients $\rho_{i,j,t}$ in $R_t$, moving window correlation estimates perform well due to the methodology's advantage of avoiding strong distributional assumptions. Following \cite{ref:Basturk2016}, the sample correlation at a selected time window $\Delta t$ is used as a proxy for approximation of time-varying correlations using Pearson's linear correlation coefficient, that is,
-
-\begin{align}
-	\hat{\mu}_{i,t} &= \frac{1}{\Delta t}\sum\nolimits_{t'=t-\Delta t+1}^t y_{i,t'}, \; \; \forall i \in \{1, \dots, k\} \label{eq:mw_mu} \\
-	\hat{\sigma}_{i,t} &= \sqrt{\frac{1}{\Delta t}\sum\nolimits_{t'=t-\Delta t+1}^t (y_{i,t'}-\hat{\mu}_{i,t})^2}, \; \; \forall i \in \{1, \dots, k\}   \label{eq:mw_sigma} \\ 
-	\hat{\sigma}_{i,j,t} &= \frac{1}{\Delta t} \sum\nolimits_{t'=t-\Delta t+1}^t (y_{i,t'}-\hat{\mu}_{i,t})(y_{j,t'}-\hat{\mu}_{j,t})  \; \; \forall i,j \in \{1, \dots, k\}   \label{eq:mw_cov} \\ 
-	\hat{\rho}_{i,j,t} &= \frac{\hat{\sigma}_{i,j,t}}{\hat{\sigma}_{i,t} \hat{\sigma}_{j,t}} \label{eq:mw_rho} 
-\end{align}   
-
-\noindent
-where $\hat{\mu}_{i,t}$ defines the mean estimate for random variable $i$ at time $t$, $\hat{\sigma}_{i,t}$ defines an estimate of the standard deviation for random variable $i$ at time $t$, and $\hat{\sigma}_{i,j,t}$ defines the covariance between random variables $i$ and $j$ at time $t$. Consequently, the Pearson product-moment correlation coefficient between random variables $i$ and $j$ at time $t$ is defined by $\hat{\rho}_{i,j,t}$. \\
-
-\noindent
-Note that the correlation coefficient is dimensionless and in general -for non-constant random variables- takes values between $-1$ and $1$. If the correlation between two random variables is close to $|1|$, then that is an indication of a strong linear relationship between corresponding random variables. The learning algorithms proposed in this paper make use of the moving window correlation estimates in \eqref{eq:mw_mu}-\eqref{eq:mw_rho} to define the set of covariates and response variable.
-
-\iffalse
-Additionally, exponential weighting of correlation coefficients $\rho_{i,j,t}$ is included in the analysis. Introduction of exponential weighting, where present observations are given more weight than past measurements, potentially better characterizes the dynamics of evolving dependency structures between asset return paths. From an informational point of view it makes sense to assume recent events more valuable than remote ones. For the computation of weighted Pearson correlation coefficients a weight structure, $w_t \ge 0$, is introduced under the constraint $\sum_{t'=t-\Delta t+1}^t w_t = 1$, operating on sample means, variances and covariances according to \cite{ref:Pozzi2012}:
-
-\begin{align}
-	\hat{\mu}_{i,t}^w &= \sum_{t'=t-\Delta t+1}^t w_{t'} y_{i,t'}, \; \; \forall i \in \{1, \dots, k\} \label{eq:mw_mu_w} \\
-	\hat{\sigma}_{i,t}^w &= \sqrt{\sum\nolimits_{t'=t-\Delta t+1}^t w_{t'} (y_{i,t'}-\hat{\mu}_{i,t}^w)^2}, \; \; \forall i \in \{1, \dots, k\}   \label{eq:mw_sigma_w} \\ 
-	\hat{\sigma}_{i,j,t}^w &= \sum\nolimits_{t'=t-\Delta t+1}^t w_{t'} (y_{i,t'}-\hat{\mu}_{i,t}^w)(y_{j,t'}-\hat{\mu}_{j,t}^w)  \; \; \forall i,j \in \{1, \dots, k\}   \label{eq:mw_cov_w} \\   
-	\hat{\rho}_{i,j,t}^w &= \frac{\hat{\sigma}_{i,j,t}^w}{\hat{\sigma}_{i,t}^w\hat{\sigma}_{j,t}^w} \label{eq:mw_rho_w} 
-\end{align}  
-
-\noindent
-\cite{ref:Pozzi2012} use the exponential function as functional form for the weights, i.e. exponential smoothing. This is the kind of weighting also used in this paper such that the weights in \eqref{eq:mw_mu_w}-\eqref{eq:mw_rho_w} are defined as:
-
-\begin{align} \label{eq:pearson_weights}
-	w_{t'} = w_0 \; e^{\alpha(t'- \Delta t)}, \; \; \forall t' \in \{t-\Delta t+1, t-\Delta t, \cdots, t\} 
-\end{align}   
-
-\noindent
-where $\alpha = \frac{1}{\theta}$ denotes the exponential decay factor, with $\alpha \in \mathbb{R}$ and $\alpha \ge 0$, and $w_0(\alpha) = \frac{1-e^{-\alpha}}{1-e^{-\alpha\Delta t}}$. Intuitively, when the parameter $\theta$ gets arbitrarily large, i.e. as $\theta \rightarrow \infty$, the weights are uniform and no distinction is made between the informational value of recent events and more remote ones. Conversely, lower values for $\theta$ indicate remote events to become increasingly irrelevant and more recent ones become ever more relevant from an informational point of view \citep{ref:Pozzi2012}. In this paper $\theta = \frac{\Delta t}{3}$ following the statement of \cite{ref:Pozzi2012} that "it is a reasonable choice for their data-set."  \\
-\fi
-
-\subsection{Capturing Nonlinear Relations: Kendall's $\tau$} 
-The Pearson product-moment correlation coefficient is the most frequent used measure for testing dependency between variables. It is, however, only a measure of linear dependence and using a linear correlation coefficient as a measure of dependence may lead to unreliable results outside the world of elliptical distributions. Given the fact that asset returns are generally not well represented by an elliptical distribution but exhibit non-linear dependence, alternative methods for capturing co-dependency are considered in this paper. One such alternative method is Kendall rank correlation coefficient, commonly referred to as Kendall's $\tau$ correlation coefficient, which measures the degree of similarity between two random variables through counting the concordant and discordant pairs. Kendall's $\tau$ accounting for tied pairs is formulated as
-
-\begin{align} \label{eq:mw_kendall}
-	\hat{\tau}_{i,j} = \frac{\sum_{u=1}^{\Delta t -1} \sum_{v=u+1}^{\Delta t} d_{uv}^i d_{uv}^j}{\sqrt{[\frac{1}{2}\Delta t (\Delta t -1)-n^i][\frac{1}{2}\Delta t(\Delta t - 1)-n^j]}}
-\end{align}
-
-\noindent
-where $d^k = sgn (y_u^k - y_v^k)$ for $k = i, j$ and $n^k$ is the total number of tied pairs for variable $k$. \\
-
-\noindent
-Kendall's $\tau$ rank correlation has some desirable theoretical properties over Pearson product-moment correlation such as: Kendall's $\tau$ rank correlation is able to capture nonlinear relationships and it is a distribution free measure, i.e. not dependent on the statistical distribution of the variables. It is robust to outliers and even defined if the variable's variances are infinite. Moreover, Kendall's correlation matrix is generally characterized by greater rank and maintaining positive semi-definiteness. A limit to the use of Kendall's $\tau$ rank correlation on large samples is its computational complexity of $O(\Delta t \ log \ \Delta t)$ \citep{ref:Pozzi2012}\footnote{This will not be an issue as the sample sizes do not qualify as problematic large in this paper.}.      \\
-
-
-
-\noindent
-Similar to Pearson moving window estimates of correlation, Kendall's $\tau$ correlation coefficient between two random variables take values in the interval [$-1$, $1$]. Values close to $1$ indicate strong similarity wheras values close to $-1$ indicate strong dissimilarity. In addition to Pearson moving window correlation estimates in \eqref{eq:mw_mu}-\eqref{eq:mw_rho}, the learning algorithms proposed in this paper make use of the moving window correlation estimates in \eqref{eq:mw_kendall} to define the set of covariates and response variable. \\
-
 \section{Correlation Estimation using Machine Learning} \label{sec:cor_ml}
 In Sections \ref{sec:ml_supervised} and \ref{sec:mvm} we have established the methodological underpinnings of machine learning and multivariate volatility modeling; two methodologies that play a central role throughout this paper. In this section we will discuss what approach we take to successfully formulate estimation of time-varying correlations as a supervised learning problem. \\
 
@@ -724,9 +785,8 @@ One should note that the set of covariates and response variable in the dataset 
 \textbf{Note that estimation of conditional correlations in our semiparametric model can be done in parallel with estimating conditional volatility matrix $D_t$. This differs from other non- and semiparametric methods which nonparametrically estimate conditional correlations given standardized residuals.} \\
 
 \noindent
-\textit{Moreover, can we state the following? "Unlike many of the early-stage multivariate GARCH models and
-unlike many estimation problems in nonparametric analysis, our semi-parametric model does not suffer from the curse of dimensionality. We do not assume any particular parametric form for the dependence between $Y_t$ and $X_t$.}
-
+\textit{Moreover, the following: "Unlike many of the early-stage multivariate GARCH models and
+unlike many estimation problems in nonparametric analysis, our semi-parametric model does not suffer from the curse of dimensionality. Random forests mitigate this problem by random subsampling of both training data as well as random subsampling of covariates. KNN does not suffer from curse of dimensionality in case an exhaustive search is performed when identifying the closest neighbours. Exhaustive search, as the term implies, involves computing the distance of the novel point from each and every point in the set and finding the point with the minimum distance. This approach is clearly inefficient and its complexity is O(nd) \citep{ref:Nene1997}. Look at a more recent suggestions for efficient KNN in high dimensional space in \citep{ref:Wang2011}.} 
 
 
 
@@ -762,7 +822,10 @@ where  $\epsilon = 10^{-5}$,  $\eta_t \sim NID(0,0.2)$ and the restriction $\rho
 To assess some of the statistical properties when moving window estimates of correlation coefficient are used as proxies for true correlations in our supervised learning problem, we will denote the estimation uncertainty associated to these coefficients by the width of their $100(1-\eta)\%$ confidence intervals. These confidence intervals are estimated by application of a bootstrap resampling procedure with replacement: For all times $t = \{\Delta t, \Delta t +1, \dots, T\}$, for $\Delta t = \{3, 4, \dots, 100\}$\footnote{Time units for $\Delta_t$ correspond to three to one hundred market days. Given the information on this discrete set of datapoints, it is possible to analyse MSE behaviour.}, a $1000$ samples of size $\Delta t$ have been randomly selected\footnote{A thousand samples is assumed to be a sufficient number of samples to capture the uncertainty around the estimated values.}. For each subsample the correlation coefficient is estimated and, subsequently, the width of the $100(1-\eta)\%$  confidence interval is measured for each coefficient. The parameter $\eta$ is set to $0.01$ in this part of the analysis.    \\ 
 
 \noindent
-\textbf{Explain validation mode: sliding or expanding moving window.}
+\textbf{Explain validation mode: sliding or expanding moving window.} \\
+
+\noindent
+For the implementation of nearest neighbor and random forest algorithms, we make use of a widely-used machine learning library for the Python programming language: Scikit-learn \citep{ref:Pedregosa2011}. \\ 
 
 \iffalse
 \noindent
@@ -1672,7 +1735,7 @@ having estimated the conditional CDF we simply invert it at the desired quantile
 \noindent
 We will now demonstrate the role of correlations in financial decision making. Specifically, we will establish some notation that is necessary to study the risk of portfolios consisting of an arbitrary number of assets denoted by $k$. We will compare DCC with other time-varying correlation estimators, namely: nearest neighbor and random forest. 
 
-\section{Value-at-Risk as Measure for Market Risk}
+\section{Value-at-Risk Theory}
 \textbf{Idea: VaR performance under normality assumption (backtesting strategies). It is ok to assume normality assumption solely for the purpose of comparing algorithms for correlation estimation. Moreover, major assumption parametric VaR is that asset returns are multivariate Gaussian distributed and serial independence.} \\
 
 \noindent
@@ -1740,56 +1803,11 @@ where $\Phi$ denotes the cumulative distribution function of standard Gaussian d
 \noindent
 In the backtesting analysis, VaR is computed at different quantiles. For simplicity, the sample mean is used as the conditional mean filtration and the proposed multivariate volatility model is applied to the mean-corrected data, i.e. $\mu_t$ is assumed constant. Furthermore, an equally weighted portfolio is used in our analysis as a number of papers \citep{ref:Plyakha2012} suggest that equally weighted portfolio strategies consistently outperform other optimization strategies. Moreover, the focus in this part of our analysis is on the empirical evaluation of different models for conditional correlation forecasting instead of finding optimal portfolio weights or any form of risk minimization.    \\
 
-
-\section{Dynamic Conditional Correlation Model}
-The dynamic conditional correlation (henceforth DCC) model \citep{ref:Engle2002} is a class of models that generalizes univariate generalized autoregressive conditional heteroskedasticity (GARCH) models to the multivariate case. The DCC models capture the advantages of GARCH models and simplifies the computation of multivariate GARCH models such as VEC-GARCH and BEKK. Reparameterization of covariance matrices lets the DCC model take advantage of the fact that correlation matrices are generally easier to model than the direct modeling of the covariance matrices. In the DCC models, time series of daily mean-corrected log returns on k assets $y_t=a_t$ is given by
-
-\begin{align}
-	y_t &= H_t^{\frac{1}{2}}z_t \\
-	H_t &= D_t R_t D_t \\
-	D_t &= diag(\sigma_{11,t}, \dots, \sigma_{kk,t})
-\end{align}
+\noindent
+"We estimate the VaR via the Monte Carlo method, which implies full repricing of the portfolio at every point in time. To keep a balance between the computational costs and the accuracy of the results we simulate five thousand portfolio values for each point in time." \\
 
 \noindent
-where $H_t$ is the conditional covariance matrix and $R_t$ is the conditional correlation matrix. $D_t$ is a diagonal matrix with $\sigma_{11,t}, \dots, \sigma_{kk,t}$ on the main diagonal, which can be estimated though univariate GARCH models.\\
-
-\noindent
-The idea behind DCC models is that multivariate volatility modeling can be divided into two estimation steps. Under assumption of conditional normality in the daily mean-corrected log returns $y_t$, the estimator gives rise to a log likelihood function. Without this assumption, an expected Quasi-Maximum Likelihood function is calculated \citep{ref:Engle2002}. As such, the first step is to estimate the conditional volatility series, $\sigma_{ii,t}$, which is done under the assumption that each asset volatility series follows a univariate GARCH(1,1) process with normal distributed errors, that is,
-
-\begin{align}
-	\sigma_{ii,t}^2 &= \omega_i + \beta_i\sigma_{ii,t-1}^2 + \alpha_i a_{i,t-1}^2 
-\end{align}
-
-\noindent
-Then, in the second step, one can use the estimated conditional volatilities $\sigma_{ii, t}$ to model the dynamics of the conditional correlation matrix $R_t$, that is,
-
-\begin{align}
-	R_t &= D_t^{-1} H_t D_t^{-1}
-\end{align}     
- 
-\noindent
-$R_t$, as noted by \cite{ref:Engle2002}, is the conditional volatility matrix of the marginally standardized residuals $\epsilon_t = (\epsilon_{1,t}, \epsilon_{2,t}, \dots, \epsilon_{k,t})$, where $\epsilon_{i,t} = a_{i,t} / \sigma_{ii,t}$. In this paper, the multivariate standard normal and the multivariate standard Student t-distribution are considered for the conditional distribution $\epsilon_t$. \\
-
-\noindent
-In the DCC model of \cite{ref:Engle2002}, the conditional volatility matrix of the marginally standardized residuals, $\epsilon_t$, is modeled using a GARCH(1,1) structure and reparameterization of $R_t$ ensures necessary conditions for $R_t$ are satisfied, that is,
-
-\begin{align}  
-	Q_t &= (1-\theta_1-\theta_2) \bar{Q} + \theta_1 Q_{t-1} \theta_2 \epsilon_{t-1} \epsilon'_{t-1} \label{eq:DCC_Q} \\
-	R_t &= diag(Q_t)^{-1} Q_t \ diag(Q_t)^{-1} \label{eq:DCC_R}
-\end{align}
-
-\noindent
-In \eqref{eq:DCC_Q}, $Q_t$ is a positive semi-definite matrix defining the structure of the correlation dynamics and $\bar{Q} = Cov(\epsilon_t \epsilon'_t) = \mathbb{E}[\epsilon_t \epsilon'_t]$ is the unconditional covariance matrix of the standardized residuals $\epsilon_t$\footnote{$\bar{Q}$ can be thought of as representing the long-run correlation structure and can be estimated by: $\bar{Q} = \frac{1}{T} \sum_{t=1}^T \epsilon_t \epsilon'_t$.}. In \eqref{eq:DCC_R}, $diag(Q)_t$ is a diagonal matrix with the square root of the diagonal elements of $Q_t$ at its diagonal. It is simply a normalization matrix to ensure the requirement that all elements in the conditional correlation matrix $R_t$ are bounded by -1 and 1. Parameters $\theta_1$, $\theta_2$ are non-negative real numbers satisfying $ 0 < \theta_1 + \theta_2 < 1$, which ensures $Q_t$ to satisfy the condition of a positive semi-definiteness and consequently positive semi-definiteness for $H_t$ under the condition that $D_t$ is also positive semi-definite.\\ 
-
-\noindent
-Eq. \eqref{eq:DCC_Q} shows that the DCC model of \cite{ref:Engle2002} is very parsimonious as the dynamics of all conditional correlations are driven with only two parameters, $\theta_1$ and $\theta_2$, regardless of the number of assets $k$. Consequently, the DCC model is relatively efficient to estimate. However, the assumption that the evolution of all correlations follows the same dynamic structure, regardless of the assets involved, can be considered a weakness of the DCC model. \\
-
-\noindent
-\textit{"Interestingly, DCC models can be estimated consistently in two steps (see Section 3.2), which makes this approach feasible when N is high. Of course, when N is large, the restriction of common dynamics gets tighter, but for large N the problem of maintaining tractability also gets harder. In this respect, several variants of the DCC model are proposed in the literature."}
-
-
-\noindent
-\textbf{The approximation used for one-step-ahead forecasts can be found in \cite{ref:Engle2001}}. \\
+On the basis of the fitted models, we generate B = 1000 bootstrap samples, $\{Y^b_{t+1} = Y^b_{t+1,1}, Y^b_{t+1,2}, \dots,Y^b_{t+1,k}\}^B_{b=1}$ for day t+1 and estimate the conditional VaR by using the B bootstrapped portfolio returns, $\{\Sigma_{i=1}^k w_i Y^b_{t+1,i}\}^B_{b=1}$. A violation happens when the actual daily loss is over the qth quantile of thebootstrap sample, where q varies among 0.95, 0.99 and 0.995. \\
 
 
 \section{Backtesting Methodology}
@@ -1831,6 +1849,8 @@ The dataset comprises 30 univariate time series of the log returns from the 30 D
 The first 500 samples were used as the training set. The remaining 500 samples are used as the test set.
 \fi
 
+\noindent
+All series show departures from normality which can be seen by their respective kurtosis and skewness. The normal distribution has an excess kurtosis of and skewness of 0. All indices exhibit a kurtosis greater than zero indicating a higher probability of large negative and positive returns than would be expected under normality. Interestingly, all return series have negative skewness which indicates more frequent large negative returns than large positive returns.
 
 \begin{table}[H]
 \centering
@@ -1905,7 +1925,15 @@ driving a dynamic volatility process can be better modeled using the Student's t
 "The confidence level is of importance. Evidently, the higher the confidence level, the larger the Value-at-Risk of the portfolio. By varying the confidence level, one is able to explore a whole risk profile, i.e. the entire distribution of results is revealed." \\
 
 \noindent
-\textbf{When commenting on the test results, do this from a perspective of rejecting the corresponding null hypothesis and whether the models underestimate risk or are overly conservative. And the practical implications from a regulatory perspective and a hedge fun/ bank perspective: a high-level capital reserve or low-level capital reserve. When commenting on figures with VaR functions talk about underestimation/ overestimation of sudden change in volatilities.}
+\textbf{When commenting on the test results, do this from a perspective of rejecting the corresponding null hypothesis and whether the models underestimate risk or are overly conservative. And the practical implications from a regulatory perspective and a hedge fun/ bank perspective: a high-level capital reserve or low-level capital reserve. When commenting on figures with VaR functions talk about underestimation/ overestimation of sudden change in volatilities.} \\
+
+\noindent
+Comment structure: First comment on test statistics depicted in tables (Coverage and Independence), then comment on figures containing, returns and VaR estimates of different models under the same VaR level. " The
+different rf/knn models do not show any significant differences in their VaR estimates, so we only show the ex. random forest or pearson model.  A significant difference can be detected between the random forest and DCC model." \iffalse edoc.ub.uni-muenchen.de/17921/1/Grziska_Martin.pdf page 74 \fi  \\
+
+
+\noindent
+"If different risk models have the same number of VaR violations and perform identically on the VaR tests a conservative risk manager might choose the risk model with the smallest VaR exceedance. When a risk model overestimates the true risks the bank has to build to much accruals, decreasing their profits. When the risk model underestimates the risk to much capital is allocated to risky positions and that might hurt the profits, too." 
 
 \subsection{Tranquil Market Conditions: Mid-1990's}
 http://lagrange.math.siu.edu/Olive/pphdrpred.pdf : for computing VaR as sample quantiles (high density regions) of multivariate Gaussian distribution.  
@@ -2228,8 +2256,10 @@ Future research: \\
 "In statistics and machine learning, ensemble methods use multiple learning algorithms to obtain better predictive performance than could be obtained from any of the constituent learning algorithms alone." Let's say DCC and some learning algorithm make up the set of superior models in MCS approach. Then it might be interesting to have a look at combining predictions from these superior models, i.e. ensemble learning.  \\
 
 \noindent
-Another interesting direction for further research is comparison of applications of learning algorithms with conditional copula models in the context of quantitative financial risk management.
+Another interesting direction for further research is comparison of applications of learning algorithms with conditional copula models in the context of quantitative financial risk management. \\
 
+\noindent
+KNN algorithm suffers from curse of dimensionality as it is mostly implemented by an approximate nearest neighbor search algorithm like a kd-tree. Usually every approximate search algorithm in high dimensional space will suffer from curse of dimensionality. KNN will not suffer from curse of dimensionality if you use a brute force search algorithm though. But this is not practical for large datasets, which in case of 30 assets is not a problem. An interesting direction for further research could be to see what qualifies as high dimensional asset universe and brute force search is not an option anymore. Following that, it would be interesting to look into the performance of KNN regression ensembles that do not suffer from the curse of dimensionality.        
 
 
 \bibliographystyle{plainnat}
