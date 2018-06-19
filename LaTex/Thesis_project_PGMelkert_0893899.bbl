@@ -1,4 +1,4 @@
-\begin{thebibliography}{43}
+\begin{thebibliography}{46}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
@@ -137,11 +137,6 @@ Robert~F. Engle, Victor~K. Ng, and Michael Rothschild.
 \newblock \emph{Journal of Econometrics}, 45\penalty0 (1):\penalty0 213--237,
   1990.
 
-\bibitem[Fox and Dunson(2011)]{ref:Fox2011}
-Emily Fox and David Dunson.
-\newblock Bayesian nonparametric covariance regression.
-\newblock \emph{Arxiv preprint arXiv: 1101.2017}, jan 2011.
-
 \bibitem[Goodrich et~al.(2015)Goodrich, Tamassia, and
   Goldwasser]{ref:Goodrich2015}
 Michael~T Goodrich, Roberto Tamassia, and Michael~H Goldwasser.
@@ -159,6 +154,12 @@ Christian~M. Hafner, Dick van Dijk, and Philip~Hans Franses.
 \newblock In \emph{Econometric Analysis of Financial and Economic Time Series},
   pages 59--103. Emerald Group Publishing Limited, 2006.
 
+\bibitem[Hansen(1994)]{ref:Hansen1994}
+Bruce~E. Hansen.
+\newblock Autoregressive conditional density estimation.
+\newblock \emph{International Economic Review}, 35\penalty0 (3):\penalty0
+  705--730, 1994.
+
 \bibitem[Hastie et~al.(2009)Hastie, Tibshirani, and Friedman]{ref:Hastie2009}
 Trevor Hastie, Robert Tibshirani, and Jerome Friedman.
 \newblock \emph{The Elements of Statistical Learning: Data Mining, Inference
@@ -170,6 +171,12 @@ Tin~Kam Ho.
 \newblock The random subspace method for constructing decision forests.
 \newblock \emph{IEEE Transactions on Pattern Analysis and Machine
   Intelligence}, 20\penalty0 (8):\penalty0 832--844, 1998.
+
+\bibitem[Jensen and Maheu(2013)]{ref:Jensen2013}
+Mark~J. Jensen and John~M. Maheu.
+\newblock Bayesian semiparametric multivariate garch modeling.
+\newblock \emph{Journal of Econometrics}, 176\penalty0 (1):\penalty0 3--17,
+  2013.
 
 \bibitem[Jondeau and Rockinger(2006)]{ref:Jondeau2006}
 Eric Jondeau and Michael Rockinger.
@@ -205,6 +212,13 @@ Qi~Li and Jeffrey~Scott Racine.
 X.~Long and A.~Ullah.
 \newblock Nonparametric and semiparametric multivariate garch model.
 \newblock unpublished, 2005.
+
+\bibitem[Long et~al.(2011)Long, Su, and Ullah]{ref:Long2011}
+Xiangdong Long, Liangjun Su, and Aman Ullah.
+\newblock Estimation and forecasting of dynamic conditional covariance: A
+  semiparametric multivariate model.
+\newblock \emph{Journal of Business \& Economic Statistics}, 29\penalty0
+  (1):\penalty0 109--125, 2011.
 
 \bibitem[Louppe(2014)]{ref:Louppe2014}
 Gilles Louppe.
@@ -261,6 +275,13 @@ Roy van~der Weide.
 \newblock Go-garch: a multivariate generalized orthogonal garch model.
 \newblock \emph{Journal of Applied Econometrics}, 17\penalty0 (5):\penalty0
   549--564, 2002.
+
+\bibitem[Virbickait{\.e} et~al.(2016)Virbickait{\.e}, Aus{\'\i}n, and
+  Galeano]{ref:Virbickait2016}
+Audron{\.e} Virbickait{\.e}, M.~Concepci{\'o}n Aus{\'\i}n, and Pedro Galeano.
+\newblock A bayesian non-parametric approach to asymmetric dynamic conditional
+  correlation model with application to portfolio selection.
+\newblock \emph{Computational Statistics \& Data Analysis}, 100, 2016.
 
 \bibitem[Wang(2011)]{ref:Wang2011}
 X.~Wang.
