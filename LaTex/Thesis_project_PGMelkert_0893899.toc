@@ -9,44 +9,40 @@
 \contentsline {section}{\numberline {1.3}Outline and Contributions}{4}{section.1.3}
 \contentsline {chapter}{\numberline {2}Methodology}{6}{chapter.2}
 \contentsline {section}{\numberline {2.1}Multivariate Volatility Modeling}{6}{section.2.1}
-\contentsline {subsection}{\numberline {2.1.1}Dynamic Conditional Correlation Model}{7}{subsection.2.1.1}
+\contentsline {subsection}{\numberline {2.1.1}Dynamic Conditional Correlation Model}{8}{subsection.2.1.1}
 \contentsline {subsection}{\numberline {2.1.2}Pearson Product-Moment Correlation Coefficient}{9}{subsection.2.1.2}
 \contentsline {subsection}{\numberline {2.1.3}Capturing Nonlinear Relations: Kendall's $\tau $}{9}{subsection.2.1.3}
 \contentsline {section}{\numberline {2.2}Machine Learning}{10}{section.2.2}
-\contentsline {subsection}{\numberline {2.2.1}Nearest Neighbors Estimator}{10}{subsection.2.2.1}
+\contentsline {subsection}{\numberline {2.2.1}Nearest Neighbor Estimator}{11}{subsection.2.2.1}
 \contentsline {subsection}{\numberline {2.2.2}Random Forest Estimator}{12}{subsection.2.2.2}
 \contentsline {subsubsection}{\numberline {2.2.2.1}Classification and Regression Trees}{12}{subsubsection.2.2.2.1}
 \contentsline {subsubsection}{\numberline {2.2.2.2}Bagging}{13}{subsubsection.2.2.2.2}
-\contentsline {subsubsection}{\numberline {2.2.2.3}Random Covariate Subspacing}{13}{subsubsection.2.2.2.3}
-\contentsline {subsubsection}{\numberline {2.2.2.4}Definition of Random Forests}{14}{subsubsection.2.2.2.4}
-\contentsline {subsection}{\numberline {2.2.3}Bias-Variance Decomposition}{15}{subsection.2.2.3}
-\contentsline {section}{\numberline {2.3}Correlation Estimation using Machine Learning}{17}{section.2.3}
-\contentsline {chapter}{\numberline {3}Simulated Data with Time-Varying Correlation}{19}{chapter.3}
-\contentsline {section}{\numberline {3.1}Moving Window Estimates of Correlation}{20}{section.3.1}
-\contentsline {section}{\numberline {3.2}Learning with True Correlation for Response Variable and Proxies for Covariates}{22}{section.3.2}
-\contentsline {subsection}{\numberline {3.2.1}Nearest Neighbor}{23}{subsection.3.2.1}
-\contentsline {subsubsection}{\numberline {3.2.1.1}Diagnosing the Generalization Error of Nearest Neighbors}{23}{subsubsection.3.2.1.1}
-\contentsline {subsubsection}{\numberline {3.2.1.2}Alternative Parameterizations of Nearest Neighbor Algorithm}{25}{subsubsection.3.2.1.2}
-\contentsline {subsection}{\numberline {3.2.2}Random Forest}{29}{subsection.3.2.2}
-\contentsline {subsubsection}{\numberline {3.2.2.1}Diagnosing the Generalization Error of Random Forest}{30}{subsubsection.3.2.2.1}
-\contentsline {subsubsection}{\numberline {3.2.2.2}Alternative Parameterizations of Random Forest Algorithm}{31}{subsubsection.3.2.2.2}
-\contentsline {section}{\numberline {3.3}Learning with Proxies for Response Variable and Covariates}{33}{section.3.3}
-\contentsline {subsection}{\numberline {3.3.1}Nearest Neighbor}{33}{subsection.3.3.1}
-\contentsline {subsubsection}{\numberline {3.3.1.1}Diagnosing the Generalization Error of Nearest Neighbor}{33}{subsubsection.3.3.1.1}
-\contentsline {subsubsection}{\numberline {3.3.1.2}Alternative Parameterizations of Nearest Neighbor Algorithm}{35}{subsubsection.3.3.1.2}
-\contentsline {subsection}{\numberline {3.3.2}Random Forest}{39}{subsection.3.3.2}
-\contentsline {subsubsection}{\numberline {3.3.2.1}Diagnosing the Generalization Error of Random Forest}{39}{subsubsection.3.3.2.1}
-\contentsline {subsubsection}{\numberline {3.3.2.2}Alternative Parameterizations of Random Forest Algorithm}{41}{subsubsection.3.3.2.2}
-\contentsline {section}{\numberline {3.4}Conclusions Simulation Results}{43}{section.3.4}
-\contentsline {chapter}{\numberline {4}Systems of Correlations in Quantitative Financial Risk Management}{45}{chapter.4}
-\contentsline {section}{\numberline {4.1}Value-at-Risk Theory}{45}{section.4.1}
-\contentsline {section}{\numberline {4.2}Backtesting Methodology}{47}{section.4.2}
-\contentsline {section}{\numberline {4.3}Data and Descriptive Statistics}{48}{section.4.3}
-\contentsline {section}{\numberline {4.4}Empirical Results}{49}{section.4.4}
-\contentsline {subsection}{\numberline {4.4.1}Tranquil Market Conditions: Mid-1990's}{50}{subsection.4.4.1}
-\contentsline {subsection}{\numberline {4.4.2}Volatile Market Conditions: 2000-2001 Dot-com Bubble}{52}{subsection.4.4.2}
-\contentsline {section}{\numberline {4.5}Conclusions Empirical Results}{54}{section.4.5}
-\contentsline {chapter}{\numberline {5}Conclusion and Future Research}{55}{chapter.5}
-\contentsline {chapter}{\numberline {A}Theoretical Analysis Value-at-Risk Forecasting}{59}{appendix.A}
-\contentsline {section}{\numberline {A.1}Tranquil Market Conditions: Mid-1990's}{59}{section.A.1}
-\contentsline {section}{\numberline {A.2}Volatile Market Conditions: 2000-2001 Dot-com Bubble}{61}{section.A.2}
+\contentsline {subsubsection}{\numberline {2.2.2.3}Random Subspace Method}{13}{subsubsection.2.2.2.3}
+\contentsline {subsubsection}{\numberline {2.2.2.4}Definition of Random Forests}{13}{subsubsection.2.2.2.4}
+\contentsline {subsection}{\numberline {2.2.3}Bias-Variance Decomposition}{14}{subsection.2.2.3}
+\contentsline {section}{\numberline {2.3}Conditional Correlation Estimation using Machine Learning}{16}{section.2.3}
+\contentsline {chapter}{\numberline {3}Simulated Data with Time-Varying Correlation}{17}{chapter.3}
+\contentsline {section}{\numberline {3.1}Moving Window Estimates of Correlation}{18}{section.3.1}
+\contentsline {section}{\numberline {3.2}Learning with True Correlation for Response Variable and Proxies for Covariates}{20}{section.3.2}
+\contentsline {subsection}{\numberline {3.2.1}Generalization Error of Nearest Neighbor under True Correlation}{21}{subsection.3.2.1}
+\contentsline {subsection}{\numberline {3.2.2}Effect of Alternative Nearest Neighbor Parameterizations under True Correlation}{22}{subsection.3.2.2}
+\contentsline {subsection}{\numberline {3.2.3}Generalization Error of Random Forest under True Correlation}{26}{subsection.3.2.3}
+\contentsline {subsection}{\numberline {3.2.4}Effect of Alternative Random Forest Parameterizations under True Correlation}{28}{subsection.3.2.4}
+\contentsline {section}{\numberline {3.3}Learning with Proxies for Response Variable and Covariates}{30}{section.3.3}
+\contentsline {subsection}{\numberline {3.3.1}Generalization Error of Nearest Neighbor under Proxy Correlation}{30}{subsection.3.3.1}
+\contentsline {subsection}{\numberline {3.3.2}Effect of Alternative Nearest Neighbor Parameterizations under Proxy Correlation}{32}{subsection.3.3.2}
+\contentsline {subsection}{\numberline {3.3.3}Generalization Error of Random Forest under Proxy Correlation}{36}{subsection.3.3.3}
+\contentsline {subsection}{\numberline {3.3.4}Effect of Alternative Random Forest Parameterizations under Proxy Correlation}{38}{subsection.3.3.4}
+\contentsline {section}{\numberline {3.4}Conclusions Simulation Results}{39}{section.3.4}
+\contentsline {chapter}{\numberline {4}Systems of Correlations in Quantitative Financial Risk Management}{42}{chapter.4}
+\contentsline {section}{\numberline {4.1}Value-at-Risk Theory}{43}{section.4.1}
+\contentsline {section}{\numberline {4.2}Backtesting Methodology}{44}{section.4.2}
+\contentsline {section}{\numberline {4.3}Data and Descriptive Statistics}{45}{section.4.3}
+\contentsline {section}{\numberline {4.4}Empirical Results}{46}{section.4.4}
+\contentsline {subsection}{\numberline {4.4.1}Tranquil Market Conditions: Mid-1990's}{47}{subsection.4.4.1}
+\contentsline {subsection}{\numberline {4.4.2}Volatile Market Conditions: 2000-2001 Dot-com Bubble}{49}{subsection.4.4.2}
+\contentsline {section}{\numberline {4.5}Conclusions Empirical Results}{51}{section.4.5}
+\contentsline {chapter}{\numberline {5}Conclusion and Future Research}{52}{chapter.5}
+\contentsline {chapter}{\numberline {A}Theoretical Analysis Value-at-Risk Forecasting}{56}{appendix.A}
+\contentsline {section}{\numberline {A.1}Tranquil Market Conditions: Mid-1990's}{56}{section.A.1}
+\contentsline {section}{\numberline {A.2}Volatile Market Conditions: 2000-2001 Dot-com Bubble}{58}{section.A.2}
