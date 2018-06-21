@@ -22,12 +22,12 @@
 \BOOKMARK [1][-]{section.2.3}{Conditional Correlation Estimation using Machine Learning}{chapter.2}% 22
 \BOOKMARK [0][-]{chapter.3}{Simulated Data with Time-Varying Correlation}{}% 23
 \BOOKMARK [1][-]{section.3.1}{Moving Window Estimates of Correlation}{chapter.3}% 24
-\BOOKMARK [1][-]{section.3.2}{Learning with True Correlation for Response Variable and Proxies for Covariates}{chapter.3}% 25
+\BOOKMARK [1][-]{section.3.2}{Learning with True Correlation for Response Variable}{chapter.3}% 25
 \BOOKMARK [2][-]{subsection.3.2.1}{Generalization Error of Nearest Neighbor under True Correlation}{section.3.2}% 26
 \BOOKMARK [2][-]{subsection.3.2.2}{Effect of Alternative Nearest Neighbor Parameterizations under True Correlation}{section.3.2}% 27
 \BOOKMARK [2][-]{subsection.3.2.3}{Generalization Error of Random Forest under True Correlation}{section.3.2}% 28
 \BOOKMARK [2][-]{subsection.3.2.4}{Effect of Alternative Random Forest Parameterizations under True Correlation}{section.3.2}% 29
-\BOOKMARK [1][-]{section.3.3}{Learning with Proxies for Response Variable and Covariates}{chapter.3}% 30
+\BOOKMARK [1][-]{section.3.3}{Learning with Proxy for Response Variable}{chapter.3}% 30
 \BOOKMARK [2][-]{subsection.3.3.1}{Generalization Error of Nearest Neighbor under Proxy Correlation}{section.3.3}% 31
 \BOOKMARK [2][-]{subsection.3.3.2}{Effect of Alternative Nearest Neighbor Parameterizations under Proxy Correlation}{section.3.3}% 32
 \BOOKMARK [2][-]{subsection.3.3.3}{Generalization Error of Random Forest under Proxy Correlation}{section.3.3}% 33

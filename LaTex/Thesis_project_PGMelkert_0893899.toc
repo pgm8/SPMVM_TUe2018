@@ -23,26 +23,26 @@
 \contentsline {section}{\numberline {2.3}Conditional Correlation Estimation using Machine Learning}{16}{section.2.3}
 \contentsline {chapter}{\numberline {3}Simulated Data with Time-Varying Correlation}{17}{chapter.3}
 \contentsline {section}{\numberline {3.1}Moving Window Estimates of Correlation}{18}{section.3.1}
-\contentsline {section}{\numberline {3.2}Learning with True Correlation for Response Variable and Proxies for Covariates}{20}{section.3.2}
+\contentsline {section}{\numberline {3.2}Learning with True Correlation for Response Variable}{20}{section.3.2}
 \contentsline {subsection}{\numberline {3.2.1}Generalization Error of Nearest Neighbor under True Correlation}{21}{subsection.3.2.1}
 \contentsline {subsection}{\numberline {3.2.2}Effect of Alternative Nearest Neighbor Parameterizations under True Correlation}{22}{subsection.3.2.2}
 \contentsline {subsection}{\numberline {3.2.3}Generalization Error of Random Forest under True Correlation}{26}{subsection.3.2.3}
 \contentsline {subsection}{\numberline {3.2.4}Effect of Alternative Random Forest Parameterizations under True Correlation}{28}{subsection.3.2.4}
-\contentsline {section}{\numberline {3.3}Learning with Proxies for Response Variable and Covariates}{30}{section.3.3}
+\contentsline {section}{\numberline {3.3}Learning with Proxy for Response Variable}{30}{section.3.3}
 \contentsline {subsection}{\numberline {3.3.1}Generalization Error of Nearest Neighbor under Proxy Correlation}{30}{subsection.3.3.1}
 \contentsline {subsection}{\numberline {3.3.2}Effect of Alternative Nearest Neighbor Parameterizations under Proxy Correlation}{32}{subsection.3.3.2}
 \contentsline {subsection}{\numberline {3.3.3}Generalization Error of Random Forest under Proxy Correlation}{36}{subsection.3.3.3}
 \contentsline {subsection}{\numberline {3.3.4}Effect of Alternative Random Forest Parameterizations under Proxy Correlation}{38}{subsection.3.3.4}
-\contentsline {section}{\numberline {3.4}Conclusions Simulation Results}{39}{section.3.4}
-\contentsline {chapter}{\numberline {4}Systems of Correlations in Quantitative Financial Risk Management}{42}{chapter.4}
-\contentsline {section}{\numberline {4.1}Value-at-Risk Theory}{43}{section.4.1}
-\contentsline {section}{\numberline {4.2}Backtesting Methodology}{44}{section.4.2}
-\contentsline {section}{\numberline {4.3}Data and Descriptive Statistics}{45}{section.4.3}
-\contentsline {section}{\numberline {4.4}Empirical Results}{46}{section.4.4}
-\contentsline {subsection}{\numberline {4.4.1}Tranquil Market Conditions: Mid-1990's}{47}{subsection.4.4.1}
-\contentsline {subsection}{\numberline {4.4.2}Volatile Market Conditions: 2000-2001 Dot-com Bubble}{49}{subsection.4.4.2}
-\contentsline {section}{\numberline {4.5}Conclusions Empirical Results}{51}{section.4.5}
-\contentsline {chapter}{\numberline {5}Conclusion and Future Research}{52}{chapter.5}
-\contentsline {chapter}{\numberline {A}Theoretical Analysis Value-at-Risk Forecasting}{56}{appendix.A}
-\contentsline {section}{\numberline {A.1}Tranquil Market Conditions: Mid-1990's}{56}{section.A.1}
-\contentsline {section}{\numberline {A.2}Volatile Market Conditions: 2000-2001 Dot-com Bubble}{58}{section.A.2}
+\contentsline {section}{\numberline {3.4}Conclusions Simulation Results}{40}{section.3.4}
+\contentsline {chapter}{\numberline {4}Systems of Correlations in Quantitative Financial Risk Management}{41}{chapter.4}
+\contentsline {section}{\numberline {4.1}Value-at-Risk Theory}{42}{section.4.1}
+\contentsline {section}{\numberline {4.2}Backtesting Methodology}{43}{section.4.2}
+\contentsline {section}{\numberline {4.3}Data and Descriptive Statistics}{44}{section.4.3}
+\contentsline {section}{\numberline {4.4}Empirical Results}{45}{section.4.4}
+\contentsline {subsection}{\numberline {4.4.1}Tranquil Market Conditions: Mid-1990's}{46}{subsection.4.4.1}
+\contentsline {subsection}{\numberline {4.4.2}Volatile Market Conditions: 2000-2001 Dot-com Bubble}{48}{subsection.4.4.2}
+\contentsline {section}{\numberline {4.5}Conclusions Empirical Results}{50}{section.4.5}
+\contentsline {chapter}{\numberline {5}Conclusion and Future Research}{51}{chapter.5}
+\contentsline {chapter}{\numberline {A}Theoretical Analysis Value-at-Risk Forecasting}{55}{appendix.A}
+\contentsline {section}{\numberline {A.1}Tranquil Market Conditions: Mid-1990's}{55}{section.A.1}
+\contentsline {section}{\numberline {A.2}Volatile Market Conditions: 2000-2001 Dot-com Bubble}{57}{section.A.2}
