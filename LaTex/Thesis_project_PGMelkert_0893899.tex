@@ -1700,8 +1700,22 @@ In summary, parsimoniously specified Nearest Neighbor and Random Forest estimato
 \chapter{Systems of Correlations in Quantitative Financial Risk Management} \label{chap:multivariate_analysis}
 This part of the analysis concerns modeling the dependence structure between financial returns in a multivariate setting. Correlation defined by Pearson's linear coefficient and Kendall's $\tau$ coefficient continues to be the measure for dependency. However, the focus of analysis in a multivariate setting is a \textit{system of correlations} rather than \textit{individual correlations}. The role of systems of correlations is demonstrated in the financial task of risk assessment. First, in Section \ref{sec:VaR}, notation is established that is necessary to study the risk of portfolios consisting of an arbitrary number of assets. Section \ref{sec:backesting} then describes the backtesting methodology that is applied to statistically compare our semiparametric multivariate volatility model against a parametric counterpart, the dynamic conditional correlation model of \cite{ref:Engle2002}. Next, our semiparametric multivariate volatility model is applied to the 30 constituents included in the Dow Jones Industrial Average index and performance is verified in terms of an economic loss function, the Value-at-Risk. As such, Section \ref{sec:data} contains some descriptive statistics of the dataset comprising log return series of the 30 constituents included in the Dow Jones Industrial Average index and Section \ref{sec:results} presents the results. Finally, Section \ref{sec:conclusions_emp} concludes the chapter.  \\
 
-\noindent
-\textbf{Insert text covering: we will look at one-step ahead VaR forecasting, relate this to Basel, and say we take 30 DJIA constituents as asset universe. Then add a Figure with the sample period 1987-2001 of the log returns of the DJIA index OR Average log-difference of 30 assets that we are considering. Then the setting is set.} \\
+
+\begin{enumerate}
+	\item Use decomposition of conditional variance-covariance matrix $H_t = D_t R_t D_t$.
+	\item $D_t$ is obtained by estimation of conditional variances with GARCH(1,1) models with Gaussian and skewed Student t-distributional assumptions for marginal error distributions. 
+	\item $R_t$ is obtained by estimation of conditional correlations with nonparametric learning estimators and parametric dynamic conditional correlation model.
+	\item Check semi positive-definiteness of obtained $H_t$ and use it for VaR computations and backtesting  under assumption that asset returns follow a multivariate Gaussian distribution.
+	\item Backtesting periods in tranquil times and in volatile times.
+\end{enumerate}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.6]{multivar_analysis/log_returns_DJ_constituents.png}
+	\caption{Log return of equally weighted Dow Jones constituents from March 1987 to December 2001.}
+	\label{fig:DJIA_returns}
+\end{figure}
+
 
 \iffalse
 \textit{If a multivariate GARCH model is fitted, the multivariate distribution of the returns can be used directly to compute the implied distribution of any portfolio. There is no need to re?estimate the model for different weight vectors. The multivariate approach is illustrated by Giot and Laurent (2003) using a trivariate example with a time?varying correlation model.}
@@ -1712,14 +1726,6 @@ having estimated the conditional CDF we simply invert it at the desired quantile
 \fi
 
 
-\begin{enumerate}
-	\item Use decomposition of conditional variance-covariance matrix $H_t = D_t R_t D_t$.
-	\item $D_t$ is obtained by estimation of conditional variances with GARCH(1,1) model with Gaussian and skewed Student t-distributional assumptions for marginal error distributions. 
-	\item $R_t$ is obtained by estimation of correlations with learning algorithms and DCC-GARCH (benchmark)
-	\item Check semi positive-definiteness of obtained $H_t$ and use it for VaR computations and backtesting  under assumption that asset returns follow a multivariate Gaussian distribution.
-	\item Backtesting periods in tranquil times and in volatile times.
-\end{enumerate}
-
 
 \iffalse
 For analysis of the conditional correlations forecasting accuracy implied by different multivariate conditional volatility models, the one day ahead out-of-sample Value-at-Risk (henceforth VaR) is computed and a backtesting analysis is performed. The idea is to consider a  $k$ dimensional system of asset return series, estimate the parameters of multivariate volatility models using a training set and apply the proposed models to obtain out-of-sample one step ahead forecasts of the conditional covariance matrix, $H_t$, where the conditional correlation matrix $R_t$ is estimated through learning estimators and the dynamic conditional correlation model of \cite{ref:Engle2002}. Then it is possible to compute one-day-ahead out-of-sample VaR and perform a backtesting analysis.  
@@ -1729,18 +1735,17 @@ For analysis of the conditional correlations forecasting accuracy implied by dif
 
 \section{Value-at-Risk Theory} \label{sec:VaR}
 %Value-at-Risk is the mandated risk measure in a lot of regulations (e.g. Basel).
-One definition of Value-at-Risk (henceforth VaR) is the maximum loss which is not exceeded at a given confidence level $\alpha$, which is by saying VaR is the loss value for which the probability of observing a larger loss is equal to $1-\alpha$. A more formal definition in terms of the $\alpha$-quantile of the loss distribution is given by \citep{ref:QRM2015}, that is \\
+One definition of Value-at-Risk (henceforth VaR) is the maximum loss which is not exceeded at a given confidence level $\alpha$, which is analogous to saying VaR is the loss value for which the probability of observing a larger loss is equal to $1-\alpha$. A more formal definition in terms of the $\alpha$-quantile of the loss distribution is given by \citep{ref:QRM2015}, that is,
 
-
-\begin{equation}
+\begin{align}
 	VaR_{\alpha} = inf\{l \in \mathbb{R}:P(L>l) \le 1-\alpha\}=inf\{l \in \mathbb{R}: F_L(l) \ge \alpha\}
-\end{equation}
+\end{align}
 
 \noindent
 where $F_L(l) = P(L \le l)$ denotes the distribution function  of the corresponding loss distribution. \\
 
 \noindent
-VaR is determined after definition of the portfolio return distribution, where portfolio return $p_t = w' y_t$. It is noted that the validation of the portfolio risk using backtesting measures is not straightforward without further assumptions on $a_t$, the distribution of errors driving the volatility process. In this paper, the multivariate Gaussian distribution and multivariate Student t-distribution are considered for the distribution of $a_t$. In any case, the first two moments of the portfolio return are given by
+VaR is determined after definition of the portfolio return distribution, where portfolio return $p_t = w' r_t$. It is noted that the validation of the portfolio risk using backtesting measures is not straightforward without further assumptions on $a_t$, the distribution of errors driving the volatility process. In this paper, the multivariate Gaussian distribution and multivariate Student t-distribution are considered for the distribution of $a_t$. In any case, the first two moments of the portfolio return are given by
 
 \begin{align}
 	\mathbb{E}[p_t] &=  w' \mathbb{E}[\mu_t] + w' \mathbb{E}[a_t] =  w' \mathbb{E}[\mu_t]  \\
@@ -1768,7 +1773,7 @@ If the portfolio return distribution is assumed to follow a multivariate Student
 The portfolio VaR for one day horizon at $\alpha$ confidence level is then given by
 
 \begin{align}
-	VaR(\alpha) &= \mu_t + \sigma_t \Phi^{-1}(\alpha)
+	VaR(\alpha) &= \mu_t + \sigma_t \Phi^{-1}(\alpha)  \label{eq:var_parametric}
 	% \\ VaR(\alpha) &= \mu_t + \sigma_t t_\nu^{-1}(\alpha)
 \end{align}
 
@@ -1777,13 +1782,16 @@ where $\Phi$ denotes the cumulative distribution function of standard Gaussian d
 \\
 
 \noindent
-In the backtesting analysis, VaR is computed at different quantiles. For simplicity, the sample mean is used as the conditional mean filtration and the proposed multivariate volatility model is applied to the mean-corrected data, i.e. $\mu_t$ is assumed constant. Furthermore, an equally weighted portfolio is used in our analysis as a number of papers \citep{ref:Plyakha2012} suggest that equally weighted portfolio strategies consistently outperform other optimization strategies. Moreover, the focus in this part of our analysis is on the empirical evaluation of different models for conditional correlation forecasting instead of finding optimal portfolio weights or any form of risk minimization.    \\
+In the backtesting analysis, VaR is computed at different quantiles. For simplicity, but without loss of generality, the sample mean is used as the conditional mean filtration and the proposed semiparametric multivariate volatility model is applied to the mean-corrected data, that is, $\mu_t$ is assumed constant. Furthermore, an equally weighted portfolio is used in our analysis as a number of papers \citep{ref:Plyakha2012} suggest that equally weighted portfolio strategies consistently outperform other optimization strategies. Moreover, the focus in this part of our analysis is on the empirical evaluation of different models for and forecasting of the conditional covariance matrix instead of finding optimal portfolio weights or any form of risk minimization.    \\
 
 \noindent
-"We estimate the VaR via the Monte Carlo method, which implies full repricing of the portfolio at every point in time. To keep a balance between the computational costs and the accuracy of the results we simulate five thousand portfolio values for each point in time. Methodologically, our procedure for computing the VaR requires the following steps. First, we estimate the whole model (conditional volatility matrix + conditional correlation matrix). Then, we simulate 10.000/ 5.000 random samples assuming multivariate Gaussian distribution function. Then, we compute the value of the considered portfolio and estimate the VaR. This procedure is repeated until the last observation, and we compare the estimated VaR with the actual next-day change in the portfolio's value." \\
+\textbf{ALTERNATIVE COMPUTATION OF VAR: USING MC SIMUALTION}\\
+\textbf{Eq. \ref{eq:var_parametric} assumes normality and serial independence but WE assume assets are correlated so:} Instead of using \ref{eq:var_parametric} I could use Monte Carlo Sampling at each time unit as I have estimated conditional covariance matrix at each time unit and. Then we estimate the VaR via the Monte Carlo method, which implies full repricing of the portfolio at every point in time. To keep a balance between the computational costs and the accuracy of the results we simulate 10 or 5 thousand portfolio values for each point in time. Methodologically, our procedure for computing the VaR requires the following steps. First, we estimate the whole model (conditional volatility matrix + conditional correlation matrix, which I have for each time unit in both backtest periods). Then, we simulate 10.000/ 5.000 random samples assuming multivariate Gaussian distribution function. Then, we compute the value of the considered portfolio which comes down to multiplication with the weight vector assuming each asset has weight 1/ total number of assets. Then we have the portfolio return density and estimate VaR for corresponding quantiles. This procedure is repeated until the last observation, and we compare the estimated VaR with the actual next-day change in the portfolio's value. In other words: On the basis of the fitted models, we generate B = 10.000/ 5.000 samples, $\{R^b_{t+1} = r^b_{t+1,1}, r^b_{t+1,2}, \dots,r^b_{t+1,k}\}^B_{b=1}$ for day t+1 and estimate the conditional VaR by using the B portfolio returns, $\{\Sigma_{i=1}^k w_i R^b_{t+1,i}\}^B_{b=1}$. \\
 
 \noindent
-On the basis of the fitted models, we generate B = 10.000/ 5.000 bootstrap samples, $\{Y^b_{t+1} = Y^b_{t+1,1}, Y^b_{t+1,2}, \dots,Y^b_{t+1,k}\}^B_{b=1}$ for day t+1 and estimate the conditional VaR by using the B bootstrapped portfolio returns, $\{\Sigma_{i=1}^k w_i Y^b_{t+1,i}\}^B_{b=1}$. \\
+\textbf{ALTERNATIVE COMPUTATION OF VAR: Highest Density Regions.}\\
+Alternatively, for obtaining VaR (quantiles) from a multivariate normal distribution we can report VaR as the 
+multivariate  'sample quantiles', leading to highest density regions. This is not clear to me at this point and it will take me some time to find out how to do this given that I have estimates of next days' conditional covariance matrix for all time t in both backtest periods.
 
 
 \section{Backtesting Methodology} \label{sec:backesting}
@@ -1900,11 +1908,13 @@ XOM   & 0.0511 & 0.0250    & -1.0537  & 30.83           & -26.77  & 16.54   \\ [
 "The confidence level is of importance. Evidently, the higher the confidence level, the larger the Value-at-Risk of the portfolio. By varying the confidence level, one is able to explore a whole risk profile, i.e. the entire distribution of results is revealed." \\
 
 \noindent
-\textbf{When commenting on the test results, do this from a perspective of rejecting the corresponding null hypothesis and whether the models underestimate risk or are overly conservative. And the practical implications from a regulatory perspective and a hedge fun/ bank perspective: a high-level capital reserve or low-level capital reserve. When commenting on figures with VaR functions talk about underestimation/ overestimation of sudden change in volatilities.} \\
+\textbf{When commenting on the test results, do this from a perspective of rejecting the corresponding null hypothesis and whether the models underestimate risk or are overly conservative. And the practical implications from a regulatory perspective and a hedge fun/ bank perspective: a high-level capital reserve or low-level capital reserve. When commenting on figures with VaR functions talk about underestimation/ overestimation of sudden change in volatilities. Comment structure: First comment on test statistics depicted in tables (Coverage and Independence), then comment on figures containing, returns and VaR estimates of different models under the same VaR level.} \\
 
+\iffalse
 \noindent
 Comment structure: First comment on test statistics depicted in tables (Coverage and Independence), then comment on figures containing, returns and VaR estimates of different models under the same VaR level. " The
 different rf/knn models do not show any significant differences in their VaR estimates, so we only show the ex. random forest or pearson model.  A significant difference can be detected between the random forest and DCC model." \iffalse edoc.ub.uni-muenchen.de/17921/1/Grziska_Martin.pdf page 74 \fi  \\
+\fi
 
 \iffalse
 \noindent
@@ -1912,7 +1922,9 @@ different rf/knn models do not show any significant differences in their VaR est
 \fi
 
 \subsection{Tranquil Market Conditions: Mid-1990's}
+\iffalse
 http://lagrange.math.siu.edu/Olive/pphdrpred.pdf : for computing VaR as sample quantiles (high density regions) of multivariate Gaussian distribution.  
+\fi
 
 
 
@@ -1943,7 +1955,7 @@ RF(100)\_pearson	&\textbf{25}	&\textbf{11}	&9		&3						  \\
 RF(100)\_kendall	&42		&17		&12		&8							\\ [1ex]
 \bottomrule
 \end{tabular}
-\caption[Kupiec test at higher quantiles under Gaussian distributed conditional innovations and tranquil market conditions.]{Kupiec test at higher quantiles under Gaussian distributed conditional innovations and tranquil market conditions. Bold face indicates rejection. Non-rejection regions: 37$<$I(0.90)$<$65, 15$<$I(0.95)$<$36, 6$<$I(0.975)$<$21 and 0$<$I(0.99)$<$11.}
+\caption[Kupiec test at higher quantiles under Gaussian distributed marginal errors and tranquil market conditions.]{Kupiec test at higher quantiles under under Gaussian distributed marginal errors and tranquil market conditions. Bold face indicates rejection. Non-rejection regions: 37$<$I(0.90)$<$65, 15$<$I(0.95)$<$36, 6$<$I(0.975)$<$21 and 0$<$I(0.99)$<$11.}
 \label{tab:kupiec_test_norm_tranquil_table}
 \end{table}
 
@@ -1978,7 +1990,7 @@ RF(100)\_pearson	&\textbf{30}	&\textbf{12}	&10		&4		  \\
 RF(100)\_kendall	&46		&21		&12		&10				\\ [1ex]
 \bottomrule
 \end{tabular}
-\caption[Kupiec test at higher quantiles under Student's t-distributed conditional innovations and tranquil market conditions.]{Kupiec test at higher quantiles under Student's t-distributed conditional innovations and tranquil market conditions. Bold face indicates rejection. Non-rejection regions: 37$<$I(0.90)$<$65, 15$<$I(0.95)$<$36, 6$<$I(0.975)$<$21 and 0$<$I(0.99)$<$11.}
+\caption[Kupiec test at higher quantiles under skewed Student's t distributed marginal errors and tranquil market conditions.]{Kupiec test at higher quantiles under skewed Student's t distributed marginal errors and tranquil market conditions. Bold face indicates rejection. Non-rejection regions: 37$<$I(0.90)$<$65, 15$<$I(0.95)$<$36, 6$<$I(0.975)$<$21 and 0$<$I(0.99)$<$11.}
 \label{tab:kupiec_test_std_tranquil_table}
 \end{table}
 
@@ -2019,7 +2031,7 @@ RF(100)\_kendall	&46		&21		&12		&10				\\ [1ex]
                                                         & \boldmath$\pi_{11}$    &      	&		&		&   \\ [1ex]
                                                         \bottomrule
 \end{tabular}
-\caption[Christoffersen Markov test at higher quantiles under Gaussian distributed conditional innovations and tranquil market conditions.]{Christoffersen Markov test at higher quantiles under Gaussian distributed conditional innovations and tranquil market conditions.}
+\caption[Christoffersen Markov test at higher quantiles under Gaussian distributed marginal errors and tranquil market conditions.]{Christoffersen Markov test at higher quantiles under Gaussian distributed marginal errors and tranquil market conditions.}
 \label{tab:christoffersen_test_norm_tranquil_table}
 \end{table}
 
@@ -2057,13 +2069,12 @@ RF(100)\_kendall	&46		&21		&12		&10				\\ [1ex]
                                                         & \boldmath$\pi_{11}$    &      	&		&		&   \\ [1ex]
                                                         \bottomrule
 \end{tabular}
-\caption[Christoffersen Markov test at higher quantiles under Student's t-distributed conditional innovations and tranquil market conditions.]{Christoffersen Markov test at higher quantiles under Student's t-distributed conditional innovations and tranquil market conditions.}
+\caption[Christoffersen Markov test at higher quantiles under skewed Student's t distributed marginal errors and tranquil market conditions.]{Christoffersen Markov test at higher quantiles under skewed Student's t distributed marginal errors and tranquil market conditions.}
 \label{tab:christoffersen_test_std_tranquil_table}
 \end{table}
 
 
 \subsection{Volatile Market Conditions: 2000-2001 Dot-com Bubble}
-DCC and pearson idw perform really well for backtest period 2000-2001. pearson idw is independent for all quantiles levels greater than 0.9 whereas dcc is rejected at 0.9 level. 
 
 
 \begin{table}[H]
@@ -2090,7 +2101,7 @@ RF(100)\_pearson	&60	&33		&\textbf{21}	&\textbf{10}	  \\
 RF(100)\_kendall	&\textbf{77}	&\textbf{53}	&\textbf{32}	&\textbf{18}	\\ [1ex]
 \bottomrule
 \end{tabular}
-\caption[Kupiec test at higher quantiles under Gaussian distributed conditional innovations and volatile market conditions.]{Kupiec test at higher quantiles under Gaussian distributed conditional innovations and volatile market conditions. Bold face indicates rejection. Non-rejection regions: 37$<$I(0.90)$<$65, 15$<$I(0.95)$<$36, 6$<$I(0.975)$<$21 and 0$<$I(0.99)$<$10.}
+\caption[Kupiec test at higher quantiles under Gaussian distributed marginal errors and volatile market conditions.]{Kupiec test at higher quantiles under Gaussian distributed marginal errors and volatile market conditions. Bold face indicates rejection. Non-rejection regions: 37$<$I(0.90)$<$65, 15$<$I(0.95)$<$36, 6$<$I(0.975)$<$21 and 0$<$I(0.99)$<$10.}
 \label{tab:kupiec_test_norm_volatile_table}
 \end{table}
 
@@ -2131,7 +2142,7 @@ RF(100)\_kendall	&\textbf{77}	&\textbf{53}	&\textbf{32}	&\textbf{18}	\\ [1ex]
                                                         & \boldmath$\pi_{11}$    &      	&		&		&   \\ [1ex]
                                                         \bottomrule
 \end{tabular}
-\caption[Christoffersen Markov test at higher quantiles under Gaussian distributed conditional innovations and volatile market conditions.]{Christoffersen Markov test at higher quantiles under Gaussian distributed conditional innovations and volatile market conditions.}
+\caption[Christoffersen Markov test at higher quantiles under Gaussian distributed marginal errors and volatile market conditions.]{Christoffersen Markov test at higher quantiles under Gaussian distributed marginal errors and volatile market conditions.}
 \label{tab:christoffersen_test_norm_volatile_table}
 \end{table}
 
@@ -2162,7 +2173,7 @@ RF(100)\_pearson	&60	&31	&\textbf{21}	&\textbf{10}			   \\
 RF(100)\_kendall	&\textbf{77}	&\textbf{53}	&\textbf{32}	&\textbf{18}	   \\ [1ex]
 \bottomrule
 \end{tabular}
-\caption[Kupiec test at higher quantiles under Student's t-distributed conditional innovations and volatile market conditions.]{Kupiec test at higher quantiles under Student's t-distributed conditional innovations and volatile market conditions. Bold face indicates rejection. Non-rejection regions: 37$<$I(0.90)$<$65, 15$<$I(0.95)$<$36, 6$<$I(0.975)$<$21 and 0$<$I(0.99)$<$10.}
+\caption[Kupiec test at higher quantiles under skewed Student's t distributed marginal errors and volatile market conditions.]{Kupiec test at higher quantiles under skewed Student's t distributed marginal errors and volatile market conditions. Bold face indicates rejection. Non-rejection regions: 37$<$I(0.90)$<$65, 15$<$I(0.95)$<$36, 6$<$I(0.975)$<$21 and 0$<$I(0.99)$<$10.}
 \label{tab:kupiec_test_std_volatile_table}
 \end{table}
 
@@ -2204,7 +2215,7 @@ RF(100)\_kendall	&\textbf{77}	&\textbf{53}	&\textbf{32}	&\textbf{18}	   \\ [1ex]
                                                         & \boldmath$\pi_{11}$    &      	&		&		&   \\ [1ex]
                                                         \bottomrule
 \end{tabular}
-\caption[Christoffersen Markov test at higher quantiles under Student's t-distributed conditional innovations and volatile market conditions.]{Christoffersen Markov test at higher quantiles under Student's t-distributed conditional innovations and volatile market conditions.}
+\caption[Christoffersen Markov test at higher quantiles under skewed Student's t distributed marginal errors and volatile market conditions.]{Christoffersen Markov test at higher quantiles under skewed Student's t distributed marginal errors and volatile market conditions.}
 \label{tab:christoffersen_test_std_volatile_table}
 \end{table}
 
@@ -2222,6 +2233,7 @@ Our learning algorithms have demonstrated the ability to perform well in times o
 
 
 \chapter{Conclusion and Future Research} \label{ch:conclusion}
+\iffalse
 Conclusions: \\
 In this paper, we examined the performance of a new semiparametric multivariate volatility model using nearest neighbor and random forest estimators of time-varying correlation. The semiparametric model performs quite well when compared with standard parametric DCC-type models in terms of Value-at-Risk forecasting accuracy. \\
 \iffalse
@@ -2246,7 +2258,7 @@ KNN algorithm suffers from curse of dimensionality as it is mostly implemented b
 \iffalse
 Different assumptions on marginal densities such as GJR-GARCH. Our model for the conditional variance is the asymmetric volatility model of Glosten, Jagannathan, and Runkle (1993), the ?GJR-GARCH? model. The motivation for the asymmetry in this model is that ?bad news? about a firm increases its future volatility more than good news. For stock returns, bad news comes in the form of a negative residual. 
 \fi      
-
+\fi
 
 \bibliographystyle{plainnat}
 \bibliography{refThesis}
@@ -2259,7 +2271,7 @@ Different assumptions on marginal densities such as GJR-GARCH. Our model for the
 \appendix
 
 \chapter{Theoretical Analysis Value-at-Risk Forecasting}
-This appendix presents results on the Value-at-Risk (VaR) forecasting performance our semiparametric multivariate volatility model using proposed learning algorithms and the dynamic conditional correlation model \citep{ref:Engle2002} on the lower quantiles of the loss distribution. Performance on the lower quantiles (less than 90\%) of the loss distribution is theoretically relevant to evaluate the fitting/forecasting of the models.   
+This appendix presents results on the Value-at-Risk (henceforth VaR) forecasting performance our semiparametric multivariate volatility model using proposed learning algorithms and the dynamic conditional correlation model \citep{ref:Engle2002} on the lower quantiles of the loss distribution. Performance on the lower quantiles (less than 90\%) of the loss distribution is theoretically relevant to evaluate the fitting/forecasting of the models.   
 
 \section{Tranquil Market Conditions: Mid-1990's}
 
@@ -2291,7 +2303,7 @@ RF(100)\_pearson	&\textbf{504}	&\textbf{499}		&483		&466		&\textbf{427}		&308		&
 RF(100)\_kendall	&500		&486		&473		&454		&407		&296		&191		&85						\\ [1ex]
 \bottomrule
 \end{tabular}
-\caption[Kupiec test at lower quantiles under Gaussian distributed conditional innovations and tranquil market conditions.]{Kupiec test at lower quantiles under Gaussian distributed conditional innovations and tranquil market conditions. Bold face indicates rejection. Non-rejection regions: 494$<$I(0.01)$<$503, 483$<$I(0.025)$<$498, 468$<$I(0.05)$<$489, 439$<$I(0.10)$<$467, 384$<$I(0.20)$<$421, 280$<$I(0.40)$<$325, 180$<$I(0.60)$<$224 and 83$<$I(0.80)$<$120.}
+\caption[Kupiec test at lower quantiles under Gaussian distributed marginal errors and tranquil market conditions.]{Kupiec test at lower quantiles under Gaussian distributed marginal errors and tranquil market conditions. Bold face indicates rejection. Non-rejection regions: 494$<$I(0.01)$<$503, 483$<$I(0.025)$<$498, 468$<$I(0.05)$<$489, 439$<$I(0.10)$<$467, 384$<$I(0.20)$<$421, 280$<$I(0.40)$<$325, 180$<$I(0.60)$<$224 and 83$<$I(0.80)$<$120.}
 \label{tab:kupiec_test_norm_lower_q_tranquil}
 \end{table}
 
@@ -2332,7 +2344,7 @@ RF(100)\_kendall	&500		&486		&473		&454		&407		&296		&191		&85						\\ [1ex]
                                                         & \boldmath$\pi_{11}$    &      	&		&		&    &&&& \\ [1ex]
                                                         \bottomrule
 \end{tabular}
-\caption[Christoffersen Markov test at lower quantiles under Gaussian distributed conditional innovations and tranquil market conditions.]{Christoffersen Markov at lower quantitest with Gaussian distributed conditional innovations under tranquil market conditions.}
+\caption[Christoffersen Markov test at lower quantiles under Gaussian distributed marginal errors and tranquil market conditions.]{Christoffersen Markov test at lower quantiles with Gaussian distributed marginal errors under tranquil market conditions.}
 \label{tab:christoffersen_test_norm_lower_q_tranquil}
 \end{table}
 
@@ -2365,7 +2377,7 @@ RF(100)\_pearson	   &\textbf{503}		&497		&479		&464		&\textbf{423}		&303		&181		
 RF(100)\_kendall	   &498	&485		&470		&452		&406		&292		&192		&86						\\ [1ex]
 \bottomrule
 \end{tabular}
-\caption[Kupiec test at lower quantiles under Student's t-distributed conditional innovations and tranquil market conditions.]{Kupiec test at lower quantiles under Student's t-distributed conditional innovations and tranquil market conditions. Bold face indicates rejection. Non-rejection regions: 494$<$I(0.01)$<$503, 483$<$I(0.025)$<$498, 468$<$I(0.05)$<$489, 439$<$I(0.10)$<$467, 384$<$I(0.20)$<$421, 280$<$I(0.40)$<$325, 180$<$I(0.60)$<$224 and 83$<$I(0.80)$<$120.}
+\caption[Kupiec test at lower quantiles under skewed Student's t distributed marginal errors and tranquil market conditions.]{Kupiec test at lower quantiles under skewed Student's t distributed marginal errors and tranquil market conditions. Bold face indicates rejection. Non-rejection regions: 494$<$I(0.01)$<$503, 483$<$I(0.025)$<$498, 468$<$I(0.05)$<$489, 439$<$I(0.10)$<$467, 384$<$I(0.20)$<$421, 280$<$I(0.40)$<$325, 180$<$I(0.60)$<$224 and 83$<$I(0.80)$<$120.}
 \label{tab:kupiec_test_std_lower_q_tranquil}
 \end{table}
 
@@ -2405,7 +2417,7 @@ RF(100)\_kendall	   &498	&485		&470		&452		&406		&292		&192		&86						\\ [1ex]
                                                         & \boldmath$\pi_{11}$    &      	&		&		&   &&&&\\ [1ex]
                                                         \bottomrule
 \end{tabular}
-\caption[Christoffersen Markov test at lower quantiles under Student's t-distributed conditional innovations and tranquil market conditions.]{Christoffersen Markov test at lower quantiles under Student's t-distributed conditional innovations and tranquil market conditions.}
+\caption[Christoffersen Markov test at lower quantiles under skewed Student's t distributed marginal errors and tranquil market conditions.]{Christoffersen Markov test at lower quantiles under skewed Student's t distributed marginal errorsand tranquil market conditions.}
 \label{tab:christoffersen_test_std_lower_q_tranquil}
 \end{table}
 
@@ -2443,7 +2455,7 @@ RF(100)\_pearson	   &492	&486		&482		&459		&411		&311		&210		&106 \\
 RF(100)\_kendall	   &\textbf{489}	&483		&472		&445		&396		&305		&214		&\textbf{120}						\\ [1ex]
 \bottomrule
 \end{tabular}
-\caption[Kupiec test at lower quantiles under Gaussian distributed conditional innovations and volatile market conditions.]{Kupiec test at lower quantiles under Gaussian distributed conditional innovations and volatile market conditions. Bold face indicates rejection. Non-rejection regions: 490$<$I(0.01)$<$500, 479$<$I(0.025)$<$494, 464$<$I(0.05)$<$484, 435$<$I(0.10)$<$463, 381$<$I(0.20)$<$418, 278$<$I(0.40)$<$322, 178$<$I(0.60)$<$222 and 82$<$I(0.80)$<$119.}
+\caption[Kupiec test at lower quantiles under Gaussian distributed marginal errors and volatile market conditions.]{Kupiec test at lower quantiles under Gaussian distributed marginal errors and volatile market conditions. Bold face indicates rejection. Non-rejection regions: 490$<$I(0.01)$<$500, 479$<$I(0.025)$<$494, 464$<$I(0.05)$<$484, 435$<$I(0.10)$<$463, 381$<$I(0.20)$<$418, 278$<$I(0.40)$<$322, 178$<$I(0.60)$<$222 and 82$<$I(0.80)$<$119.}
 \label{tab:kupiec_test_norm_lower_q_volatile}
 \end{table}
 
@@ -2484,7 +2496,7 @@ RF(100)\_kendall	   &\textbf{489}	&483		&472		&445		&396		&305		&214		&\textbf{1
                                                         & \boldmath$\pi_{11}$    &      	&		&		&    &&&& \\ [1ex]
                                                         \bottomrule
 \end{tabular}
-\caption[Christoffersen Markov test at lower quantiles under Gaussian distributed conditional innovations and volatile market conditions.]{Christoffersen Markov test at lower quantiles under Gaussian distributed conditional innovations and volatile market conditions.}
+\caption[Christoffersen Markov test at lower quantiles under Gaussian distributed marginal errors and volatile market conditions.]{Christoffersen Markov test at lower quantiles under Gaussian distributed marginal errors volatile market conditions.}
 \label{tab:christoffersen_test_norm_lower_q_volatile}
 \end{table}
 
@@ -2517,7 +2529,7 @@ RF(100)\_pearson	   &491	&487		&482		&462		&410		&312		&209		&103		\\
 RF(100)\_kendall	   &\textbf{488}	&483		&472		&445		&395		&306		&213		&\textbf{120}			\\ [1ex]
 \bottomrule
 \end{tabular}
-\caption[Kupiec test at lower quantiles under Student's t-distributed conditional innovations and volatile market conditions.]{Kupiec test at lower quantiles under Student's t-distributed conditional innovations and volatile market conditions. Bold face indicates rejection.  Non-rejection regions: 490$<$I(0.01)$<$500, 479$<$I(0.025)$<$494, 464$<$I(0.05)$<$484, 435$<$I(0.10)$<$463, 381$<$I(0.20)$<$418, 278$<$I(0.40)$<$322, 178$<$I(0.60)$<$222 and 82$<$I(0.80)$<$119.}
+\caption[Kupiec test at lower quantiles under skewed Student's t distributed marginal errors and volatile market conditions.]{Kupiec test at lower quantiles under skewed Student's t distributed marginal errors and volatile market conditions. Bold face indicates rejection.  Non-rejection regions: 490$<$I(0.01)$<$500, 479$<$I(0.025)$<$494, 464$<$I(0.05)$<$484, 435$<$I(0.10)$<$463, 381$<$I(0.20)$<$418, 278$<$I(0.40)$<$322, 178$<$I(0.60)$<$222 and 82$<$I(0.80)$<$119.}
 \label{tab:kupiec_test_std_lower_q_volatile}
 \end{table}
 
@@ -2557,7 +2569,7 @@ RF(100)\_kendall	   &\textbf{488}	&483		&472		&445		&395		&306		&213		&\textbf{1
                                                         & \boldmath$\pi_{11}$    &      	&		&		&   &&&&\\ [1ex]
                                                         \bottomrule
 \end{tabular}
-\caption[Christoffersen Markov test at lower quantiles under Student's t-distributed conditional innovations and volatile market conditions.]{Christoffersen Markov test at lower quantiles under Student's t-distributed conditional innovations and volatile market conditions.}
+\caption[Christoffersen Markov test at lower quantiles under skewed Student's t distributed marginal errors and volatile market conditions.]{Christoffersen Markov test at lower quantiles under skewed Student's t distributed marginal errors and volatile market conditions.}
 \label{tab:christoffersen_test_std_lower_q_volatile}
 \end{table}
 

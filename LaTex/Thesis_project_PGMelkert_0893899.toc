@@ -37,12 +37,12 @@
 \contentsline {chapter}{\numberline {4}Systems of Correlations in Quantitative Financial Risk Management}{41}{chapter.4}
 \contentsline {section}{\numberline {4.1}Value-at-Risk Theory}{42}{section.4.1}
 \contentsline {section}{\numberline {4.2}Backtesting Methodology}{43}{section.4.2}
-\contentsline {section}{\numberline {4.3}Data and Descriptive Statistics}{44}{section.4.3}
-\contentsline {section}{\numberline {4.4}Empirical Results}{45}{section.4.4}
-\contentsline {subsection}{\numberline {4.4.1}Tranquil Market Conditions: Mid-1990's}{46}{subsection.4.4.1}
-\contentsline {subsection}{\numberline {4.4.2}Volatile Market Conditions: 2000-2001 Dot-com Bubble}{48}{subsection.4.4.2}
-\contentsline {section}{\numberline {4.5}Conclusions Empirical Results}{50}{section.4.5}
-\contentsline {chapter}{\numberline {5}Conclusion and Future Research}{51}{chapter.5}
-\contentsline {chapter}{\numberline {A}Theoretical Analysis Value-at-Risk Forecasting}{55}{appendix.A}
-\contentsline {section}{\numberline {A.1}Tranquil Market Conditions: Mid-1990's}{55}{section.A.1}
-\contentsline {section}{\numberline {A.2}Volatile Market Conditions: 2000-2001 Dot-com Bubble}{57}{section.A.2}
+\contentsline {section}{\numberline {4.3}Data and Descriptive Statistics}{45}{section.4.3}
+\contentsline {section}{\numberline {4.4}Empirical Results}{46}{section.4.4}
+\contentsline {subsection}{\numberline {4.4.1}Tranquil Market Conditions: Mid-1990's}{47}{subsection.4.4.1}
+\contentsline {subsection}{\numberline {4.4.2}Volatile Market Conditions: 2000-2001 Dot-com Bubble}{49}{subsection.4.4.2}
+\contentsline {section}{\numberline {4.5}Conclusions Empirical Results}{51}{section.4.5}
+\contentsline {chapter}{\numberline {5}Conclusion and Future Research}{52}{chapter.5}
+\contentsline {chapter}{\numberline {A}Theoretical Analysis Value-at-Risk Forecasting}{56}{appendix.A}
+\contentsline {section}{\numberline {A.1}Tranquil Market Conditions: Mid-1990's}{56}{section.A.1}
+\contentsline {section}{\numberline {A.2}Volatile Market Conditions: 2000-2001 Dot-com Bubble}{58}{section.A.2}
