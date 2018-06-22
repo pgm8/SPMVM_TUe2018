@@ -1,14 +1,14 @@
-\documentclass{report}
+\documentclass[11pt]{report}
 
 \usepackage[british]{babel}
 \usepackage{lipsum} % pack­age to generate filler text Lorem Ip­sum dummy text 
-\usepackage[margin=25mm,left=30mm,includefoot]{geometry} % geometry package to define margins. Possibility to make left margin larger for binding the document.
+\usepackage[margin=25.4mm,includefoot]{geometry} % geometry package to define margins. Possibility to make left margin larger for binding the document.
 
 \usepackage[hidelinks]{hyperref}  % Allows for clickable reference
 \hypersetup{colorlinks = true, linkcolor=blue, citecolor = {blue}, urlcolor=blue,}
 \usepackage{enumitem}
-\usepackage[absolute]{textpos}
-
+%\usepackage[absolute]{textpos}
+\usepackage[overlay,absolute]{textpos}
 
 % Graphics preamble
 \newcommand\scalemath[2]{\scalebox{#1}{\mbox{\ensuremath{\displaystyle #2}}}}
@@ -25,8 +25,7 @@
 \usepackage{fancyhdr}   % package for extensive control of page headers and footers
 \pagestyle{fancy}
 \fancyhead{}
-\fancyfoot{}
-\fancyfoot[R]{\thepage\ }
+\fancyfoot[C]{\thepage}% Page numbering for center footer
 \renewcommand{\headrulewidth}{0pt}    % Removes beautiful line in header
 \renewcommand{\footrulewidth}{1pt}
 \usepackage[bottom]{footmisc}  % keeps footnotes at bottom of page
@@ -65,25 +64,27 @@
 \begin{document}
 
 \begin{titlepage}
-\begin{center}
+%\begin{center}
+\iffalse
 \includegraphics[height=2cm]{tue-logo-high}\\
 
 \large
 Department of Industrial Engineering and Innovation Sciences  \\
 Operations, Planning, Accounting and Control Research Group
+\fi
+\hfill Eindhoven, July 2018
 
 \vspace*{10cm}
 
-\setlength{\TPHorizModule}{1mm}
-\setlength{\TPVertModule}{\TPHorizModule}
+%\setlength{\TPHorizModule}{1mm}
+%\setlength{\TPVertModule}{\TPHorizModule}
 % Set the Paragraph Indent to zero, so the first line is not Indented
 % Back-up the current value so it can be put back at the end of the title page
 \newlength{\backupparindent}
 \setlength{\backupparindent}{\parindent}
 \setlength{\parindent}{0mm}			
-% Begins a textbox at 72 mm from the left of the edge of the paper and 89 mm from the top
-% The width of the textbox is 95 mm (167 - 72 mm)
-\begin{textblock}{165}(30,89)
+\iffalse
+\begin{textblock}{165}(45,90)
     \vspace*{1mm}
     \huge
     \textbf{Conditional Correlation Modeling using Multivariate GARCH and Machine Learning \\}
@@ -95,8 +96,36 @@ Operations, Planning, Accounting and Control Research Group
     \vspace*{10mm}
     \Large
     P.G. Melkert \\
-    0893899	
+    Student identity number 0893899	
 \end{textblock}
+\fi
+%%%%%%%%%% TUE SPECIFICATION TITLE PAGE %%%%%%%%%%%%
+% Textblock width 90 mm, pos x,y (60, 73)
+\begin{textblock*}{90mm}(60mm,73mm)
+    \vspace*{1mm}
+    \Large
+    \textbf{Conditional Correlation Modeling \\ using Multivariate GARCH and \\ Machine Learning \\}
+    \vspace*{1mm}    
+    
+    \normalsize   
+    by \\
+    Paul G. Melkert \\
+\end{textblock*}
+\vspace*{15mm}
+
+\begin{center}
+Student identity number 0893899	 \\
+     \vspace*{15mm}
+    in partial fulfilment of the requirements for the degree of \\
+     \vspace*{5mm}
+\textbf{Master of Science \\ in Operations Management and Logistics}\\
+    \vspace*{5mm}
+
+
+
+\vfill
+
+
 
 \vfill
 Draft
@@ -108,7 +137,7 @@ Draft
 \mbox{}
 \vfill
 \noindent
-Advisors:\\
+Supervisors:\\
 Dr. A. Chockalingam, Eindhoven University of Technology, OPAC \\
 Dr. R.J. de Almeida e Santos Nogueira, Maastricht University, Quantitative Economics
 
@@ -231,7 +260,7 @@ The quest for reliable estimates of correlations between Žfinancial variables ha
 An alternative to the parametric estimation of the conditional covariance matrix and conditional correlation matrix is provided by non- and semiparametric models. In contrast to parametric estimation, nonparametric models do not impose (potentially misspecified) arbitrary assumptions on the distribution or functional form of the object being estimated. Semiparametric models comprise methods that contain both fully parametric components and fully nonparametric components, and may prove to be appropriate in cases nonparametric models are not;  for example, in case of implications of the curse of dimensionality or lack of knowledge on the distribution of errors \citep{ref:Li2006}. Although semiparametric models may inherit desirable properties of a nonparametric model in that they are robust against misspecification on distributional assumption and functional form, the reliance on parametric assumptions does not exclude semiparametric models from inconsistency due to misspecification. Although there are numerous papers on nonparametric models for the conditional variance, there is a limited number of papers on fully nonparametric multivariate volatility models. For some interesting applications, examine the paper of \cite{ref:Long2005}, and \textbf{Add some more recent work}. \\
 
 \noindent
-Existing semiparametric multivariate volatility approaches may be based on the premise of a finite-dimensional parameter functional form for the conditional covariance matrix while the error distribution is estimated non- or semiparametrically, or on the premise of a finite-dimensional parameter functional form for the conditional variance while the conditional correlations are estimated nonparametrically. For some applications where the error distribution is estimated nonparametrically using kernel functions, examine the work of \cite{ref:Long2005}, \cite{ref:Hafner2007}, \cite{ref:Long2011}\footnote{A semiparametric conditional covariance model is proposed that combines parametric and nonparametric estimators of the conditional covariance matrix in a multiplicative way.}, and \textbf{Add some more recent work}. For some interesting Bayesian-based semiparametric multivariate GARCH models, examine the paper of \cite{ref:Jensen2013}\footnote{A Bayesian nonparametric modeling approach is proposed for the error distribution in multivariate GARCH models.} and \cite{ref:Virbickait2016}. For some interesting (time-varying) copula-based semiparametric multivariate GARCH models\footnote{This class of models considers the conditional variance of each marginal time series to be specified parametrically through univariate GARCH-type models where non- or semiparametric estimation of the univariate marginal distributions is followed by a parametric specification of the copula function, which specifies the dependence structure between the marginal series.\iffalse the multivariate distribution of the standardized innovation are specified semiparametrically as a parametric copula evaluated at nonparametric marginals.\fi}, examine the work of  \cite{ref:Chen2006}, \cite{ref:Patton2006}, \cite{ref:Jondeau2006}, \cite{ref:Ausin2010}, and \textbf{Add some more recent work}. For some interesting applications belonging to the second category, examine the work of \cite{ref:Hafner2006}\footnote{A nonparametric estimator is considered for the correlation function where a Nadaraya-Watson kernel regression is applied to each conditional correlation individually.}, and \textbf{Add some more recent work}. \\     
+Existing semiparametric multivariate volatility approaches may be based on the premise of a finite-dimensional parameter functional form for the conditional covariance matrix while the error distribution is estimated non- or semiparametrically, or on the premise of a finite-dimensional parameter functional form for the conditional variance while the conditional correlations are estimated nonparametrically. For some applications where the error distribution is estimated nonparametrically using kernel functions, examine the work of \cite{ref:Long2005}, \cite{ref:Hafner2007}, \cite{ref:Long2011}\footnote{A semiparametric conditional covariance model is proposed that combines parametric and nonparametric estimators of the conditional covariance matrix in a multiplicative way.}, and \textbf{Add some more recent work}. For some interesting Bayesian-based semiparametric multivariate GARCH models, examine the paper of \cite{ref:Jensen2013}\footnote{A Bayesian nonparametric modeling approach is proposed for the error distribution in multivariate GARCH models.} and \cite{ref:Virbickait2016}. For some interesting (time-varying) copula-based semiparametric multivariate GARCH models\footnote{This class of models considers the conditional variance of each marginal time series to be specified parametrically through univariate GARCH-type models where non- or semiparametric estimation of the univariate marginal distributions is followed by a parametric specification of the copula function, which specifies the dependence structure between the marginal series.\iffalse the multivariate distribution of the standardized innovation are specified semiparametrically as a parametric copula evaluated at nonparametric marginals.\fi}, examine the work of  \cite{ref:Chen2006}, \cite{ref:Patton2006}, \cite{ref:Jondeau2006}, \cite{ref:Ausin2010}, and \textbf{Add some more recent work}. Finally, for some interesting applications belonging to the second category, examine the work of \cite{ref:Hafner2006}\footnote{A nonparametric estimator is considered for the correlation function where a Nadaraya-Watson kernel regression is applied to each conditional correlation individually.}, and \textbf{Add some more recent work}. \\     
 
 
 \noindent
@@ -315,7 +344,7 @@ The main contribution of this paper is the development of a computational framew
 Chapter \ref{ch:methodology} presents the methodological framework. The conceptual underpinnings of machine learning (algorithms) and multivariate volatility modeling are discussed. Moreover, an approach is presented to successfully address supervised learning in the context of estimating time-varying correlation between financial returns. Given that correlation is not directly observable, construction of the set of covariates and response variables is done by approximation of true correlation using Pearson and Kendall sample correlations from moving windows. The result is a generic and parsimonious supervised learning problem formulation for the task of estimating time-varying correlation, which should overcome the difficulty of curse of dimensionality in high dimensional systems. Importantly, the supervised learning problem formulation serves as basis for the first presentation of nearest neighbor and random forest estimators of time-varying correlation between financial returns. \\
 
 \noindent
-Chapter \ref{ch:simulation_study} examines the accuracy of nearest neighbor and random forest estimators of correlation in a bivariate setting; two asset return paths with a predefined pairwise correlation structure. The controlled setting of a simulation study allows us to observe the effect of different foundational model properties on the generalization error, which is defined as the mean squared error loss in this paper. On the premise of mean squared error loss, we are able to observe the effect of incorporation of approximation error due to defining the set of covariates and response variable using moving window estimates of correlation. It is shown that proposed learning estimators improve over conventional moving window approximation of time-varying correlation through lower mean squared error and by decreasing the sensitivity of the results to the choice of window length in the moving window approximations of time-varying correlation. Furthermore, it is shown that \textbf{Insert more detailed summary of simulation results: learning estimates results in semi positive-definite correlation matrix, the effect of incorporating approximation error due to defining the set of covariates and response variable using moving window estimates of correlation.}. In summary, the simulation study provides initial evidence on the aptness of nearest neighbour and random forest algorithms as estimators of time-varying correlation between financial returns.  \\
+Chapter \ref{ch:simulation_study} examines the accuracy of nearest neighbor and random forest estimators of correlation in a bivariate setting; two asset return paths with a predefined pairwise correlation structure. The controlled setting of a simulation study allows us to observe the effect of different foundational model properties on the generalization error, which is defined as the mean squared error loss in this paper. On the premise of mean squared error loss, we are able to observe the effect of incorporation of approximation error due to defining the set of covariates and response variable using moving window estimates of correlation. It is shown that proposed learning estimators improve over conventional moving window approximation of time-varying correlation through lower mean squared error and by decreasing the sensitivity of the results to the choice of window length in the moving window approximations of time-varying correlation. Moreover, learning estimates with approximations of actual correlation as covariates and response variable follow the increases and decreases of the actual correlation smoother, with tighter confidence intervals compared with Pearson and Kendall sample correlation estimates using moving windows. This is a more desirable result as it is not expected that correlation between assets changes that drastically at each time unit. Additionally, both learning estimators exhibit expected behavior under different parameterizations given the theoretical analysis of MSE decomposition into squared bias and variance terms; an increase in the number of neighbors in the Nearest Neighbor and an increase in the number of decision trees in the Random Forest reduce the variance in both estimators. Finally, the conditional correlation matrix obtained under a variety of different parameterizations of Nearest Neighbor and Random Forest estimators satisfy the condition of positive semidefiniteness. In summary, using simulation, initial evidence has been provided on the potential use of proposed learning estimators as estimators of time-varying correlation between financial returns.  \\
 
 \noindent
 We then extend the empirical evaluation of correlation estimates using machine learning to a multivariate setting in Chapter \ref{chap:multivariate_analysis}. The focus of analysis is \textit{systems of correlations} in a quantitative financial risk management context rather than \textit{individual correlations}. The proposed semiparametric multivariate volatility model is applied to the 30 constituents included in the Dow Jones Industrial Average index and performance is verified in terms of an economic loss function, the Value-at-Risk. Evidence is provided that the model is able to capture interesting time-varying properties in correlations and that it is competitive with a multivariate parametric counterpart, the Dynamic Conditional Correlation model of \cite{ref:Engle2002}. \textbf{Insert more detailled summary of empirical results: tranquil market conditions and volatile market conditions, unconditional coverage and independence test + main result.} \\
@@ -786,7 +815,7 @@ In Sections \ref{sec:mvm} and \ref{sec:ml_supervised} we have established the me
 As the time-varying correlation between financial returns is unobservable, we specify the response variable $Y$ using approximations of time-varying correlation in the form of sample correlations from moving windows, which are calculated according to \eqref{eq:mw_rho} and \eqref{eq:mw_kendall} for Pearson's linear correlation coefficient and Kendall's $\tau$ correlation coefficient, respectively. Pearson and Kendall moving window correlation estimates of the previous time unit, $\hat{\rho}_{i,j,t-1}$, are used for constructing the set of covariates $X^T$ in addition to the minimum and maximum return of the previous time unit, $min_{i}(r_{i,t-1})$ and $max_{i}(r_{i,t-1})$.   \\        
 
 \noindent
-This means that, in case of a k-dimensional asset universe, there are $k(k-1)/2$ pairwise correlations to be predicted specified as response variable $Y_t$ at each time unit $t \in \{1,2,\dots,T\}$. The set of covariates at each time unit, $X_t$, will consist of $k(k-1)/2$ pairwise correlations plus the minimum and maximum return of the previous time unit, which results in a covariate space of dimension $k(k-1)/2 + 2$. Given this notation, the parsimoniously specified training dataset is formulated as a $T\times (k^2-k+2)$ matrix, that is, 
+This means that, in case of a k-dimensional asset universe, there are $k(k-1)/2$ pairwise correlations to be specified as response variable $Y_t$ at each time unit $t \in \{1,2,\dots,T\}$. The set of covariates at each time unit, $X_t$, consists of $k(k-1)/2$ pairwise correlations plus the minimum and maximum return of the previous time unit, which results in a covariate space of dimension $k(k-1)/2 + 2$. Given this notation, the parsimoniously specified training dataset is formulated as a $T\times (k^2-k+2)$ matrix, that is, 
 
 % dataset with covariate matrix and response variable
 \begin{equation} \label{eq:dataset}
@@ -800,7 +829,7 @@ This means that, in case of a k-dimensional asset universe, there are $k(k-1)/2$
 \end{equation} 
 
 \noindent
-where the response variable of day $t$, $Y_t$, is defined as a $k(k-1)/2$-dimensional vector containing pairwise correlation estimates of day $t+1$, i.e. $Y_t = (\hat{\rho}_{1,2,t+1}, \hat{\rho}_{1,3,t+1}, \dots, \hat{\rho}_{2,3,t+1}, \hat{\rho}_{2,4,t+1}, \dots,  \hat{\rho}_{k,k(k-1)/2,t+1})$. \\ 
+where the response variable of time unit $t$, $Y_t$, is defined as a $k(k-1)/2$-dimensional vector containing pairwise correlation estimates of time unit $t+1$, i.e. $Y_t = (\hat{\rho}_{1,2,t+1}, \hat{\rho}_{1,3,t+1}, \dots, \hat{\rho}_{2,3,t+1}, \hat{\rho}_{2,4,t+1}, \dots,  \hat{\rho}_{k,k(k-1)/2,t+1})$. \\ 
 
 \iffalse
 \noindent
@@ -820,10 +849,10 @@ unlike many estimation problems in nonparametric analysis, our semiparametric mo
 
 
 \chapter{Simulated Data with Time-Varying Correlation} \label{ch:simulation_study}
-In this chapter, using simulation, performance of time-varying correlations estimated by proposed learning methods and conventional moving windows is compared in terms of a statistical loss function, the Mean Squared Error (MSE). The goal of the simulation is to verify whether proposed learning methods are appropriate methods for the estimation of time-varying correlation between financial returns. Section \ref{sec:MW} presents results of Pearson and Kendall sample correlation estimates using moving windows under different choices of window length. Section \ref{sec:true_correlation} present results of Nearest Neighbor (henceforth KNN) and Random Forest (henceforth RF) estimators when the set of covariates are approximations of true correlation and the response variable is specified by true correlation. Next, Section \ref{sec:proxy_correlation} present results of KNN and RF estimators when both the set of covariates and response variable are approximations of true correlation. Finally, Section \ref{sec:conclusions_sim} concludes the chapter. \\  
+In this chapter, using simulation, performance of time-varying correlations estimated by proposed learning methods and conventional moving windows is compared in terms of a statistical loss function, the Mean Squared Error. The goal of the simulation is to verify whether proposed learning methods are appropriate methods for the estimation of time-varying correlation between financial returns. Section \ref{sec:MW} presents results of Pearson and Kendall sample correlation estimates using moving windows under different choices of window length. Section \ref{sec:true_correlation} present results of Nearest Neighbor (henceforth KNN) and Random Forest (henceforth RF) estimators when the set of covariates are approximations of true correlation and the response variable is specified by true correlation. Next, Section \ref{sec:proxy_correlation} present results of KNN and RF estimators when both the set of covariates and response variable are approximations of true correlation. Finally, Section \ref{sec:conclusions_sim} concludes the chapter. \\  
 
 \noindent
-As an example, we simulate  $T = 500$ observations $y_t= (y_{1,t}, y_{2,t})'$ for  $t=1, \dots,T$ from a model with highly persistent time-varying correlations following an auto-regressive process, described by:
+As an example, we simulate  $T = 500$ observations $y_t= (y_{1,t}, y_{2,t})'$ for  $t \in \{1, \dots,T\}$ from a model with highly persistent time-varying correlations following an auto-regressive process, that is,
 
 \begin{align} 
 	\begin{array}{rcl} y_t &{}\sim &{}N\left( 
@@ -840,7 +869,7 @@ where  $\epsilon = 10^{-5}$,  $\eta_t \sim NID(0,0.2)$ and the restriction $\rho
 \begin{figure}[H]
 	\centering
 	\includegraphics[scale=0.6]{simulation_assetpaths_with_stochastic_correlations.png}
-	\caption{Simulated data and time-varying correlations from \eqref{eq:correlation_simulation}.}
+	\caption{Simulated data and time-varying correlation from \eqref{eq:correlation_simulation}.}
 	\label{fig:cholesky_simulation}
 \end{figure}
 
@@ -852,7 +881,7 @@ For implementation of the nearest neighbor and random forest algorithms, we make
 
 
 \section{Moving Window Estimates of Correlation} \label{sec:MW}
-The accuracy of Pearson and Kendall estimates for time-varying correlation is compared by using mean squared error (MSE) between estimated and actual correlations. The variance of mean squared errors from Pearson estimates in Fig. \ref{fig:mse_pearson_kendall_bootstrap} is approximately 1.78e-3 while that of Kendall is approximately 1.59e-3, i.e. Kendall estimates are slightly less sensitive to the choice of window length compared to Pearson estimates but the difference seems negligible small or might even not be significant. Interestingly, it is observed that Kendall estimates for time-varying correlation have slightly higher MSE values for larger window lengths. A possible explanation for this observation is that the simulated asset returns follow a multivariate normal distribution, i.e. an elliptical distribution. Therefore, it makes sense that a linear correlation coefficient such as Pearson results in lower MSE values for most window lengths. Pearson can get unreliable in the presence of fat-tailed distributions, which is generally a property of real asset return data \citep{ref:Pozzi2012}. It will be interesting to verify whether Kendall is a better choice for approximation of true correlation in the case of real asset return data in Chapter \ref{chap:multivariate_analysis}. \\
+The accuracy of Pearson and Kendall estimates for time-varying correlation is compared by using mean squared error (henceforth MSE) between estimated and actual correlations. The variance of mean squared errors from Pearson estimates in Fig. \ref{fig:mse_pearson_kendall_bootstrap} is approximately 1.78e-3 while that of Kendall is approximately 1.59e-3, i.e. Kendall estimates are slightly less sensitive to the choice of window length compared to Pearson estimates but the difference seems negligible small or might even not be significant. Interestingly, it is observed that Kendall estimates for time-varying correlation have slightly higher MSE values for larger window lengths. A possible explanation for this observation is that the simulated asset returns follow a multivariate normal distribution, i.e. an elliptical distribution. Therefore, it makes sense that a linear correlation coefficient such as Pearson results in lower MSE values for most window lengths. Pearson can get unreliable in the presence of fat-tailed distributions, which is generally a property of real asset return data \citep{ref:Pozzi2012}. It will be interesting to verify whether Kendall is a better choice for approximation of true correlation in the case of real asset return data in Chapter \ref{chap:multivariate_analysis}. \\
 
 \noindent
 Pearson and Kendall moving window estimates of time-varying correlation satisfy the positive semidefiniteness condition in the time-varying correlation matrix $R_t$ for all time $t$ under all choices of window length. Fig. \ref{fig:det_pearson_kendall} presents the obtained minimum determinants of $R_t$ for all choices of window length. In fact, \cite{ref:Pozzi2012} give proves that Pearson and Kendall sample correlation using moving windows generally results positive semidefinite correlation matrices.     
@@ -1745,7 +1774,7 @@ One definition of Value-at-Risk (henceforth VaR) is the maximum loss which is no
 where $F_L(l) = P(L \le l)$ denotes the distribution function  of the corresponding loss distribution. \\
 
 \noindent
-VaR is determined after definition of the portfolio return distribution, where portfolio return $p_t = w' r_t$. It is noted that the validation of the portfolio risk using backtesting measures is not straightforward without further assumptions on $a_t$, the distribution of errors driving the volatility process. In this paper, the multivariate Gaussian distribution and multivariate Student t-distribution are considered for the distribution of $a_t$. In any case, the first two moments of the portfolio return are given by
+VaR is determined after definition of the portfolio return distribution, where portfolio return $p_t = w' r_t$. It is noted that the validation of the portfolio risk using backtesting measures is not straightforward without further assumptions on $a_t$, the distribution of errors driving the volatility process. In this paper, the multivariate Gaussian distribution is considered for the distribution of $a_t$. In any case, the first two moments of the portfolio return are given by
 
 \begin{align}
 	\mathbb{E}[p_t] &=  w' \mathbb{E}[\mu_t] + w' \mathbb{E}[a_t] =  w' \mathbb{E}[\mu_t]  \\
@@ -1788,6 +1817,11 @@ In the backtesting analysis, VaR is computed at different quantiles. For simplic
 \textbf{ALTERNATIVE COMPUTATION OF VAR: USING MC SIMUALTION}\\
 \textbf{Eq. \ref{eq:var_parametric} assumes normality and serial independence but WE assume assets are correlated so:} Instead of using \ref{eq:var_parametric} I could use Monte Carlo Sampling at each time unit as I have estimated conditional covariance matrix at each time unit and. Then we estimate the VaR via the Monte Carlo method, which implies full repricing of the portfolio at every point in time. To keep a balance between the computational costs and the accuracy of the results we simulate 10 or 5 thousand portfolio values for each point in time. Methodologically, our procedure for computing the VaR requires the following steps. First, we estimate the whole model (conditional volatility matrix + conditional correlation matrix, which I have for each time unit in both backtest periods). Then, we simulate 10.000/ 5.000 random samples assuming multivariate Gaussian distribution function. Then, we compute the value of the considered portfolio which comes down to multiplication with the weight vector assuming each asset has weight 1/ total number of assets. Then we have the portfolio return density and estimate VaR for corresponding quantiles. This procedure is repeated until the last observation, and we compare the estimated VaR with the actual next-day change in the portfolio's value. In other words: On the basis of the fitted models, we generate B = 10.000/ 5.000 samples, $\{R^b_{t+1} = r^b_{t+1,1}, r^b_{t+1,2}, \dots,r^b_{t+1,k}\}^B_{b=1}$ for day t+1 and estimate the conditional VaR by using the B portfolio returns, $\{\Sigma_{i=1}^k w_i R^b_{t+1,i}\}^B_{b=1}$. \\
 
+\noindent 
+Check out this paper for MC simulation in the tail of distribution: \\
+\noindent
+iro.umontreal.ca/~lecuyer/myftp/papers/vt16truncnormal.pdf \\
+
 \noindent
 \textbf{ALTERNATIVE COMPUTATION OF VAR: Highest Density Regions.}\\
 Alternatively, for obtaining VaR (quantiles) from a multivariate normal distribution we can report VaR as the 
@@ -1827,7 +1861,7 @@ The main assumption underlying Christoffersen's Markov test is that the indicato
 
 
 \section{Data and Descriptive Statistics} \label{sec:data}
-The dataset comprises 30 univariate time series of the log returns from the 30 Dow Jones Industrial Average index constituents. The return series cover data from March 1987 to December 2001. During these periods, financial markets witnessed tranquil periods with low volatility such as the mid-1990's as periods of crisis with high volatility, including the collapse of the Dot-com bubble that began in spring 2000 and the collapse of Enron and WorldCom companies in 2001. \\
+The dataset comprises 30 univariate time series of the log returns from the 30 Dow Jones Industrial Average index constituents. The return series cover data from March 1987 to December 2001. During these periods, financial markets experienced tranquil periods with low volatility such as the mid-1990's as well as periods of high volatility, including the collapse of the Dot-com bubble that began in spring 2000 and the collapse of Enron and WorldCom companies in 2001. \\
 
 
 \iffalse
@@ -1838,7 +1872,7 @@ The first 500 samples were used as the training set. The remaining 500 samples a
 Tabel \ref{tab:stats_data} presents summary statistics on the 30 univariate time series of the log returns from the Dow Jones Industrial Average index. Of particular note is the negative skewness of the return series and the excess kurtosis for all 30 assets. \textit{A Ljung-Box tests for autocorrelation finds significant (at the 0.05 level) autocorrelation in the squared log returns series.}. This provides evidence to specify models for the conditional variance. \iffalse www.tandfonline.com/doi/pdf/10.1080/07350015.2016.1177535?needAccess=true \fi Our model for the conditional variance is the GARCH(1,1) model of \cite{ref:Bollerslev1986}. For the marginal distributions of the standardized residuals two model specifications are considered: Gaussian distribution and the skewed Student's t-distribution of \cite{ref:Hansen1994}, which accounts for nonzero skewness and excess kurtosis, that is, 
 
 \begin{align}
-	\eta_{i,t} = \frac{\epsilon_{i,t}}{\sigma_{i,t}} \sim \text{iid} \ Skew \ t (v_i, \psi_i)  \nonumber
+	\eta_{i,t} = \frac{z_{i,t}}{\sigma_{i,t}} \sim \text{iid} \ Skew \ t (v_i, \psi_i)  \nonumber
 \end{align}
 
 
@@ -1847,7 +1881,7 @@ Tabel \ref{tab:stats_data} presents summary statistics on the 30 univariate time
 
 
 \noindent
-All series show departures from normality which can be seen by their respective kurtosis and skewness. The normal distribution has an excess kurtosis of and skewness of 0. All indices exhibit a kurtosis greater than zero indicating a higher probability of large negative and positive returns than would be expected under normality. Interestingly, all return series have negative skewness which indicates more frequent large negative returns than large positive returns.
+All series show departures from normality which can be seen by their respective kurtosis and skewness. The normal distribution has an excess kurtosis and skewness of 0. All indices exhibit an excess kurtosis greater than zero indicating a higher probability of large negative and positive returns than would be expected under normality. Interestingly, all return series have negative skewness which indicates more frequent large negative returns than large positive returns.
 
 \begin{table}[H]
 \centering
