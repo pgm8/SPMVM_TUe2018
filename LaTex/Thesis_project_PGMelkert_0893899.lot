@@ -9,21 +9,21 @@
 \contentsline {table}{\numberline {3.4}{\ignorespaces Mean Squared Error (MSE) decomposition as a function of the number of estimators (trees) for RF with approximations for both covariates and response variable.\relax }}{45}{table.caption.27}
 \addvspace {10\p@ }
 \contentsline {table}{\numberline {4.1}{\ignorespaces Descriptive statistics of Dow Jones Industrial Average daily log returns.}}{53}{table.caption.30}
-\contentsline {table}{\numberline {4.2}{\ignorespaces Kupiec test at higher quantiles under Gaussian distributed marginal errors and tranquil market conditions.}}{54}{table.caption.31}
-\contentsline {table}{\numberline {4.3}{\ignorespaces Kupiec test at higher quantiles under skewed Student's t distributed marginal errors and tranquil market conditions.}}{55}{table.caption.32}
-\contentsline {table}{\numberline {4.4}{\ignorespaces Christoffersen Markov test at higher quantiles under Gaussian distributed marginal errors and tranquil market conditions.}}{56}{table.caption.33}
-\contentsline {table}{\numberline {4.5}{\ignorespaces Christoffersen Markov test at higher quantiles under skewed Student's t distributed marginal errors and tranquil market conditions.}}{57}{table.caption.34}
-\contentsline {table}{\numberline {4.6}{\ignorespaces Kupiec test at higher quantiles under Gaussian distributed marginal errors and volatile market conditions.}}{57}{table.caption.35}
-\contentsline {table}{\numberline {4.7}{\ignorespaces Christoffersen Markov test at higher quantiles under Gaussian distributed marginal errors and volatile market conditions.}}{58}{table.caption.36}
-\contentsline {table}{\numberline {4.8}{\ignorespaces Kupiec test at higher quantiles under skewed Student's t distributed marginal errors and volatile market conditions.}}{58}{table.caption.37}
-\contentsline {table}{\numberline {4.9}{\ignorespaces Christoffersen Markov test at higher quantiles under skewed Student's t distributed marginal errors and volatile market conditions.}}{59}{table.caption.38}
+\contentsline {table}{\numberline {4.2}{\ignorespaces Kupiec test at higher quantiles under Gaussian distributed marginal errors and tranquil market conditions.}}{55}{table.caption.31}
+\contentsline {table}{\numberline {4.3}{\ignorespaces Kupiec test at higher quantiles under skewed Student's t distributed marginal errors and tranquil market conditions.}}{56}{table.caption.32}
+\contentsline {table}{\numberline {4.4}{\ignorespaces Christoffersen Markov test at higher quantiles under Gaussian distributed marginal errors and tranquil market conditions.}}{57}{table.caption.33}
+\contentsline {table}{\numberline {4.5}{\ignorespaces Christoffersen Markov test at higher quantiles under skewed Student's t distributed marginal errors and tranquil market conditions.}}{58}{table.caption.34}
+\contentsline {table}{\numberline {4.6}{\ignorespaces Kupiec test at higher quantiles under Gaussian distributed marginal errors and volatile market conditions.}}{58}{table.caption.35}
+\contentsline {table}{\numberline {4.7}{\ignorespaces Christoffersen Markov test at higher quantiles under Gaussian distributed marginal errors and volatile market conditions.}}{59}{table.caption.36}
+\contentsline {table}{\numberline {4.8}{\ignorespaces Kupiec test at higher quantiles under skewed Student's t distributed marginal errors and volatile market conditions.}}{59}{table.caption.37}
+\contentsline {table}{\numberline {4.9}{\ignorespaces Christoffersen Markov test at higher quantiles under skewed Student's t distributed marginal errors and volatile market conditions.}}{60}{table.caption.38}
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {table}{\numberline {A.1}{\ignorespaces Kupiec test at lower quantiles under Gaussian distributed marginal errors and tranquil market conditions.}}{65}{table.caption.40}
-\contentsline {table}{\numberline {A.2}{\ignorespaces Christoffersen Markov test at lower quantiles under Gaussian distributed marginal errors and tranquil market conditions.}}{66}{table.caption.41}
-\contentsline {table}{\numberline {A.3}{\ignorespaces Kupiec test at lower quantiles under skewed Student's t distributed marginal errors and tranquil market conditions.}}{66}{table.caption.42}
-\contentsline {table}{\numberline {A.4}{\ignorespaces Christoffersen Markov test at lower quantiles under skewed Student's t distributed marginal errors and tranquil market conditions.}}{67}{table.caption.43}
-\contentsline {table}{\numberline {A.5}{\ignorespaces Kupiec test at lower quantiles under Gaussian distributed marginal errors and volatile market conditions.}}{68}{table.caption.44}
-\contentsline {table}{\numberline {A.6}{\ignorespaces Christoffersen Markov test at lower quantiles under Gaussian distributed marginal errors and volatile market conditions.}}{69}{table.caption.45}
-\contentsline {table}{\numberline {A.7}{\ignorespaces Kupiec test at lower quantiles under skewed Student's t distributed marginal errors and volatile market conditions.}}{69}{table.caption.46}
-\contentsline {table}{\numberline {A.8}{\ignorespaces Christoffersen Markov test at lower quantiles under skewed Student's t distributed marginal errors and volatile market conditions.}}{70}{table.caption.47}
+\contentsline {table}{\numberline {A.1}{\ignorespaces Kupiec test at lower quantiles under Gaussian distributed marginal errors and tranquil market conditions.}}{66}{table.caption.40}
+\contentsline {table}{\numberline {A.2}{\ignorespaces Christoffersen Markov test at lower quantiles under Gaussian distributed marginal errors and tranquil market conditions.}}{67}{table.caption.41}
+\contentsline {table}{\numberline {A.3}{\ignorespaces Kupiec test at lower quantiles under skewed Student's t distributed marginal errors and tranquil market conditions.}}{67}{table.caption.42}
+\contentsline {table}{\numberline {A.4}{\ignorespaces Christoffersen Markov test at lower quantiles under skewed Student's t distributed marginal errors and tranquil market conditions.}}{68}{table.caption.43}
+\contentsline {table}{\numberline {A.5}{\ignorespaces Kupiec test at lower quantiles under Gaussian distributed marginal errors and volatile market conditions.}}{69}{table.caption.44}
+\contentsline {table}{\numberline {A.6}{\ignorespaces Christoffersen Markov test at lower quantiles under Gaussian distributed marginal errors and volatile market conditions.}}{70}{table.caption.45}
+\contentsline {table}{\numberline {A.7}{\ignorespaces Kupiec test at lower quantiles under skewed Student's t distributed marginal errors and volatile market conditions.}}{70}{table.caption.46}
+\contentsline {table}{\numberline {A.8}{\ignorespaces Christoffersen Markov test at lower quantiles under skewed Student's t distributed marginal errors and volatile market conditions.}}{71}{table.caption.47}

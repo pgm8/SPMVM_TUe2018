@@ -172,6 +172,12 @@ Tin~Kam Ho.
 \newblock \emph{IEEE Transactions on Pattern Analysis and Machine
   Intelligence}, 20\penalty0 (8):\penalty0 832--844, 1998.
 
+\bibitem[Jarque and Bera(1980)]{ref:Jarque1980}
+Carlos~M. Jarque and Anil~K. Bera.
+\newblock Efficient tests for normality, homoscedasticity and serial
+  independence of regression residuals.
+\newblock \emph{Economics Letters}, 6\penalty0 (3):\penalty0 255--259, 1980.
+
 \bibitem[Jensen and Maheu(2013)]{ref:Jensen2013}
 Mark~J. Jensen and John~M. Maheu.
 \newblock Bayesian semiparametric multivariate garch modeling.
@@ -229,12 +235,6 @@ Gilles Louppe.
 Alexander~J. McNeil, R{\"u}diger Frey, and Paul Embrechts.
 \newblock \emph{Quantative Risk Management: Concepts, Techniques and Tools}.
 \newblock Princeton University Press, 2015.
-
-\bibitem[Nene and Nayar(1997)]{ref:Nene1997}
-S.~A. Nene and S.~K. Nayar.
-\newblock A simple algorithm for nearest neighbor search in high dimensions.
-\newblock \emph{IEEE Transactions on Pattern Analysis and Machine
-  Intelligence}, 19\penalty0 (9):\penalty0 989--1003, 1997.
 
 \bibitem[Patton(2006)]{ref:Patton2006}
 Andrew~J. Patton.
