@@ -1,4 +1,4 @@
-\begin{thebibliography}{47}
+\begin{thebibliography}{50}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
@@ -137,6 +137,21 @@ Robert~F. Engle, Victor~K. Ng, and Michael Rothschild.
 \newblock \emph{Journal of Econometrics}, 45\penalty0 (1):\penalty0 213--237,
   1990.
 
+\bibitem[Fisher and Gallagher(2012)]{ref:Fisher2012}
+Thomas~J. Fisher and Colin~M. Gallagher.
+\newblock New weighted portmanteau statistics for time series goodness of fit
+  testing.
+\newblock \emph{Journal of the American Statistical Association}, 107\penalty0
+  (498):\penalty0 777--787, 2012.
+
+\bibitem[Glosten et~al.(1993)Glosten, Jagannathan, , and
+  Runkle]{ref:Glosten1993}
+L.~R. Glosten, R.~Jagannathan, , and D.~E. Runkle.
+\newblock On the relation between the expected value and the volatility of the
+  nominal excess return on stocks.
+\newblock \emph{Journal of Finance}, 48\penalty0 (5):\penalty0 1779--1801,
+  1993.
+
 \bibitem[Goodrich et~al.(2015)Goodrich, Tamassia, and
   Goldwasser]{ref:Goodrich2015}
 Michael~T Goodrich, Roberto Tamassia, and Michael~H Goldwasser.
@@ -213,6 +228,11 @@ S{\'e}bastien Laurent, Jeroen V.~K. Rombouts, and Francesco Violante.
 Qi~Li and Jeffrey~Scott Racine.
 \newblock \emph{Nonparametric Econometrics: Theory and Practice}.
 \newblock Number 8355 in Economics Books. Princeton University Press, 2006.
+
+\bibitem[Ljung and Box(1978)]{ref:Ljung1978}
+G.~M. Ljung and G.~E.~P. Box.
+\newblock On a measure of lack of fit in time series models.
+\newblock \emph{Biometrika}, 65\penalty0 (2):\penalty0 297--303, 1978.
 
 \bibitem[Long and Ullah(2005)]{ref:Long2005}
 X.~Long and A.~Ullah.

@@ -40,11 +40,12 @@
 \contentsline {section}{\numberline {4.3}Data and Descriptive Statistics}{51}{section.4.3}
 \contentsline {subsection}{\numberline {4.3.1}Summary Statistics}{52}{subsection.4.3.1}
 \contentsline {subsection}{\numberline {4.3.2}Conditional Variance Model}{53}{subsection.4.3.2}
-\contentsline {section}{\numberline {4.4}Empirical Results}{54}{section.4.4}
+\contentsline {section}{\numberline {4.4}Empirical Results}{55}{section.4.4}
 \contentsline {subsection}{\numberline {4.4.1}Tranquil Market Conditions: Mid-1990's}{56}{subsection.4.4.1}
-\contentsline {subsection}{\numberline {4.4.2}Volatile Market Conditions: 2000-2001 Dot-com Bubble}{58}{subsection.4.4.2}
-\contentsline {section}{\numberline {4.5}Conclusions Empirical Results}{60}{section.4.5}
-\contentsline {chapter}{\numberline {5}Conclusion and Future Research}{61}{chapter.5}
-\contentsline {chapter}{\numberline {A}Theoretical Analysis Value-at-Risk Forecasting}{66}{appendix.A}
-\contentsline {section}{\numberline {A.1}Tranquil Market Conditions: Mid-1990's}{66}{section.A.1}
-\contentsline {section}{\numberline {A.2}Volatile Market Conditions: 2000-2001 Dot-com Bubble}{69}{section.A.2}
+\contentsline {subsection}{\numberline {4.4.2}Volatile Market Conditions: 2000-2001 Dot-com Bubble}{59}{subsection.4.4.2}
+\contentsline {section}{\numberline {4.5}Conclusions Empirical Results}{61}{section.4.5}
+\contentsline {chapter}{\numberline {5}Conclusion and Future Research}{62}{chapter.5}
+\contentsline {chapter}{\numberline {A}Cross-sectional Distribution Data of Conditional Variance Models}{67}{appendix.A}
+\contentsline {chapter}{\numberline {B}Value-at-Risk Forecasts on Lower Quantiles}{69}{appendix.B}
+\contentsline {section}{\numberline {B.1}Tranquil Market Conditions: Mid-1990's}{69}{section.B.1}
+\contentsline {section}{\numberline {B.2}Volatile Market Conditions: 2000-2001 Dot-com Bubble}{72}{section.B.2}
