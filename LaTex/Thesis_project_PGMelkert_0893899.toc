@@ -38,8 +38,10 @@
 \contentsline {section}{\numberline {4.1}Value-at-Risk Theory}{49}{section.4.1}
 \contentsline {section}{\numberline {4.2}Backtesting Methodology}{50}{section.4.2}
 \contentsline {section}{\numberline {4.3}Data and Descriptive Statistics}{51}{section.4.3}
+\contentsline {subsection}{\numberline {4.3.1}Summary Statistics}{52}{subsection.4.3.1}
+\contentsline {subsection}{\numberline {4.3.2}Conditional Variance Model}{53}{subsection.4.3.2}
 \contentsline {section}{\numberline {4.4}Empirical Results}{54}{section.4.4}
-\contentsline {subsection}{\numberline {4.4.1}Tranquil Market Conditions: Mid-1990's}{55}{subsection.4.4.1}
+\contentsline {subsection}{\numberline {4.4.1}Tranquil Market Conditions: Mid-1990's}{56}{subsection.4.4.1}
 \contentsline {subsection}{\numberline {4.4.2}Volatile Market Conditions: 2000-2001 Dot-com Bubble}{58}{subsection.4.4.2}
 \contentsline {section}{\numberline {4.5}Conclusions Empirical Results}{60}{section.4.5}
 \contentsline {chapter}{\numberline {5}Conclusion and Future Research}{61}{chapter.5}

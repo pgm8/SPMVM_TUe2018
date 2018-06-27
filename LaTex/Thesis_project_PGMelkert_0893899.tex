@@ -45,6 +45,7 @@
 \usepackage{algorithm}
 \usepackage {algpseudocode}
 \usepackage{cases}
+\usepackage{bbm}
 
 % Research question preamble
 \newtheorem{question}{Question} 
@@ -408,28 +409,28 @@ The dynamic conditional correlation (henceforth DCC) model \citep{ref:Engle2002}
 \begin{align}
 	r_t &= H_t^{\frac{1}{2}}z_t \\
 	H_t &= D_t R_t D_t \\
-	D_t &= diag(\sigma_{11,t}, \dots, \sigma_{kk,t})
+	D_t &= diag(\sigma_{1,t}, \dots, \sigma_{k,t})
 \end{align}
 
 \noindent
-where $H_t$ is the conditional covariance matrix and $R_t$ is the conditional correlation matrix. $D_t$ is a diagonal matrix with $\sigma_{11,t}, \dots, \sigma_{kk,t}$ on the main diagonal, which can be estimated though univariate GARCH models. \\
+where $H_t$ is the conditional covariance matrix and $R_t$ is the conditional correlation matrix. $D_t$ is a diagonal matrix with $\sigma_{1,t}, \dots, \sigma_{k,t}$ on the main diagonal, which can be estimated though univariate GARCH models. \\
 
 \noindent
-The idea behind DCC models is that multivariate volatility modeling can be divided into two estimation steps. Under assumption of conditional normality in the daily mean-corrected log returns $r_t$, the estimator gives rise to a log likelihood function. Without this assumption, an expected Quasi-Maximum Likelihood function is calculated \citep{ref:Engle2002}. As such, the first step is to estimate the conditional volatility series, $\sigma_{ii,t}$, which is done under the assumption that marginal volatility series follow a univariate GARCH(1,1) process with normal distributed errors, that is,
+The idea behind DCC models is that multivariate volatility modeling can be divided into two estimation steps. Under assumption of conditional normality in the daily mean-corrected log returns $r_t$, the estimator gives rise to a log likelihood function. Without this assumption, an expected Quasi-Maximum Likelihood function is calculated \citep{ref:Engle2002}. As such, the first step is to estimate the conditional volatility series, $\sigma_{i,t}$, which is done under the assumption that marginal volatility series follow a univariate GARCH(1,1) process with Gaussian distributed errors, that is,
 
 \begin{align}
-	\sigma_{ii,t}^2 &= \omega_i + \beta_i\sigma_{ii,t-1}^2 + \alpha_i a_{i,t-1}^2 
+	\sigma_{i,t}^2 &= \omega_i + \beta_i\sigma_{i,t-1}^2 + \alpha_i a_{i,t-1}^2 
 \end{align}
 
 \noindent
-Then, in the second step, one can use the estimated conditional volatilities $\sigma_{ii, t}$ to model the dynamics of the conditional correlation matrix $R_t$, that is,
+Then, in the second step, one can use the estimated conditional volatilities $\sigma_{i, t}$ to model the dynamics of the conditional correlation matrix $R_t$, that is,
 
 \begin{align}
 	R_t &= D_t^{-1} H_t D_t^{-1}
 \end{align}     
  
 \noindent
-$R_t$, as noted by \cite{ref:Engle2002}, is the conditional volatility matrix of the marginally standardized residuals $\epsilon_t = (\epsilon_{1,t}, \epsilon_{2,t}, \dots, \epsilon_{k,t})$, where $\epsilon_{i,t} = a_{i,t} / \sigma_{ii,t}$. In this paper, the multivariate standard normal and the multivariate standard Student t-distribution are considered for the conditional distribution $\epsilon_t$. \\
+$R_t$, as noted by \cite{ref:Engle2002}, is the conditional volatility matrix of the marginally standardized residuals $\epsilon_t = (\epsilon_{1,t}, \epsilon_{2,t}, \dots, \epsilon_{k,t})$, where $\epsilon_{i,t} = a_{i,t} / \sigma_{i,t}$. In this paper, the multivariate standard normal and the multivariate standard Student t-distribution are considered for the conditional distribution $\epsilon_t$. \\
 
 \noindent
 In the DCC model of \cite{ref:Engle2002}, the conditional volatility matrix of the marginally standardized residuals, $\epsilon_t$, is modeled using a GARCH(1,1) structure and reparameterization of $R_t$ ensures necessary conditions for $R_t$ are satisfied, that is,
@@ -1868,8 +1869,7 @@ The first 500 samples were used as the training set. The remaining 500 samples a
 	\label{fig:DJIA_returns}
 \end{figure}
 
-
-\noindent
+\subsection{Summary Statistics}
 Tabel \ref{tab:stats_data} presents summary statistics on the 30 marginal time series of the log returns included in the DJIA. Of particular note is the negative skewness of the return series and the excess kurtosis for all 30 assets. \iffalse www.tandfonline.com/doi/pdf/10.1080/07350015.2016.1177535?needAccess=true \fi All asset return series exhibit an excess kurtosis indicating a higher probability of large negative and positive returns than would be expected under normality. Additionally, all return series exhibit negative skewness which indicates more frequent large negative returns than large positive returns. In other words, all series exhibit behavior that departs from normality. The departures from normality are verified with a simple a Jarque-Bera test \citep{ref:Jarque1980} where the null hypothesis states that the sample is drawn from a distribution with a skewness and excess kurtosis equals to that of the normal distribution, that is, skewness and excess kurtosis are zero. The Jarque-Bera test rejects the assumption of normality for all assets. "Part of this non-normality
 is caused by some large outliers around the October 1987 stock market crash and during the bursting of the 2000 Dot-com bubble. However, the distribution of the data still appears highly non-normal even after the removal of these outliers." \\
 
@@ -1923,22 +1923,48 @@ XOM   & 0.0511 & 1.528   & -1.0537  & 30.83        & -26.77  & 16.54   & 148221\
 \label{tab:stats_data}
 \end{table}
 
+\subsection{Conditional Variance Model}
+As discussed in Section \ref{sec:VaR}, for simplicity, but without loss of generality, the conditional mean of our data is specified by the unconditional mean. Our model for the conditional variance is the GARCH(1,1) model of \cite{ref:Bollerslev1986} with the marginal distributions of the standardized residuals specified as the Gaussian distribution. Additionally, we consider the asymmetric volatility model of \cite{ref:Glosten1993}, the GJR-GARCH model, as specification for the conditional variance. The choice for the asymmetry in this model is motivated by the asymmetric response of volatility to positive and negative asset returns; a negative asymmetric correlation between asset return change and volatility change implying the rise in volatility following negative returns is larger than the fall in volatility following positive returns. The GJR-GARCH(1,1) model accounts for a this inverse relationship between first and second moments of asset returns, that is,
+
+\begin{align} \label{eq:gjr_garch}
+	\sigma^2_{i,t} = \omega_i + \beta_i \sigma^2_{i,t-1} + \alpha_i a^2_{i,t-1} + \gamma_i a^2_{i,t-1} I_{t-1}\{a_{i,t-1} < 0 \} 
+\end{align}
+
 \noindent
-As discussed in Section \ref{sec:VaR}, for simplicity, but without loss of generality, the conditional mean of our data is specified by the unconditional mean. Our model for the conditional variance is the GARCH(1,1) model of \cite{ref:Bollerslev1986}. For the marginal distributions of the standardized residuals two model specifications are considered: Gaussian distribution and the skewed Student's t-distribution of \cite{ref:Hansen1994}, which accounts for nonzero skewness and excess kurtosis, that is, 
+For the marginal distributions of the standardized residuals from GJR-GARCH specification for the conditional variance, the following specification is considered: skewed Student's t-distribution of \cite{ref:Hansen1994}, which accounts for nonzero skewness and excess kurtosis, that is, 
 
 \begin{align}
 	\eta_{i,t} = \frac{z_{i,t}}{\sigma_{i,t}} \sim \text{iid} \ Skew \ t (v_i, \psi_i)  \nonumber
 \end{align}
 
 \noindent
-Table \textbf{Insert ref} summarizes the results of estimating the above models on the 30 univariate time series. The average estimated degrees of freedom of the shape parameter is 6.8 and the estimated skewness parameter is positive for all 30 assets, and both estimated parameters are significantly different from zero for all 30 assets, indicating heavy tails and positive skewness. 
+Table \ref{tab:stat_dist_gjr_sstd_table} summarizes the results of estimating the GJR-GARCH(1,1) model from \ref{eq:gjr_garch} on the 30 time series. The average estimated degrees of freedom of the shape parameter is 6.9 and the estimated skewness parameter is positive for all 30 assets, and both estimated parameters are significantly different from zero for all 30 assets, indicating heavy tails and positive skewness.  
 
-\bigskip  
 
-\noindent
-\textbf{Insert Table presenting summary in-sample-statistics of marginal distribution parameters.}
 
-\bigskip 
+\begin{table}[H]
+\centering
+\captionsetup[subtable]{position=below}
+\begin{tabular}{l c c c c c c c}
+\toprule
+\multirow{2}{*}{}      & \multicolumn{7}{c}{Cross-sectional distribution}                                        \\ \cmidrule{3-8} 
+                    &   & Mean       & 5\%       & 25\%      & Median    & 75\%               & 95\%              \\ \midrule 
+$\omega_i$         &        & 0.0965     & 0.0211    & 0.0384    & 0.0713    & 0.1023             & 0.2856            \\
+$\alpha_i$           &       & 0.0355     & 0.0123    & 0.0281    & 0.0359    & 0.0404             & 0.0600            \\
+$\beta_i$             &     & 0.9208     & 0.8840    & 0.9036    & 0.9279    & 0.9416             & 0.9650            \\
+$\gamma_i$        &          & 0.0357     & 0.0009    & 0.0135    & 0.0377    & 0.0580             & 0.0734            \\
+$v_i$                  &   & 6.9225     & 4.7454    & 6.2507    & 7.0366    & 7.7493             & 8.4095            \\
+$\psi_i$               &     & 1.0406     & 1.0043    & 1.0247    & 1.0390    & 1.0529             & 1.0830            \\
+\multicolumn{6}{l}{}                                                    & \multicolumn{2}{l}{No. of  Rejections} \\
+\multicolumn{6}{l}{LB test for standardized residuals}                  & \multicolumn{2}{c}{2}                  \\
+\multicolumn{6}{l}{LM test for squared standardized residuals} & \multicolumn{2}{c}{2}                  \\
+\multicolumn{6}{l}{KS test for skew t dist standardized residuals}      & \multicolumn{2}{c}{1}     \\ [1ex]            
+\bottomrule  
+\end{tabular}
+\caption[]{} 
+\label{tab:stat_dist_gjr_sstd_table}
+\end{table}
+
 
 \noindent
 \textbf{The GARCH model can capture part of the heavy tail, capture observed leptokurtic behavior. Therefore, potentially, all excess kurtosis is captured by GARCH with Gaussian assumptions for marginal error distributions. Potentially, a more heavy tailed distribution is needed. Check whether estimated skew and kurtosis coefficients are significantly different from zero.

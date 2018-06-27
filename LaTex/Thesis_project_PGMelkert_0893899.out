@@ -37,11 +37,13 @@
 \BOOKMARK [1][-]{section.4.1}{Value-at-Risk Theory}{chapter.4}% 37
 \BOOKMARK [1][-]{section.4.2}{Backtesting Methodology}{chapter.4}% 38
 \BOOKMARK [1][-]{section.4.3}{Data and Descriptive Statistics}{chapter.4}% 39
-\BOOKMARK [1][-]{section.4.4}{Empirical Results}{chapter.4}% 40
-\BOOKMARK [2][-]{subsection.4.4.1}{Tranquil Market Conditions: Mid-1990's}{section.4.4}% 41
-\BOOKMARK [2][-]{subsection.4.4.2}{Volatile Market Conditions: 2000-2001 Dot-com Bubble}{section.4.4}% 42
-\BOOKMARK [1][-]{section.4.5}{Conclusions Empirical Results}{chapter.4}% 43
-\BOOKMARK [0][-]{chapter.5}{Conclusion and Future Research}{}% 44
-\BOOKMARK [0][-]{appendix.A}{Theoretical Analysis Value-at-Risk Forecasting}{}% 45
-\BOOKMARK [1][-]{section.A.1}{Tranquil Market Conditions: Mid-1990's}{appendix.A}% 46
-\BOOKMARK [1][-]{section.A.2}{Volatile Market Conditions: 2000-2001 Dot-com Bubble}{appendix.A}% 47
+\BOOKMARK [2][-]{subsection.4.3.1}{Summary Statistics}{section.4.3}% 40
+\BOOKMARK [2][-]{subsection.4.3.2}{Conditional Variance Model}{section.4.3}% 41
+\BOOKMARK [1][-]{section.4.4}{Empirical Results}{chapter.4}% 42
+\BOOKMARK [2][-]{subsection.4.4.1}{Tranquil Market Conditions: Mid-1990's}{section.4.4}% 43
+\BOOKMARK [2][-]{subsection.4.4.2}{Volatile Market Conditions: 2000-2001 Dot-com Bubble}{section.4.4}% 44
+\BOOKMARK [1][-]{section.4.5}{Conclusions Empirical Results}{chapter.4}% 45
+\BOOKMARK [0][-]{chapter.5}{Conclusion and Future Research}{}% 46
+\BOOKMARK [0][-]{appendix.A}{Theoretical Analysis Value-at-Risk Forecasting}{}% 47
+\BOOKMARK [1][-]{section.A.1}{Tranquil Market Conditions: Mid-1990's}{appendix.A}% 48
+\BOOKMARK [1][-]{section.A.2}{Volatile Market Conditions: 2000-2001 Dot-com Bubble}{appendix.A}% 49
