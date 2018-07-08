@@ -49,7 +49,6 @@ class ModuleManager(object):
         :param filename: filename containing dataset in csv format"""
         csv_file = read_csv(os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))),
                                          ('resources/Data/%s' % filename)), index_col=0)
-        print(csv_file.head())
         self.save_data(filename[:-3]+'pkl', csv_file)
 
     def transform_pickle_to_csv(self, filename):

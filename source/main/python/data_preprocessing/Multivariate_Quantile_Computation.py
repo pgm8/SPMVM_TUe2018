@@ -11,7 +11,10 @@ def main():
     ##################################################################################################################
     ###                                      Multivariate Quantile Computation                                     ###
     ##################################################################################################################
-    data_cor = mm.load_data('multivariate_analysis/cor_DCC_mvnorm_DJI30_1994_1995')
+    cor_data = mm.load_data('multivariate_analysis/cor_DCC_mvnorm_DJI30_1994_1995.pkl')
+    print(cor_data)
+
+
 
 
 
