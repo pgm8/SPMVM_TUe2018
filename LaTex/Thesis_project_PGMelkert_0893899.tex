@@ -261,7 +261,7 @@ The quest for reliable estimates of correlations between Žfinancial variables ha
 An alternative to the parametric estimation of the conditional covariance matrix and conditional correlation matrix is provided by non- and semiparametric models. In contrast to parametric estimation, nonparametric models do not impose (potentially misspecified) arbitrary assumptions on the distribution or functional form of the object being estimated. Semiparametric models comprise methods that contain both fully parametric components and fully nonparametric components, and may prove to be appropriate in cases nonparametric models are not;  for example, in case of implications of the curse of dimensionality or lack of knowledge on the distribution of errors \citep{ref:Li2006}. Although semiparametric models may inherit desirable properties of a nonparametric model in that they are robust against misspecification on distributional assumption and functional form, the reliance on parametric assumptions does not exclude semiparametric models from inconsistency due to misspecification. Although there are numerous papers on nonparametric models for the conditional variance, there is a limited number of papers on fully nonparametric multivariate volatility models. For some interesting applications, examine the paper of \cite{ref:Long2005}, and \textbf{Add some more recent work}. \\
 
 \noindent
-Existing semiparametric multivariate volatility approaches may be based on the premise of a finite-dimensional parameter functional form for the conditional covariance matrix while the error distribution is estimated non- or semiparametrically, or on the premise of a finite-dimensional parameter functional form for the conditional variance while the conditional correlations are estimated nonparametrically. For some applications where the error distribution is estimated nonparametrically using kernel functions, examine the work of \cite{ref:Long2005}, \cite{ref:Hafner2007}, \cite{ref:Long2011}\footnote{A semiparametric conditional covariance model is proposed that combines parametric and nonparametric estimators of the conditional covariance matrix in a multiplicative way.}, and \textbf{Add some more recent work}. For some interesting Bayesian-based semiparametric multivariate GARCH models, examine the paper of \cite{ref:Jensen2013}\footnote{A Bayesian nonparametric modeling approach is proposed for the error distribution in multivariate GARCH models.} and \cite{ref:Virbickait2016}. For some interesting (time-varying) copula-based semiparametric multivariate GARCH models\footnote{This class of models considers the conditional variance of each marginal time series to be specified parametrically through univariate GARCH-type models where non- or semiparametric estimation of the univariate marginal distributions is followed by a parametric specification of the copula function, which specifies the dependence structure between the marginal series.\iffalse the multivariate distribution of the standardized innovation are specified semiparametrically as a parametric copula evaluated at nonparametric marginals.\fi}, examine the work of  \cite{ref:Chen2006}, \cite{ref:Patton2006}, \cite{ref:Jondeau2006}, \cite{ref:Ausin2010}, and \textbf{Add some more recent work}. Finally, for some interesting applications belonging to the second category, examine the work of \cite{ref:Hafner2006}\footnote{A nonparametric estimator is considered for the correlation function where a Nadaraya-Watson kernel regression is applied to each conditional correlation individually.}, and \textbf{Add some more recent work}. \\     
+Existing semiparametric multivariate volatility approaches may be based on the premise of a finite-dimensional parameter functional form for the conditional covariance matrix while the error distribution is estimated non- or semiparametrically, or on the premise of a finite-dimensional parameter functional form for the conditional variance while the conditional correlations are estimated nonparametrically. For some applications where the error distribution is estimated nonparametrically using kernel functions, examine the work of \cite{ref:Long2005}, \cite{ref:Hafner2007}, \cite{ref:Long2011} \iffalse \footnote{A semiparametric conditional covariance model is proposed that combines parametric and nonparametric estimators of the conditional covariance matrix in a multiplicative way.} \fi, and \textbf{Add some more recent work}. For some interesting Bayesian-based semiparametric multivariate GARCH models, examine the paper of \cite{ref:Jensen2013}\iffalse \footnote{A Bayesian nonparametric modeling approach is proposed for the error distribution in multivariate GARCH models.}\fi and \cite{ref:Virbickait2016}. For some interesting (time-varying) copula-based semiparametric multivariate GARCH models\iffalse \footnote{This class of models considers the conditional variance of each marginal time series to be specified parametrically through univariate GARCH-type models where non- or semiparametric estimation of the univariate marginal distributions is followed by a parametric specification of the copula function, which specifies the dependence structure between the marginal series.\fi \iffalse the multivariate distribution of the standardized innovation are specified semiparametrically as a parametric copula evaluated at nonparametric marginals.} \fi, examine the work of  \cite{ref:Chen2006}, \cite{ref:Patton2006}, \cite{ref:Jondeau2006}, \cite{ref:Ausin2010}, and \textbf{Add some more recent work}. Finally, for some interesting applications belonging to the second category, examine the work of \cite{ref:Hafner2006}\iffalse\footnote{A nonparametric estimator is considered for the correlation function where a Nadaraya-Watson kernel regression is applied to each conditional correlation individually.}, and \textbf{Add some more recent work}\fi. \\     
 
 
 \noindent
@@ -342,10 +342,10 @@ Next, we extend the empirical evaluation of time-varying correlation modeling to
 The main contribution of this paper is the development of a computational framework using nearest neighbor and random forest algorithms for the task of estimating time-varying correlation between financial returns. We show that the integration of statistical models for capturing conditional volatility, such as univariate GARCH-type models, with proposed learning estimators provides a flexible, semiparametric way of formulating multivariate volatility models that avoid the imposition of (potentially misspecified) assumptions on the distribution and functional form of the conditional correlation matrix. \\ 
 
 \noindent
-Chapter \ref{ch:methodology} presents the methodological framework. The conceptual underpinnings of machine learning (algorithms) and multivariate volatility modeling are discussed. Moreover, an approach is presented to successfully address supervised learning in the context of estimating time-varying correlation between financial returns. Given that correlation is not directly observable, construction of the set of covariates and response variables is done by approximation of true correlation using Pearson and Kendall sample correlations from moving windows. The result is a generic and parsimonious supervised learning problem formulation for the task of estimating time-varying correlation, which should overcome the difficulty of curse of dimensionality in high dimensional systems. Importantly, the supervised learning problem formulation serves as basis for the first presentation of nearest neighbor and random forest estimators of time-varying correlation between financial returns. \\
+Chapter \ref{ch:methodology} presents the methodological framework. The conceptual underpinnings of machine learning (algorithms) and multivariate volatility modeling are discussed. Moreover, an approach is presented to successfully address supervised learning in the context of estimating time-varying correlation between financial returns. Given that correlation is not directly observable, construction of the set of covariates and response variables is done by approximation of true correlation using Pearson and Kendall sample correlations from moving windows. The result is a generic and parsimonious supervised learning problem formulation for the task of estimating time-varying correlation, which should overcome the difficulty of curse of dimensionality in high dimensional systems. Notably, the supervised learning problem formulation serves as basis for the first presentation of nearest neighbor and random forest estimators of time-varying correlation between financial returns. \\
 
 \noindent
-Chapter \ref{ch:simulation_study} examines the accuracy of nearest neighbor and random forest estimators of correlation in a bivariate setting; two asset return paths with a predefined pairwise correlation structure. The controlled setting of a simulation study allows us to observe the effect of different foundational model properties on the generalization error, which is defined as the mean squared error loss in this paper. On the premise of mean squared error loss, we are able to observe the effect of incorporation of approximation error due to defining the set of covariates and response variable using moving window estimates of correlation. It is shown that proposed learning estimators improve over conventional moving window approximation of time-varying correlation through lower mean squared error and by decreasing the sensitivity of the results to the choice of window length in the moving window approximations of time-varying correlation. Moreover, learning estimates with approximations of actual correlation as covariates and response variable follow the increases and decreases of the actual correlation smoother, with tighter confidence intervals compared with Pearson and Kendall sample correlation estimates using moving windows. This is a more desirable result as it is not expected that correlation between assets changes that drastically at each time unit. Additionally, both learning estimators exhibit expected behavior under different parameterizations given the theoretical analysis of MSE decomposition into squared bias and variance terms; an increase in the number of neighbors in the Nearest Neighbor and an increase in the number of decision trees in the Random Forest reduce the variance in both estimators. Finally, the conditional correlation matrix obtained under a variety of different parameterizations of Nearest Neighbor and Random Forest estimators satisfy the condition of positive semidefiniteness. In summary, using simulation, initial evidence has been provided on the potential use of proposed learning estimators as estimators of time-varying correlation between financial returns.  \\
+Chapter \ref{ch:simulation_study} examines the accuracy of nearest neighbor and random forest estimators of correlation in a bivariate setting; two asset return paths with a predefined pairwise correlation structure. The controlled setting of a simulation study allows us to observe the effect of different foundational model properties on the generalization error, which is defined as the mean squared error loss in this chapter. On the premise of mean squared error loss, we are able to observe the effect of incorporation of approximation error due to defining the set of covariates and response variable using moving window estimates of correlation. It is shown that proposed learning estimators improve over conventional moving window approximation of time-varying correlation through lower mean squared error and by decreasing the sensitivity of the results to the choice of window length in the moving window approximations of time-varying correlation. Moreover, learning estimates with approximations of actual correlation as covariates and response variable follow the increases and decreases of the actual correlation smoother, with tighter confidence intervals compared with Pearson and Kendall sample correlation estimates using moving windows. This is a more desirable result as it is not expected that correlation between assets changes that drastically at each time unit. Additionally, both learning estimators exhibit expected behavior under different parameterizations given the theoretical analysis of mean squared error decomposition into squared bias and variance terms; an increase in the number of neighbors in the Nearest Neighbor and an increase in the number of decision trees in the Random Forest reduce the variance in both estimators. Finally, the conditional correlation matrix obtained under a variety of different parameterizations of Nearest Neighbor and Random Forest estimators satisfy the condition of positive semidefiniteness. In summary, using simulation, initial evidence has been provided on the potential use of proposed learning estimators as estimators of time-varying correlation between financial returns.  \\
 
 \noindent
 We then extend the empirical evaluation of correlation estimates using machine learning to a multivariate setting in Chapter \ref{chap:multivariate_analysis}. The focus of analysis is \textit{systems of correlations} in a quantitative financial risk management context rather than \textit{individual correlations}. The proposed semiparametric multivariate volatility model is applied to the 30 constituents included in the Dow Jones Industrial Average index and performance is verified in terms of an economic loss function, the Value-at-Risk. Evidence is provided that the model is able to capture interesting time-varying properties in correlations and that it is competitive with a multivariate parametric counterpart, the Dynamic Conditional Correlation model of \cite{ref:Engle2002}. \textbf{Insert more detailled summary of empirical results: tranquil market conditions and volatile market conditions, unconditional coverage and independence test + main result.} \\
@@ -377,7 +377,7 @@ As such, in this paper, a $k$-dimensional asset return series, $r_t = (r_{1,t}, 
 where $t \in \{1, \dots,T\}$ indicates the time unit, $z_t$ is a $k \times 1$ vector of i.i.d random variables with mean zero and unit variance, $H_t$ is a $k\times k$ positive semidefinite matrix, and $H_t^{1/2}$  denotes the Cholesky decomposition of $H_t$. Like \citep{ref:Engle2002}, it is assumed asset return series $r_t$ has a conditional mean of zero. \\
 
 \noindent
-The time-varying variance-covariances of returns $r_t$ are represented by the $k \times k$ matrix $\mathrm {Var}(r_t) = H^{1/2}_t H^{\prime 1/2}_t = H_t$, which by construction is not observable \citep{ref:Basturk2016}. A plethora of models has been proposed to model the conditional covariance matrix $H_t$ and a reparameterizations of $H_t$ is a common approach for the identification of variances and correlation coefficients \citep{ref:Bauwens2006}, that is, 
+The time-varying variance-covariances of returns $r_t$ are represented by the $k \times k$ matrix $\mathrm {Var}(r_t) = H^{1/2}_t H^{\prime 1/2}_t = H_t$, which by construction is not observable \citep{ref:Basturk2016}. A plethora of models has been proposed to model the conditional covariance matrix $H_t$ and we consider a reparameterization of $H_t$ that is a common approach for the identification of variances and correlation coefficients \citep{ref:Bauwens2006}, that is, 
 
 \begin{align} \label{eq:covariance_decomposition} 
 	H_{t}=D_{t}R_{t}D_{t} = 
@@ -390,7 +390,7 @@ The time-varying variance-covariances of returns $r_t$ are represented by the $k
 where $D_t$ is a diagonal matrix with variances of each marginal series on its diagonal and matrix $R_t$ includes all pairwise correlations $\rho_{i,j,t}$, with $\rho_{i,j,t} = \rho_{j,i,t}$ (by definition). \\
 
 \noindent
-The semiparametric character of our specification for $H_t$ now becomes apparent: the diagonal elements of the matrix $D_t$ are modeled parametrically using, for example, standard univariate GARCH-type models, whereas the conditional correlation matrix $R_t$ is estimated in a nonparametric manner using nonparametric machine learning algorithms. Estimation of $D_t$  is independent of the estimation of pairwise correlations, $\rho_{i,j,t}$, in $R_t$. This is explained by the fact that $D_t$ defines the unconditional variance of each marginalseries at time unit t, which is independent of correlations $R_t$  by definition \citep{ref:Basturk2016}. In order to ensure positive semidefiniteness of the conditional variance-covariance matrix $H_t$ at each time unit $t$, two necessary conditions need to be satisfied when specifying $R_t$, that is,  
+The semiparametric character of our specification for $H_t$ now becomes apparent: the diagonal elements of the matrix $D_t$ are modeled parametrically using, for example, standard univariate GARCH-type models, whereas the conditional correlation matrix $R_t$ is estimated in a nonparametric manner using nonparametric machine learning algorithms. Estimation of $D_t$  is independent of the estimation of pairwise correlations, $\rho_{i,j,t}$, in $R_t$. This is explained by the fact that $D_t$ defines the unconditional variance of each marginal series at time unit $t$, which is independent of correlations $R_t$  by definition \citep{ref:Basturk2016}. In order to ensure positive semidefiniteness of the conditional variance-covariance matrix $H_t$ at each time unit $t$, two necessary conditions need to be satisfied when specifying $R_t$, that is,  
 
 \begin{enumerate}
 	\item $R_t$ has to be positive semidefinite with det($R_t) \geq$ 0. ($D_t$ is positive semidefinite as all its diagonal elements are positive).
@@ -512,10 +512,10 @@ Similar to Pearson moving window estimates of correlation, Kendall's $\tau$ corr
 Machine learning is the science of getting computers to gain the ability to learn from data without any user imposed conditions, i.e. without being explicitly programmed. In a typical machine learning setting, one has an outcome measurement, generally quantitative (e.g. asset price) or categorical (e.g. septic/ not septic) in nature, that one wishes to predict based on a set of predictor variables or covariates (e.g. blood pressure, body temperature and heart rate). One possesses a training set of data, in which the outcome and covariate measurements for a set of objects (e.g. people or days in case of time series analysis) is observed. Then, this data serves to build a prediction model, or learner, which will have the purpose of enabling one to predict the outcome for new unseen objects. An adequate learner is one that is capable of accurately predicting such an outcome. The goal of the learning process is to progressively improve the learner's performance on a specific task.  \\
 
 \noindent
-The example above describes a particular type of machine learning problem, namely a \textit{supervised learning problem}. The qualification \textit{supervised} comes from the fact that the outcome variable is present to guide the learning process. More formally: a supervised learning problem is concerned with the prediction of one or more outputs or response variables $Y = (Y_1, Y_2, \dots, Y_M)$ given some set of covariates $X^T = (X_1, X_2, \dots, X_M)$. Let the covariates for the $i$th training instance be denoted by $x_i = (x_{i,1}, x_{i,2}, \dots, x_{i,P})$ and let $y_i$ denote the corresponding response measurement. The predictions of the response variables are then based on a training data sample $(x_1, y_1), (x_2, y_2), \dots, (x_M, y_M)$, of which the joint values of covariate response tuples are known \citep{ref:Hastie2009}. Supervised learning is the type of learning that is considered throughout this paper. \\              
+The example above describes a particular type of machine learning problem, namely a \textit{supervised learning problem}. The qualification \textit{supervised} comes from the fact that the outcome variable is present to guide the learning process. More formally: a supervised learning problem is concerned with the prediction of one or more outputs or response variables $Y = (Y_1, Y_2, \dots, Y_M)$ given some set of covariates $X^T = (X_1, X_2, \dots, X_M)$. Let the covariates for the $i$th training instance be denoted by $X_i = (x_{i,1}, x_{i,2}, \dots, x_{i,P})$ and let $Y_i = (y_{i,1}, y_{i,2}, \dots, y_{i,R})$ denote the corresponding response measurement. The predictions of the response variables are then based on a training data sample $(X_1, Y_1), (X_2, Y_2), \dots, (X_M, Y_M)$, of which the joint values of covariate response tuples are known \citep{ref:Hastie2009}. Supervised learning is the type of learning that is considered throughout this paper. \\              
 
 \subsection{Nearest Neighbor Estimator} \label{sec:knn}  
-K-nearest neighbors (henceforth KNN) is a simple nonparametric suerpvised learning method. The algorithm makes a decision by identifying the $k$ neighbors that share the highest similarity with a query instance. The response variable is then estimated as a (weighted) average of the response variables corresponding to the identified $k$ nearest neighbors. There exist many metrics for similarity and a common metric is the Euclidian distance, which is also the similarity metric used in this paper. That is, the distance between two data points x$_i$ and x$_j$ is defined as 
+K-nearest neighbors (henceforth KNN) is a simple nonparametric supervised learning method. The algorithm makes a decision by identifying the $k$ training instances, or neighbors, that share the highest similarity with a query instance. The response variable is then estimated as a (weighted) average of the response values from the $k$ closest neighbors. There exist many metrics for similarity and a common metric is the Euclidian distance, which is also the similarity metric used in this paper. That is, the distance between two data points x$_i$ and x$_j$ is defined as 
 
 \begin{equation} \label{eq:distanceFunction}
 	d(x_i,x_j) = \sqrt{\sum_{m=1}^{P} (x_{i,m} - x_{j,m})^2} 	
@@ -525,10 +525,10 @@ K-nearest neighbors (henceforth KNN) is a simple nonparametric suerpvised learni
 where d(x$_i$, x$_j$) is the Euclidian distance between data points x$_i$ and x$_j$, x$_{i,k}$ is the mth covariate value of x$_i$, x$_{j,m}$ is the mth covariate value of x$_j$.   \\
 
 \noindent
-It may be preferred to discriminate between the k nearest neighbors when making predictions, i.e. let the closest observation among the k nearest neighbors have more say in affecting the outcome of the query instance. As such, a parameterization of KNN is considered where each of the k nearest neighbors has a weight induced from its distance with respect to the query instance. More precisely, each of the k nearest neighbors has a weight equal to the inverse of its distance to the query instance, i.e. inverse distance weighting. A simple weighting function based on the inverse distance weighting function introduced by \cite{ref:Shepard1968} is considered in this paper, that is, \\ 
+It may be preferred to discriminate between the k nearest neighbors when making predictions; let the closest observation among the k nearest neighbors have more say in affecting the outcome of the query instance. As such, a parameterization of KNN is considered where each of the k nearest neighbors has a weight induced from its distance with respect to the query instance. More precisely, each of the k nearest neighbors has a weight equal to the inverse of its distance to the query instance: inverse distance weighting. A simple weighting function based on the inverse distance weighting function introduced by \cite{ref:Shepard1968} is considered in this paper, that is, \\ 
 
 \noindent
-Let the training dataset be denoted by T$_{train} = {(x_1, y_1), (x_2, y_2), \cdots, (x_M, y_M)}$, $x_i = (x_{i,1}, x_{i,2}, \cdots, x_{i,P}) \in$ X, y$_i \in \mathbb{R}^r$, where $r$ denotes the dimension of the response variable space. Let s = (x$_0$) denote a query instance and $y_0$ its prediction. The distance weighting function is shown in \eqref{eq:IDWfunction}.
+Let the training dataset be denoted by T$_{train} = \{(x_1, y_1), (x_2, y_2), \dots, (x_M, y_M)\}$, \\ $x_i = (x_{i,1}, x_{i,2}, \dots, x_{i,P}) \in$ X, y$_i \in \mathbb{R}^r$, where $r$ denotes the dimension of the response variable space. Let s x$_0$ denote a query instance and $y_0$ its prediction. The distance weighting function is shown in \eqref{eq:IDWfunction}.
 
 \begin{align} \label{eq:IDWfunction}
 	y_0 = \frac{\sum_{i=1}^{k}w_i y_i}{\sum_{i=1}^{k}w_i} 
@@ -551,46 +551,28 @@ w_{i, \text{inverse}}  &=
   \end{cases}
 \end{align}
 
-\noindent
-\textbf{Insert textually explained KNN algorithm.} \\
+
+\begin{algorithm}[H]
+	\caption{k-Nearest Neighbor for Regression}
+	\label{alg:KNN}
+	\begin{enumerate}
+		\item Compute the distance $d(x_0, x_i)$ for $i=1$ to $M$.
+		\item Compute set $I$ containing the indices for the $k$ smallest distances $d(x_0, x_i)$.
+		\item Output the prediction as a (weighted) average of the response values from the $k$ closest training instances: $\frac{1}{k} \sum_{i=1}^{k} w_i f(x_i)$ \\  
+	\end{enumerate}	
+\end{algorithm}
 
 \noindent
-The k-nearest neighbor algorithm is described in pseudocode by \hyperref[alg:KNN]{Algorithm\ 1}. The space complexity of the KNN algorithm is dominated by the space required by the data structure storing the training dataset and thus the space complexity is O((p+r)M). The time complexity of the KNN algorithm is dominated by the first for-loop. Inside the first for-loop, the distance between the query instance $x_0$ and each training set instance is computed where each distance computation requires O(p) time and is done for all $M$ training instances. Hence the worst case run time for computing all distances is O(pM). The arithmetic operations in the second for-loop run in constant time for $k$ times and thus the worst-case run time for the second for-loop is O(k). Selecting the k-closest neighbors can be done in O(M) time with introselect algorithm or in O(M) \textit{expected} time with randomized quick-select. If the latter is used, the worst-case run time of the KNN algorithm is technically O(M$^2$) because randomized quick-select runs in O(M$^2$) time \citep{ref:Goodrich2015}. The complexity analysis is based on an implementation of the KNN algorithm using exhaustive search for identification of the k nearest neighbours. \\  
+The k-nearest neighbor algorithm is described in pseudocode by \hyperref[alg:KNN]{Algorithm\ 1}. The space complexity of the KNN algorithm is dominated by the space required by the data structure storing the training dataset and thus the space complexity is O((P+R)M). The time complexity of the KNN algorithm is upper bounded by the first set of operations when the distance between the query instance $x_0$ and each training set instance is computed. Each distance computation requires O(P) time and is done for all $M$ training instances. Hence the worst case run time for computing all distances is O(PM). Computing the set $I$ containing the indices for the $k$ closest neighbors can be done in O(M) time with the introselect algorithm or in O(M) \textit{expected} time with randomized quick-select. If the latter is used, the worst-case run time of the KNN algorithm is technically O(M$^2$) because randomized quick-select runs in O(M$^2$) time \citep{ref:Goodrich2015}. The complexity analysis is based on an implementation of the KNN algorithm using exhaustive search for identification of the k nearest neighbors. \\  
+
+
+\noindent
+From the pseudocode of the KNN algorithm it is observed that the hyper-parameter $k$, the number of nearest neighbors, is to be specified. The optimal value for $k$ may be determined by a grid search in some range of natural numbers. An elaborate discussion on choosing an appropriate value for $k$ is delayed to Section \ref{sec:mse_decompose}. \\
 
 \noindent
 \textbf{Good point to talk about the curse of dimensionality in the distance function. How do we cope with this in case of high dimensional systems of correlation? Reference papers addressing this issue: Brute-Force k-Nearest Neighbors Search on the GPU, and efficient KNN in high dimensional space in \citep{ref:Wang2011}} \\
 
-\iffalse
-\begin{algorithm}[H]
-	\caption{KNN(T$_{train}$, $x_0$, k, weight=\{'uniform', 'inverse'\})}
-	\label{alg:KNN}
-	\begin{algorithmic}[1]
-		\State $D \gets \emptyset$ \Comment{Initialize list of distances as an empty list of size $\abs{T}$}
-		\State $T_{k} \gets \emptyset$ \Comment{Initialize list of k-nearest neighbors as an empty list of size $\abs{k}$} 
-		\State $y_0 \gets \emptyset$ \Comment{Initialize list of response variables as an empty list of size $\abs{r}$}
-		\ForAll{$t=(x_i, y_i) \in T_{train}$}		
-			\State $d(x_0,x_i) = \sqrt{\sum_{m=1}^{n} (x_{0,m} - x_{i,m})^2}$ \Comment{Compute Euclidian distance}
-			\State $D \gets D \cup (d(x_0,x_i), y_i)$   \Comment{Add tuple distance and response vector}
-		\EndFor		
-		\State $T_{k} \gets D.getMin(k)$ \Comment{Assign k-smallest tuples from D w.r.t. $d(x_0,x_i)$}
-		\For{$i \in \{1, \cdots, k$\}} \Comment{Compute weights for k closest neighbors}
-			\If{$\text{weight is uniform}$}
-				\State $w_i = w_{i,uniform}$    \Comment{According to \eqref{eq:uni_weights}}
-			\Else
-				\State  $w_i = w_{i,inverse}$	\Comment{According to \eqref{eq:inverse_weights}}
-			\EndIf			
-		\EndFor
-		\For{$j \in \{1, \cdots, r$\}}
-			\State $y_j = \frac{\sum_{i=1}^{k}w_i y_i}{\sum_{i=1}^{k}w_i}$
-			\State $y_0 \gets y_j$   \Comment{Add response variable to response vector}		
-		\EndFor
-			\State \Return $y_0$
-\end{algorithmic} 
-\end{algorithm}
-\fi
 
-\noindent
-From the pseudocode of the KNN algorithm it is observed that the hyper-parameter $k$, the number of nearest neighbors, is to be specified. The optimal value for $k$ may be determined by a grid search in some range of natural numbers. An elaborate discussion on choosing an appropriate value for $k$ is delayed to Section \ref{sec:mse_decompose}.
 
 
 
@@ -604,19 +586,27 @@ Decision trees are a non-parametric supervised learning method used for the task
 The decision tree predicts the value of a response variable by learning simple if-then-else inference rules from a training dataset. From a geometrical point of view, this results into a recursive partitioning of the covariate space, $X$, into a set of (hyper)rectangles, which each each assign some constant value to all instances in a terminal partition. \\
 
 \noindent
-The representation for the Classification And Regression Trees (henceforth CART) \citep{ref:Breiman1984} model is a binary tree. In a binary decision tree, each node $t$ represents a partition or subspace of the whole covariate space, $X_t \subseteq X$, with the root node corresponding to whole covariate space $X$. Each internal node, represented by an covariate-based if-then inference rule, splits the subspace it represents into two disjoint subspaces which correspond to each of the node's two children. Which covariate to base the split on is found according to some split criterion. In the CART framework, this comes down to the split that achieves the greatest improvement in predictive accuracy or, in other words, the greatest decrease in node impurity, which is measured by the squared error loss in case of regression problems. The ultimate goal is to construct a decision tree such that its terminal nodes contain instances that show minimal impurity or minimal variance with respect to their response values \citep{ref:Louppe2014}. \\
+The representation for the Classification And Regression Trees (henceforth CART) \citep{ref:Breiman1984} model is a binary tree. In a binary decision tree, each node $t$ represents a partition or subspace of the whole covariate space, $X_t \subseteq X$, with the root node corresponding to whole covariate space $X$. Each internal node, represented by a covariate-based if-then-else inference rule, splits the subspace it represents into two disjoint subspaces which correspond to each of the node's two children. This is continued until some stopping criterion is met and one ends up with a number of subspaces in which the response is modeled as a constant $c_m$. Which covariate to split on is found according to some split criterion. In the CART framework, this comes down to the split that achieves the greatest improvement in predictive accuracy or, in other words, the greatest decrease in node impurity, which is measured by the squared error loss in case of regression problems. The ultimate goal is to construct a decision tree such that its terminal nodes contain instances that show minimal impurity or minimal variance with respect to their response values \citep{ref:Louppe2014}. For a nice example that illustrates the tree construction process just described, examine page 28 of the work by \cite{ref:Louppe2014}.      \\
 
 \noindent
-\textbf{Insert example} \\
-\textbf{Insert more information with respect to computation of impurity decrease} \\
-\textbf{Insert textually explained CART algorithm.} \\
-          
+An important issue in a tree construction process is finding good splits. The best binary partition is found with a greedy algorithm in the decision tree construction process. Let us consider a splitting variable $s$ and a split point $t$. The goal is to find the best covariate to split on, $s*$, and split point $t$, that is,
 
+\begin{align} \label{eq:split_crit}
+	\min_{s,t} \ \Big[\min_{c_1} \sum_{x_i \in S_1(s,t)} (y_i - c_1)^2 + \min_{c_2} \sum_{x_i \in S_2(s,t)} (y_i - c_2)^2 \Big]
+\end{align}
 
+\noindent
+where the pair of half-planes is defined by $S_1(s,t) = \{ X | X_s \leq t \}$ and $S_2(s,t) = \{ X | X_s > t \}$. Moreover, \cite{ref:Hastie2009} note that for any choice $s$ and $t$, the inner minimization of \eqref{eq:split_crit} is solved by
 
+\begin{align}
+	\hat{c}_1 = \frac{1}{N_{S_1}} \sum_{y_i | x_i \in R_1(s,t)} y_i \ \ \text{and} \ \ \hat{c}_2 = \frac{1}{N_{S_2}} \sum_{y_i | x_i \in R_2(s,t)} y_i 
+\end{align}
+
+\noindent
+where $N_{S_i}$ denotes the number of instances split by the half-plane $S_i$.
 
 \subsubsection{Bagging} \label{sec:bagging}
-Bagging or bootstrap aggregating is a general procedure for the purpose of reducing the variance of an estimator function. The general idea is to construct an estimator from many bootstrapped samples of the original training data, and, in case of regression problems, average the results. A bootstrapped sample is a subset of the original training data, independently and randomly selected. Each bootstrapped sample contains the same number of data instances as the original training data with, due to the nature of random sampling with replacement, approximately 1/3 of the instances duplicated, and approximately 1/3 of the instances are omitted of the bootstrapped sample. \cite{ref:Breiman1996} notes that bagging is particularly effective for unstable procedures, that is, high-variance, low-bias estimators, such as classification and regression trees (CART). A drawback of bagging is the loss of model interpretation; a decision tree is highly interpretable, a bagged decision tree is not anymore.  
+Bagging or bootstrap aggregating is a general procedure for the purpose of reducing the variance of an estimator function. The general idea is to construct an estimator from many bootstrapped samples of the original training data, and, in case of regression problems, average the results. A bootstrapped sample is a subset of the original training data, independently and randomly selected. Each bootstrapped sample contains the same number of data instances as the original training data with, due to the nature of random sampling with replacement, approximately 1/3 of the instances duplicated, and approximately 1/3 of the instances are omitted of the bootstrapped sample. \cite{ref:Breiman1996} notes that bagging is particularly effective for unstable procedures, that is, high-variance, low-bias estimators, such as classification and regression trees (CART). A drawback of bagging is the loss of model interpretation; a decision tree is highly interpretable, a bagged decision tree not so much.  
 
 
 \subsubsection{Random Subspace Method} \label{sec:rsm}
@@ -709,6 +699,31 @@ Tabel \ref{tab:rf_table} shows that Random Forest \citep{ref:Breiman2001} is a c
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \subsubsection{Definition of Random Forests}
+The random forest algorithm is described in pseudocode by \hyperref[alg:RF]{Algorithm\ 2} (inspired from \cite{ref:Hastie2009}).
+
+\begin{algorithm}[H]
+	\caption{Random Forest for Regression}
+	\label{alg:RF}
+	\begin{enumerate}
+		\item For $b=1$ to $B$:
+			\begin{enumerate}
+				\item Draw a bootstrap sample S* of size $M$ from the training dataset.
+				\item Grow a decision tree $T_b$ to the bootstrap sample, by recursive repetition of the following steps for each terminal node of the decision tree until a stopping criterion is met.
+					\begin{enumerate}
+						\item Randomly select $p$ covariates from the $P$ covariates.
+						\item Select the best covariate/split-point among the $p$.
+						\item Split the node into two children nodes. 
+					\end{enumerate}  
+			\end{enumerate}
+		\item Output the prediction of the ensemble of trees $\{T_b\}_{b=1}^B$ at a new query instance $x_0$: \\ $\hat{f}_{rf}^B(x_0) = \frac{1}{B} \sum_{b=1}^B T_b(x_0)$  
+	\end{enumerate}	
+\end{algorithm}
+
+
+\noindent
+\textbf{Mention how impurity decrease is calculated in case of multiple regression output problems.}
+
+
 \iffalse
 As proposed by \cite{ref:Breiman2001}), RF-CART uses squared error loss to compute node purity. However, the most interesting difference between the two trees is the application of random covariate subspacing in RF-CART trees. \\
 
@@ -729,10 +744,6 @@ that maximizes impurity decrease. In case of multiple outputs scikit learn decis
 "The main advantage of multi-output decision trees is that dependencies between output variables can be taken into account, whereas building q individual models cannot exploit such correlations, which may affect the overall accuracy of the model. A second advantage is that building a single model is often less computationally expensive than building q different models, both from a time and space complexity point of view." (louppe, 2014) \\
 \fi
 
-\noindent
-\textbf{Insert textually explained RF algorithm.} \\
-\noindent
-\textbf{Mention how impurity decrease is calculated in case of multiple regression output problems.}
 
 \iffalse
 \noindent
@@ -830,7 +841,7 @@ This means that, in case of a k-dimensional asset universe, there are $k(k-1)/2$
 \end{equation} 
 
 \noindent
-where the response variable of time unit $t$, $Y_t$, is defined as a $k(k-1)/2$-dimensional vector containing pairwise correlation estimates of time unit $t+1$, i.e. $Y_t = (\hat{\rho}_{1,2,t+1}, \hat{\rho}_{1,3,t+1}, \dots, \hat{\rho}_{2,3,t+1}, \hat{\rho}_{2,4,t+1}, \dots,  \hat{\rho}_{k,k(k-1)/2,t+1})$. \\ 
+where the response variable of time unit $t$, $Y_t$, is defined as a $k(k-1)/2$-dimensional vector containing pairwise correlation estimates of time unit $t+1$, i.e. $Y_t = (\hat{\rho}_{1,2,t+1}, \hat{\rho}_{1,3,t+1}, \dots, \hat{\rho}_{2,3,t+1}, \hat{\rho}_{2,4,t+1}, \dots, \\ \hat{\rho}_{k,k(k-1)/2,t+1})$. \\ 
 
 \iffalse
 \noindent
@@ -1731,15 +1742,6 @@ In summary, parsimoniously specified Nearest Neighbor and Random Forest estimato
 \chapter{Systems of Correlations in Quantitative Financial Risk Management} \label{chap:multivariate_analysis}
 This part of the analysis concerns modeling the dependence structure between financial returns in a multivariate setting. Correlation defined by Pearson's linear coefficient and Kendall's $\tau$ coefficient continues to be the measure for dependency. However, the focus of analysis in a multivariate setting is a \textit{system of correlations} rather than \textit{individual correlations}. The role of systems of correlations is demonstrated in the financial task of risk assessment. First, in Section \ref{sec:VaR}, notation is established that is necessary to study the risk of portfolios consisting of an arbitrary number of assets. Section \ref{sec:backesting} then describes the backtesting methodology that is applied to statistically compare our semiparametric multivariate volatility model against a parametric counterpart, the dynamic conditional correlation model of \cite{ref:Engle2002}. Next, our semiparametric multivariate volatility model is applied to the 30 constituents included in the Dow Jones Industrial Average index and performance is verified in terms of an economic loss function, the Value-at-Risk. As such, Section \ref{sec:data} contains some descriptive statistics of the dataset comprising log return series of the 30 constituents included in the Dow Jones Industrial Average index and Section \ref{sec:results} presents the results. Finally, Section \ref{sec:conclusions_emp} concludes the chapter.  \\
 
-\begin{enumerate}
-	\item Use decomposition of conditional variance-covariance matrix $H_t = D_t R_t D_t$.
-	\item $D_t$ is obtained by estimation of conditional variances with GARCH(1,1) models with Gaussian and skewed Student t-distributional assumptions for marginal error distributions. 
-	\item $R_t$ is obtained by estimation of conditional correlations with nonparametric learning estimators and parametric dynamic conditional correlation model.
-	\item Check semi positive-definiteness of obtained $H_t$ and use it for VaR computations and backtesting  under assumption that asset returns follow a multivariate Gaussian distribution.
-	\item Backtesting periods in tranquil times and in volatile times.
-\end{enumerate}
-
-
 \iffalse
 \textit{If a multivariate GARCH model is fitted, the multivariate distribution of the returns can be used directly to compute the implied distribution of any portfolio. There is no need to re?estimate the model for different weight vectors. The multivariate approach is illustrated by Giot and Laurent (2003) using a trivariate example with a time?varying correlation model.}
 
@@ -1816,10 +1818,28 @@ Check out this paper for MC simulation in the tail of distribution: \\
 \noindent
 iro.umontreal.ca/~lecuyer/myftp/papers/vt16truncnormal.pdf \\
 
-\noindent
+\subsection{High Density Regions}
 \textbf{ALTERNATIVE COMPUTATION OF VAR: Highest Density Regions.}\\
-Alternatively, for obtaining VaR (quantiles) from a multivariate normal distribution we can report VaR as the 
-multivariate  'sample quantiles', leading to highest density regions. This is not clear to me at this point and it will take me some time to find out how to do this given that I have estimates of next days' conditional covariance matrix for all time t in both backtest periods.
+Alternatively, for obtaining VaR (quantiles) from a multivariate normal distribution we can report VaR as the multivariate  'sample quantiles', leading to highest density regions. \\
+
+\noindent
+Highest density regions are well suited for the purpose of forecast accuracy evaluation. One of the most distinctive property of HDR's is that of all possible regions of probability coverage $1-\alpha$, the HDR has the smallest region possible in the sample space. In the one-dimensional continuous case that would be the shortest interval, and in the two-dimensional case that would be the smallest area of the surface.   
+
+
+\begin{itemize}
+	\item Highest density region (HDR) ($\alpha$) is defined as the area with the smallest interval that spans $1-\alpha$ of the density.
+	\item The region covering the sample space for a given probability $1-\alpha$, should have the smallest possible volume.
+	\item Every point inside the region should have probability density at least as large as every point outside the region.
+	\item  In the case of a normal distribution an HDR coincides with the usual probability region symmetric about the mean, spanning the a/2 and 1 - a/2 quantiles. 
+	\item It follows that the number of disjoint intervals in a highest density region can never exceed the number of modal groups in the density function. 
+	\item The inverse cdf of a normal corresponds to the quantile function of a normal.
+	\item As long as you can define a function that evaluates the CDF, you can find quantiles. 
+	\item  One major problem is the computational  difficulty in numerically integrating over a general region in  high-dimensional space. An alternative approach is required that avoids explicit integration:
+\end{itemize}
+
+\noindent
+"Although the reduced models, in which the portfolio's returns are considered as one single univariate time series, can be used to calculate VaR for large portfolio, the reduced models (univariate method) may yield low accuracy by ignoring the complicated correlation among the individual returns. Consequently, reduced models provide less detailed information on the source of risk. \iffalse https://pdfs.semanticscholar.org/13c3/84e1928796f06618f812262836c64664db6e.pdf \fi
+Problematic: extension of VaR to the multivariate framework is not unique because a unique definition of multivariate quantile does not exist."
 
 
 \section{Backtesting Methodology} \label{sec:backesting}
@@ -1855,7 +1875,7 @@ The main assumption underlying Christoffersen's Markov test is that the indicato
 
 
 \section{Data and Descriptive Statistics} \label{sec:data}
-The dataset comprises 30 univariate time series of the log returns included in the 30 Dow Jones Industrial Average index (henceforth DJIA). The return series cover data from March 1987 to December 2001. During these periods, financial markets experienced tranquil periods with low volatility such as the mid-1990's as well as periods of high volatility, including the collapse of the Dot-com bubble that began in spring 2000 and the collapse of Enron and WorldCom companies in 2001. Fig. \ref{fig:DJIA_returns} shows the mean log return series of the DJIA constituents. By visual inspection, the heteroskedastic behavior of the return series becomes apparent, indicating volatility clustering, and is an indication for specifying a model for the conditional variances to capture this behavior.        
+The dataset comprises 30 univariate time series of the log returns included in the 30 Dow Jones Industrial Average index (henceforth DJIA). The return series cover data from March 1987 to December 2001. During these periods, financial markets experienced tranquil periods with low volatility such as the mid-1990's as well as periods of high volatility, including the collapse of the Dot-com bubble that began in spring 2000 and the collapse of Enron and WorldCom companies in 2001. Fig. \ref{fig:DJIA_returns} shows the daily mean log return series of the DJIA constituents. By visual inspection, the heteroskedastic behavior of the return series becomes apparent, indicating volatility clustering, and is an indication for specifying a model for the conditional variances to capture this behavior.        
 
 
 \iffalse
@@ -1870,8 +1890,8 @@ The first 500 samples were used as the training set. The remaining 500 samples a
 \end{figure}
 
 \subsection{Summary Statistics}
-Tabel \ref{tab:stats_data} presents summary statistics on the 30 marginal time series of the log returns included in the DJIA. Of particular note is the negative skewness of the return series and the excess kurtosis for all 30 assets. \iffalse www.tandfonline.com/doi/pdf/10.1080/07350015.2016.1177535?needAccess=true \fi All asset return series exhibit an excess kurtosis indicating a higher probability of large negative and positive returns than would be expected under normality. Additionally, all return series exhibit negative skewness which indicates more frequent large negative returns than large positive returns. In other words, all series exhibit behavior that departs from normality. The departures from normality are verified with a simple a Jarque-Bera test \citep{ref:Jarque1980} where the null hypothesis states that the sample is drawn from a distribution with a skewness and excess kurtosis equals to that of the normal distribution, that is, skewness and excess kurtosis are zero. The Jarque-Bera test rejects the assumption of normality for all assets. "Part of this non-normality
-is caused by some large outliers around the October 1987 stock market crash and during the bursting of the 2000 Dot-com bubble. However, the distribution of the data still appears highly non-normal even after the removal of these outliers." \\
+Tabel \ref{tab:stats_data} presents summary statistics on the 30 marginal time series of the log returns included in the DJIA. Of particular note is the negative skewness of the return series and the excess kurtosis for all 30 assets. \iffalse www.tandfonline.com/doi/pdf/10.1080/07350015.2016.1177535?needAccess=true \fi All asset return series exhibit an excess kurtosis indicating a higher probability of large negative and positive returns than would be expected under normality. Additionally, all return series exhibit negative skewness which indicates more frequent large negative returns than large positive returns. In other words, all series exhibit behavior that departs from normality. The departures from normality are verified with a simple Jarque-Bera test \citep{ref:Jarque1980} under the null hypothesis that the sample is drawn from a distribution with a skewness and excess kurtosis equals to that of the normal distribution, that is, skewness and excess kurtosis are zero. The Jarque-Bera test rejects the assumption of normality for all assets. This motivates considering specifications for the conditional variance and marginal error distributions in order to capture the exhibited excess kurtosis and skewness. 
+
 
 \begin{table}[H]
 \centering
@@ -1924,7 +1944,7 @@ XOM   & 0.0511 & 1.528   & -1.0537  & 30.83        & -26.77  & 16.54   & 148221\
 \end{table}
 
 \subsection{Conditional Variance Model}
-As discussed in Section \ref{sec:VaR}, for simplicity, but without loss of generality, the conditional mean of our data is specified by the unconditional mean. Our model for the conditional variance is the GARCH(1,1) model of \cite{ref:Bollerslev1986} with the marginal distributions of the standardized residuals specified as the Gaussian distribution. Additionally, we consider the asymmetric volatility model of \cite{ref:Glosten1993}, the GJR-GARCH model, as specification for the conditional variance. The choice for the asymmetry in this model is motivated by the asymmetric response of volatility to positive and negative asset returns; a negative asymmetric correlation between asset return change and volatility change implies that the rise in volatility following negative returns is larger than the fall in volatility following positive returns. The GJR-GARCH(1,1) model accounts for this inverse relationship between first and second order moments of asset returns, that is,
+As discussed in Section \ref{sec:VaR}, for simplicity, but without loss of generality, the conditional mean of our data is specified by the unconditional mean. Our model for the conditional variance is the GARCH(1,1) model of \cite{ref:Bollerslev1986} with the marginal distributions of the standardized residuals specified as the Gaussian distribution. Additionally, we consider the asymmetric volatility model of \cite{ref:Glosten1993}, the GJR-GARCH model, as specification for the conditional variance. The choice for the asymmetry in this model is motivated by the asymmetric response of volatility to positive and negative asset returns; a asymmetric negative correlation between asset return change and volatility change implies that the rise in volatility following negative returns is generally larger than the fall in volatility following positive returns. The GJR-GARCH(1,1) model accounts for this inverse relationship between first and second order moments of asset returns, that is,
 
 \begin{align} \label{eq:gjr_garch}
 	\sigma^2_{i,t} = \omega_i + \beta_i \sigma^2_{i,t-1} + \alpha_i a^2_{i,t-1} + \gamma_i a^2_{i,t-1} I_{t-1}\{a_{i,t-1} < 0 \} 
@@ -1937,8 +1957,9 @@ For the marginal distributions of the standardized residuals from GJR-GARCH spec
 	\eta_{i,t} = \frac{z_{i,t}}{\sigma_{i,t}} \sim \text{iid} \ Skew \ t (v_i, \psi_i)  \nonumber
 \end{align}
 
+
 \noindent
-Table \ref{tab:stat_dist_gjr_sstd_table} summarizes the results of estimating the GJR-GARCH(1,1) model from \ref{eq:gjr_garch} on the 30 time series. A Ljung-Box test \citep{ref:Ljung1978} exhibits significant autocorrelation in 15 out of 30 of the daily log returns. For the purpose of allowing us to check the adequacy of the conditional variance and marginal distribution specifications, an ARMA(3,1) model was used to capture the autocorrelation remaining in the residual series. The conditional variance models display only moderate statistical indication of asymmetry in volatility given that the estimated asymmetry coefficient, $\gamma_i$, is found statistically significant for 8 out of 30 assets. However, the sign bias test statistics on the residuals are insignificant for 7 out of 8 of the asymmetric models implying asymmetric response of volatility to positive and negative asset returns is adequately captured by the asymmetric GJR-GARCH model. Moreover, for 6 out of these 7 the effect of positive asset returns are stronger than negative asset returns on future volatility. The average estimated degrees of freedom of the shape parameter is 6.9 and the estimated skewness parameter is positive for all 30 assets, and both estimated parameters are significantly different from zero for all 30 assets, indicating heavy tails and positive skewness.    
+Table \ref{tab:stat_dist_gjr_sstd_table} summarizes the results of estimating the GJR-GARCH(1,1) model from \eqref{eq:gjr_garch} on the daily log returns of 30 constituents included in the DJAI for the initial in-sample period of the volatile market test period (March 1987 to December 1999) for 3235 observations. A Ljung-Box test \citep{ref:Ljung1978} exhibits significant autocorrelation in 15 out of 30 of the daily log returns. For the purpose of verifying the adequacy of the conditional variance and marginal distribution specifications, an ARMA(3,1) model was used to capture autocorrelation remaining in the residual series. The conditional variance models display only moderate statistical indication of asymmetry in volatility given that the estimated asymmetry coefficient, $\gamma_i$, is found statistically significant for only 8 out of 30 assets. However, the sign bias test statistics on the residuals are insignificant for 7 out of 8 of the asymmetric models implying asymmetric response of volatility to positive and negative asset returns is adequately captured by the asymmetric GJR-GARCH model. Moreover, for 6 out of these 7 the effect of positive asset returns are stronger than negative asset returns on future volatility. The average estimated degrees of freedom of the shape parameter is 6.9 and the estimated skewness parameter is positive for all 30 assets, and both estimated parameters are significantly different from zero for all 30 assets, indicating heavy tails and positive skewness.    
 
 \begin{table}[H]
 \centering
@@ -1959,15 +1980,16 @@ $\psi_i$               &     & 1.0406     & 1.0043    & 1.0247    & 1.0390    & 
 \multicolumn{6}{l}{KS test for skew t dist standardized residuals}      & \multicolumn{2}{c}{1}     \\ [1ex]            
 \bottomrule  
 \end{tabular}
-\caption[]{} 
+\caption[Summary statistics of GJR-GARCH skewed Student's t model specification for the conditional variance in volatile market conditions.]{Summary statistics of GJR-GARCH(1,1) skewed Student's t model specification for the conditional variance in the initial in-sample period of the volatile market period.} 
 \label{tab:stat_dist_gjr_sstd_table}
 \end{table}
 
 \noindent
-We conclude our discussion on the GJR-GARCH(1,1) model with skewed Student's t-distributed error marginals summarizing goodness-of-fit tests for the marginal distribution specification. Table \ref{tab:stat_dist_gjr_sstd_table} shows that a Ljung-Box test for autocorrelation up to the tenth lag rejects the null hypothesis of zero autocorrelation (at the 0.05 level) for only two of the standardized residual series. More importantly, the weighted portmanteau test \cite{ref:Fisher2012} rejects the null hypothesis of zero autocorrelation (at the 0.05 level) up to the tenth lag for only two of the squared standardized residual series. From the latter one can conclude that the GJR-GARCH(1,1) model provides a satisfactory fit to the conditional volatilities. Next, the null hypothesis  of correct specification of the skewed Student's t-distribution for the standardized residuals is rejected for 1 of the 30 asset return series with a Kolmogorov-Smirnov test using 100 simulations. Table \ref{tab:stat_dist_garch_norm_table} summarizes the results of the estimated ARMA(3,1)-GARCH(1,1) model with Gaussian marginal distribution. The table provides strong statistical evidence on misspecification of the Gaussian distribution for the marginal distributions of the standardized residuals as the null hypothesis of correct specification of the Gaussian distribution for the standardized residuals is rejected for all asset return series with a Kolmogorov-Smirnov test using 100 simulations. In summary, we can conclude that the GJR-GARCH(1,1) model with a skewed Student's t-distribution specification for the marginal errors provides an adequate alternative model to describe the conditional variances of the 30 log return series in our empirical application.  
+We conclude our discussion on the GJR-GARCH(1,1) model with skewed Student's t-distributed marginals summarizing goodness-of-fit tests for the marginal distribution specification. Table \ref{tab:stat_dist_gjr_sstd_table} shows that a Ljung-Box test for autocorrelation up to the tenth lag rejects the null hypothesis of zero autocorrelation (at the 0.05 level) for only two of the standardized residual series. More importantly, the weighted portmanteau test \cite{ref:Fisher2012} rejects the null hypothesis of zero autocorrelation (at the 0.05 level) up to the tenth lag for only two of the squared standardized residual series. From the latter one can conclude that the GJR-GARCH(1,1) model provides a satisfactory fit to the conditional volatilities. Next, the null hypothesis  of correct specification of the skewed Student's t-distribution for the standardized residuals is rejected for 1 of the 30 asset return series with a Kolmogorov-Smirnov test using 100 simulations. Table \ref{tab:stat_dist_garch_norm_table} summarizes the results of the estimated ARMA(3,1)-GARCH(1,1) model with Gaussian marginal distribution. The table provides strong statistical evidence on misspecification of the Gaussian distribution for the marginal distributions of the standardized residuals as the null hypothesis of correct specification of the Gaussian distribution for the standardized residuals is rejected for all asset return series with a Kolmogorov-Smirnov test using 100 simulations. \\
 
-        
-       
+\noindent
+In summary, we can conclude that the GJR-GARCH(1,1) model with a skewed Student's t-distribution specification for the marginal errors provides an adequate alternative  conditional variance model that is capable of capturing the excess kurtosis and skewness exhibited by the daily log returns of the 30 DJIA constituents in our empirical application. This holds for the initial in-sample period of the volatile market test period (March 1987 to December 1999) but similar conclusions hold for the initial in-sample period of the tranquil market test period (March 1987 to December 1993) as supported by Tabel \ref{tab:stat_dist_gjr_sstd_tranquil_table} and Tabel \ref{tab:stat_dist_garch_norm_tranquil_table}.  
+
 
 \section{Empirical Results} \label{sec:results}
 Our empirical application proceeds as follows. Using daily log returns of the 30 constituents included in the Dow Jones Industrial Average index for the in-sample estimation period, we 
@@ -1984,7 +2006,8 @@ Our empirical application proceeds as follows. Using daily log returns of the 30
 \end{enumerate} 
 
 \noindent
-One step ahead out-of-sample forecasts are made for the entire out-of-sample test period with reestimation of conditional volatility and conditional correlation model parameters at each time period (each day). The result is a set of Value-at-Risk forecasts that corresponds in size to the length of out-of-sample test period.    
+One step ahead out-of-sample forecasts are made for the entire out-of-sample test period with re-estimation of conditional volatility and conditional correlation model parameters at each time period (each day). The result is a set of Value-at-Risk forecasts that corresponds in size to the length of out-of-sample test period.    
+
 
 \bigskip
 \noindent
@@ -2375,7 +2398,7 @@ $\beta_i$             &     & 0.8716     & 0.7817    & 0.8434    & 0.8764    & 0
 \multicolumn{6}{l}{KS test for Gaussian dist standardized residuals}      & \multicolumn{2}{c}{30}     \\ [1ex]            
 \bottomrule  
 \end{tabular}
-\caption[]{Summary statistics of the estimated ARMA(3,1)-GARCH(1,1) model with Gaussian marginal distribution on daily log returns of 30 constituents included in the Dow Jones Industrial Average index for the period March 1987 to December 1999 for 3235 observations. The columns present the mean and quantiles from the cross-sectional distribution of the parameters listed in the rows. Results from Goodness-of-fit tests are shown in the bottom of the table. The first and second row present the number of rejections (at the 0.05 level) across 30 assets from Ljung-Box and weighted portmanteau tests for autocorrelation up to the tenth lag for standardized residuals and squared standardized residuals, respectively. The bottom row shows the number of rejections across 30 assets from a Kolmogorov-Smirnov test of the the Gaussian distribution fit to the standardized residuals.} 
+\caption[Summary statistics of GJR-GARCH Gaussian model specification for the conditional variance in volatile market conditions.]{Summary statistics of the estimated ARMA(3,1)-GARCH(1,1) model with Gaussian marginal distribution on daily log returns of 30 constituents included in the Dow Jones Industrial Average index for the period March 1987 to December 1999 for 3235 observations. The columns present the mean and quantiles from the cross-sectional distribution of the parameters listed in the rows. Results from Goodness-of-fit tests are shown in the bottom of the table. The first and second row present the number of rejections (at the 0.05 level) across 30 assets from Ljung-Box and weighted portmanteau tests for autocorrelation up to the tenth lag for standardized residuals and squared standardized residuals, respectively. The bottom row shows the number of rejections across 30 assets from a Kolmogorov-Smirnov test of the the Gaussian distribution fit to the standardized residuals.} 
 \label{tab:stat_dist_garch_norm_table}
 \end{table}
 
@@ -2398,7 +2421,7 @@ $\psi_i$               &     & 1.0288		 &0.9797	 &1.0150	 &1.0314	 &1.0443	 &1.0
 \multicolumn{6}{l}{KS test for skew t dist standardized residuals}      & \multicolumn{2}{c}{3}     \\ [1ex]            
 \bottomrule  
 \end{tabular}
-\caption[]{Summary statistics of the estimated ARMA(3,1)-GARCH(1,1) model with skewed Student's t marginal distribution on daily log returns of 30 constituents included in the Dow Jones Industrial Average index for the period March 1987 to December 1993 for 1720 observations. The columns present the mean and quantiles from the cross-sectional distribution of the parameters listed in the rows. Goodness-of-fit test results are shown in the bottom of the table. The first and second row present the number of rejections (at the 0.05 level) across 30 assets from Ljung-Box and weighted portmanteau tests for autocorrelation up to the tenth lag for standardized residuals and squared standardized residuals. The bottom row shows the number of rejections across 30 assets from a Kolmogorov-Smirnov test of the Gaussian distribution fit to the standardized residuals.} 
+\caption[Summary statistics of GJR-GARCH skewed Student's t model specification for the conditional variance in tranquil market conditions.]{Summary statistics of the estimated ARMA(3,1)-GARCH(1,1) model with skewed Student's t marginal distribution on daily log returns of 30 constituents included in the Dow Jones Industrial Average index for the period March 1987 to December 1993 for 1720 observations. The columns present the mean and quantiles from the cross-sectional distribution of the parameters listed in the rows. Goodness-of-fit test results are shown in the bottom of the table. The first and second row present the number of rejections (at the 0.05 level) across 30 assets from Ljung-Box and weighted portmanteau tests for autocorrelation up to the tenth lag for standardized residuals and squared standardized residuals. The bottom row shows the number of rejections across 30 assets from a Kolmogorov-Smirnov test of the Gaussian distribution fit to the standardized residuals.} 
 \label{tab:stat_dist_gjr_sstd_tranquil_table}
 \end{table}
 
@@ -2418,7 +2441,7 @@ $\beta_i$             &     & 0.7906		&0.5927	&0.7519	&0.8132	&0.8853	&0.9262   
 \multicolumn{6}{l}{KS test for Gaussian dist standardized residuals}      & \multicolumn{2}{c}{26}     \\ [1ex]            
 \bottomrule  
 \end{tabular}
-\caption[]{Summary statistics of the estimated ARMA(3,1)-GARCH(1,1) model with Gaussian marginal distribution on daily log returns of 30 constituents included in the Dow Jones Industrial Average index for the period March 1987 to December 1993 for 1720 observations. The columns present the mean and quantiles from the cross-sectional distribution of the parameters listed in the rows. Goodness-of-fit test results are shown in the bottom of the table. The first and second row present the number of rejections (at the 0.05 level) across 30 assets from Ljung-Box and weighted portmanteau tests for autocorrelation up to the tenth lag for standardized residuals and squared standardized residuals. The bottom row shows the number of rejections across 30 assets from Kolmogorov-Smirnov test of the Gaussian distribution fit to the standardized residuals.} 
+\caption[Summary statistics of GJR-GARCH Gaussian model specification for the conditional variance in tranquil market conditions.]{Summary statistics of the estimated ARMA(3,1)-GARCH(1,1) model with Gaussian marginal distribution on daily log returns of 30 constituents included in the Dow Jones Industrial Average index for the period March 1987 to December 1993 for 1720 observations. The columns present the mean and quantiles from the cross-sectional distribution of the parameters listed in the rows. Goodness-of-fit test results are shown in the bottom of the table. The first and second row present the number of rejections (at the 0.05 level) across 30 assets from Ljung-Box and weighted portmanteau tests for autocorrelation up to the tenth lag for standardized residuals and squared standardized residuals. The bottom row shows the number of rejections across 30 assets from Kolmogorov-Smirnov test of the Gaussian distribution fit to the standardized residuals.} 
 \label{tab:stat_dist_garch_norm_tranquil_table}
 \end{table}
 

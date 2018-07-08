@@ -6,46 +6,47 @@
 \contentsline {chapter}{\numberline {1}Introduction}{1}{chapter.1}
 \contentsline {section}{\numberline {1.1}Problem Statement}{3}{section.1.1}
 \contentsline {section}{\numberline {1.2}Research Objectives}{4}{section.1.2}
-\contentsline {section}{\numberline {1.3}Outline and Contributions}{5}{section.1.3}
+\contentsline {section}{\numberline {1.3}Outline and Contributions}{4}{section.1.3}
 \contentsline {chapter}{\numberline {2}Methodology}{7}{chapter.2}
 \contentsline {section}{\numberline {2.1}Multivariate Volatility Modeling}{7}{section.2.1}
 \contentsline {subsection}{\numberline {2.1.1}Dynamic Conditional Correlation Model}{9}{subsection.2.1.1}
 \contentsline {subsection}{\numberline {2.1.2}Pearson Product-Moment Correlation Coefficient}{11}{subsection.2.1.2}
 \contentsline {subsection}{\numberline {2.1.3}Capturing Nonlinear Relations: Kendall's $\tau $}{11}{subsection.2.1.3}
 \contentsline {section}{\numberline {2.2}Machine Learning}{12}{section.2.2}
-\contentsline {subsection}{\numberline {2.2.1}Nearest Neighbor Estimator}{12}{subsection.2.2.1}
+\contentsline {subsection}{\numberline {2.2.1}Nearest Neighbor Estimator}{13}{subsection.2.2.1}
 \contentsline {subsection}{\numberline {2.2.2}Random Forest Estimator}{14}{subsection.2.2.2}
-\contentsline {subsubsection}{\numberline {2.2.2.1}Classification and Regression Trees}{14}{subsubsection.2.2.2.1}
+\contentsline {subsubsection}{\numberline {2.2.2.1}Classification and Regression Trees}{15}{subsubsection.2.2.2.1}
 \contentsline {subsubsection}{\numberline {2.2.2.2}Bagging}{15}{subsubsection.2.2.2.2}
-\contentsline {subsubsection}{\numberline {2.2.2.3}Random Subspace Method}{15}{subsubsection.2.2.2.3}
-\contentsline {subsubsection}{\numberline {2.2.2.4}Definition of Random Forests}{16}{subsubsection.2.2.2.4}
-\contentsline {subsection}{\numberline {2.2.3}Bias-Variance Decomposition}{16}{subsection.2.2.3}
-\contentsline {section}{\numberline {2.3}Conditional Correlation Estimation using Machine Learning}{19}{section.2.3}
-\contentsline {chapter}{\numberline {3}Simulated Data with Time-Varying Correlation}{20}{chapter.3}
-\contentsline {section}{\numberline {3.1}Moving Window Estimates of Correlation}{21}{section.3.1}
-\contentsline {section}{\numberline {3.2}Learning with True Correlation for Response Variable}{24}{section.3.2}
-\contentsline {subsection}{\numberline {3.2.1}Generalization Error of Nearest Neighbor under True Correlation}{24}{subsection.3.2.1}
-\contentsline {subsection}{\numberline {3.2.2}Effect of Alternative Nearest Neighbor Parameterizations under True Correlation}{26}{subsection.3.2.2}
-\contentsline {subsection}{\numberline {3.2.3}Generalization Error of Random Forest under True Correlation}{31}{subsection.3.2.3}
-\contentsline {subsection}{\numberline {3.2.4}Effect of Alternative Random Forest Parameterizations under True Correlation}{33}{subsection.3.2.4}
-\contentsline {section}{\numberline {3.3}Learning with Proxy for Response Variable}{35}{section.3.3}
-\contentsline {subsection}{\numberline {3.3.1}Generalization Error of Nearest Neighbor under Proxy Correlation}{35}{subsection.3.3.1}
-\contentsline {subsection}{\numberline {3.3.2}Effect of Alternative Nearest Neighbor Parameterizations under Proxy Correlation}{38}{subsection.3.3.2}
-\contentsline {subsection}{\numberline {3.3.3}Generalization Error of Random Forest under Proxy Correlation}{42}{subsection.3.3.3}
-\contentsline {subsection}{\numberline {3.3.4}Effect of Alternative Random Forest Parameterizations under Proxy Correlation}{44}{subsection.3.3.4}
-\contentsline {section}{\numberline {3.4}Conclusions Simulation Results}{46}{section.3.4}
-\contentsline {chapter}{\numberline {4}Systems of Correlations in Quantitative Financial Risk Management}{48}{chapter.4}
+\contentsline {subsubsection}{\numberline {2.2.2.3}Random Subspace Method}{16}{subsubsection.2.2.2.3}
+\contentsline {subsubsection}{\numberline {2.2.2.4}Definition of Random Forests}{17}{subsubsection.2.2.2.4}
+\contentsline {subsection}{\numberline {2.2.3}Bias-Variance Decomposition}{17}{subsection.2.2.3}
+\contentsline {section}{\numberline {2.3}Conditional Correlation Estimation using Machine Learning}{20}{section.2.3}
+\contentsline {chapter}{\numberline {3}Simulated Data with Time-Varying Correlation}{21}{chapter.3}
+\contentsline {section}{\numberline {3.1}Moving Window Estimates of Correlation}{22}{section.3.1}
+\contentsline {section}{\numberline {3.2}Learning with True Correlation for Response Variable}{25}{section.3.2}
+\contentsline {subsection}{\numberline {3.2.1}Generalization Error of Nearest Neighbor under True Correlation}{25}{subsection.3.2.1}
+\contentsline {subsection}{\numberline {3.2.2}Effect of Alternative Nearest Neighbor Parameterizations under True Correlation}{27}{subsection.3.2.2}
+\contentsline {subsection}{\numberline {3.2.3}Generalization Error of Random Forest under True Correlation}{32}{subsection.3.2.3}
+\contentsline {subsection}{\numberline {3.2.4}Effect of Alternative Random Forest Parameterizations under True Correlation}{34}{subsection.3.2.4}
+\contentsline {section}{\numberline {3.3}Learning with Proxy for Response Variable}{36}{section.3.3}
+\contentsline {subsection}{\numberline {3.3.1}Generalization Error of Nearest Neighbor under Proxy Correlation}{36}{subsection.3.3.1}
+\contentsline {subsection}{\numberline {3.3.2}Effect of Alternative Nearest Neighbor Parameterizations under Proxy Correlation}{39}{subsection.3.3.2}
+\contentsline {subsection}{\numberline {3.3.3}Generalization Error of Random Forest under Proxy Correlation}{43}{subsection.3.3.3}
+\contentsline {subsection}{\numberline {3.3.4}Effect of Alternative Random Forest Parameterizations under Proxy Correlation}{45}{subsection.3.3.4}
+\contentsline {section}{\numberline {3.4}Conclusions Simulation Results}{47}{section.3.4}
+\contentsline {chapter}{\numberline {4}Systems of Correlations in Quantitative Financial Risk Management}{49}{chapter.4}
 \contentsline {section}{\numberline {4.1}Value-at-Risk Theory}{49}{section.4.1}
-\contentsline {section}{\numberline {4.2}Backtesting Methodology}{50}{section.4.2}
-\contentsline {section}{\numberline {4.3}Data and Descriptive Statistics}{51}{section.4.3}
-\contentsline {subsection}{\numberline {4.3.1}Summary Statistics}{52}{subsection.4.3.1}
-\contentsline {subsection}{\numberline {4.3.2}Conditional Variance Model}{53}{subsection.4.3.2}
-\contentsline {section}{\numberline {4.4}Empirical Results}{55}{section.4.4}
-\contentsline {subsection}{\numberline {4.4.1}Tranquil Market Conditions: Mid-1990's}{56}{subsection.4.4.1}
-\contentsline {subsection}{\numberline {4.4.2}Volatile Market Conditions: 2000-2001 Dot-com Bubble}{59}{subsection.4.4.2}
-\contentsline {section}{\numberline {4.5}Conclusions Empirical Results}{61}{section.4.5}
-\contentsline {chapter}{\numberline {5}Conclusion and Future Research}{62}{chapter.5}
-\contentsline {chapter}{\numberline {A}Cross-sectional Distribution Data of Conditional Variance Models}{67}{appendix.A}
-\contentsline {chapter}{\numberline {B}Value-at-Risk Forecasts on Lower Quantiles}{69}{appendix.B}
-\contentsline {section}{\numberline {B.1}Tranquil Market Conditions: Mid-1990's}{69}{section.B.1}
-\contentsline {section}{\numberline {B.2}Volatile Market Conditions: 2000-2001 Dot-com Bubble}{72}{section.B.2}
+\contentsline {subsection}{\numberline {4.1.1}High Density Regions}{51}{subsection.4.1.1}
+\contentsline {section}{\numberline {4.2}Backtesting Methodology}{52}{section.4.2}
+\contentsline {section}{\numberline {4.3}Data and Descriptive Statistics}{53}{section.4.3}
+\contentsline {subsection}{\numberline {4.3.1}Summary Statistics}{54}{subsection.4.3.1}
+\contentsline {subsection}{\numberline {4.3.2}Conditional Variance Model}{55}{subsection.4.3.2}
+\contentsline {section}{\numberline {4.4}Empirical Results}{57}{section.4.4}
+\contentsline {subsection}{\numberline {4.4.1}Tranquil Market Conditions: Mid-1990's}{58}{subsection.4.4.1}
+\contentsline {subsection}{\numberline {4.4.2}Volatile Market Conditions: 2000-2001 Dot-com Bubble}{61}{subsection.4.4.2}
+\contentsline {section}{\numberline {4.5}Conclusions Empirical Results}{63}{section.4.5}
+\contentsline {chapter}{\numberline {5}Conclusion and Future Research}{64}{chapter.5}
+\contentsline {chapter}{\numberline {A}Cross-sectional Distribution Data of Conditional Variance Models}{69}{appendix.A}
+\contentsline {chapter}{\numberline {B}Value-at-Risk Forecasts on Lower Quantiles}{71}{appendix.B}
+\contentsline {section}{\numberline {B.1}Tranquil Market Conditions: Mid-1990's}{71}{section.B.1}
+\contentsline {section}{\numberline {B.2}Volatile Market Conditions: 2000-2001 Dot-com Bubble}{74}{section.B.2}

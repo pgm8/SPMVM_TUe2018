@@ -11,25 +11,33 @@ dcc_garch_modeling <- function(data=a_t, t=t, distribution.model="norm", distrib
     tic <- Sys.time()
     data_train <- data[1:t[i],1:N]  # Rolling forward: data[i:t[i],1:N]  
     # Specify univariate GARCH(1,1) with marginal Student-t dist. errors for each component series
-    univ_garch_spec <- ugarchspec(variance.model=list(model="fGARCH", submodel="GARCH", garchOrder=c(1, 1)), 
+    if (distribution.model=="norm"){
+    univ_garch_spec <- ugarchspec(variance.model=list(model="fGARCH", submodel="GARCH", garchOrder=c(1, 1)),
                                   mean.model=list(armaOrder=c(0,0), include.mean=FALSE), distribution.model=distribution.model)
+    } else{
+    univ_garch_spec <- ugarchspec(variance.model=list(model="gjrGARCH", garchOrder=c(1, 1)),
+                                  mean.model=list(armaOrder=c(0,0), include.mean=FALSE), distribution.model=distribution.model)
+    }
     multi_univ_garch_spec <- multispec(replicate(N,univ_garch_spec))
     # Specify DCC-GARCH(1,1) with multivariate Student-t errors for stand. residual series
-    dcc_spec <- dccspec(multi_univ_garch_spec, dccOrder=c(1,1), model="DCC", distribution=distribution)
+    #dcc_spec <- dccspec(multi_univ_garch_spec, dccOrder=c(1,1), model="DCC", distribution=distribution)
     # Fit component series
     fit.multi_garch <- multifit(multi_univ_garch_spec, data_train, cluster=cl)
     # Estimate DCC-GARCH(1,1) mvt model
-    fit.dcc = dccfit(dcc_spec, data=data_train, solver='solnp', cluster=cl, fit.control=list(eval.se = FALSE), fit=fit.multi_garch)
+    #fit.dcc = dccfit(dcc_spec, data=data_train, solver='solnp', cluster=cl, fit.control=list(eval.se = FALSE), fit=fit.multi_garch)
     # Save conditional volatilities and correlations
-    dcc.forc <- dccforecast(fit.dcc, n.ahead=1, n.roll=0)  # T+1 forecasts
-    D_t_file[i, ] <- as.numeric(sigma(dcc.forc))
-    R_t_file[i, ] <- t(dcc.forc@mforecast[["R"]][[1]][,,1])[lower.tri(t(dcc.forc@mforecast[["R"]][[1]][,,1]),diag=FALSE)]
+    uniGarch.forc <- multiforecast(fit.multi_garch, n.ahead=1, n.roll=0, cluster=cl) # T+1 forecasts conditional volatilities
+    #dcc.forc <- dccforecast(fit.dcc, n.ahead=1, n.roll=0, cluster=cl)  # T+1 forecasts
+    D_t_file[i, ] <- as.numeric(sigma(uniGarch.forc))
+    #D_t_file[i, ] <- as.numeric(sigma(dcc.forc))
+    #R_t_file[i, ] <- t(dcc.forc@mforecast[["R"]][[1]][,,1])[lower.tri(t(dcc.forc@mforecast[["R"]][[1]][,,1]),diag=FALSE)]
     print(i)
     print(t[i])
     print(Sys.time()-tic)
   }
   stopCluster(cl)
-  return(list("D_t_file"=D_t_file, "R_t_file"=R_t_file))
+  #return(list("D_t_file"=D_t_file, "R_t_file"=R_t_file))
+  return(list("D_t_file"=D_t_file))
 }
 ####################################################################################################
 ######                                Value-at-Risk Estimation                               #######
@@ -57,12 +65,25 @@ cov_mat_portfolio <- function(vol_vec, cor_vec) {
 sigma_vec_portfolio <- function(volatility_matrix, cor_matrix, T=T, w=w) {
   # volatility_matrix := matrix with conditional volatilities
   # cor_matrix := matrix with conditional correlations
-  sigma_t <- rep(NaN,T)  
+  sigma_t <- rep(NaN,T)
   for (i in 1:T) {
-    H_t <- cov_mat_portfolio(volatility_matrix[i,], cor_matrix[i,])  
-    sigma_t[i] <- sqrt(t(w)%*%H_t%*%w)  # Portfolio sdv 
+    H_t <- cov_mat_portfolio(volatility_matrix[i,], cor_matrix[i,])
+    sigma_t[i] <- sqrt(t(w)%*%H_t%*%w)  # Portfolio sdv
   }
   return(sigma_t)
+}
+
+VaR_estimates_alt <- function(volatility_matrix, cor_matrix, mu=mu_portfolio_loss, cl=alpha) {
+  VaR_mat <- matrix(data=NaN, nrow=T, ncol=length(cl))
+  colnames(VaR_mat) <- 1-cl  #  Set column names to corresponding conf. level VaR estimates
+  for (i in 1:3) {  # dim(vol_data_tranquil_mvnorm)[1]
+    print(i)
+    H_t <- cov_mat_portfolio(as.numeric(volatility_matrix[i,]), as.numeric(cor_matrix[i,]))
+    for (a in cl) {
+      VaR_mat[i, toString(a)] <- mu_portfolio_loss + qmvnorm(p=a, interval=c(-5, 5), tail="lower", mu=c(rep(0, 30)), sigma=H_t)$quantile
+    }
+  }
+  return(VaR_mat)
 }
 
 VaR_estimates <- function(sigma_portfolio, mu=mu_portfolio_loss, cl=alpha) {

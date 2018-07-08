@@ -9,10 +9,9 @@ def main():
     mm = ModuleManager()
 
     ##################################################################################################################
-    ###                                      Multivariate Quantiles Computation                                    ###
+    ###                                      Multivariate Quantile Computation                                     ###
     ##################################################################################################################
-
-
+    data_cor = mm.load_data('multivariate_analysis/cor_DCC_mvnorm_DJI30_1994_1995')
 
 
 
