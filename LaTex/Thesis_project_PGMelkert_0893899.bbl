@@ -1,4 +1,4 @@
-\begin{thebibliography}{50}
+\begin{thebibliography}{51}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
@@ -205,6 +205,11 @@ Eric Jondeau and Michael Rockinger.
   stock market application.
 \newblock \emph{Journal of International Money and Finance}, 25\penalty0
   (5):\penalty0 827--853, 2006.
+
+\bibitem[Kendall(1948)]{ref:Kendall1948}
+M.~G. Kendall.
+\newblock Rank correlation methods.
+\newblock \emph{Charles Griffin \& Company Limited}, 1948.
 
 \bibitem[Kupiec(1995)]{ref:Kupiec1995}
 Paul~H Kupiec.
