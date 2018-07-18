@@ -32,12 +32,12 @@ def main():
             # u contains random points on the unit hypersphere
             u = r / np.linalg.norm(r, axis=0)
             for alpha in alpha_vec:
-                y = chi2.ppf(q=alpha, df=dim)         #-2*np.log(1-alpha)  #
+                y = np.sqrt(chi2.ppf(q=alpha, df=dim))
                 # Transform points on the unit hypersphere to the hyperellipsoid
                 xrandom = sqrtm(H).dot(np.sqrt(y) * u)
                 # Compute the lowest (equally) weighted average of random points on the hyperellipsoid.
                 # This is the maximum loss with alpha percent probability, i.e. Value-at-Risk
-                xrandom_min = np.min(np.array([np.mean(x) for x in xrandom.T]))
+                xrandom_min = np.max(np.abs(np.array([np.mean(x) for x in xrandom.T])))
                 var_estimates.append(xrandom_min)
             result = pd.merge(result, pd.DataFrame(np.asarray(var_estimates).reshape(1, -1),
                                                    columns=header), how='outer')
@@ -50,16 +50,16 @@ def main():
     ###                                      Multivariate Quantile Computation                                     ###
     ##################################################################################################################
     dim = 30
-    vol_data = mm.load_data('multivariate_analysis/volatilities_garch_norm_DJI30_1994_1995.pkl')
+    vol_data = mm.load_data('multivariate_analysis/volatilities_garch_norm_DJI30_2000_2001.pkl')
     #cor_data = mm.load_data('multivariate_analysis/cor_DCC_mvnorm_DJI30_1994_1995.pkl')
-    cor_data = mm.load_data('multivariate_analysis/pearson/pearson_cor_estimates/cor_rf100_pearson_10_DJI30_1994_1995.pkl')
+    cor_data = mm.load_data('multivariate_analysis/pearson/pearson_cor_estimates/cor_knn5_pearson_10_DJI30_2000_2001.pkl')
 
     result = generate_random_points_on_hyperellipsoid(vol_data=vol_data, cor_data=cor_data)
     print(result)
     #mm.save_data('multivariate_analysis/VaR/var_dcc_mvnorm_1994_1995_nsample_1e6.pkl', result)
     #mm.transform_pickle_to_csv('multivariate_analysis/VaR/var_dcc_mvnorm_1994_1995_nsample_1e6.pkl')
-    #mm.save_data('multivariate_analysis/VaR/var_knn_idw_garch_1994_1995_nsample_1e5_ch2_alpha.pkl', result)
-    #mm.transform_pickle_to_csv('multivariate_analysis/VaR/var_knn_idw_garch_1994_1995_nsample_1e5_ch2_alpha.pkl')
+    mm.save_data('multivariate_analysis/VaR/var_knn5_pearson_garch_2000_2001_nsample_1e5_sqrt_chi2.pkl', result)
+    mm.transform_pickle_to_csv('multivariate_analysis/VaR/var_knn5_pearson_garch_2000_2001_nsample_1e5_sqrt_chi2.pkl')
 
 
 

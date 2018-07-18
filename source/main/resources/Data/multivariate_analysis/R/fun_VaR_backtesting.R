@@ -1,44 +1,45 @@
 ####################################################################################################
 ######                      DCC-GARCH Student-t distributed errors (rugarch)                 #######
 ####################################################################################################
-# Two-stage quasi-likelihood function to find parameters under multivariate Student-t distributed errors
+# Two-stage quasi-likelihood function to find parameters under multivariate normal distributed errors
 dcc_garch_modeling <- function(data=a_t, t=t, distribution.model="norm", distribution="mvnorm") {
   D_t_file <- matrix(NaN, T, N)
   colnames(D_t_file) <- c(colnames(data))[1:N]
   R_t_file <- matrix(NaN, T, N*(N-1)/2)
   cl = makePSOCKcluster(10)
-  for (i in seq_along(t)) {  # for (i in seq_along(t))  # tranquil: {1720:2223}, voaltile: {3225:3734}
+  for (i in seq_along(t)) {  # tranquil: {1720:2223}, voaltile: {3225:3734}
     tic <- Sys.time()
     data_train <- data[1:t[i],1:N]  # Rolling forward: data[i:t[i],1:N]  
-    # Specify univariate GARCH(1,1) with marginal Student-t dist. errors for each component series
-    if (distribution.model=="norm"){
-    univ_garch_spec <- ugarchspec(variance.model=list(model="fGARCH", submodel="GARCH", garchOrder=c(1, 1)),
-                                  mean.model=list(armaOrder=c(0,0), include.mean=FALSE), distribution.model=distribution.model)
-    } else{
+    # Specificaiton for component conditional volatilities
     univ_garch_spec <- ugarchspec(variance.model=list(model="gjrGARCH", garchOrder=c(1, 1)),
                                   mean.model=list(armaOrder=c(0,0), include.mean=FALSE), distribution.model=distribution.model)
-    }
+    # if (distribution.model=="norm"){
+    # univ_garch_spec <- ugarchspec(variance.model=list(model="fGARCH", submodel="GARCH", garchOrder=c(1, 1)),
+    #                               mean.model=list(armaOrder=c(0,0), include.mean=FALSE), distribution.model=distribution.model)
+    # } else{
+    # univ_garch_spec <- ugarchspec(variance.model=list(model="gjrGARCH", garchOrder=c(1, 1)),
+    #                               mean.model=list(armaOrder=c(0,0), include.mean=FALSE), distribution.model=distribution.model)
+    # }
     multi_univ_garch_spec <- multispec(replicate(N,univ_garch_spec))
     # Specify DCC-GARCH(1,1) with multivariate Student-t errors for stand. residual series
-    #dcc_spec <- dccspec(multi_univ_garch_spec, dccOrder=c(1,1), model="DCC", distribution=distribution)
+    dcc_spec <- dccspec(multi_univ_garch_spec, dccOrder=c(1,1), model="DCC", distribution=distribution)
     # Fit component series
     fit.multi_garch <- multifit(multi_univ_garch_spec, data_train, cluster=cl)
     # Estimate DCC-GARCH(1,1) mvt model
-    #fit.dcc = dccfit(dcc_spec, data=data_train, solver='solnp', cluster=cl, fit.control=list(eval.se = FALSE), fit=fit.multi_garch)
+    fit.dcc = dccfit(dcc_spec, data=data_train, solver='solnp', cluster=cl, fit.control=list(eval.se = FALSE), fit=fit.multi_garch)
     # Save conditional volatilities and correlations
     uniGarch.forc <- multiforecast(fit.multi_garch, n.ahead=1, n.roll=0, cluster=cl) # T+1 forecasts conditional volatilities
-    #dcc.forc <- dccforecast(fit.dcc, n.ahead=1, n.roll=0, cluster=cl)  # T+1 forecasts
+    dcc.forc <- dccforecast(fit.dcc, n.ahead=1, n.roll=0, cluster=cl)  # T+1 forecasts
     D_t_file[i, ] <- as.numeric(sigma(uniGarch.forc))
-    #D_t_file[i, ] <- as.numeric(sigma(dcc.forc))
-    #R_t_file[i, ] <- t(dcc.forc@mforecast[["R"]][[1]][,,1])[lower.tri(t(dcc.forc@mforecast[["R"]][[1]][,,1]),diag=FALSE)]
+    R_t_file[i, ] <- t(dcc.forc@mforecast[["R"]][[1]][,,1])[lower.tri(t(dcc.forc@mforecast[["R"]][[1]][,,1]),diag=FALSE)]
     print(i)
     print(t[i])
     print(Sys.time()-tic)
   }
   stopCluster(cl)
-  #return(list("D_t_file"=D_t_file, "R_t_file"=R_t_file))
-  return(list("D_t_file"=D_t_file))
+  return(list("D_t_file"=D_t_file, "R_t_file"=R_t_file))
 }
+
 ####################################################################################################
 ######                                Value-at-Risk Estimation                               #######
 ####################################################################################################
@@ -62,7 +63,7 @@ cov_mat_portfolio <- function(vol_vec, cor_vec) {
   return(H_t)
 }
 
-sigma_vec_portfolio <- function(volatility_matrix, cor_matrix, T=T, w=w) {
+portfolio_VaR <- function(volatility_matrix, cor_matrix, mu_portfolio_loss, alpha, file, T=T, w=w) {
   # volatility_matrix := matrix with conditional volatilities
   # cor_matrix := matrix with conditional correlations
   sigma_t <- rep(NaN,T)
@@ -70,23 +71,12 @@ sigma_vec_portfolio <- function(volatility_matrix, cor_matrix, T=T, w=w) {
     H_t <- cov_mat_portfolio(volatility_matrix[i,], cor_matrix[i,])
     sigma_t[i] <- sqrt(t(w)%*%H_t%*%w)  # Portfolio sdv
   }
-  return(sigma_t)
+  VaR_t = VaR_estimates(sigma_portfolio=sigma_t, mu=mu_portfolio_loss, cl=alpha)
+  write.csv(VaR_t, file=file) 
+  return(VaR_t)
 }
 
-VaR_estimates_alt <- function(volatility_matrix, cor_matrix, mu=mu_portfolio_loss, cl=alpha) {
-  VaR_mat <- matrix(data=NaN, nrow=T, ncol=length(cl))
-  colnames(VaR_mat) <- 1-cl  #  Set column names to corresponding conf. level VaR estimates
-  for (i in 1:3) {  # dim(vol_data_tranquil_mvnorm)[1]
-    print(i)
-    H_t <- cov_mat_portfolio(as.numeric(volatility_matrix[i,]), as.numeric(cor_matrix[i,]))
-    for (a in cl) {
-      VaR_mat[i, toString(a)] <- mu_portfolio_loss + qmvnorm(p=a, interval=c(-5, 5), tail="lower", mu=c(rep(0, 30)), sigma=H_t)$quantile
-    }
-  }
-  return(VaR_mat)
-}
-
-VaR_estimates <- function(sigma_portfolio, mu=mu_portfolio_loss, cl=alpha) {
+VaR_estimates <- function(sigma_portfolio, mu, cl) {
   VaR_mat <- matrix(data=NaN, nrow=T, ncol=length(cl))
   colnames(VaR_mat) <- 1-cl  #  Set column names to corresponding conf. level VaR estimates
   for (i in 1:length(sigma_portfolio)) {
@@ -101,7 +91,7 @@ VaR_estimates <- function(sigma_portfolio, mu=mu_portfolio_loss, cl=alpha) {
 ######                                Value-at-Risk Backtesting                              #######
 ####################################################################################################
 # Kupiec's Unconditional Coverage Test & Christoffersen Markov Test for independence 
-uc_ind_test <- function(VaR_est, cl=alpha) {
+uc_ind_test <- function(VaR_est, cl, file) {
   # Initialise datastructure to save test results
   row_names <- c("exceedances", "LR_pof", "LR_crit_pof", "decision_pof",
                  "pi01", "pi11", "LR_ind", "LR_crit_ind", "decision_ind")
@@ -135,27 +125,11 @@ uc_ind_test <- function(VaR_est, cl=alpha) {
     Kupiec_Christoffersen_mat[, toString(1-a)] <- c(I_sum, LR_pof, LR_crit_pof,decision_pof,
                                                     pi_01, pi_11, LR_ind, LR_crit_ind, decision_ind)
   }
+  write.csv(Kupiec_Christoffersen_mat, file=file) 
   return(Kupiec_Christoffersen_mat)
 }
 
 
-regions_uc_test_approx <- function(T, alpha) {
-  "Kupiec test uses Binomial distribution to construct a likelihood ratio, which is APPROXIMATELY
-  centrally chi-squared with one degree of freedom, assuming H0. By considering the -2Log() of the
-  likelihood ratio and setting this equal to epsilon quantile of chi^2(1,0), denoted by y, one can 
-  find the roots of the function. Finding the roots equals finding the non-rejection interval values,
-  approximately."
-  # T: length backtest period
-  # alpha: confidence level VaR
-  # y: significance level test = 95th percentile of the Chi-Squared distribution with 1 degree of freedom
-  y <- qchisq(.95, df=1)
-  result <- uniroot.all(function(x, y, t=T, a=alpha) {2*log(((t-x)/(a*T))^(t-x)*((x/((1-a)*t))^x))-y}, 
-          y=y, lower=0, upper=T)
-  return(list("lb"=floor(result[1]), "ub"=ceiling(result[2])))
-}
-  
-
-# X ~ Binomial(500, 0.05) 
 regions_uc_test <- function(T=T, alpha=alpha, eps=0.05) {
   " Use binomial distribution (hit sequence) to construct non-rejection regions."
   # T: length backtest period
@@ -167,7 +141,7 @@ regions_uc_test <- function(T=T, alpha=alpha, eps=0.05) {
   if(pbinom(q=lb_init, size=T, prob=q) > (eps/2)) {
     lb_init <- lb_init-1
   }
-  ub_init <- qbinom(p=(eps/2), size=T, prob=q, lower.tail=FALSE)  # 35
+  ub_init <- qbinom(p=(eps/2), size=T, prob=q, lower.tail=FALSE)
   if(pbinom(q=ub_init, size=T, prob=q, lower.tail=FALSE) > (eps/2)) {
     ub_init <- ub_init+1
   }

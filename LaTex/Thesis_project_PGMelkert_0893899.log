@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2016.5.22)  17 JUL 2018 21:59
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2016.5.22)  18 JUL 2018 16:06
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1935,20 +1935,10 @@ Underfull \hbox (badness 10000) in paragraph at lines 1967--1969
 
  []
 
-[56]
-Overfull \hbox (50.26532pt too wide) in paragraph at lines 1992--2017
- [][] 
- []
-
-[57] [58
+[56] [57] [58
 
 
-]
-Overfull \hbox (63.95195pt too wide) in paragraph at lines 2101--2126
- [][] 
- []
-
-[59]
+] [59]
 Underfull \hbox (badness 10000) in paragraph at lines 2143--2144
 
  []
@@ -2047,7 +2037,7 @@ e/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/local/texlive/2
 /texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/2016/t
 exmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/local/texlive/2016/te
 xmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on Thesis_project_PGMelkert_0893899.pdf (78 pages, 5847152 bytes
+Output written on Thesis_project_PGMelkert_0893899.pdf (78 pages, 5847156 bytes
 ).
 PDF statistics:
  1466 PDF objects out of 1728 (max. 8388607)

@@ -1983,35 +1983,35 @@ different rf/knn models do not show any significant differences in their VaR est
 http://lagrange.math.siu.edu/Olive/pphdrpred.pdf : for computing VaR as sample quantiles (high density regions) of multivariate Gaussian distribution.  
 \fi
 
-Preliminary results.
+In tranquil market conditions, Kendall consistently results in more exceedances but within acceptance region. This may results in a more volatile period in underestimation of risk. Any explanation? 
 \begin{landscape}
 %\begin{sidewaystable}[h]  
 \begin{table}
 \centering
 \captionsetup[subtable]{position=below}
-\begin{tabular}{ l c c c c l l l l l l l l}
+\begin{tabular}{l c c c  l l l l l l l l}
 \toprule
-\multicolumn{1}{c}{{\underline{Model}}} & \multicolumn{4}{c}{{\underline{VaR Exceedances}}} & \multicolumn{8}{c}{{\underline{Transition Probabilities}}}                                                                     \\
-                                & I(0.90)  & I(0.95)  & I(0.975)  & I(0.99) & \multicolumn{2}{c}{I(0.90)} & \multicolumn{2}{c}{I(0.95)} & \multicolumn{2}{c}{I(0.975)} & \multicolumn{2}{c}{I(0.99)} \\ \cmidrule{2-13} 
-                                &          &          &           &         & \multicolumn{1}{c}{{$\pi_{01}$}}       & \multicolumn{1}{c}{{$\pi_{11}$}}       & \multicolumn{1}{c}{{$\pi_{01}$}}       & \multicolumn{1}{c}{{$\pi_{11}$}}       & \multicolumn{1}{c}{{$\pi_{01}$}}        & \multicolumn{1}{c}{{$\pi_{11}$}}       & \multicolumn{1}{c}{{$\pi_{01}$}}       & \multicolumn{1}{c}{{$\pi_{11}$}}       \\  \midrule 
-DCC-Garch				&\textbf{14}	&\textbf{11}	&7	&2         &0.0266              &0.0714      &0.0203              &0.0909              &0.0121               &0.1429              &0.004              &0              \\
-KNN(5)-Pearson-Garch            &\textbf{34}	&17          &11           &7           &0.0618              &0.1471              &0.0309              &0.1176              &0.0203               & 0.0909             &0.0121              &0.1429              \\
-KNN(5)-Kendall-Garch            &48	&25	&15	&10         &0.0879              &0.1667              &0.046              &0.12              &0.0287               &0.0667              &0.0183              &0.1              \\
-KNN(idw)-Pearson-Garch          &\textbf{14}	&\textbf{11}	&\textbf{6}		&2         &0.0266              &0.0714             &0.0203              &0.0909              &0.0121               &0              &0.004              &0              \\
-KNN(idw)-Kendall-Garch          &\textbf{27}	&\textbf{12}	&10	&6         &0.0546              &0.037              &0.0224              &0.0833              &0.0183               &0.1              &0.0121             &0              \\
-RF(10)-Pearson-Garch            &\textbf{26}		&17		&10		&3         &0.0503              &0.0769              &0.0309              &0.1176             &0.0183               &0.1              &0.006              &0              \\
-RF(10)-Kendall-Garch            &42	&18	&12	&8        &0.0803              &0.119              &0.0351              &0.0556              &0.0224               &0.0833              &0.0141              &0.125             \\
-RF(100)-Pearson-Garch           &\textbf{25	}	&\textbf{11}	&9	&3         &0.0481              &0.08              &0.0203              &0.0909              &0.0162               &0.1111              &0.006              &0              \\
-RF(100)-Kendall-Garch           &42	&17		&12		&8          &0.0781	&0.1429	&0.0329          &0.0588           &0.0224         &0.0833              &0.0141              &0.125                      \\  \midrule 
-DCC-GJR				&          &          &           &         &              &              &              &              &               &              &              &              \\
-KNN(5)-Pearson-GJR              &39	&19		&13		&7         &\textbf{0.069}	&\textbf{0.1795}	&\textbf{0.0331}	&\textbf{0.1579}	&0.0245           &0.0769              &0.0121              &0.1429              \\
-KNN(5)-Kendall-GJR              &49	&27		&17		&\textbf{11}        &0.0903              &0.1633           &0.0504              &0.1111              &0.0309               &0.1176              &0.0203              &0.0909              \\
-KNN(idw)-Pearson-GJR         &\textbf{16}		&\textbf{11}	&7	&2         &0.0308           &0.0625           &0.0203             &0.0909              &0.0121               &0.1429              &0.004              &0              \\
-KNN(idw)-Kendall-GJR          &\textbf{30}		&\textbf{13}	&11	&2          &0.0592          &0.0667           &0.0245             &0.0769              &0.0203               &0.0909              &0.0121            &0              \\
-RF(10)-Pearson-GJR             &\textbf{29}		&17		&11		&4         &0.0549           &0.1034           &0.0309             &0.1176              &0.0203               &0.0909              &0.008              &0              \\
-RF(10)-Kendall-GJR              &46	&21		&12		&10	         &0.0875              &0.1304              &0.0415              &0.0476              &0.0224               &0.0833              &0.0183              &0.1              \\
-RF(100)-Pearson-GJR           &\textbf{30}		&\textbf{13}	&10	&4            &0.055              &0.1333              &0.0245              &0.0769              &0.0183               &0.1              &0.008              &0              \\
-RF(100)-Kendall-GJR             &47	&20		&12		&10         &0.0899              &0.1277              &0.0393              &0.05              &0.0224       &0.0833              &0.0183         &0.1             \\  [1ex]            
+\multicolumn{1}{c}{{\underline{Model}}} & \multicolumn{3}{c}{{\underline{VaR Exceedances}}} & \multicolumn{6}{c}{{\underline{Transition Probabilities}}}                                                                     \\
+                                & I(0.95)  & I(0.975)  & I(0.99) &  \multicolumn{2}{c}{I(0.95)} & \multicolumn{2}{c}{I(0.975)} & \multicolumn{2}{c}{I(0.99)} \\ \cmidrule{2-10} 
+                                &          &                   &                  & \multicolumn{1}{c}{{$\pi_{01}$}}       & \multicolumn{1}{c}{{$\pi_{11}$}}       & \multicolumn{1}{c}{{$\pi_{01}$}}        & \multicolumn{1}{c}{{$\pi_{11}$}}       & \multicolumn{1}{c}{{$\pi_{01}$}}       & \multicolumn{1}{c}{{$\pi_{11}$}}       \\  \midrule 
+DCC-Garch					&\textbf{11}	&7	&2              &0.0203              &0.0909              &0.0121               &0.1429              &0.004              &0              \\
+KNN(5)-Pearson-Garch            	&17          &11           &7                        &0.0309              &0.1176              &0.0203               & 0.0909             &0.0121              &0.1429              \\
+KNN(5)-Kendall-Garch            	&25	&15	&10                       &0.046              &0.12              &0.0287               &0.0667              &0.0183              &0.1              \\
+KNN(idw)-Pearson-Garch          	&\textbf{11}	&\textbf{6}		&2                     &0.0203              &0.0909              &0.0121               &0              &0.004              &0              \\
+KNN(idw)-Kendall-Garch          	&\textbf{12}	&10	&6                      &0.0224              &0.0833              &0.0183               &0.1              &0.0121             &0              \\
+RF(10)-Pearson-Garch            		&17		&10		&3                      &0.0309              &0.1176             &0.0183               &0.1              &0.006              &0              \\
+RF(10)-Kendall-Garch            	&18	&12	&8        &0.0803                           &0.0556              &0.0224               &0.0833              &0.0141              &0.125             \\
+RF(100)-Pearson-Garch           	&\textbf{11}	&9	&3                       &0.0203              &0.0909              &0.0162               &0.1111              &0.006              &0              \\
+RF(100)-Kendall-Garch           	&17		&12		&8          	&0.0329          &0.0588           &0.0224         &0.0833              &0.0141              &0.125                      \\  \midrule 
+DCC-GJR				          &          &           &         &                       &              &               &              &              &              \\
+KNN(5)-Pearson-GJR              	&19		&13		&7         	&\textbf{0.0331}	&\textbf{0.1579}	&0.0245           &0.0769              &0.0121              &0.1429              \\
+KNN(5)-Kendall-GJR              	&27		&17		&\textbf{11}                   &0.0504              &0.1111              &0.0309               &0.1176              &0.0203              &0.0909              \\
+KNN(idw)-Pearson-GJR         	&\textbf{11}	&7	&2                   &0.0203             &0.0909              &0.0121               &0.1429              &0.004              &0              \\
+KNN(idw)-Kendall-GJR          		&\textbf{13}	&11	&2                     &0.0245             &0.0769              &0.0203               &0.0909              &0.0121            &0              \\
+RF(10)-Pearson-GJR             	&17		&11		&4                    &0.0309             &0.1176              &0.0203               &0.0909              &0.008              &0              \\
+RF(10)-Kendall-GJR              	&21		&12		&10	                       &0.0415              &0.0476              &0.0224               &0.0833              &0.0183              &0.1              \\
+RF(100)-Pearson-GJR          	&\textbf{13}	&10	&4                          &0.0245              &0.0769              &0.0183               &0.1              &0.008              &0              \\
+RF(100)-Kendall-GJR             	&20		&12		&10                       &0.0393              &0.05              &0.0224       &0.0833              &0.0183         &0.1             \\  [1ex]            
 \bottomrule  
 \end{tabular}
 \caption[Backtesting results under tranquil market conditions.]{This table presents the results of unconditional coverage (Kupiec test) and independence (Christoffersen markov test) at higher quantiles of the loss distribution under tranquil market conditions. Bold face indicates rejection. Non-rejection regions for the Kupiec test: 37$<$I(0.90)$<$65, 15$<$I(0.95)$<$36, 6$<$I(0.975)$<$21 and 0$<$I(0.99)$<$11.}
@@ -2098,32 +2098,32 @@ RF(100)\_kendall	&							\\ [1ex]
 \begin{table}
 \centering
 \captionsetup[subtable]{position=below}
-\begin{tabular}{lllllllllllll}
+\begin{tabular}{l c c c  l l l l l l l l}
 \toprule
-\multicolumn{1}{c}{{\underline{Model}}} & \multicolumn{4}{c}{{\underline{VaR Exceedances}}} & \multicolumn{8}{c}{{\underline{Transition Probabilities}}}                                                                     \\
-                                & I(0.90)  & I(0.95)  & I(0.975)  & I(0.99) & \multicolumn{2}{c}{I(0.90)} & \multicolumn{2}{c}{I(0.95)} & \multicolumn{2}{c}{I(0.975)} & \multicolumn{2}{c}{I(0.99)} \\ \cmidrule{2-13} 
-                                &          &          &           &         & \multicolumn{1}{c}{{$\pi_{01}$}}       & \multicolumn{1}{c}{{$\pi_{11}$}}       & \multicolumn{1}{c}{{$\pi_{01}$}}       & \multicolumn{1}{c}{{$\pi_{11}$}}       & \multicolumn{1}{c}{{$\pi_{01}$}}        & \multicolumn{1}{c}{{$\pi_{11}$}}       & \multicolumn{1}{c}{{$\pi_{01}$}}       & \multicolumn{1}{c}{{$\pi_{11}$}}       \\  \midrule  
-DCC-GARCH				&55		&28		&16		&9        &\textbf{0.0968}	&\textbf{0.2}		&0.0531              &0.1071              &0.0311               &0.0625              &0.0184              &0              \\
-KNN(5)-Pearson-Garch            &\textbf{65}	&34	&\textbf{23}	&\textbf{16}         &0.1172         &0.2031         &\textbf{0.0581}        &\textbf{0.1765}           &0.0420           &0.0870          &0.0290          &0.0625              \\
-KNN(5)-Kendall-Garch            &\textbf{76}		&\textbf{53}	&\textbf{32}	&\textbf{20}        &\textbf{0.1321}       &\textbf{0.2533}    &0.0984     &0.1538     &\textbf{0.0535}    &\textbf{0.1875}  	&0.0355      &0.1              \\
-KNN(idw)-Pearson-Garch        &52	&26		&15		&9     &\textbf{0.0915}	&\textbf{0.1961}       &0.0507     &0.0769           &0.0289              &0.0667              &0.0184              &0              \\
-KNN(idw)-Kendall-Garch          &\textbf{65}	&\textbf{42}	&\textbf{25}	&\textbf{15}                &0.1172             &0.2031          &0.0788              &0.119              &0.0485               &0.08          &0.0289           &0.0667              \\
-RF(10)-Pearson-Garch            &          &          &           &         &              &              &              &              &               &              &              &              \\
-RF(10)-Kendall-Garch            &\textbf{76}		&\textbf{50}	&\textbf{33}	&\textbf{20}           &0.1392              &0.2133              &0.0956              &0.1224              &0.0601               &0.1212              &0.0355              &0.1              \\
-RF(100)-Pearson-Garch           &          &          &           &         &              &              &              &              &               &              &              &              \\
-RF(100)-Kendall-Garch           &\textbf{77}		&\textbf{53}	&\textbf{32}	&\textbf{18}          &\textbf{0.1371}	&\textbf{0.2368}	&0.1007	&0.1346	&0.0578	&0.1250	&0.0312	&0.1111              \\ \midrule
-DCC-GJR					&          &          &           &         &              &              &              &              &               &              &              &              \\
-KNN(5)-Pearson-GJR              &\textbf{65}	&34	&\textbf{24}	&\textbf{15}     &\textbf{0.1149}	&\textbf{0.2188}   &\textbf{0.0581}	&\textbf{0.0581}     &0.0442        &0.0833              &0.0269              &0.0667              \\
-KNN(5)-Kendall-GJR              &\textbf{74}		&\textbf{51}	&\textbf{32}	&\textbf{20}         &\textbf{0.1315}	&\textbf{0.2329}       &0.0958      &0.14    &\textbf{0.0535}	&\textbf{0.1875}         &0.0376              &0.05              \\
-KNN(idw)-Pearson-GJR          &49	&27	&15	&9         &\textbf{0.0867}          &\textbf{0.1837}              &0.053              &0.0741              &0.0289               &0.0667              &0.0184              &0              \\
-KNN(idw)-Kendall-GJR            &61		&\textbf{41}	&\textbf{23}	&\textbf{15}         &0.1093              &0.2          &0.0764              &0.122              &0.0441               &0.087              &0.0289              &0.0667              \\
-RF(10)-Pearson-GJR              &62	&\textbf{36}	&18	&\textbf{11}         &0.1164              &0.1639              &0.067              &0.1111          &0.0312               &0.1111      &0.0225           &0              \\
-RF(10)-Kendall-GJR              &\textbf{76}		&\textbf{49}	&\textbf{32}	&\textbf{19}   &0.1415              &0.2              &0.0931              &0.125              &0.0578               &0.125         &0.0375              &0.0526              \\
-RF(100)-Pearson-GJR           &60	&31		&\textbf{21}	&\textbf{10}         &0.1136              &0.1525      &0.0556              &0.129          &0.0356               &0.1429              &0.0204           &0              \\
-RF(100)-Kendall-GJR             &\textbf{76}		&\textbf{53}	&\textbf{32}	&\textbf{18}         &0.1368        &0.2267              &0.1007        &0.1346              &0.0578               &0.125             &0.0312          &0.1111             \\  [1ex]            
+\multicolumn{1}{c}{{\underline{Model}}} & \multicolumn{3}{c}{{\underline{VaR Exceedances}}} & \multicolumn{6}{c}{{\underline{Transition Probabilities}}}                                                                     \\
+                                & I(0.95)  & I(0.975)  & I(0.99) & \multicolumn{2}{c}{I(0.95)} & \multicolumn{2}{c}{I(0.975)} & \multicolumn{2}{c}{I(0.99)} \\ \cmidrule{2-10} 
+                                &             &           &                 & \multicolumn{1}{c}{{$\pi_{01}$}}       & \multicolumn{1}{c}{{$\pi_{11}$}}       & \multicolumn{1}{c}{{$\pi_{01}$}}        & \multicolumn{1}{c}{{$\pi_{11}$}}       & \multicolumn{1}{c}{{$\pi_{01}$}}       & \multicolumn{1}{c}{{$\pi_{11}$}}       \\  \midrule  
+DCC-GARCH					&28		&16		&9        	&0.0531              &0.1071              &0.0311               &0.0625              &0.0184              &0              \\
+KNN(5)-Pearson-Garch            	&34	&\textbf{23}	&\textbf{16}                &\textbf{0.0581}        &\textbf{0.1765}           &0.0420           &0.0870          &0.0290          &0.0625              \\
+KNN(5)-Kendall-Garch           		&\textbf{53}	&\textbf{32}    &\textbf{20}	      &0.0984     &0.1538     &\textbf{0.0535}    &\textbf{0.1875}  	&0.0355      &0.1              \\
+KNN(idw)-Pearson-Garch        	&26		&15		&9           &0.0507     &0.0769           &0.0289              &0.0667              &0.0184              &0              \\
+KNN(idw)-Kendall-Garch          	&\textbf{42}	&\textbf{25}	&\textbf{15}           &0.0788              &0.119              &0.0485               &0.08          &0.0289           &0.0667              \\
+RF(10)-Pearson-Garch              &\textbf{37}	&18	&\textbf{10}                      &0.0693              &0.1081               &0.0312              &0.1111              &0.0204	&0              \\
+RF(10)-Kendall-Garch            	&\textbf{50}	&\textbf{33}	&\textbf{20}                &0.0956              &0.1224              &0.0601               &0.1212              &0.0355              &0.1              \\
+RF(100)-Pearson-Garch            &33	   &\textbf{21}	&\textbf{10}         &0.0601         &0.1212              &0.0356               &0.1429              &0.0204              &0              \\
+RF(100)-Kendall-Garch           	&\textbf{53}	&\textbf{32}	&\textbf{18}    	&0.1007	&0.1346	&0.0578	&0.1250	&0.0312	&0.1111              \\ \midrule
+DCC-GJR					        &          &           &         &                   &              &               &              &              &              \\
+KNN(5)-Pearson-GJR              	&34	&\textbf{24}	&\textbf{15}      &\textbf{0.0581}	&\textbf{0.0581}     &0.0442        &0.0833              &0.0269              &0.0667              \\
+KNN(5)-Kendall-GJR              	&\textbf{51}	&\textbf{32}	&\textbf{20}          &0.0958      &0.14    &\textbf{0.0535}	&\textbf{0.1875}         &0.0376              &0.05              \\
+KNN(idw)-Pearson-GJR          	&27	&15	&9                 &0.053              &0.0741              &0.0289               &0.0667              &0.0184              &0              \\
+KNN(idw)-Kendall-GJR            		&\textbf{41}	&\textbf{23}	&\textbf{15}              &0.0764              &0.122              &0.0441               &0.087              &0.0289              &0.0667              \\
+RF(10)-Pearson-GJR              	&\textbf{36}	&18	&\textbf{11}                &0.067              &0.1111          &0.0312               &0.1111      &0.0225           &0              \\
+RF(10)-Kendall-GJR              	&\textbf{49}	&\textbf{32}	&\textbf{19}            &0.0931              &0.125              &0.0578               &0.125         &0.0375              &0.0526              \\
+RF(100)-Pearson-GJR          	&31		&\textbf{21}	&\textbf{10}           &0.0556              &0.129          &0.0356               &0.1429              &0.0204           &0              \\
+RF(100)-Kendall-GJR             	&\textbf{53}	&\textbf{32}	&\textbf{18}         &0.1007        &0.1346              &0.0578               &0.125             &0.0312          &0.1111             \\  [1ex]            
 \bottomrule  
 \end{tabular}
-\caption[Backtesting results under volatile market conditions.]{This table presents the results of unconditional coverage (Kupiec test) and independence (Christoffersen markov test) at higher quantiles of the loss distribution under volatile market conditions. Bold face indicates rejection. Non-rejection regions for the Kupiec test: 37$<$I(0.90)$<$65, 15$<$I(0.95)$<$36, 6$<$I(0.975)$<$21 and 0$<$I(0.99)$<$11.}
+\caption[Backtesting results under volatile market conditions.]{This table presents the results of unconditional coverage (Kupiec test) and independence (Christoffersen markov test) at higher quantiles of the loss distribution under volatile market conditions. Bold face indicates rejection. Non-rejection regions for the Kupiec test: 37$<$I(0.90)$<$65, 15$<$I(0.95)$<$36, 6$<$I(0.975)$<$21 and 0$<$I(0.99)$<$10.}
 \label{tab:kupiec_test_norm_tranquil_table}
 %\end{sidewaystable}
 \end{table}
