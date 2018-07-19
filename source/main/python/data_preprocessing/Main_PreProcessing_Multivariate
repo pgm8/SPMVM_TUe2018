@@ -9,6 +9,7 @@ from TechnicalAnalyzer import TechnicalAnalyzer
 import matplotlib.pyplot as plt
 import datetime as dt
 import os
+import re
 
 from sklearn.neighbors import KNeighborsRegressor
 from sklearn.ensemble import RandomForestRegressor
@@ -216,41 +217,44 @@ def main():
     ###                                                    Value-at-Risk Figures                                   ###
     ##################################################################################################################
 
-    dates_x = [202, 455, 707, 960, 1213, 1467, 1741, 1972, 2224, 2478, 2731, 2983, 3275, 3487]
-    dates_label = ['1988', '1989', '1990', '1991', '1992', '1993', '1994', '1995', '1996', '1997', '1998', '1999',
-                   '2000', '2001']
 
-    def var_plot(r, q, period='volatile'):
+    def var_plot(r, q, fig_name=None, period='volatile'):
         var_true = r.reset_index(drop=True, inplace=False)
         var_forecast_95 = q.loc[:, '0.95']
         var_forecast_975 = q.loc[:, '0.975']
         var_forecast_99 = q.loc[:, '0.99']
         # VaR
-        plt.plot(var_true, label='return', linewidth=0.4, color='black')
-        plt.plot(var_forecast_95, label='VaR$_{0.95}$', linewidth=0.4, color='green')
-        plt.plot(var_forecast_975, label='VaR$_{0.975}$', linewidth=0.4, color='orange')
-        plt.plot(var_forecast_99, label='VaR$_{0.99}$', linewidth=0.4, color='red')
+        plt.plot(var_true, label='r$_{t}$', linewidth=0.4, color='black')
+        plt.plot(var_forecast_95, label='VaR$_{t,0.95}$', linewidth=0.6, color='#01ff07', linestyle='--')
+        plt.plot(var_forecast_975, label='VaR$_{t,0.975}$', linewidth=0.6, color='#0165fc', linestyle=':')
+        plt.plot(var_forecast_99, label='VaR$_{t,0.99}$', linewidth=0.6, color='#ff000d', linestyle='-.')
         # Axes
-        plt.xlabel('date')
-        plt.ylabel('percentage return')
+        fontsize = 8
+        #plt.xlabel('date', fontsize=7)
+        plt.ylabel('percentage return', fontsize=fontsize)
         if period is 'volatile':
             dates_x = [0, 63, 126, 189, 252, 314, 379, 436]
             dates_label = ['Jan-00', 'Apr-00', 'Jul-00', 'Oct-00', 'Jan-01', 'Apr-01', 'Jul-01', 'Oct-01']
             plt.xlim(0, 500)
             plt.ylim(-8, 8)
-            plt.yticks(np.arange(-8, 9, 2))
+            plt.yticks(np.arange(-8, 9, 2), fontsize=fontsize)
         elif period is 'tranquil':
             dates_x = [0, 63, 125, 190, 252, 314, 378, 441]
-            dates_label = ['Jan-94', 'Apr-94', 'Jul-94', 'Oct-94', 'Jan-95', 'Apr-95', 'Jul-95', 'Oct-95']
+            dates_label = ['Jan94', 'Apr94', 'Jul94', 'Oct94', 'Jan95', 'Apr95', 'Jul95', 'Oct95']
             plt.xlim(0, 504)
             plt.ylim(-4, 4)
-            plt.yticks(np.arange(-4, 5, 1))
+            plt.yticks(np.arange(-4, 5, 1), fontsize=fontsize)
         else:
             print('Please specify a correct period definition: volatile or tranquil market conditions.')
-        plt.xticks(dates_x, dates_label)  # rotation=45
-        plt.legend(fontsize='small', loc='upper center', bbox_to_anchor=(0.5, 1.1), ncol=4, fancybox=True,
-                   edgecolor='black')
-        return plt
+        plt.xticks(dates_x, dates_label, fontsize=fontsize)  # rotation=45
+        plt.legend(fontsize='small', loc='upper center', ncol=4, fancybox=True, edgecolor='black') # bbox_to_anchor=(0.5, 1.1),
+        if fig_name is None:
+            print('Please provide a figure name for saving purposes')
+        else:
+            # specify path to save the figure as pdf to ensure sufficient resolution
+            mm.save_fig(figure=plt, fig_name=period + '/' + fig_name + '.pdf')
+        plt.close()
+        return
 
 
     data_DJIA = mm.load_data('multivariate_analysis/DJI30_returns_1987_2001.pkl')
@@ -260,16 +264,33 @@ def main():
     T_tranquil, T_volatile = 504, 500  # out-of-sample length market periodvar_forecast.loc[:, '0.99']
     n = 30  # Number of assets under consideration
     w = [1 / n] * n
-    VaR_true_tranquil = data_DJIA_tranquil.tail(T_tranquil).dot(w)
+    VaR_true_tranquile = data_DJIA_tranquil.tail(T_tranquil).dot(w)
     VaR_true_volatile = data_DJIA.tail(T_volatile).dot(w)
+    period = 'tranquil'
+    files = [i for i in os.listdir(os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))),
+                                                'resources/Data/multivariate_analysis/VaR/%s/' % period)) if
+             os.path.isfile(os.path.join(os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))),
+                                                      'resources/Data/multivariate_analysis/VaR/%s/' % period),
+                                         i)) and i.startswith('var')]
+    if period is 'tranquil':
+        var_true = VaR_true_volatile
+    else:
+        var_true = VaR_true_volatile
+    var_true = VaR_true_tranquile
 
-    #var_forecast = mm.load_data('multivariate_analysis/VaR/tranquil/var_RF10_kendall_gjr_1994_1995.pkl')
+    VaR_true = VaR_true_tranquile
 
-    var_forecast = pd.read_csv('multivariate_analysis/VaR/tranquil/var_DCC_garch_mvnorm_1994_1995.csv')
-    print(var_forecast.head(10))
 
-    #fig = var_plot(r=VaR_true_tranquil, q=var_forecast.loc[:, ['0.95', '0.975', '0.99']], period='tranquil')
-    #fig.show()
+    for filename in files:
+       filename_fig = re.search('var_(.+?).csv', filename).group(1)  # Extract figure name from filename
+       var_forecast = mm.load_csv('multivariate_analysis/VaR/%s/%s' % (period, filename))
+       var_plot(r=VaR_true, q=var_forecast, fig_name=filename_fig, period=period)
+
+
+
+
+
+
 
 
 

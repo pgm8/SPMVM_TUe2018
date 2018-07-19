@@ -9,19 +9,20 @@
 \contentsline {figure}{\numberline {3.5}{\ignorespaces MSE for KNN estimates with Pearson and Kendall Moving Window bootstrap estimates as covariates and true correlation.\relax }}{26}{figure.caption.11}
 \contentsline {figure}{\numberline {3.6}{\ignorespaces MSE as function of number of neighbors for KNN estimates with Pearson and Kendall as covariates and true correlation.\relax }}{28}{figure.caption.13}
 \contentsline {figure}{\numberline {3.7}{\ignorespaces MSE for KNN estimates with different weighting functions, Pearson Moving Window bootstrap estimates as covariates and true correlation.\relax }}{29}{figure.caption.14}
-\contentsline {figure}{\numberline {3.8}{\ignorespaces Comparison MSE and minimum determinants for KNN with true correlation, Pearson and Kendall Moving Window bootstrap estimates.\relax }}{31}{figure.caption.15}
-\contentsline {figure}{\numberline {3.9}{\ignorespaces Comparison MSE and minimum determinants for RF(n\_estimators=10) with covariates from Pearson and Kendall and true correlation.\relax }}{32}{figure.caption.16}
-\contentsline {figure}{\numberline {3.10}{\ignorespaces MSE for RF estimates with Pearson and Kendall Moving Window bootstrap estimates as covariates and true correlation.\relax }}{33}{figure.caption.17}
-\contentsline {figure}{\numberline {3.11}{\ignorespaces Comparison MSE for RF(n\_estimators=10) with true correlation, Pearson and Kendall Moving Window bootstrap estimates.\relax }}{35}{figure.caption.19}
-\contentsline {figure}{\numberline {3.12}{\ignorespaces Comparison MSE and minimum determinants for KNN(n\_neighbors=5) with covariates from Pearson and Kendall and proxy correlation.\relax }}{36}{figure.caption.20}
-\contentsline {figure}{\numberline {3.13}{\ignorespaces MSE for KNN estimates with Pearson and Kendall Moving Window bootstrap estimates as covariates and proxy correlation.\relax }}{37}{figure.caption.21}
-\contentsline {figure}{\numberline {3.14}{\ignorespaces MSE for KNN estimates with inverse weighting function, Pearson and Kendall Moving Window bootstrap estimates as covariates and response variable.\relax }}{40}{figure.caption.23}
-\contentsline {figure}{\numberline {3.15}{\ignorespaces Comparison MSE and minimum determinants for KNN with Pearson covariates and proxy correlation, Pearson and Kendall Moving Window bootstrap estimates.\relax }}{42}{figure.caption.24}
-\contentsline {figure}{\numberline {3.16}{\ignorespaces Comparison MSE and minimum determinants for RF(n\_estimators=10) with covariates from Pearson and Kendall and proxy correlation.\relax }}{43}{figure.caption.25}
-\contentsline {figure}{\numberline {3.17}{\ignorespaces MSE for RF estimates with Pearson and Kendall Moving Window bootstrap estimates as covariates and proxy correlation.\relax }}{44}{figure.caption.26}
-\contentsline {figure}{\numberline {3.18}{\ignorespaces Comparison MSE for RF(n\_estimators=10) with proxy correlation, Pearson and Kendall Moving Window bootstrap estimates.\relax }}{46}{figure.caption.28}
+\contentsline {figure}{\numberline {3.8}{\ignorespaces Comparison MSE and minimum determinants for KNN with true correlation, Pearson and Kendall Moving Window bootstrap estimates.\relax }}{30}{figure.caption.15}
+\contentsline {figure}{\numberline {3.9}{\ignorespaces Comparison MSE and minimum determinants for RF(n\_estimators=10) with covariates from Pearson and Kendall and true correlation.\relax }}{31}{figure.caption.16}
+\contentsline {figure}{\numberline {3.10}{\ignorespaces MSE for RF estimates with Pearson and Kendall Moving Window bootstrap estimates as covariates and true correlation.\relax }}{32}{figure.caption.17}
+\contentsline {figure}{\numberline {3.11}{\ignorespaces Comparison MSE for RF(n\_estimators=10) with true correlation, Pearson and Kendall Moving Window bootstrap estimates.\relax }}{33}{figure.caption.19}
+\contentsline {figure}{\numberline {3.12}{\ignorespaces Comparison MSE and minimum determinants for KNN(n\_neighbors=5) with covariates from Pearson and Kendall and proxy correlation.\relax }}{34}{figure.caption.20}
+\contentsline {figure}{\numberline {3.13}{\ignorespaces MSE for KNN estimates with Pearson and Kendall Moving Window bootstrap estimates as covariates and proxy correlation.\relax }}{36}{figure.caption.21}
+\contentsline {figure}{\numberline {3.14}{\ignorespaces MSE for KNN estimates with inverse weighting function, Pearson and Kendall Moving Window bootstrap estimates as covariates and response variable.\relax }}{38}{figure.caption.23}
+\contentsline {figure}{\numberline {3.15}{\ignorespaces Comparison MSE and minimum determinants for KNN with Pearson covariates and proxy correlation, Pearson and Kendall Moving Window bootstrap estimates.\relax }}{40}{figure.caption.24}
+\contentsline {figure}{\numberline {3.16}{\ignorespaces Comparison MSE and minimum determinants for RF(n\_estimators=10) with covariates from Pearson and Kendall and proxy correlation.\relax }}{41}{figure.caption.25}
+\contentsline {figure}{\numberline {3.17}{\ignorespaces MSE for RF estimates with Pearson and Kendall Moving Window bootstrap estimates as covariates and proxy correlation.\relax }}{42}{figure.caption.26}
+\contentsline {figure}{\numberline {3.18}{\ignorespaces Comparison MSE for RF(n\_estimators=10) with proxy correlation, Pearson and Kendall Moving Window bootstrap estimates.\relax }}{43}{figure.caption.28}
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {4.1}{\ignorespaces Log return of equally weighted Dow Jones constituents from March 1987 to December 2001.\relax }}{52}{figure.caption.29}
+\contentsline {figure}{\numberline {4.1}{\ignorespaces Log return of equally weighted Dow Jones constituents from March 1987 to December 2001.\relax }}{50}{figure.caption.29}
+\contentsline {figure}{\numberline {4.2}{\ignorespaces Out-of-sample returns and Value-at-Risk estimates.}}{57}{figure.caption.33}
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }

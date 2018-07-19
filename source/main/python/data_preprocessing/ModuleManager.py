@@ -2,7 +2,7 @@ import os
 from pickle import dump
 from pickle import load
 from pandas import read_csv
-
+import matplotlib.pyplot as plt
 
 class ModuleManager(object):
     """ModuleManager class. The responsibility of the ModuleManager class is to load, transform and
@@ -60,5 +60,16 @@ class ModuleManager(object):
         path = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))),
                             ('resources/Data/%s' % filename))
         data_csv.to_csv(path)
+
+    def load_csv(self, filename):
+        return (read_csv(os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))),
+                                         ('resources/Data/%s' % filename)), index_col=0))
+
+    def save_fig(self, figure, fig_name):
+        path = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(__file__))))
+                                            ), ('LaTex/figures/multivar_analysis/%s' % fig_name))
+        figure.savefig(path, format='pdf')
+
+
 
 

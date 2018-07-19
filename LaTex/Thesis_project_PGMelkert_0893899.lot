@@ -4,17 +4,17 @@
 \contentsline {table}{\numberline {2.1}{\ignorespaces Random Forest: a combination of Bagging and the Random Subspace Method.\relax }}{16}{table.caption.6}
 \addvspace {10\p@ }
 \contentsline {table}{\numberline {3.1}{\ignorespaces Mean Squared Error (MSE) decomposition as a function of the number of neighbors (k) for KNN with proxy for covariates and true correlation.\relax }}{27}{table.caption.12}
-\contentsline {table}{\numberline {3.2}{\ignorespaces Mean Squared Error (MSE) decomposition as a function of the number of estimators (trees) for RF with proxy for covariates and true correlation.\relax }}{34}{table.caption.18}
-\contentsline {table}{\numberline {3.3}{\ignorespaces Mean Squared Error (MSE) decomposition as a function of the number of neighbors (k) for KNN with approximations for both covariates and response variable.\relax }}{38}{table.caption.22}
-\contentsline {table}{\numberline {3.4}{\ignorespaces Mean Squared Error (MSE) decomposition as a function of the number of estimators (trees) for RF with approximations for both covariates and response variable.\relax }}{45}{table.caption.27}
+\contentsline {table}{\numberline {3.2}{\ignorespaces Mean Squared Error (MSE) decomposition as a function of the number of estimators (trees) for RF with proxy for covariates and true correlation.\relax }}{33}{table.caption.18}
+\contentsline {table}{\numberline {3.3}{\ignorespaces Mean Squared Error (MSE) decomposition as a function of the number of neighbors (k) for KNN with approximations for both covariates and response variable.\relax }}{37}{table.caption.22}
+\contentsline {table}{\numberline {3.4}{\ignorespaces Mean Squared Error (MSE) decomposition as a function of the number of estimators (trees) for RF with approximations for both covariates and response variable.\relax }}{43}{table.caption.27}
 \addvspace {10\p@ }
-\contentsline {table}{\numberline {4.1}{\ignorespaces Descriptive statistics of Dow Jones Industrial Average daily log returns.}}{53}{table.caption.30}
-\contentsline {table}{\numberline {4.2}{\ignorespaces Summary statistics of GJR-GARCH skewed Student's t model specification for the conditional variance in volatile market conditions.}}{54}{table.caption.31}
-\contentsline {table}{\numberline {4.3}{\ignorespaces Backtesting results under tranquil market conditions.}}{57}{table.caption.32}
-\contentsline {table}{\numberline {4.4}{\ignorespaces Backtesting results under volatile market conditions.}}{59}{table.caption.33}
+\contentsline {table}{\numberline {4.1}{\ignorespaces Descriptive statistics of Dow Jones Industrial Average daily log returns.}}{51}{table.caption.30}
+\contentsline {table}{\numberline {4.2}{\ignorespaces Summary statistics of GJR-GARCH skewed Student's t model specification for the conditional variance in volatile market conditions.}}{52}{table.caption.31}
+\contentsline {table}{\numberline {4.3}{\ignorespaces Backtesting results under tranquil market conditions.}}{56}{table.caption.32}
+\contentsline {table}{\numberline {4.4}{\ignorespaces Backtesting results under volatile market conditions.}}{59}{table.caption.34}
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {table}{\numberline {A.1}{\ignorespaces Summary statistics of GJR-GARCH Gaussian model specification for the conditional variance in volatile market conditions.}}{66}{table.caption.35}
-\contentsline {table}{\numberline {A.2}{\ignorespaces Summary statistics of GJR-GARCH skewed Student's t model specification for the conditional variance in tranquil market conditions.}}{67}{table.caption.36}
-\contentsline {table}{\numberline {A.3}{\ignorespaces Summary statistics of GJR-GARCH Gaussian model specification for the conditional variance in tranquil market conditions.}}{67}{table.caption.37}
+\contentsline {table}{\numberline {A.1}{\ignorespaces Summary statistics of GJR-GARCH Gaussian model specification for the conditional variance in volatile market conditions.}}{66}{table.caption.36}
+\contentsline {table}{\numberline {A.2}{\ignorespaces Summary statistics of GJR-GARCH skewed Student's t model specification for the conditional variance in tranquil market conditions.}}{67}{table.caption.37}
+\contentsline {table}{\numberline {A.3}{\ignorespaces Summary statistics of GJR-GARCH Gaussian model specification for the conditional variance in tranquil market conditions.}}{67}{table.caption.38}
 \addvspace {10\p@ }

@@ -729,7 +729,7 @@ Let us denote the response variable as $Y$ and our covariates as $X$. If one ass
 	\text{Err}(x_0) &= E[(Y - \hat{f}(x_0))^2 | X = x_0]\nonumber \\
 		      &= \sigma_\epsilon^2 + [E\hat{f}(x_0) - f(x_0)]^2 + E[\hat{f}(x_0)-E\hat{f}(x_0)]^2 \nonumber \\ 
 		      &= \sigma_\epsilon^2 + \text{Bias}^2(\hat{f}(x_0)) + \text{Var}(\hat{f}(x_0))\nonumber \\
-		      &= \text{Irreducible Error} + \text{Bias}^2 + \text{Variance}. 	
+		      &= \text{Irreducible Error} + \text{Bias}^2 + \text{Variance}. 			      
 \intertext{The first term in \eqref{eq:mse_decomposition_general} is defined as the variance of the output around its true mean $f(x_0)$, and cannot be mitigated regardless of how accurate $f(x_0)$ is estimated, unless $\sigma_\epsilon^2 = 0$. Moreover, it is independent of both the learning algorithm and the training set and provides a a theoretical lower bound of the generalization error for any model \citep{ref:Louppe2014}. The second term, squared bias, is defined as the amount by which the average of the estimate differs from the true relationship between the covariates and response variable, that is, the true mean $f(x_0)$. Lastly, the variance is defined as the expected squared deviation of an estimate $\hat{f}(x_0)$ around its mean estimate. Typically, the more complex model $\hat{f}$ is defined, the lower the (squared) bias but the higher the variance. Conversely, as the model complexity is decreased, the (squared) bias tends to increase and the variance tends to decrease. This behavior is known as the \textit{bias-variance tradeoff}.} 
 \intertext{One may estimate a model $\hat{f}(X)$ using any modeling technique and the expected prediction error of a k-nearest neighbor regression fit $\hat{f}_k(X)$ at a query instance $X = x_0$ can hence be decomposed as:}
 	\text{Err}_k(x_0) &= E[(Y - \hat{f}_k(x_0))^2 | X = x_0]\nonumber \\
@@ -857,23 +857,23 @@ To assess some of the statistical properties when sample correlation coefficient
 
 
 \section{Moving Window Estimates of Correlation} \label{sec:MW}
-The accuracy of Pearson and Kendall estimates for conditional correlation is compared by using mean squared error ( MSE) between estimated and actual correlations. The variance of mean squared errors from Pearson estimates in Fig. \ref{fig:mse_pearson_kendall_bootstrap} is approximately 1.78e-3 while that of Kendall is approximately 1.59e-3, i.e. Kendall estimates are slightly less sensitive to the choice of window length compared to Pearson estimates but the difference seems negligible small or might even not be significant. Interestingly, it is observed that Kendall estimates for conditional correlation have slightly higher MSE values for larger window lengths. A possible explanation for this observation is that the simulated asset returns follow a multivariate normal distribution, i.e. an elliptical distribution. Therefore, it makes sense that a linear correlation coefficient such as Pearson results in lower MSE values for most window lengths. Pearson can get unreliable in the presence of fat-tailed distributions, which is generally a property of real asset return data \citep{ref:Pozzi2012}. It will be interesting to verify whether Kendall is a better choice for approximation of true correlation in the case of real asset return data in Chapter \ref{chap:multivariate_analysis}. \\
+The accuracy of Pearson and Kendall estimates for conditional correlation is compared by using mean squared error ( MSE) between estimated and actual correlations. The variance of mean squared errors from Pearson estimates in Figure \ref{fig:mse_pearson_kendall_bootstrap} is approximately 1.78e-3 while that of Kendall is approximately 1.59e-3, i.e. Kendall estimates are slightly less sensitive to the choice of window length compared to Pearson estimates but the difference seems negligible small or might even not be significant. Interestingly, it is observed that Kendall estimates for conditional correlation have slightly higher MSE values for larger window lengths. A possible explanation for this observation is that the simulated asset returns follow a multivariate normal distribution, i.e. an elliptical distribution. Therefore, it makes sense that a linear correlation coefficient such as Pearson results in lower MSE values for most window lengths. Pearson can get unreliable in the presence of fat-tailed distributions, which is generally a property of real asset return data \citep{ref:Pozzi2012}. It will be interesting to verify whether Kendall is a better choice for approximation of true correlation in the case of real asset return data in Chapter \ref{chap:multivariate_analysis}. \\
 
 \noindent
-Pearson and Kendall moving window estimates of conditional correlation satisfy the positive definiteness condition in the conditional correlation matrix $R_t$ for all time $t$ under all choices of window length. Fig. \ref{fig:det_pearson_kendall} presents the obtained minimum determinants of $R_t$ for all choices of window length. In fact, \cite{ref:Pozzi2012} give proves that Pearson and Kendall sample correlation using moving windows generally results positive definite correlation matrices.     
+Pearson and Kendall moving window estimates of conditional correlation satisfy the positive definiteness condition in the conditional correlation matrix $R_t$ for all time $t$ under all choices of window length. Figure \ref{fig:det_pearson_kendall} presents the obtained minimum determinants of $R_t$ for all choices of window length. In fact, \cite{ref:Pozzi2012} give proves that Pearson and Kendall sample correlation using moving windows generally results positive definite correlation matrices.     
 
 
 \begin{figure}[H]
 	\centering
 	\begin{subfigure}[b]{0.49 \textwidth}
 		\centering 
-		\includegraphics[width=\textwidth]{mse_pearson_kendall.png} 
+		\includegraphics[width=\textwidth, height=0.5\textwidth]{mse_pearson_kendall.png} 
 		\caption{MSE for Pearson and Kendall Moving Window bootstrap estimates.}
 		\label{fig:mse_pearson_kendall_bootstrap}
 	\end{subfigure}
 	\begin{subfigure}[b]{0.49 \textwidth}
 		\centering 
-		\includegraphics[width=\textwidth]{det_pearson_kendall} 
+		\includegraphics[width=\textwidth, height=0.5\textwidth]{det_pearson_kendall} 
 		\caption{Minimum det($R_t$) from Pearson and Kendall Moving Window bootstrap estimates.}
 		\label{fig:det_pearson_kendall}
 	\end{subfigure}
@@ -886,34 +886,34 @@ Pearson and Kendall moving window estimates of conditional correlation satisfy t
 
 
 \noindent
-Fig. \ref{fig:pearson21_bootstrap} and Fig. \ref{fig:kendall21_bootstrap} show that both Pearson and Kendall moving window estimates of correlation change substantially over time indicating the capture of changing correlation levels. Additionally, it is observed that the obtained 99\% confidence intervals around these estimates are rather wide, covering all values in the range $[-1,1]$, which imply that the uncertainty around the estimated values are high \citep{ref:Basturk2016}. Pearson estimates appears to be more volatile than Kendall estimates of correlation, which may be attributed to Kendall's $\tau$ rank correlation's desirable property of being robust to outliers. 
+Figure \ref{fig:pearson21_bootstrap} and Figure \ref{fig:kendall21_bootstrap} show that both Pearson and Kendall moving window estimates of correlation change substantially over time indicating the capture of changing correlation levels. Additionally, it is observed that the obtained 99\% confidence intervals around these estimates are rather wide, covering all values in the range $[-1,1]$, which imply that the uncertainty around the estimated values are high \citep{ref:Basturk2016}. Pearson estimates appears to be more volatile than Kendall estimates of correlation, which may be attributed to Kendall's $\tau$ rank correlation's desirable property of being robust to outliers. 
 
 \begin{figure}[H]  % [h] parameter makes sure figures are located at 'this' location.
 	\centering
 	\begin{subfigure}[b]{0.49 \textwidth} % sum of widths should be less than text width if all one the same line
 		\centering 
-		\includegraphics[width=\textwidth]{pearson_21_estimates_bootstrap.png} 
+		\includegraphics[width=\textwidth, height=0.5\textwidth]{pearson_21_estimates_bootstrap.png} 
 		\caption{Pearson estimates with window size 21.} 		
 		\label{fig:pearson21_bootstrap}
 	\end{subfigure} 
 	\hfill
 	\begin{subfigure}[b]{0.49 \textwidth}
 		\centering 
-		\includegraphics[width=\textwidth]{kendall_21_estimates_bootstrap.png} 
+		\includegraphics[width=\textwidth, height=0.5\textwidth]{kendall_21_estimates_bootstrap.png} 
 		\caption{Kendall estimates with window size 21.} 		
 		\label{fig:kendall21_bootstrap}
 	\end{subfigure}
 	\hfill
 	\begin{subfigure}[b]{0.49 \textwidth} 
 		\centering
-		\includegraphics[width=\textwidth]{decom_mse_pearson.png}
+		\includegraphics[width=\textwidth, height=0.5\textwidth]{decom_mse_pearson.png}
 		\caption{Bias-variance decomposition for Pearson estimates.}
 		\label{fig:decom_mse_pearson}
 	\end{subfigure}
 	\hfill
 	\begin{subfigure}[b]{0.49 \textwidth} 
 		\centering
-		\includegraphics[width=\textwidth]{decom_mse_kendall.png}
+		\includegraphics[width=\textwidth, height=0.5\textwidth]{decom_mse_kendall.png}
 		\caption{Bias-variance decomposition for Kendall estimates.}
 		\label{fig:decom_mse_kendall}
 	\end{subfigure}
@@ -922,7 +922,7 @@ Fig. \ref{fig:pearson21_bootstrap} and Fig. \ref{fig:kendall21_bootstrap} show t
 \end{figure}
 
 \noindent
-Moreover, Pearson and Kendall estimates using moving windows are very sensitive to the choice of the window length. This is illustrated by the bias-variance decomposition of the MSE between estimated and actual correlations, shown in Fig. \ref{fig:decom_mse_pearson} and Fig. \ref{fig:decom_mse_kendall}. One can observe an inverse relationship between the choice of window length (i.e. the bootstrap sample size) and value of the variance term in the MSE decomposition. This relationship may be explained by the fact that as the bootstrap sample size increases with an increase of the window length, the standard error, or the standard deviation of the sampling distribution, decreases. In other words, as the bootstrap sample size increases, the variability of the sampling distribution decreases which would show through smaller 99\% confidence intervals. Analogously, in these figures this is shown through a decrease in de variance term of the bias-variance decomposition of the MSE between estimated and actual correlations. \\
+Moreover, Pearson and Kendall estimates using moving windows are very sensitive to the choice of the window length. This is illustrated by the bias-variance decomposition of the MSE between estimated and actual correlations, shown in Figure \ref{fig:decom_mse_pearson} and Figure \ref{fig:decom_mse_kendall}. One can observe an inverse relationship between the choice of window length (i.e. the bootstrap sample size) and value of the variance term in the MSE decomposition. This relationship may be explained by the fact that as the bootstrap sample size increases with an increase of the window length, the standard error, or the standard deviation of the sampling distribution, decreases. In other words, as the bootstrap sample size increases, the variability of the sampling distribution decreases which would show through smaller 99\% confidence intervals. Analogously, in these figures this is shown through a decrease in de variance term of the bias-variance decomposition of the MSE between estimated and actual correlations. \\
 
 
 \section{Learning with True Correlation for Response Variable} \label{sec:true_correlation}
@@ -931,20 +931,20 @@ The covariates of proposed nonparametric learning estimators are approximations 
 
 %%%%%% NEAREST neighbor TRUE COR %%%%%%%%
 \subsection{Generalization Error of Nearest Neighbor under True Correlation} \label{sec:MSE_knn_true}
-The accuracy of KNN estimates with Pearson and Kendall covariates for conditional correlation is compared by using the MSE between estimated and actual correlations. MSE from KNN with Pearson and Kendall moving window estimates of correlation for covariates are shown in Fig. \ref{fig:mse_knn5_pearson_kendall_true}. Regardless of the choice of window length, MSE from KNN with Pearson and Kendall covariates are between 0.0939 and 0.1071, and 0.0929 and 0.1071, respectively. The variance of MSE from KNN estimates with Pearson covariates is approximately 6.07e-6 while that of KNN estimates with Kendall covariates is approximately 5.66e-6. KNN thus appears to be insensitive to the choice of window length, regardless whether the set of covariates is constructed from Pearson or Kendall moving window estimates of correlation. KNN's property of insensitivity to the choice of window length is preferred over Pearson and Kendall's property of being highly sensitive to the choice of the window length used for correlation estimates as depicted in Fig. \ref{fig:mse_pearson_kendall_bootstrap}. Moreover, KNN estimates of conditional correlation satisfy the positive definiteness condition in the conditional correlation matrix $R_t$ for all time $t$ under all choices of window length. Fig. \ref{fig:det_knn5_pearson_kendall_true} presents the obtained minimum determinants of $R_t$ for all choices of window length.  
+The accuracy of KNN estimates with Pearson and Kendall covariates for conditional correlation is compared by using the MSE between estimated and actual correlations. MSE from KNN with Pearson and Kendall moving window estimates of correlation for covariates are shown in Figure \ref{fig:mse_knn5_pearson_kendall_true}. Regardless of the choice of window length, MSE from KNN with Pearson and Kendall covariates are between 0.0939 and 0.1071, and 0.0929 and 0.1071, respectively. The variance of MSE from KNN estimates with Pearson covariates is approximately 6.07e-6 while that of KNN estimates with Kendall covariates is approximately 5.66e-6. KNN thus appears to be insensitive to the choice of window length, regardless whether the set of covariates is constructed from Pearson or Kendall moving window estimates of correlation. KNN's property of insensitivity to the choice of window length is preferred over Pearson and Kendall's property of being highly sensitive to the choice of the window length used for correlation estimates as depicted in Figure \ref{fig:mse_pearson_kendall_bootstrap}. Moreover, KNN estimates of conditional correlation satisfy the positive definiteness condition in the conditional correlation matrix $R_t$ for all time $t$ under all choices of window length. Figure \ref{fig:det_knn5_pearson_kendall_true} presents the obtained minimum determinants of $R_t$ for all choices of window length.  
      
 \begin{figure}[H]
 	\centering
 	\begin{subfigure}[b]{0.49 \textwidth} 
 		\centering
-		\includegraphics[width=\textwidth]{mse_knn5_pearson_kendall_true.png}
+		\includegraphics[width=\textwidth, height=0.5\textwidth]{mse_knn5_pearson_kendall_true.png}
 		\caption{MSE for KNN with covariates from Pearson and Kendall and true correlation.}
 		\label{fig:mse_knn5_pearson_kendall_true}
 	\end{subfigure}
 	\hfill
 	\begin{subfigure}[b]{0.49 \textwidth} 
 		\centering
-		\includegraphics[width=\textwidth]{det_knn5_pearson_kendall_true}
+		\includegraphics[width=\textwidth, height=0.5\textwidth]{det_knn5_pearson_kendall_true}
 		\caption{Minimum determinants for KNN with covariates from Pearson and Kendall and true correlation.}
 		\label{fig:det_knn5_pearson_kendall_true}
 	\end{subfigure}
@@ -954,34 +954,34 @@ The accuracy of KNN estimates with Pearson and Kendall covariates for conditiona
 
 
 \noindent
-From visual inspection of the plots in Fig. \ref{fig:knn_pearson21_bootstrap_true} and Fig. \ref{fig:knn_kendall21_bootstrap_true} it seems that the uncertainty in the conditional correlation, $\rho_t$, which is illustrated by the $99\%$ confidence interval, is smaller for KNN estimates compared to Pearson and Kendall moving window estimates under the same window length of 21. KNN estimates of correlation with number of neighbors equal to 5 are, however, much more volatile. This may be a less desirable result as it is not expected that correlation between assets changes that drastically at each time unit. Rather, correlation is expected to vary gradually over time \citep{ref:Basturk2016}. It is observed though that, as with an increase in the choice of window length for Pearson and Kendall moving window estimates of correlation, an increase in the number of neighbors results in smoother KNN estimates of correlation. \\
+From visual inspection of the plots in Figure \ref{fig:knn_pearson21_bootstrap_true} and Figure \ref{fig:knn_kendall21_bootstrap_true} it seems that the uncertainty in the conditional correlation, $\rho_t$, which is illustrated by the $99\%$ confidence interval, is smaller for KNN estimates compared to Pearson and Kendall moving window estimates under the same window length of 21. KNN estimates of correlation with number of neighbors equal to 5 are, however, much more volatile. This may be a less desirable result as it is not expected that correlation between assets changes that drastically at each time unit. Rather, correlation is expected to vary gradually over time \citep{ref:Basturk2016}. It is observed though that, as with an increase in the choice of window length for Pearson and Kendall moving window estimates of correlation, an increase in the number of neighbors results in smoother KNN estimates of correlation. \\
 
 \begin{figure}[H]  % [h] parameter makes sure figures are located at 'this' location.
 	\centering
 	\begin{subfigure}[b]{0.49 \textwidth} % sum of widths should be less than text width if all one the same line
 		\centering 
-		\includegraphics[width=\textwidth]{knn_pearson_21_estimates_bootstrap_true.png} 
+		\includegraphics[width=\textwidth, height=0.5\textwidth]{knn_pearson_21_estimates_bootstrap_true.png} 
 		\caption{KNN estimates with window size 21, Pearson as covariate and true correlation.} 	
 		\label{fig:knn_pearson21_bootstrap_true}
 	\end{subfigure} 
 	\hfill	
 	\begin{subfigure}[b]{0.49 \textwidth} 
 		\centering 
-		\includegraphics[width=\textwidth]{knn_kendall_21_estimates_bootstrap_true.png} 
+		\includegraphics[width=\textwidth, height=0.5\textwidth]{knn_kendall_21_estimates_bootstrap_true.png} 
 		\caption{KNN estimates with window size 21, Kendall as covariate and true correlation.} 
 		\label{fig:knn_kendall21_bootstrap_true}
 	\end{subfigure} 
 	\hfill	
 	\begin{subfigure}[b]{0.49 \textwidth}
 		\centering 
-		\includegraphics[width=\textwidth]{decom_mse_knn5_pearson_true.png} 
+		\includegraphics[width=\textwidth, height=0.5\textwidth]{decom_mse_knn5_pearson_true.png} 
 		\caption{Bias-variance decomposition for KNN estimates with Pearson as covariate and true correlation.} 	
 		\label{fig:decom_mse_knn5_pearson_true}
 	\end{subfigure}
 	\hfill  
 	\begin{subfigure}[b]{0.49 \textwidth}
 		\centering 
-		\includegraphics[width=\textwidth]{decom_mse_knn5_kendall_true.png} 
+		\includegraphics[width=\textwidth, height=0.5\textwidth]{decom_mse_knn5_kendall_true.png} 
 		\caption{Bias-variance decomposition for KNN estimates with Kendall as covariate and true correlation.} 
 		\label{fig:decom_mse_knn5_kendall_true}
 	\end{subfigure}
@@ -990,10 +990,10 @@ From visual inspection of the plots in Fig. \ref{fig:knn_pearson21_bootstrap_tru
 \end{figure}
 
 \noindent
-The MSE decomposition into bias and variance terms from KNN estimates of correlation are shown in Fig. \ref{fig:decom_mse_knn5_pearson_true} and Fig. \ref{fig:decom_mse_knn5_kendall_true}. These figures indicate that the KNN estimator is considerably less sensitive to the choice of the window length for smaller window sizes when compared to Pearson and Kendall sample correlations using moving windows. The uncertainty around the estimated correlations appears to be marginally affected by the choice of the window length for all window sizes. This statement is supported by the fact that the variance as a function of the window length behaves like a (more or less) constant red line in these figures.   
+The MSE decomposition into bias and variance terms from KNN estimates of correlation are shown in Figure \ref{fig:decom_mse_knn5_pearson_true} and Figure \ref{fig:decom_mse_knn5_kendall_true}. These figures indicate that the KNN estimator is considerably less sensitive to the choice of the window length for smaller window sizes when compared to Pearson and Kendall sample correlations using moving windows. The uncertainty around the estimated correlations appears to be marginally affected by the choice of the window length for all window sizes. This statement is supported by the fact that the variance as a function of the window length behaves like a (more or less) constant red line in these figures.   
 
 \subsection{Effect of Alternative Nearest Neighbor Parameterizations under True Correlation} \label{sec:MSE_knn_alt_true}
-Fig. \ref{fig:decom_mse_pearson_kendall_true} depicted an inverse relationship between the choice of the window length and the uncertainty around Pearson and Kendall sample correlation estimates using moving windows. The KNN estimator has a similar property: simulation results in Tabel \ref{tab:mse_decomp_knn_pearson_kendall_true} show an inverse relationship between the choice of the number of nearest neighbors used in the estimation of correlations and the uncertainty around the estimated correlations, regardless whether Pearson or Kendall estimates are used for specification of the set of covariates. It is clearly observed that an increase in the number of neighbors, $k$, results in a decrease of the variance, and conversely. This observation is in line with our discussion on MSE decomposition for the KNN estimator and Eq. \eqref{eq:mse_decomposition_knn} in Section \ref{sec:mse_decompose}. Additionally, we stated that the higher the value of $k$, the lower the model complexity and, as such, the squared bias tends to increase with an increase in $k$. However, simulation results depicted in Tabel \ref{tab:mse_decomp_knn_pearson_kendall_true} indicate no increase in squared bias with an increase in $k$ up to $k=800$. The first increase in squared bias is observed when the number of neighbors is approximately 900. For all $k$ smaller than 900 a decrease in squared bias is observed with an increase in $k$. This statement is more clearly shown through a geometrical representation of the MSE decomposition as a function of the number of neighbors for $k \in \{5, 10, 25, 50, 100\}$ in Fig. \ref{fig:knn5_pearson_kendall_sens_analysis_true}. \\  
+Figure \ref{fig:decom_mse_pearson_kendall_true} depicted an inverse relationship between the choice of the window length and the uncertainty around Pearson and Kendall sample correlation estimates using moving windows. The KNN estimator has a similar property: simulation results in Tabel \ref{tab:mse_decomp_knn_pearson_kendall_true} show an inverse relationship between the choice of the number of nearest neighbors used in the estimation of correlations and the uncertainty around the estimated correlations, regardless whether Pearson or Kendall estimates are used for specification of the set of covariates. It is clearly observed that an increase in the number of neighbors, $k$, results in a decrease of the variance, and conversely. This observation is in line with our discussion on MSE decomposition for the KNN estimator and Eq. \eqref{eq:mse_decomposition_knn} in Section \ref{sec:mse_decompose}. Additionally, we stated that the higher the value of $k$, the lower the model complexity and, as such, the squared bias tends to increase with an increase in $k$. However, simulation results depicted in Tabel \ref{tab:mse_decomp_knn_pearson_kendall_true} indicate no increase in squared bias with an increase in $k$ up to $k=800$. The first increase in squared bias is observed when the number of neighbors is approximately 900. For all $k$ smaller than 900 a decrease in squared bias is observed with an increase in $k$. This statement is more clearly shown through a geometrical representation of the MSE decomposition as a function of the number of neighbors for $k \in \{5, 10, 25, 50, 100\}$ in Figure \ref{fig:knn5_pearson_kendall_sens_analysis_true}. \\  
 
 
 
@@ -1061,21 +1061,21 @@ Fig. \ref{fig:decom_mse_pearson_kendall_true} depicted an inverse relationship b
 \end{table}
 
 \noindent
-Fig. \ref{fig:knn5_pearson_sens_analysis_true} and Fig. \ref{fig:knn5_kendall_sens_analysis_true}  depict geometrical representations of the simulation results for KNN estimates with Pearson and Kendall covariates (and true correlation), respectively. The MSE decomposition as a function of the number of neighbors for $k \in \{5, 10, 25, 50, 100\}$ clearly shows a decrease in the squared bias with an increase in $k$. Given
-Eq. \eqref{eq:mse_decomposition_knn} and our discussion from Section \ref{sec:mse_decompose} one might have expected an increase in squared bias with an increase in $k$. A possible explanation for the behavior depicted in Fig. \ref{fig:knn5_pearson_kendall_sens_analysis_true} may be that up to some $k$, an increase in $k$ implies additional neighbors containing informational value are used for the estimation of conditional correlation. Logically, the inclusion of additional neighbors containing informational value results into more accurate estimates of correlation, which shows through a decrease in squared bias. As of some $k$, additional neighbors only add noise to the estimation process which results into increased squared bias.    
+Figure \ref{fig:knn5_pearson_sens_analysis_true} and Figure \ref{fig:knn5_kendall_sens_analysis_true}  depict geometrical representations of the simulation results for KNN estimates with Pearson and Kendall covariates (and true correlation), respectively. The MSE decomposition as a function of the number of neighbors for $k \in \{5, 10, 25, 50, 100\}$ clearly shows a decrease in the squared bias with an increase in $k$. Given
+Eq. \eqref{eq:mse_decomposition_knn} and our discussion from Section \ref{sec:mse_decompose} one might have expected an increase in squared bias with an increase in $k$. A possible explanation for the behavior depicted in Figure \ref{fig:knn5_pearson_kendall_sens_analysis_true} may be that up to some $k$, an increase in $k$ implies additional neighbors containing informational value are used for the estimation of conditional correlation. Logically, the inclusion of additional neighbors containing informational value results into more accurate estimates of correlation, which shows through a decrease in squared bias. As of some $k$, additional neighbors only add noise to the estimation process which results into increased squared bias.    
 
 \begin{figure}[H]  % [h] parameter makes sure figures are located at 'this' location.
 	\centering
 	\begin{subfigure}[b]{0.49 \textwidth} % sum of widths should be less than text width if all one the same line
 		\centering 
-		\includegraphics[width=\textwidth]{sens_analysis_mse_knn_pearson_true.png} 
+		\includegraphics[width=\textwidth, height=0.5\textwidth]{sens_analysis_mse_knn_pearson_true.png} 
 		\caption{KNN estimates with window size 10, Pearson as covariate and true correlation.}
 		\label{fig:knn5_pearson_sens_analysis_true}
 	\end{subfigure} 
 	\hfill	
 	\begin{subfigure}[b]{0.49 \textwidth} 
 		\centering 
-		\includegraphics[width=\textwidth]{sens_analysis_mse_knn_kendall_true.png} 
+		\includegraphics[width=\textwidth, height=0.5\textwidth]{sens_analysis_mse_knn_kendall_true.png} 
 		\caption{KNN estimates window size 10, Kendall as covariate and true correlation.} 
 		\label{fig:knn5_kendall_sens_analysis_true}
 	\end{subfigure} 
@@ -1084,37 +1084,37 @@ Eq. \eqref{eq:mse_decomposition_knn} and our discussion from Section \ref{sec:ms
 \end{figure}
 
 \noindent
-Next, two more parameterizations of the KNN learning algorithm are analyzed. In both parameterizations, the set of neighbors used for point estimation of conditional correlation is defined as the entire training data set. However, in the first parameterization, the KNN estimator uses an uniformly weighted average of correlations where each of the neighbors contributes equally to the point estimate of conditional correlation. In the second parameterization, the KNN estimator uses an inverse distance weighted average of correlations, as defined in \eqref{eq:IDWfunction}. MSE decomposition of both parameterizations with Pearson covariates and true correlation is depicted in Fig. \ref{fig:decom_mse_knn_len_train_IDW_pearson_kendall_true}. Clearly, the variance terms become negligible small in case the set of neighbors used for point estimation of conditional correlation is defined as the entire training data set, regardless of the weighting function. The variance, depicted by the red line, is barely observable in the bottom of Fig. \ref{fig:decom_mse_knn_len_train_pearson_true} and Fig. \ref{fig:decom_mse_knn_IDW_pearson_true}. This observation is in line with results depicted in Tabel \ref{tab:mse_decomp_knn_pearson_kendall_true} where the value of the variance term is negligible small for $k=1000$, regardless whether the set of covariates is constructed from Pearson or Kendall moving window estimates of correlation. \\
+Next, two more parameterizations of the KNN learning algorithm are analyzed. In both parameterizations, the set of neighbors used for point estimation of conditional correlation is defined as the entire training data set. However, in the first parameterization, the KNN estimator uses an uniformly weighted average of correlations where each of the neighbors contributes equally to the point estimate of conditional correlation. In the second parameterization, the KNN estimator uses an inverse distance weighted average of correlations, as defined in \eqref{eq:IDWfunction}. MSE decomposition of both parameterizations with Pearson covariates and true correlation is depicted in Figure \ref{fig:decom_mse_knn_len_train_IDW_pearson_kendall_true}. Clearly, the variance terms become negligible small in case the set of neighbors used for point estimation of conditional correlation is defined as the entire training data set, regardless of the weighting function. The variance, depicted by the red line, is barely observable in the bottom of Figure \ref{fig:decom_mse_knn_len_train_pearson_true} and Figure \ref{fig:decom_mse_knn_IDW_pearson_true}. This observation is in line with results depicted in Tabel \ref{tab:mse_decomp_knn_pearson_kendall_true} where the value of the variance term is negligible small for $k=1000$, regardless whether the set of covariates is constructed from Pearson or Kendall moving window estimates of correlation. \\
 
 \noindent
-Although low variance is a desirable property of any estimator, the estimated correlation dynamics depicted in Fig. \ref{fig:decom_mse_knn_len_train_pearson_true} and Fig. \ref{fig:decom_mse_knn_IDW_pearson_true} show very little volatility\footnote{Only behavior of the alternative parameterized KNN estimator with Pearson covariates is shown as behavior of its Kendall counterpart is nearly identical.}. In fact, when the KNN estimator uses an uniformly weighted average of correlations and the entire training data set, the estimated correlation dynamics resemble assuming constant correlation, which is the exact concept we tend to improve on by assuming correlation between financial returns to be conditional. In case of an inverse distance weighting function, the KNN estimator does capture some conditional correlation dynamics resulting in low volatile and smooth correlation dynamics. In reality, the underlying correlation dynamics may potentially be best captured optimizing over the hyperparmeter $k$ until an appropriate level of volatility and smoothness is reached.              \\      
+Although low variance is a desirable property of any estimator, the estimated correlation dynamics depicted in Figure \ref{fig:decom_mse_knn_len_train_pearson_true} and Figure \ref{fig:decom_mse_knn_IDW_pearson_true} show very little volatility\footnote{Only behavior of the alternative parameterized KNN estimator with Pearson covariates is shown as behavior of its Kendall counterpart is nearly identical.}. In fact, when the KNN estimator uses an uniformly weighted average of correlations and the entire training data set, the estimated correlation dynamics resemble assuming constant correlation, which is the exact concept we tend to improve on by assuming correlation between financial returns to be conditional. In case of an inverse distance weighting function, the KNN estimator does capture some conditional correlation dynamics resulting in low volatile and smooth correlation dynamics. In reality, the underlying correlation dynamics may potentially be best captured optimizing over the hyperparmeter $k$ until an appropriate level of volatility and smoothness is reached.              \\      
 
 \begin{figure}[H]  % [h] parameter makes sure figures are located at 'this' location.
 	\centering
 	\begin{subfigure}[b]{0.49 \textwidth}
 		\centering 
-		\includegraphics[width=\textwidth]{knn_pearson_21_len_train_estimates_bootstrap_true.png} 
+		\includegraphics[width=\textwidth, height=0.5\textwidth]{knn_pearson_21_len_train_estimates_bootstrap_true.png} 
 		\caption{KNN estimates as uniformly weighted averages, with window size 21 and Pearson covariates.} 	
 		\label{fig:knn_pearson21_len_train_bootstrap_true}
 	\end{subfigure}
 	\hfill  
 	\begin{subfigure}[b]{0.49 \textwidth}
 		\centering 
-		\includegraphics[width=\textwidth]{knn_pearson_21_IDW_estimates_bootstrap_true.png} 
+		\includegraphics[width=\textwidth, height=0.5\textwidth]{knn_pearson_21_IDW_estimates_bootstrap_true.png} 
 		\caption{KNN estimates as inverse distance weighted averages, with window size 21 and Pearson covariates.} 
 		\label{fig:knn_pearson21_IDW_bootstrap_true}
 	\end{subfigure}
 
 	\begin{subfigure}[b]{0.49 \textwidth}
 		\centering 
-		\includegraphics[width=\textwidth]{decom_mse_knn_len_train_pearson_true.png} 
+		\includegraphics[width=\textwidth, height=0.5\textwidth]{decom_mse_knn_len_train_pearson_true.png} 
 		\caption{Bias-variance decomposition for KNN estimates constructed from uniformly weighted averages.} 	
 		\label{fig:decom_mse_knn_len_train_pearson_true}
 	\end{subfigure}
 	\hfill  
 	\begin{subfigure}[b]{0.49 \textwidth}
 		\centering 
-		\includegraphics[width=\textwidth]{decom_mse_knn_IDW_pearson_true.png} 
+		\includegraphics[width=\textwidth, height=0.5\textwidth]{decom_mse_knn_IDW_pearson_true.png} 
 		\caption{Bias-variance decomposition for KNN estimates constructed from inverse distance weighted averages.} 
 		\label{fig:decom_mse_knn_IDW_pearson_true}
 	\end{subfigure}
@@ -1123,27 +1123,27 @@ Although low variance is a desirable property of any estimator, the estimated co
 \end{figure}
 
 \noindent
-The accuracy of the two different parameterizations is compared using MSE between estimated and actual correlations. In Fig. \ref{fig:decom_mse_knn_len_train_pearson_true}, MSE from KNN with an uniform weighting function is approximately 0.0785, regardless of the choice of window length and whether Pearson or Kendall moving window estimates are use for constructing the set of covariates. In Fig. \ref{fig:decom_mse_knn_IDW_pearson_true} MSE from KNN with an inverse distance weighting function is approximately between 0.0721 and 0.0774, and between 0.0727 and 0.0771 when Pearson and Kendall moving window estimates are used as covariates, respectively. This implies that slightly lower MSE values are obtained with an inverse distance weighting function as opposed to an uniform weighting function, which is line with our discussion from Section \ref{sec:knn}. It makes sense to have training data instances with a higher amount of proximity to the query instance contribute more to the value of the response variable than training data instances with a lower amount of proximity to the query instance. Moreover, Fig. \ref{fig:decom_mse_knn_len_train_IDW_pearson_kendall_true} shows that both parameterizations are insensitive to the choice of window length, regardless of the weighting function and covariate choice. In fact, the variance of MSE from KNN with an uniform weighting function and an inverse distance weighting function are 5.00e-11 and 8.55e-7, respectively. In other words, hardly significantly different from one another. \\
+The accuracy of the two different parameterizations is compared using MSE between estimated and actual correlations. In Figure \ref{fig:decom_mse_knn_len_train_pearson_true}, MSE from KNN with an uniform weighting function is approximately 0.0785, regardless of the choice of window length and whether Pearson or Kendall moving window estimates are use for constructing the set of covariates. In Figure \ref{fig:decom_mse_knn_IDW_pearson_true} MSE from KNN with an inverse distance weighting function is approximately between 0.0721 and 0.0774, and between 0.0727 and 0.0771 when Pearson and Kendall moving window estimates are used as covariates, respectively. This implies that slightly lower MSE values are obtained with an inverse distance weighting function as opposed to an uniform weighting function, which is line with our discussion from Section \ref{sec:knn}. It makes sense to have training data instances with a higher amount of proximity to the query instance contribute more to the value of the response variable than training data instances with a lower amount of proximity to the query instance. Moreover, Figure \ref{fig:decom_mse_knn_len_train_IDW_pearson_kendall_true} shows that both parameterizations are insensitive to the choice of window length, regardless of the weighting function and covariate choice. In fact, the variance of MSE from KNN with an uniform weighting function and an inverse distance weighting function are 5.00e-11 and 8.55e-7, respectively. In other words, hardly significantly different from one another. \\
 
 \noindent
-The alternative parameterizations of the KNN estimator with approximated covariates and response variable also satisfy the positive definiteness condition of the conditional correlation matrix $R_t$ for all time $t$ under all choices of window length in the interval [0, 100]. Fig. \ref{fig:det_knn_IDW_pearson_kendall_true.png} presents the obtained minimum determinants of $R_t$ for all choices of window length under an inverse distance weighting function\footnote{Usage of an uniform distance weighting function yields approximately constant minimum determinant of 0.74, for both Pearson and Kendall approximations.}.  \\ 
+The alternative parameterizations of the KNN estimator with approximated covariates and response variable also satisfy the positive definiteness condition of the conditional correlation matrix $R_t$ for all time $t$ under all choices of window length in the interval [0, 100]. Figure \ref{fig:det_knn_IDW_pearson_kendall_true.png} presents the obtained minimum determinants of $R_t$ for all choices of window length under an inverse distance weighting function\footnote{Usage of an uniform distance weighting function yields approximately constant minimum determinant of 0.74, for both Pearson and Kendall approximations.}.  \\ 
 
 \noindent
-This section is concluded with a comparison of the function approximation capabilities of the KNN estimator and Pearson and Kendall sample correlation estimates using moving windows. Comparison is based on MSE between estimated and actual correlations. Fig. \ref{fig:mse_knn5_idw_pearson_kendall_true} shows MSE from KNN under a default parameterization where the number of neighbors equals 5, an alternative parameterization with an inverse distance weighting function as well as Pearson and Kendall moving window estimates of conditional correlations. According to MSE, parameterizations of the KNN estimator where the number of neighbors is 5 or 10 perform better than those of Pearson and Kendall moving window estimates for small window sizes. Parameterizations of the KNN estimator with an alternative distance weighting function and where the entire training data set is used for estimating correlation yields significantly smaller MSE compared to Pearson and Kendall sample correlation estimates using moving windows for all window sizes. In fact, the simulation shows that the KNN estimator outperforms Pearson and Kendall sample correlation estimates for all window sizes when the number of neighbors $k \in \{25, 50, 100\}$ in addition to both alternative parameterizations. Finally, the variance of MSE from KNN estimates under default parameterizations and with an inverse distance weighting function in Fig. \ref{fig:mse_knn5_idw_pearson_kendall_true} are 6.07e-6 and 8.55e-7, respectively, while that of Pearson and Kendall sample correlation estimates using moving windows are 0.0040 and 0.0037, respectively. \\
+This section is concluded with a comparison of the function approximation capabilities of the KNN estimator and Pearson and Kendall sample correlation estimates using moving windows. Comparison is based on MSE between estimated and actual correlations. Figure \ref{fig:mse_knn5_idw_pearson_kendall_true} shows MSE from KNN under a default parameterization where the number of neighbors equals 5, an alternative parameterization with an inverse distance weighting function as well as Pearson and Kendall moving window estimates of conditional correlations. According to MSE, parameterizations of the KNN estimator where the number of neighbors is 5 or 10 perform better than those of Pearson and Kendall moving window estimates for small window sizes. Parameterizations of the KNN estimator with an alternative distance weighting function and where the entire training data set is used for estimating correlation yields significantly smaller MSE compared to Pearson and Kendall sample correlation estimates using moving windows for all window sizes. In fact, the simulation shows that the KNN estimator outperforms Pearson and Kendall sample correlation estimates for all window sizes when the number of neighbors $k \in \{25, 50, 100\}$ in addition to both alternative parameterizations. Finally, the variance of MSE from KNN estimates under default parameterizations and with an inverse distance weighting function in Figure \ref{fig:mse_knn5_idw_pearson_kendall_true} are 6.07e-6 and 8.55e-7, respectively, while that of Pearson and Kendall sample correlation estimates using moving windows are 0.0040 and 0.0037, respectively. \\
 
 
 \begin{figure}[H]  % [h] parameter makes sure figures are located at 'this' location.
 	\centering
 	\begin{subfigure}[b]{0.49 \textwidth}
 		\centering 
-		\includegraphics[width=\textwidth]{mse_knn5_idw_pearson_kendall_true} 
+		\includegraphics[width=\textwidth, height=0.5\textwidth]{mse_knn5_idw_pearson_kendall_true} 
 		\caption{MSE for KNN with Pearson covariates and true correlation, Pearson and Kendall Moving Window bootstrap estimates.}
 		\label{fig:mse_knn5_idw_pearson_kendall_true}
 	\end{subfigure}
 	\hfill
 	\begin{subfigure}[b]{0.49 \textwidth}
 		\centering 
-		\includegraphics[width=\textwidth]{det_knn_IDW_pearson_kendall_true.png} 
+		\includegraphics[width=\textwidth, height=0.5\textwidth]{det_knn_IDW_pearson_kendall_true.png} 
 		\caption{Minimum determinants for KNN estimates constructed from inverse distance weighting function, Pearson and Kendall covariates and true correlation.}
 		\label{fig:det_knn_IDW_pearson_kendall_true.png}
 	\end{subfigure}
@@ -1154,20 +1154,20 @@ This section is concluded with a comparison of the function approximation capabi
 
 %%%%%%% RANDOM FOREST TRUE COR %%%%%%%%%%%%%%
 \subsection{Generalization Error of Random Forest under True Correlation} \label{sec:MSE_rf_true}
-The accuracy of RF estimates with Pearson and Kendall covariates for conditional correlation is compared by using the MSE between estimated and actual correlations. MSE from RF with Pearson and Kendall moving window estimates of correlation for covariates are shown in Fig. \ref{fig:mse_rf10_pearson_kendall_true}. Regardless of the choice of window length, MSE from RF with Pearson and Kendall covariates are between 0.0847 and 0.0980, and 0.0830 and 0.0983, respectively. The variance of MSE from RF estimates with Pearson covariates is approximately 8.42e-6 while that of RF estimates with Kendall covariates is approximately 8.92e-6. Analogous to KNN estimates of correlation, RF thus appears to be rather insensitive to the choice of window length, regardless whether the set of covariates is constructed from Pearson or Kendall moving window estimates of correlation. Moreover, RF estimates of conditional correlation satisfy the positive definiteness condition in the conditional correlation matrix $R_t$ for all time $t$ under all considered choices of window length. Fig. \ref{fig:det_rf10_pearson_kendall_true} presents the obtained minimum determinants of $R_t$ for all choices of window length.   
+The accuracy of RF estimates with Pearson and Kendall covariates for conditional correlation is compared by using the MSE between estimated and actual correlations. MSE from RF with Pearson and Kendall moving window estimates of correlation for covariates are shown in Figure \ref{fig:mse_rf10_pearson_kendall_true}. Regardless of the choice of window length, MSE from RF with Pearson and Kendall covariates are between 0.0847 and 0.0980, and 0.0830 and 0.0983, respectively. The variance of MSE from RF estimates with Pearson covariates is approximately 8.42e-6 while that of RF estimates with Kendall covariates is approximately 8.92e-6. Analogous to KNN estimates of correlation, RF thus appears to be rather insensitive to the choice of window length, regardless whether the set of covariates is constructed from Pearson or Kendall moving window estimates of correlation. Moreover, RF estimates of conditional correlation satisfy the positive definiteness condition in the conditional correlation matrix $R_t$ for all time $t$ under all considered choices of window length. Figure \ref{fig:det_rf10_pearson_kendall_true} presents the obtained minimum determinants of $R_t$ for all choices of window length.   
 
 \begin{figure}[H]
 	\centering
 	\begin{subfigure}[b]{0.49 \textwidth} 
 		\centering
-		\includegraphics[width=\textwidth]{mse_rf10_pearson_kendall_true}
+		\includegraphics[width=\textwidth, height=0.5\textwidth]{mse_rf10_pearson_kendall_true}
 		\caption{MSE for RF with covariates from Pearson and Kendall and true correlation.}
 		\label{fig:mse_rf10_pearson_kendall_true}
 	\end{subfigure}
 	\hfill
 	\begin{subfigure}[b]{0.49 \textwidth} 
 		\centering
-		\includegraphics[width=\textwidth]{det_rf10_pearson_kendall_true}
+		\includegraphics[width=\textwidth, height=0.5\textwidth]{det_rf10_pearson_kendall_true}
 		\caption{Minimum determinants for RF with covariates from Pearson and Kendall and true correlation.}
 		\label{fig:det_rf10_pearson_kendall_true}
 	\end{subfigure}
@@ -1176,38 +1176,38 @@ The accuracy of RF estimates with Pearson and Kendall covariates for conditional
 \end{figure}
 
 \noindent
-From visual inspection of the plots in Fig. \ref{fig:rf_pearson21_bootstrap_true} and Fig. \ref{fig:rf_kendall21_bootstrap_true} it seems that the uncertainty in the conditional correlation, $\rho_t$, which is illustrated by the 99\% confidence interval, seems smaller for RF estimates compared to Pearson and Kendall moving window estimates under the same window length of 21. Analogous to KNN estimates of correlation, RF estimates of correlation under default parametrization, that is with number of trees in the decision forest equal to 10, are much more volatile than Pearson and Kendall sample correlations using moving windows. This may be a less desirable result as it is not expected that correlation between assets changes that drastically at each time unit. Rather, correlation is expected to vary gradually over time \citep{ref:Basturk2016} \\
+From visual inspection of the plots in Figure \ref{fig:rf_pearson21_bootstrap_true} and Figure \ref{fig:rf_kendall21_bootstrap_true} it seems that the uncertainty in the conditional correlation, $\rho_t$, which is illustrated by the 99\% confidence interval, seems smaller for RF estimates compared to Pearson and Kendall moving window estimates under the same window length of 21. Analogous to KNN estimates of correlation, RF estimates of correlation under default parametrization, that is with number of trees in the decision forest equal to 10, are much more volatile than Pearson and Kendall sample correlations using moving windows. This may be a less desirable result as it is not expected that correlation between assets changes that drastically at each time unit. Rather, correlation is expected to vary gradually over time \citep{ref:Basturk2016} \\
 
 \noindent
-The MSE decomposition into bias and variance terms from RF estimates of correlation are shown in Fig. \ref{fig:decom_mse_rf10_pearson_true} and Fig. \ref{fig:decom_mse_rf10_kendall_true}. These figures indicate that the RF estimator is considerably less sensitive to the choice of the window length for smaller window sizes when compared to Pearson and Kendall sample correlations using moving windows depicted in Fig \ref{fig:mse_pearson_kendall_bootstrap}. The uncertainty around the estimated correlations appears to be marginally affected by the choice of the window length for all window sizes. This statement is supported by the fact that the variance as a function of the window length behaves like a (more or less) constant red line in these figures; a result analogous to conditional correlations obtained from the KNN estimator.
+The MSE decomposition into bias and variance terms from RF estimates of correlation are shown in Figure \ref{fig:decom_mse_rf10_pearson_true} and Figure \ref{fig:decom_mse_rf10_kendall_true}. These figures indicate that the RF estimator is considerably less sensitive to the choice of the window length for smaller window sizes when compared to Pearson and Kendall sample correlations using moving windows depicted in Fig \ref{fig:mse_pearson_kendall_bootstrap}. The uncertainty around the estimated correlations appears to be marginally affected by the choice of the window length for all window sizes. This statement is supported by the fact that the variance as a function of the window length behaves like a (more or less) constant red line in these figures; a result analogous to conditional correlations obtained from the KNN estimator.
 
 
 \begin{figure}[H]  % [h] parameter makes sure figures are located at 'this' location.
 	\centering
 	\begin{subfigure}[b]{0.49 \textwidth} % sum of widths should be less than text width if all one the same line
 		\centering 
-		\includegraphics[width=\textwidth]{rf_pearson_21_estimates_bootstrap_true.png} 
+		\includegraphics[width=\textwidth, height=0.5\textwidth]{rf_pearson_21_estimates_bootstrap_true.png} 
 		\caption{RF estimates with window size 21, Pearson as covariate and true correlation.} 	
 		\label{fig:rf_pearson21_bootstrap_true}
 	\end{subfigure} 
 	\hfill	
 	\begin{subfigure}[b]{0.49 \textwidth} 
 		\centering 
-		\includegraphics[width=\textwidth]{rf_kendall_21_estimates_bootstrap_true.png} 
+		\includegraphics[width=\textwidth, height=0.5\textwidth]{rf_kendall_21_estimates_bootstrap_true.png} 
 		\caption{RF estimates with window size 21, Kendall as covariate and true correlation.} 
 		\label{fig:rf_kendall21_bootstrap_true}
 	\end{subfigure} 
 	\hfill	
 	\begin{subfigure}[b]{0.49 \textwidth}
 		\centering 		
-		\includegraphics[width=\textwidth]{decom_mse_rf10_pearson_true.png} 
+		\includegraphics[width=\textwidth, height=0.5\textwidth]{decom_mse_rf10_pearson_true.png} 
 		\caption{Bias-variance decomposition for RF estimates with Pearson as covariate and true correlation.} 
 		\label{fig:decom_mse_rf10_pearson_true}
 	\end{subfigure}
 	\hfill  
 	\begin{subfigure}[b]{0.49 \textwidth}
 		\centering 
-		\includegraphics[width=\textwidth]{decom_mse_rf10_kendall_true.png} 
+		\includegraphics[width=\textwidth, height=0.5\textwidth]{decom_mse_rf10_kendall_true.png} 
 		\caption{Bias-variance decomposition for RF estimates with Kendall as covariate and true correlation.} 
 		\label{fig:decom_mse_rf10_kendall_true}
 	\end{subfigure}
@@ -1275,14 +1275,14 @@ With respect to our discussion on the effect of random covariate selection in in
 \end{table}
 
 \noindent
-This section is concluded with a comparison of the function approximation capabilities of the RF estimator and Pearson and Kendall sample correlation estimates using moving windows. Comparison is based on MSE between estimated and actual correlations. Fig. \ref{fig:mse_rf10_pearson_kendall_comp_true.png} shows MSE from RF under default parameterization where the number of estimators equals 10, as well as Pearson and Kendall moving window estimates of conditional correlations. According to MSE, default parameterizations of the RF estimator where the random forest is constructed from 10 decision trees yields significantly smaller MSE compared to Pearson and Kendall sample correlation estimates using moving windows for all window sizes. Finally, the variance of MSE from RF estimates under default parameterizations and Pearson and Kendall approximations of true correlation in Fig. \ref{fig:mse_rf10_pearson_kendall_comp_true.png} are 8.42e-6 and 8.92e-6, respectively, while that of Pearson and Kendall moving window estimates are 0.0040 and 0.0037, respectively. \\
+This section is concluded with a comparison of the function approximation capabilities of the RF estimator and Pearson and Kendall sample correlation estimates using moving windows. Comparison is based on MSE between estimated and actual correlations. Figure \ref{fig:mse_rf10_pearson_kendall_comp_true.png} shows MSE from RF under default parameterization where the number of estimators equals 10, as well as Pearson and Kendall moving window estimates of conditional correlations. According to MSE, default parameterizations of the RF estimator where the random forest is constructed from 10 decision trees yields significantly smaller MSE compared to Pearson and Kendall sample correlation estimates using moving windows for all window sizes. Finally, the variance of MSE from RF estimates under default parameterizations and Pearson and Kendall approximations of true correlation in Figure \ref{fig:mse_rf10_pearson_kendall_comp_true.png} are 8.42e-6 and 8.92e-6, respectively, while that of Pearson and Kendall moving window estimates are 0.0040 and 0.0037, respectively. \\
 
 
 \begin{figure}[H]
 	\centering
 	\begin{subfigure}[b]{0.49 \textwidth} 
 		\centering
-		\includegraphics[width=\textwidth]{mse_rf10_pearson_kendall_comp_true.png}
+		\includegraphics[width=\textwidth, height=0.5\textwidth]{mse_rf10_pearson_kendall_comp_true.png}
 		%\caption{MSE for RF with covariates from Pearson and Kendall and true correlation.}
 		%\label{fig:mse_rf10_pearson_kendall_comp_true.png}
 	\end{subfigure}
@@ -1302,20 +1302,20 @@ This section is premised on a more realistic approach to apply nearest neighbor 
 
 %%%%%% NEAREST NEIGHBOR PROXY 	%%%%%%%%
 \subsection{Generalization Error of Nearest Neighbor under Proxy Correlation} \label{sec:MSE_knn_proxy}
-The accuracy of KNN estimates with Pearson and Kendall sample correlation estimates using moving windows for both covariates and response variable is compared by using mean squared error (MSE) between estimated and actual correlations. MSE from KNN with Pearson and Kendall moving window estimates of correlation is shown in Fig. \ref{fig:mse_knn5_pearson_kendall_proxy}. Regardless of the choice of window length, MSE from KNN with Pearson and Kendall covariates are between 0.0855 and 0.2555, and 0.0952 and 0.2223, respectively. The variance of MSE from KNN estimates with Pearson covariates is approximately 5.70e-4 while that of KNN estimates with Kendall covariates is approximately 2.96e-4. Recall that in Fig. \ref{fig:mse_knn5_pearson_kendall_true} the KNN estimator appeared to be insensitive to the choice of window length when the response variable is specified by the true correlation. Interestingly, Fig. \ref{fig:mse_knn5_pearson_kendall_proxy} shows that MSE from KNN estimation with Pearson or Kendall approximations for the response variable varies substantially for smaller window sizes. Although, less variation is observed when compared with MSE from Pearson and Kendall moving window estimates depicted in Fig. \ref{fig:mse_pearson_kendall_bootstrap}. Moreover, KNN estimates of conditional correlation with both the set of covariates and response variable approximations of true correlation satisfy the positive definiteness condition in the conditional correlation matrix $R_t$ for all time $t$ under all choices of window length. Fig. \ref{fig:det_knn5_pearson_kendall_proxy} presents the obtained minimum determinants of $R_t$ for all choices of window length.  
+The accuracy of KNN estimates with Pearson and Kendall sample correlation estimates using moving windows for both covariates and response variable is compared by using mean squared error (MSE) between estimated and actual correlations. MSE from KNN with Pearson and Kendall moving window estimates of correlation is shown in Figure \ref{fig:mse_knn5_pearson_kendall_proxy}. Regardless of the choice of window length, MSE from KNN with Pearson and Kendall covariates are between 0.0855 and 0.2555, and 0.0952 and 0.2223, respectively. The variance of MSE from KNN estimates with Pearson covariates is approximately 5.70e-4 while that of KNN estimates with Kendall covariates is approximately 2.96e-4. Recall that in Figure \ref{fig:mse_knn5_pearson_kendall_true} the KNN estimator appeared to be insensitive to the choice of window length when the response variable is specified by the true correlation. Interestingly, Figure \ref{fig:mse_knn5_pearson_kendall_proxy} shows that MSE from KNN estimation with Pearson or Kendall approximations for the response variable varies substantially for smaller window sizes. Although, less variation is observed when compared with MSE from Pearson and Kendall moving window estimates depicted in Figure \ref{fig:mse_pearson_kendall_bootstrap}. Moreover, KNN estimates of conditional correlation with both the set of covariates and response variable approximations of true correlation satisfy the positive definiteness condition in the conditional correlation matrix $R_t$ for all time $t$ under all choices of window length. Figure \ref{fig:det_knn5_pearson_kendall_proxy} presents the obtained minimum determinants of $R_t$ for all choices of window length.  
      
 \begin{figure}[H]
 	\centering
 	\begin{subfigure}[b]{0.49 \textwidth} 
 		\centering
-		\includegraphics[width=\textwidth]{mse_knn5_pearson_kendall_proxy.png}
+		\includegraphics[width=\textwidth, height=0.5\textwidth]{mse_knn5_pearson_kendall_proxy.png}
 		\caption{MSE for KNN with covariates from Pearson and Kendall and proxy correlation.}
 		\label{fig:mse_knn5_pearson_kendall_proxy}
 	\end{subfigure}
 	\hfill
 	\begin{subfigure}[b]{0.49 \textwidth} 
 		\centering
-		\includegraphics[width=\textwidth]{det_knn5_pearson_kendall_proxy}
+		\includegraphics[width=\textwidth, height=0.5\textwidth]{det_knn5_pearson_kendall_proxy}
 		\caption{Minimum determinants for KNN with covariates from Pearson and Kendall and proxy correlation.}
 		\label{fig:det_knn5_pearson_kendall_proxy}
 	\end{subfigure}	
@@ -1324,40 +1324,40 @@ The accuracy of KNN estimates with Pearson and Kendall sample correlation estima
 \end{figure}
 
 \noindent
-From visual inspection of the plots in Fig. \ref{fig:knn_pearson21_bootstrap_proxy} and Fig. \ref{fig:knn_kendall21_bootstrap_proxy} it is clear that the uncertainty in the conditional correlation, $\rho_t$, 
-which is illustrated by the $99\%$ confidence interval, is smaller for KNN estimates compared to Pearson moving window estimates and Kendall moving window estimates, even though both the set of covariates and the response variable of the KNN algorithm are based on approximations of correlation instead of actual correlation. These figures also show smaller uncertainty in the conditional correlation $\rho_t$ when compared with KNN estimates with true correlation as the response variable, which are depicted in Fig. \ref{fig:decom_mse_knn5_pearson_kendall_proxy}. Moreover, KNN estimates of correlation with true correlation as response variable in Fig. \ref{fig:knn_pearson21_bootstrap_proxy} and Fig. \ref{fig:knn_kendall21_bootstrap_proxy} are much more volatile. KNN estimates with approximated correlation as response variable in Fig. \ref{fig:knn_pearson21_bootstrap_proxy} and Fig. \ref{fig:knn_kendall21_bootstrap_proxy}, however, follow the increases and decreases of the actual correlation smoother, with tighter confidence intervals. This is a more desirable result as it is not expected that correlation between assets changes that drastically at each time unit.  \\
+From visual inspection of the plots in Figure \ref{fig:knn_pearson21_bootstrap_proxy} and Figure \ref{fig:knn_kendall21_bootstrap_proxy} it is clear that the uncertainty in the conditional correlation, $\rho_t$, 
+which is illustrated by the $99\%$ confidence interval, is smaller for KNN estimates compared to Pearson moving window estimates and Kendall moving window estimates, even though both the set of covariates and the response variable of the KNN algorithm are based on approximations of correlation instead of actual correlation. These figures also show smaller uncertainty in the conditional correlation $\rho_t$ when compared with KNN estimates with true correlation as the response variable, which are depicted in Figure \ref{fig:decom_mse_knn5_pearson_kendall_proxy}. Moreover, KNN estimates of correlation with true correlation as response variable in Figure \ref{fig:knn_pearson21_bootstrap_proxy} and Figure \ref{fig:knn_kendall21_bootstrap_proxy} are much more volatile. KNN estimates with approximated correlation as response variable in Figure \ref{fig:knn_pearson21_bootstrap_proxy} and Figure \ref{fig:knn_kendall21_bootstrap_proxy}, however, follow the increases and decreases of the actual correlation smoother, with tighter confidence intervals. This is a more desirable result as it is not expected that correlation between assets changes that drastically at each time unit.  \\
 
 
 \noindent
-The MSE decomposition into bias and variance terms from KNN estimates of correlation are shown in Fig. \ref{fig:decom_mse_knn_pearson_proxy} and Fig. \ref{fig:decom_mse_knn_kendall_proxy}. These figures indicate that the KNN estimator with approximated response variable is more sensitive to the choice of the window length for smaller window sizes compared to the KNN estimator with true correlation depicted in Fig. \ref{fig:decom_mse_knn5_pearson_kendall_true}. This observation can be explained by error propagation: the effect of covariates' uncertainties (or errors) on the error of the function based on them. In the case when the KNN estimator uses approximated response variable for learning, the error associated with approximation of true correlation using moving window estimates is propagated to the response of the KNN estimator. Fig. \ref{fig:decom_mse_knn_pearson_proxy} and Fig. \ref{fig:decom_mse_knn_kendall_proxy} show, however, that the KNN estimator with approximated response variable is considerably less sensitive to the choice of the window length for smaller window sizes when compared to Pearson and Kendall sample correlation estimates using moving windows depicted in Fig. \ref{fig:decom_mse_pearson} and Fig \ref{fig:decom_mse_kendall}, respectively. The KNN estimator thus seems to mitigate the error propagation to some extend for smaller window sizes. This may be explained by the fact that KNN estimator, even with a small number of neighbors such as under the default parameterization where $k=5$, uses neighbors that contain additional informational value compared to the informational value in moving window estimates with small window sizes.      
+The MSE decomposition into bias and variance terms from KNN estimates of correlation are shown in Figure \ref{fig:decom_mse_knn_pearson_proxy} and Figure \ref{fig:decom_mse_knn_kendall_proxy}. These figures indicate that the KNN estimator with approximated response variable is more sensitive to the choice of the window length for smaller window sizes compared to the KNN estimator with true correlation depicted in Figure \ref{fig:decom_mse_knn5_pearson_kendall_true}. This observation can be explained by error propagation: the effect of covariates' uncertainties (or errors) on the error of the function based on them. In the case when the KNN estimator uses approximated response variable for learning, the error associated with approximation of true correlation using moving window estimates is propagated to the response of the KNN estimator. Figure \ref{fig:decom_mse_knn_pearson_proxy} and Figure \ref{fig:decom_mse_knn_kendall_proxy} show, however, that the KNN estimator with approximated response variable is considerably less sensitive to the choice of the window length for smaller window sizes when compared to Pearson and Kendall sample correlation estimates using moving windows depicted in Figure \ref{fig:decom_mse_pearson} and Fig \ref{fig:decom_mse_kendall}, respectively. The KNN estimator thus seems to mitigate the error propagation to some extend for smaller window sizes. This may be explained by the fact that KNN estimator, even with a small number of neighbors such as under the default parameterization where $k=5$, uses neighbors that contain additional informational value compared to the informational value in moving window estimates with small window sizes.      
 
 
 \begin{figure}[H]  % [h] parameter makes sure figures are located at 'this' location.
 	\centering
 	\begin{subfigure}[b]{0.49 \textwidth} % sum of widths should be less than text width if all one the same line
 		\centering 
-		\includegraphics[width=\textwidth]{knn_pearson_21_estimates_bootstrap_proxy.png} 
+		\includegraphics[width=\textwidth, height=0.5\textwidth]{knn_pearson_21_estimates_bootstrap_proxy.png} 
 		\caption{KNN estimates with window size 21, Pearson as covariate and proxy correlation.} 	
 		\label{fig:knn_pearson21_bootstrap_proxy}
 	\end{subfigure} 
 	\hfill	
 	\begin{subfigure}[b]{0.49 \textwidth} 
 		\centering 
-		\includegraphics[width=\textwidth]{knn_kendall_21_estimates_bootstrap_proxy.png} 
+		\includegraphics[width=\textwidth, height=0.5\textwidth]{knn_kendall_21_estimates_bootstrap_proxy.png} 
 		\caption{KNN estimates with window size 21, Kendall as covariate and proxy correlation.} 
 		\label{fig:knn_kendall21_bootstrap_proxy}
 	\end{subfigure} 
 	\hfill	
 	\begin{subfigure}[b]{0.49 \textwidth}
 		\centering 
-		\includegraphics[width=\textwidth]{decom_mse_knn_pearson_proxy.png} 
+		\includegraphics[width=\textwidth, height=0.5\textwidth]{decom_mse_knn_pearson_proxy.png} 
 		\caption{Bias-variance decomposition for KNN estimates with Pearson as covariate and proxy correlation.} 	
 		\label{fig:decom_mse_knn_pearson_proxy}
 	\end{subfigure}
 	\hfill  
 	\begin{subfigure}[b]{0.49 \textwidth}
 		\centering 
-		\includegraphics[width=\textwidth]{decom_mse_knn_kendall_proxy.png} 
+		\includegraphics[width=\textwidth, height=0.5\textwidth]{decom_mse_knn_kendall_proxy.png} 
 		\caption{Bias-variance decomposition for KNN estimates with Kendall as covariate and proxy correlation.} 
 		\label{fig:decom_mse_knn_kendall_proxy}
 	\end{subfigure}
@@ -1433,10 +1433,10 @@ Tabel \ref{tab:mse_decomp_knn_pearson_kendall_proxy} presents MSE decomposition 
 \end{table}
 
 \noindent
-As in Section \ref{sec:MSE_knn_alt_true}, two more parameterizations of the KNN learning algorithm are analyzed where the set of neighbors used for point estimation of conditional correlation is defined as the entire training data set. The KNN estimators uses an uniformly weighted average of correlations and an inverse distance weighted average of correlations, as defined in \eqref{eq:IDWfunction}. However, the choice of an uniform distance weighting function results in approximately constant correlation, as depicted in Fig. \ref{fig:knn_pearson21_len_train_bootstrap_true} where the true correlation was considered as the response variable. The idea of assuming constant correlation is exactly what we aim to improve on in this paper by considering correlation to be conditional. As such, the remainder of this section will primarily focus on results from the KNN estimator considering an inverse distance weighting function. \\
+As in Section \ref{sec:MSE_knn_alt_true}, two more parameterizations of the KNN learning algorithm are analyzed where the set of neighbors used for point estimation of conditional correlation is defined as the entire training data set. The KNN estimators uses an uniformly weighted average of correlations and an inverse distance weighted average of correlations, as defined in \eqref{eq:IDWfunction}. However, the choice of an uniform distance weighting function results in approximately constant correlation, as depicted in Figure \ref{fig:knn_pearson21_len_train_bootstrap_true} where the true correlation was considered as the response variable. The idea of assuming constant correlation is exactly what we aim to improve on in this paper by considering correlation to be conditional. As such, the remainder of this section will primarily focus on results from the KNN estimator considering an inverse distance weighting function. \\
   
 \noindent
-Again, the accuracy of the two different parameterizations is compared by MSE between estimated and actual correlation. The MSE decomposition of KNN estimates under inverse distance weighting function and proxies for covariates and the response variable is depicted in Fig. \ref{fig:decom_mse_knn_IDW_pearson_kendall_proxy}. The variance term becomes negligible small in case the set of neighbors used for point estimation of conditional correlation is defined as the entire training set. The variance depicted by the red line is barely observable in the bottom of Fig. \ref{fig:decom_mse_knn_IDW_pearson_proxy}-\ref{fig:decom_mse_knn_IDW_kendall_proxy}. This is in line with results presented in Tabel \ref{tab:mse_decomp_knn_pearson_kendall_proxy} where the value of the variance term becomes negligible small for larger $k$, regardless whether the set of covariates is constructed from Pearson or Kendall sample correlation estimates using moving windows. Fig. \ref{fig:knn_pearson_21_IDW_estimates_bootstrap_proxy} and Fig. \ref{fig:knn_kendall_21_IDW_estimates_bootstrap_proxy} show that in case of an inverse distance weighting function, the KNN estimator captures conditional correlation dynamics in a low volatile and smooth manner. When these plots are compared with the more volatile correlation dynamics estimated by the KNN estimator with number of neighbors equal to 5, one may tend to say a lower number of neighbors than the entire training data set might be a better choice to properly capture conditional correlation dynamics. In reality, the underlying correlation dynamics may potentially be best captured optimizing over the hyperparmeter $k$ until an appropriate level of volatility and smoothness is reached.         \\      
+Again, the accuracy of the two different parameterizations is compared by MSE between estimated and actual correlation. The MSE decomposition of KNN estimates under inverse distance weighting function and proxies for covariates and the response variable is depicted in Figure \ref{fig:decom_mse_knn_IDW_pearson_kendall_proxy}. The variance term becomes negligible small in case the set of neighbors used for point estimation of conditional correlation is defined as the entire training set. The variance depicted by the red line is barely observable in the bottom of Figure \ref{fig:decom_mse_knn_IDW_pearson_proxy}-\ref{fig:decom_mse_knn_IDW_kendall_proxy}. This is in line with results presented in Tabel \ref{tab:mse_decomp_knn_pearson_kendall_proxy} where the value of the variance term becomes negligible small for larger $k$, regardless whether the set of covariates is constructed from Pearson or Kendall sample correlation estimates using moving windows. Figure \ref{fig:knn_pearson_21_IDW_estimates_bootstrap_proxy} and Figure \ref{fig:knn_kendall_21_IDW_estimates_bootstrap_proxy} show that in case of an inverse distance weighting function, the KNN estimator captures conditional correlation dynamics in a low volatile and smooth manner. When these plots are compared with the more volatile correlation dynamics estimated by the KNN estimator with number of neighbors equal to 5, one may tend to say a lower number of neighbors than the entire training data set might be a better choice to properly capture conditional correlation dynamics. In reality, the underlying correlation dynamics may potentially be best captured optimizing over the hyperparmeter $k$ until an appropriate level of volatility and smoothness is reached.         \\      
 
 
 
@@ -1446,28 +1446,28 @@ Again, the accuracy of the two different parameterizations is compared by MSE be
 	\centering
 	\begin{subfigure}[b]{0.49 \textwidth}
 		\centering 
-		\includegraphics[width=\textwidth]{knn_pearson_21_IDW_estimates_bootstrap_proxy.png} 
+		\includegraphics[width=\textwidth, height=0.5\textwidth]{knn_pearson_21_IDW_estimates_bootstrap_proxy.png} 
 		\caption{KNN estimates as inverse distance weighted averages, with window size 21 and Pearson covariates.} 	
 		\label{fig:knn_pearson_21_IDW_estimates_bootstrap_proxy}
 	\end{subfigure}
 	\hfill  
 	\begin{subfigure}[b]{0.49 \textwidth}
 		\centering 
-		\includegraphics[width=\textwidth]{knn_kendall_21_IDW_estimates_bootstrap_proxy.png} 
+		\includegraphics[width=\textwidth, height=0.5\textwidth]{knn_kendall_21_IDW_estimates_bootstrap_proxy.png} 
 		\caption{KNN estimates as inverse distance weighted averages, with window size 21 and Kendall covariates.} 
 		\label{fig:knn_kendall_21_IDW_estimates_bootstrap_proxy}
 	\end{subfigure}
 	\hfill  
 	\begin{subfigure}[b]{0.49 \textwidth}
 		\centering 
-		\includegraphics[width=\textwidth]{decom_mse_knn_IDW_pearson_proxy.png} 
+		\includegraphics[width=\textwidth, height=0.5\textwidth]{decom_mse_knn_IDW_pearson_proxy.png} 
 		\caption{Bias-variance decomposition for KNN estimates constructed from inverse distance weighted averages and Pearson covariates.} 
 		\label{fig:decom_mse_knn_IDW_pearson_proxy}
 	\end{subfigure}
 	\hfill  
 	\begin{subfigure}[b]{0.49 \textwidth}
 		\centering 
-		\includegraphics[width=\textwidth]{decom_mse_knn_IDW_kendall_proxy.png} 
+		\includegraphics[width=\textwidth, height=0.5\textwidth]{decom_mse_knn_IDW_kendall_proxy.png} 
 		\caption{Bias-variance decomposition for KNN estimates constructed from inverse distance weighted averages and Kendall covariates.} 
 		\label{fig:decom_mse_knn_IDW_kendall_proxy}
 	\end{subfigure}
@@ -1478,13 +1478,13 @@ Again, the accuracy of the two different parameterizations is compared by MSE be
 
 \noindent
 Regardless of the choice of window length, MSE from KNN with an uniform weighting function and the set of covariates and response variable constructed from Pearson and Kendall sample correlation estimates using moving windows are approximately between 0.0774 and 0.0923, and 0.1054 and 0.1118, respectively. 
-MSE from KNN with an inverse distance weighting function is approximately between 0.0778 and 0.1024, and between 0.0919 and 0.1127, respectively. This implies that, using a KNN estimator, approximations based on Pearson sample correlations using moving windows seems more appropriate for the simulated data than Kendall sample correlations using moving windows, regardless of the weighting function; Fig. \ref{fig:decom_mse_knn_IDW_pearson_proxy} depicts a lower MSE for all window sizes compared with MSE in Fig. \ref{fig:decom_mse_knn_IDW_kendall_proxy}. An explanation for this observation is given along the same lines as for Pearson and Kendall sample correlation estimates using moving windows in Section \ref{sec:true_correlation}; the simulated asset returns follow a multivariate normal distribution, that is, an elliptical distribution. Therefore, it makes sense that lower MSE values are obtained when true correlation is approximated using a linear correlation coefficient such as Pearson in an KNN estimator. Moreover, the choice for an inverse distance weighting function seems to have no significant performance advantage over an uniform weighting function when true correlation is approximated using moving window estimates in terms of a statistical loss functions such as MSE. Interestingly, this is in contrast with results obtained from KNN estimator under true correlation in Section \ref{sec:MSE_knn_true}. More importantly however, using a uniform weighting function with the entire training set yields approximately constant correlation estimates, which is the exact idea we aim to improve on with a more realistic assumption of conditional correlation. The latter is better captured under an inverse distance weighting function. Finally, the variance of MSE from KNN with uniform weighting function and the set of covariates constructed from Pearson and Kendall moving window estimates are approximately 3.98e-6 and 9.26e-7, respectively. The variance of MSE from KNN with inverse distance weighting function and the set of covariates constructed from Pearson and Kendall moving window estimates are approximately 8.46e-6 and 8.61e-6, respectively. The difference in sensitivity to the choice of window length between the different parameterizations is negligible small if significant at all. \\
+MSE from KNN with an inverse distance weighting function is approximately between 0.0778 and 0.1024, and between 0.0919 and 0.1127, respectively. This implies that, using a KNN estimator, approximations based on Pearson sample correlations using moving windows seems more appropriate for the simulated data than Kendall sample correlations using moving windows, regardless of the weighting function; Figure \ref{fig:decom_mse_knn_IDW_pearson_proxy} depicts a lower MSE for all window sizes compared with MSE in Figure \ref{fig:decom_mse_knn_IDW_kendall_proxy}. An explanation for this observation is given along the same lines as for Pearson and Kendall sample correlation estimates using moving windows in Section \ref{sec:true_correlation}; the simulated asset returns follow a multivariate normal distribution, that is, an elliptical distribution. Therefore, it makes sense that lower MSE values are obtained when true correlation is approximated using a linear correlation coefficient such as Pearson in an KNN estimator. Moreover, the choice for an inverse distance weighting function seems to have no significant performance advantage over an uniform weighting function when true correlation is approximated using moving window estimates in terms of a statistical loss functions such as MSE. Interestingly, this is in contrast with results obtained from KNN estimator under true correlation in Section \ref{sec:MSE_knn_true}. More importantly however, using a uniform weighting function with the entire training set yields approximately constant correlation estimates, which is the exact idea we aim to improve on with a more realistic assumption of conditional correlation. The latter is better captured under an inverse distance weighting function. Finally, the variance of MSE from KNN with uniform weighting function and the set of covariates constructed from Pearson and Kendall moving window estimates are approximately 3.98e-6 and 9.26e-7, respectively. The variance of MSE from KNN with inverse distance weighting function and the set of covariates constructed from Pearson and Kendall moving window estimates are approximately 8.46e-6 and 8.61e-6, respectively. The difference in sensitivity to the choice of window length between the different parameterizations is negligible small if significant at all. \\
 
 \noindent
-The alternative parameterizations of the KNN estimator also satisfy the positive definiteness condition in the conditional correlation matrix $R_t$ for all time $t$ under all choices of window length in the interval [0, 100]. Fig. \ref{fig:det_knn_len_train_IDW_pearson_kendall_proxy} presents the obtained minimum determinants of $R_t$ for all choices of window length under the proposed alternative parameterizations.\\
+The alternative parameterizations of the KNN estimator also satisfy the positive definiteness condition in the conditional correlation matrix $R_t$ for all time $t$ under all choices of window length in the interval [0, 100]. Figure \ref{fig:det_knn_len_train_IDW_pearson_kendall_proxy} presents the obtained minimum determinants of $R_t$ for all choices of window length under the proposed alternative parameterizations.\\
 
 \noindent 
-This section is concluded with a comparison of the function approximation capabilities of the KNN estimator and Pearson and Kendall sample correlation estimates using moving windows. Comparison is based on MSE between estimated and actual correlations. Fig. \ref{fig:mse_knn5_IDW_pearson_kendall_proxy}\footnote{Only behavior of the (alternative parameterized) KNN estimator with Pearson covariates is shown as behavior of its Kendall counterpart is nearly identical.} shows MSE from KNN under a default parameterization where then number of neighbors equals 5, an alternative parameterization with an inverse distance weighting function as well as Pearson and Kendall sample correlation estimates using moving windows. According to MSE, parameterizations of the KNN estimator with approximated covariates and response variable performs significantly better than those of Pearson and Kendall moving window estimates for small window sizes. Moreover, parameterizations of the KNN estimator with an alternative distance weighting function yields significantly smaller MSE compared to Pearson and Kendall moving window estimates for all window sizes. Thus, similar to the analysis in Section \ref{sec:MSE_knn_alt_true}, the KNN estimator yields lower MSE with an increase in the number of neighbors, particularly for smaller window sizes. This result follows from the fact that conditional correlation is then estimated using increased sample information, which positively contributes to accurately capturing time variation in correlations. Evidently, the underlying correlation dynamics may potentially be best captured optimizing over the hyperparmeter $k$ until an appropriate level of volatility and smoothness is reached. Finally, the variance of MSE from KNN estimates under a default parameterization and alternative parameterization using an inverse distance weighting funtion in Fig. \ref{fig:mse_knn5_IDW_pearson_kendall_proxy} are 5.70e-4 and 8.46e-6, respectively, while that of Pearson and Kendall sample correlation estimates using moving windows are 0.0040 and 0.0037, respectively. In other words, the KNN estimator with approximated covariates and response variable is significantly less sensitive to the choice of window length than Pearson and Kendall sample correlation estimates using moving windows.  \\
+This section is concluded with a comparison of the function approximation capabilities of the KNN estimator and Pearson and Kendall sample correlation estimates using moving windows. Comparison is based on MSE between estimated and actual correlations. Figure \ref{fig:mse_knn5_IDW_pearson_kendall_proxy}\footnote{Only behavior of the (alternative parameterized) KNN estimator with Pearson covariates is shown as behavior of its Kendall counterpart is nearly identical.} shows MSE from KNN under a default parameterization where then number of neighbors equals 5, an alternative parameterization with an inverse distance weighting function as well as Pearson and Kendall sample correlation estimates using moving windows. According to MSE, parameterizations of the KNN estimator with approximated covariates and response variable performs significantly better than those of Pearson and Kendall moving window estimates for small window sizes. Moreover, parameterizations of the KNN estimator with an alternative distance weighting function yields significantly smaller MSE compared to Pearson and Kendall moving window estimates for all window sizes. Thus, similar to the analysis in Section \ref{sec:MSE_knn_alt_true}, the KNN estimator yields lower MSE with an increase in the number of neighbors, particularly for smaller window sizes. This result follows from the fact that conditional correlation is then estimated using increased sample information, which positively contributes to accurately capturing time variation in correlations. Evidently, the underlying correlation dynamics may potentially be best captured optimizing over the hyperparmeter $k$ until an appropriate level of volatility and smoothness is reached. Finally, the variance of MSE from KNN estimates under a default parameterization and alternative parameterization using an inverse distance weighting funtion in Figure \ref{fig:mse_knn5_IDW_pearson_kendall_proxy} are 5.70e-4 and 8.46e-6, respectively, while that of Pearson and Kendall sample correlation estimates using moving windows are 0.0040 and 0.0037, respectively. In other words, the KNN estimator with approximated covariates and response variable is significantly less sensitive to the choice of window length than Pearson and Kendall sample correlation estimates using moving windows.  \\
 
 
 
@@ -1492,14 +1492,14 @@ This section is concluded with a comparison of the function approximation capabi
 	\centering
 	\begin{subfigure}[b]{0.49 \textwidth}
 		\centering 
-		\includegraphics[width=\textwidth]{mse_knn5_IDW_pearson_kendall_proxy} 
+		\includegraphics[width=\textwidth, height=0.5\textwidth]{mse_knn5_IDW_pearson_kendall_proxy} 
 		\caption{MSE for KNN with Pearson covariates and proxy correlation, Pearson and Kendall Moving Window bootstrap estimates.}
 		\label{fig:mse_knn5_IDW_pearson_kendall_proxy}
 	\end{subfigure}
 	\hfill
 	\begin{subfigure}[b]{0.49 \textwidth} 
 		\centering
-		\includegraphics[width=\textwidth]{det_knn_IDW_len_train_pearson_kendall_proxy}
+		\includegraphics[width=\textwidth, height=0.5\textwidth]{det_knn_IDW_len_train_pearson_kendall_proxy}
 		\caption{Minimum determinants for KNN using uniform and inverse distance weighting function, Pearson and Kendall covariates and proxy correlation.}
 		\label{fig:det_knn_len_train_IDW_pearson_kendall_proxy}
 	\end{subfigure}	
@@ -1511,20 +1511,20 @@ This section is concluded with a comparison of the function approximation capabi
 
 %%%%%%% RANDOM FOREST PROXY %%%%%%%%%%%%%%
 \subsection{Generalization Error of Random Forest under Proxy Correlation} \label{sec:MSE_rf_proxy}
-The accuracy of RF estimates with Pearson and Kendall covariates for conditional correlation is compared by using the MSE between estimated and actual correlations. MSE from RF with Pearson and Kendall moving window estimates of correlation for covariates and as response variable are shown in Fig. \ref{fig:mse_rf10_pearson_kendall_proxy}. Regardless of the choice of window length, MSE from RF with Pearson and Kendall covariates are between 0.0868 and 0.2318, and 0.0946 and 0.2321, respectively. The variance of MSE from RF estimates with Pearson covariates is approximately 4.54e-4 while that of RF estimates with Kendall covariates is approximately 3.23e-4. Interestingly, Fig. \ref{fig:mse_rf10_pearson_kendall_proxy} shows that MSE from RF estimation with Pearson or Kendall sample approximations for the response variable varies substantially for smaller window sizes. Although, less variation is observed when compared with MSE from Pearson and Kendall sample correlation estimates using moving windows depicted in Fig. \ref{fig:mse_pearson_kendall_bootstrap}. This observation is analogous to the comparison of KNN estimates of correlation. Moreover, RF estimates of conditional correlation where both the set of covariates and response variable is constructed from Pearson and Kendall samples correlation estimates using moving windows satisfy the positive definiteness condition in the conditional correlation matrix $R_t$ for all time $t$ under all considered choices of window length. Fig. \ref{fig:det_rf10_pearson_kendall_proxy} presents the obtained minimum determinants of $R_t$ for all choices of window length. Although the minimum determinants for smaller window sizes approach 0, they remain nonnegative for all time $t$.
+The accuracy of RF estimates with Pearson and Kendall covariates for conditional correlation is compared by using the MSE between estimated and actual correlations. MSE from RF with Pearson and Kendall moving window estimates of correlation for covariates and as response variable are shown in Figure \ref{fig:mse_rf10_pearson_kendall_proxy}. Regardless of the choice of window length, MSE from RF with Pearson and Kendall covariates are between 0.0868 and 0.2318, and 0.0946 and 0.2321, respectively. The variance of MSE from RF estimates with Pearson covariates is approximately 4.54e-4 while that of RF estimates with Kendall covariates is approximately 3.23e-4. Interestingly, Figure \ref{fig:mse_rf10_pearson_kendall_proxy} shows that MSE from RF estimation with Pearson or Kendall sample approximations for the response variable varies substantially for smaller window sizes. Although, less variation is observed when compared with MSE from Pearson and Kendall sample correlation estimates using moving windows depicted in Figure \ref{fig:mse_pearson_kendall_bootstrap}. This observation is analogous to the comparison of KNN estimates of correlation. Moreover, RF estimates of conditional correlation where both the set of covariates and response variable is constructed from Pearson and Kendall samples correlation estimates using moving windows satisfy the positive definiteness condition in the conditional correlation matrix $R_t$ for all time $t$ under all considered choices of window length. Figure \ref{fig:det_rf10_pearson_kendall_proxy} presents the obtained minimum determinants of $R_t$ for all choices of window length. Although the minimum determinants for smaller window sizes approach 0, they remain nonnegative for all time $t$.
 
 \begin{figure}[H]
 	\centering
 	\begin{subfigure}[b]{0.49 \textwidth} 
 		\centering
-		\includegraphics[width=\textwidth]{mse_rf10_pearson_kendall_proxy}
+		\includegraphics[width=\textwidth, height=0.5\textwidth]{mse_rf10_pearson_kendall_proxy}
 		\caption{MSE for RF with covariates from Pearson and Kendall and proxy correlation.}
 		\label{fig:mse_rf10_pearson_kendall_proxy}
 	\end{subfigure}
 	\hfill
 	\begin{subfigure}[b]{0.49 \textwidth} 
 		\centering
-		\includegraphics[width=\textwidth]{det_rf10_pearson_kendall_proxy}
+		\includegraphics[width=\textwidth, height=0.5\textwidth]{det_rf10_pearson_kendall_proxy}
 		\caption{Minimum determinants for RF with covariates from Pearson and Kendall and proxy correlation.}
 		\label{fig:det_rf10_pearson_kendall_proxy}
 	\end{subfigure}
@@ -1533,10 +1533,10 @@ The accuracy of RF estimates with Pearson and Kendall covariates for conditional
 \end{figure}
 
 \noindent
-Visual inspection of the plots in Fig. \ref{fig:rf_pearson21_bootstrap_proxy} and Fig. \ref{fig:rf_kendall21_bootstrap_proxy} yields an analysis that is similar to the analysis of the KNN estimator under approximations of correlation instead of actual correlation in Section \ref{sec:MSE_knn_proxy}. It is clear that the uncertainty in the conditional correlation $\rho_t$, which is illustrated by the 99\% confidence interval, is smaller for RF estimates compared to Pearson and Kendall sample correlation estimates using moving windows, even though both the set of covariates and the response variable of the RF estimator are now based on approximations of correlation instead of actual correlation. These figures also show smaller uncertainty in the conditional correlation, $\rho_t$, when compared with RF estimates with true correlation as the response variable, which are depicted in Fig. \ref{fig:decom_mse_rf10_pearson_kendall_true}. Moreover RF estimates of correlation with true correlation as response variable in Fig. \ref{fig:rf_pearson21_bootstrap_true} and Fig. \ref{fig:rf_kendall21_bootstrap_true} are much more volatile. RF estimates with approximated correlation as response variable in Fig. \ref{fig:rf_pearson21_bootstrap_proxy} and Fig. \ref{fig:rf_kendall21_bootstrap_proxy} , however, follow the increases and decreases of the actual correlation smoother, with tighter confidence intervals. This is a more desirable result as it is not expected that correlation between assets changes that drastically at each time unit. \\
+Visual inspection of the plots in Figure \ref{fig:rf_pearson21_bootstrap_proxy} and Figure \ref{fig:rf_kendall21_bootstrap_proxy} yields an analysis that is similar to the analysis of the KNN estimator under approximations of correlation instead of actual correlation in Section \ref{sec:MSE_knn_proxy}. It is clear that the uncertainty in the conditional correlation $\rho_t$, which is illustrated by the 99\% confidence interval, is smaller for RF estimates compared to Pearson and Kendall sample correlation estimates using moving windows, even though both the set of covariates and the response variable of the RF estimator are now based on approximations of correlation instead of actual correlation. These figures also show smaller uncertainty in the conditional correlation, $\rho_t$, when compared with RF estimates with true correlation as the response variable, which are depicted in Figure \ref{fig:decom_mse_rf10_pearson_kendall_true}. Moreover RF estimates of correlation with true correlation as response variable in Figure \ref{fig:rf_pearson21_bootstrap_true} and Figure \ref{fig:rf_kendall21_bootstrap_true} are much more volatile. RF estimates with approximated correlation as response variable in Figure \ref{fig:rf_pearson21_bootstrap_proxy} and Figure \ref{fig:rf_kendall21_bootstrap_proxy} , however, follow the increases and decreases of the actual correlation smoother, with tighter confidence intervals. This is a more desirable result as it is not expected that correlation between assets changes that drastically at each time unit. \\
 
 \noindent
-The MSE decomposition into bias and variance terms from RF estimates of correlation are shown in Fig. \ref{fig:rf_pearson21_bootstrap_proxy} and Fig. \ref{fig:decom_mse_rf10_pearson_proxy}. These figures indicate that the RF estimator with approximated response variable is more sensitive to the choice of the window length for smaller window sizes compared to RF estimator with true correlation depicted in Fig. \ref{fig:decom_mse_rf10_pearson_kendall_true}. This observation is similar to the observation when comparing the KNN estimators with different specifications of the response variable and can be explained by the propagation of approximation error in the response variable. Fig. \ref{fig:decom_mse_rf10_pearson_proxy} and Fig. \ref{fig:decom_mse_rf10_kendall_proxy} show, however, that the RF estimator with approximated response variable is considerably less sensitive to the choice of the window length for smaller window sizes when compared to Pearson and Kendall sample correlation estimates using moving windows depicted in Fig. \ref{fig:decom_mse_pearson} and Fig \ref{fig:decom_mse_kendall}, respectively. Thus, analogous to the KNN estimator with approximated covariates and response variable, the RF estimator seems to mitigate the error propagation to some extend for smaller window sizes. Finally, a lower bias compared to Pearson and Kendall sample correlation estimates using moving windows implies a random forest may be a more suitable estimator for modeling conditional correlation. Additionally, lower variance is observed when compared with Pearson and Kendall sample correlation estimates using moving windows. This can be accredited to the the bootstrap aggregating procedure underlying the RF algorithm as explained in Section \ref{sec:bagging}.        
+The MSE decomposition into bias and variance terms from RF estimates of correlation are shown in Figure \ref{fig:rf_pearson21_bootstrap_proxy} and Figure \ref{fig:decom_mse_rf10_pearson_proxy}. These figures indicate that the RF estimator with approximated response variable is more sensitive to the choice of the window length for smaller window sizes compared to RF estimator with true correlation depicted in Figure \ref{fig:decom_mse_rf10_pearson_kendall_true}. This observation is similar to the observation when comparing the KNN estimators with different specifications of the response variable and can be explained by the propagation of approximation error in the response variable. Figure \ref{fig:decom_mse_rf10_pearson_proxy} and Figure \ref{fig:decom_mse_rf10_kendall_proxy} show, however, that the RF estimator with approximated response variable is considerably less sensitive to the choice of the window length for smaller window sizes when compared to Pearson and Kendall sample correlation estimates using moving windows depicted in Figure \ref{fig:decom_mse_pearson} and Fig \ref{fig:decom_mse_kendall}, respectively. Thus, analogous to the KNN estimator with approximated covariates and response variable, the RF estimator seems to mitigate the error propagation to some extend for smaller window sizes. Finally, a lower bias compared to Pearson and Kendall sample correlation estimates using moving windows implies a random forest may be a more suitable estimator for modeling conditional correlation. Additionally, lower variance is observed when compared with Pearson and Kendall sample correlation estimates using moving windows. This can be accredited to the the bootstrap aggregating procedure underlying the RF algorithm as explained in Section \ref{sec:bagging}.        
 
 
 
@@ -1544,28 +1544,28 @@ The MSE decomposition into bias and variance terms from RF estimates of correlat
 	\centering
 	\begin{subfigure}[b]{0.49 \textwidth} % sum of widths should be less than text width if all one the same line
 		\centering 
-		\includegraphics[width=\textwidth]{rf_pearson_21_estimates_bootstrap_proxy.png} 
+		\includegraphics[width=\textwidth, height=0.5\textwidth]{rf_pearson_21_estimates_bootstrap_proxy.png} 
 		\caption{RF estimates with window size 21, Pearson as covariate and proxy correlation.} 	
 		\label{fig:rf_pearson21_bootstrap_proxy}
 	\end{subfigure} 
 	\hfill	
 	\begin{subfigure}[b]{0.49 \textwidth} 
 		\centering 
-		\includegraphics[width=\textwidth]{rf_kendall_21_estimates_bootstrap_proxy.png} 
+		\includegraphics[width=\textwidth, height=0.5\textwidth]{rf_kendall_21_estimates_bootstrap_proxy.png} 
 		\caption{RF estimates with window size 21, Kendall as covariate and proxy correlation.} 
 		\label{fig:rf_kendall21_bootstrap_proxy}
 	\end{subfigure} 
 	\hfill	
 	\begin{subfigure}[b]{0.49 \textwidth}
 		\centering 		
-		\includegraphics[width=\textwidth]{decom_mse_rf10_pearson_proxy.png} 
+		\includegraphics[width=\textwidth, height=0.5\textwidth]{decom_mse_rf10_pearson_proxy.png} 
 		\caption{Bias-variance decomposition for RF estimates with Pearson as covariate and proxy correlation.} 
 		\label{fig:decom_mse_rf10_pearson_proxy}
 	\end{subfigure}
 	\hfill  
 	\begin{subfigure}[b]{0.49 \textwidth}
 		\centering 
-		\includegraphics[width=\textwidth]{decom_mse_rf10_kendall_proxy.png} 
+		\includegraphics[width=\textwidth, height=0.5\textwidth]{decom_mse_rf10_kendall_proxy.png} 
 		\caption{Bias-variance decomposition for RF estimates with Kendall as covariate and proxy correlation.} 
 		\label{fig:decom_mse_rf10_kendall_proxy}
 	\end{subfigure}
@@ -1633,14 +1633,14 @@ With respect to our discussion on the effect of random covariate selection in in
 \end{table}
 
 \noindent
-This section is concluded with a comparison of the function approximation capabilities of the RF estimator and Pearson and Kendall sample correlation estimates using moving windows. The comparison is based on MSE between estimated and actual correlations. Fig. \ref{fig:mse_rf10_pearson_kendall_comp_proxy.png} shows MSE from RF under a default parameterization where the number of estimators equals 10, as well as Pearson and Kendall sample correlation estimates using moving windows. According to MSE, default parameterizations of the RF estimator yield significantly smaller MSE compared to Pearson and Kendall sample correlation estimates using moving windows for smaller window sizes. Finally, the variance of MSE from RF estimates under default parameterization and Pearson and Kendall approximations of true correlation in Fig. \ref{fig:mse_rf10_pearson_kendall_comp_proxy.png} are 4.54-4 and 3.23e-4, respectively, while that of Pearson and Kendall moving window estimates are 0.0040 and 0.0037, respectively. \\
+This section is concluded with a comparison of the function approximation capabilities of the RF estimator and Pearson and Kendall sample correlation estimates using moving windows. The comparison is based on MSE between estimated and actual correlations. Figure \ref{fig:mse_rf10_pearson_kendall_comp_proxy.png} shows MSE from RF under a default parameterization where the number of estimators equals 10, as well as Pearson and Kendall sample correlation estimates using moving windows. According to MSE, default parameterizations of the RF estimator yield significantly smaller MSE compared to Pearson and Kendall sample correlation estimates using moving windows for smaller window sizes. Finally, the variance of MSE from RF estimates under default parameterization and Pearson and Kendall approximations of true correlation in Figure \ref{fig:mse_rf10_pearson_kendall_comp_proxy.png} are 4.54-4 and 3.23e-4, respectively, while that of Pearson and Kendall moving window estimates are 0.0040 and 0.0037, respectively. \\
 
 
 \begin{figure}[H]
 	\centering
 	\begin{subfigure}[b]{0.49 \textwidth} 
 		\centering
-		\includegraphics[width=\textwidth]{mse_rf10_pearson_kendall_comp_proxy.png}
+		\includegraphics[width=\textwidth, height=0.5\textwidth]{mse_rf10_pearson_kendall_comp_proxy.png}
 		%\caption{MSE for RF with covariates from Pearson and Kendall and proxy correlation.}
 		%\label{fig:mse_rf10_pearson_kendall_comp_proxy.png}
 	\end{subfigure}
@@ -1825,7 +1825,7 @@ The main assumption underlying Christoffersen's Markov test is that the indicato
 
 
 \section{Data and Descriptive Statistics} \label{sec:data}
-The dataset comprises 30 univariate time series of the log returns included in the 30 Dow Jones Industrial Average index (DJIA). The return series cover data from March 1987 to December 2001 and originate from from Yahoo Finance. During these periods, financial markets experienced tranquil periods with low volatility such as the mid-1990's as well as periods of high volatility, including the collapse of the Dot-com bubble that began in spring 2000 and the collapse of Enron and WorldCom companies in 2001. Fig. \ref{fig:DJIA_returns} shows the daily mean log return series of the DJIA constituents. By visual inspection, the heteroskedastic behavior of the return series becomes apparent, indicating volatility clustering, and is an indication for specifying a model for the conditional variances to capture this behavior.        
+The dataset comprises 30 univariate time series of the log returns included in the 30 Dow Jones Industrial Average index (DJIA). The return series cover data from March 1987 to December 2001 and originate from from Yahoo Finance. During these periods, financial markets experienced tranquil periods with low volatility such as the mid-1990's as well as periods of high volatility, including the collapse of the Dot-com bubble that began in spring 2000 and the collapse of Enron and WorldCom companies in 2001. Figure \ref{fig:DJIA_returns} shows the daily mean log return series of the DJIA constituents. By visual inspection, the heteroskedastic behavior of the return series becomes apparent, indicating volatility clustering, and is an indication for specifying a model for the conditional variances to capture this behavior.        
 
 
 \begin{figure}[H]
@@ -1957,11 +1957,14 @@ Our empirical application proceeds as follows. Using daily log returns of the 30
 \noindent
 One-step-ahead out-of-sample forecasts are obtained for the entire out-of-sample period. Conditional volatility and conditional correlation model parameters are re-estimated with the most recent information available, that is, conditional on the information available at time $t-1$. The result is a set of Value-at-Risk forecasts that corresponds in size to the length of out-of-sample period. \\
 
+\noindent
+To recall, there are two different classes of risk models evaluated: first, a fully parametric benchmark is applied to the returns data, the dynamic conditional correlation (DCC) model of \citep{ref:Engle2002}, which is limited in the sense that it only considers Gaussian marginals. The second class consists of the proposed semiparametric model where conditional correlations are estimated using nonparametric k-nearest neighbor (KNN) and random forest (RF) regressors.   \\
 
 
 \bigskip
 \noindent
 "The confidence level is of importance. Evidently, the higher the confidence level, the larger the Value-at-Risk of the portfolio. By varying the confidence level, one is able to explore a whole risk profile, i.e. the entire distribution of results is revealed." \\
+
 
 
 \noindent
@@ -1982,11 +1985,29 @@ different rf/knn models do not show any significant differences in their VaR est
 \iffalse
 http://lagrange.math.siu.edu/Olive/pphdrpred.pdf : for computing VaR as sample quantiles (high density regions) of multivariate Gaussian distribution.  
 \fi
+Preliminary general conclusion: \\
+\noindent
+In tranquil market conditions, Kendall consistently results in more exceedances but within acceptance regions than its pearson counterpart. Also: GJR consistently results in more exceedances than garch counterparts. This may result in underestimation of risk in a more volatile period. \\
 
-In tranquil market conditions, Kendall consistently results in more exceedances but within acceptance region. This may results in a more volatile period in underestimation of risk. Any explanation? 
+\noindent
+Plots: very little difference between garch and gjr (gjr forecasts tend to be a little bit smoother). Significant difference between pearson and kendall wrt to smoothness var forecasts. Kendall results in less volatilie VaR forecasts (explained by less volatile correlation forecasts due to insensitivity to outliers). \\
+
+
+\begin{itemize}
+	\item Kendall consistently results in more exceedances but within acceptance regions than its 	pearson counterpart.
+	\item GJR consistently results in more exceedances than garch counterparts. 
+\end{itemize}
+
+\noindent
+Table \ref{tab:kupiec_test_norm_tranquil_table} presents an overview of the VaR backtest results under tranquil market conditions for a long position in an equally weighted portfolio comprising the 30 constituents of the DJIA. The backtest results indicate that 
+
+The backtest results indicate that all models except the KNN(5)-Kendall-GJR model are adequate in estimating the 99\% VaR; the models are not rejected by Kupiec and Christoffersen tests at the 5\% level of significance. For the 99\% VaR, the       
+
+
+
+ 
 \begin{landscape}
-%\begin{sidewaystable}[h]  
-\begin{table}
+\begin{table}[h]
 \centering
 \captionsetup[subtable]{position=below}
 \begin{tabular}{l c c c  l l l l l l l l}
@@ -1994,65 +2015,99 @@ In tranquil market conditions, Kendall consistently results in more exceedances 
 \multicolumn{1}{c}{{\underline{Model}}} & \multicolumn{3}{c}{{\underline{VaR Exceedances}}} & \multicolumn{6}{c}{{\underline{Transition Probabilities}}}                                                                     \\
                                 & I(0.95)  & I(0.975)  & I(0.99) &  \multicolumn{2}{c}{I(0.95)} & \multicolumn{2}{c}{I(0.975)} & \multicolumn{2}{c}{I(0.99)} \\ \cmidrule{2-10} 
                                 &          &                   &                  & \multicolumn{1}{c}{{$\pi_{01}$}}       & \multicolumn{1}{c}{{$\pi_{11}$}}       & \multicolumn{1}{c}{{$\pi_{01}$}}        & \multicolumn{1}{c}{{$\pi_{11}$}}       & \multicolumn{1}{c}{{$\pi_{01}$}}       & \multicolumn{1}{c}{{$\pi_{11}$}}       \\  \midrule 
-DCC-Garch					&\textbf{11}	&7	&2              &0.0203              &0.0909              &0.0121               &0.1429              &0.004              &0              \\
+DCC-Garch				&\textbf{11}	&7	&2              &0.0203              &0.0909              &0.0121               &0.1429              &0.004              &0              \\
+DCC-GJR		  			&\textbf{11}	&7	&2         &0.0203      &0.0909       &0.0121       &0.1429         &0.004              &0              \\  \midrule 
 KNN(5)-Pearson-Garch            	&17          &11           &7                        &0.0309              &0.1176              &0.0203               & 0.0909             &0.0121              &0.1429              \\
-KNN(5)-Kendall-Garch            	&25	&15	&10                       &0.046              &0.12              &0.0287               &0.0667              &0.0183              &0.1              \\
-KNN(idw)-Pearson-Garch          	&\textbf{11}	&\textbf{6}		&2                     &0.0203              &0.0909              &0.0121               &0              &0.004              &0              \\
-KNN(idw)-Kendall-Garch          	&\textbf{12}	&10	&6                      &0.0224              &0.0833              &0.0183               &0.1              &0.0121             &0              \\
-RF(10)-Pearson-Garch            		&17		&10		&3                      &0.0309              &0.1176             &0.0183               &0.1              &0.006              &0              \\
-RF(10)-Kendall-Garch            	&18	&12	&8        &0.0803                           &0.0556              &0.0224               &0.0833              &0.0141              &0.125             \\
-RF(100)-Pearson-Garch           	&\textbf{11}	&9	&3                       &0.0203              &0.0909              &0.0162               &0.1111              &0.006              &0              \\
-RF(100)-Kendall-Garch           	&17		&12		&8          	&0.0329          &0.0588           &0.0224         &0.0833              &0.0141              &0.125                      \\  \midrule 
-DCC-GJR				          &          &           &         &                       &              &               &              &              &              \\
 KNN(5)-Pearson-GJR              	&19		&13		&7         	&\textbf{0.0331}	&\textbf{0.1579}	&0.0245           &0.0769              &0.0121              &0.1429              \\
+KNN(5)-Kendall-Garch            	&25	&15	&10                       &0.046              &0.12              &0.0287               &0.0667              &0.0183              &0.1              \\
 KNN(5)-Kendall-GJR              	&27		&17		&\textbf{11}                   &0.0504              &0.1111              &0.0309               &0.1176              &0.0203              &0.0909              \\
+KNN(idw)-Pearson-Garch          &\textbf{11}	&\textbf{6}		&2                     &0.0203              &0.0909              &0.0121               &0              &0.004              &0              \\
 KNN(idw)-Pearson-GJR         	&\textbf{11}	&7	&2                   &0.0203             &0.0909              &0.0121               &0.1429              &0.004              &0              \\
-KNN(idw)-Kendall-GJR          		&\textbf{13}	&11	&2                     &0.0245             &0.0769              &0.0203               &0.0909              &0.0121            &0              \\
+KNN(idw)-Kendall-Garch          	&\textbf{12}	&10	&6                      &0.0224              &0.0833              &0.0183               &0.1              &0.0121             &0              \\
+KNN(idw)-Kendall-GJR          	&\textbf{13}	&11	&2                     &0.0245             &0.0769              &0.0203               &0.0909              &0.0121            &0              \\  \midrule 
+RF(10)-Pearson-Garch            	&17		&10		&3                      &0.0309              &0.1176             &0.0183               &0.1              &0.006              &0              \\
 RF(10)-Pearson-GJR             	&17		&11		&4                    &0.0309             &0.1176              &0.0203               &0.0909              &0.008              &0              \\
+RF(10)-Kendall-Garch            	&18	&12	&8        &0.0803                           &0.0556              &0.0224               &0.0833              &0.0141              &0.125             \\
 RF(10)-Kendall-GJR              	&21		&12		&10	                       &0.0415              &0.0476              &0.0224               &0.0833              &0.0183              &0.1              \\
+RF(100)-Pearson-Garch           	&\textbf{11}	&9	&3                       &0.0203              &0.0909              &0.0162               &0.1111              &0.006              &0              \\
 RF(100)-Pearson-GJR          	&\textbf{13}	&10	&4                          &0.0245              &0.0769              &0.0183               &0.1              &0.008              &0              \\
+RF(100)-Kendall-Garch           	&17		&12		&8          	&0.0329          &0.0588           &0.0224         &0.0833              &0.0141              &0.125                      \\ 
 RF(100)-Kendall-GJR             	&20		&12		&10                       &0.0393              &0.05              &0.0224       &0.0833              &0.0183         &0.1             \\  [1ex]            
 \bottomrule  
 \end{tabular}
-\caption[Backtesting results under tranquil market conditions.]{This table presents the results of unconditional coverage (Kupiec test) and independence (Christoffersen markov test) at higher quantiles of the loss distribution under tranquil market conditions. Bold face indicates rejection. Non-rejection regions for the Kupiec test: 37$<$I(0.90)$<$65, 15$<$I(0.95)$<$36, 6$<$I(0.975)$<$21 and 0$<$I(0.99)$<$11.}
+\caption[Backtesting results under tranquil market conditions.]{This table presents the results of unconditional coverage (Kupiec test) and independence (Christoffersen markov test) at higher quantiles of the loss distribution under tranquil market conditions. Bold face indicates rejection. Non-rejection regions for the Kupiec test: 15$<$I(0.95)$<$36, 6$<$I(0.975)$<$21 and 0$<$I(0.99)$<$11.}
 \label{tab:kupiec_test_norm_tranquil_table}
-%\end{sidewaystable}
 \end{table}
 \end{landscape}
 
 
+%%%% VaR figures Tranquil Market Conditions %%%%%
+\begin{figure}[H]  % [h] parameter makes sure figures are located at 'this' location.
+	\centering
+	\begin{subfigure}[b]{0.49 \textwidth} %7
+		\centering 		
+		\includegraphics[width=\textwidth, height=0.5\textwidth]{multivar_analysis/tranquil/DCC_garch_mvnorm_1994_1995.pdf} 
+		\caption{DCC-Garch} 
+		\label{}
+	\end{subfigure}
+	\hfill  
+	\begin{subfigure}[b]{0.49 \textwidth} %8
+		\centering 
+		\includegraphics[width=\textwidth, height=0.5\textwidth]{multivar_analysis/tranquil/DCC_gjr_mvnorm_1994_1995.pdf} 
+		\caption{DCC-GJR} 
+		\label{}
+	\end{subfigure}
+	\begin{subfigure}[b]{0.49 \textwidth} %1
+		\centering 
+		\includegraphics[width=\textwidth, height=0.5\textwidth]{multivar_analysis/tranquil/KNN5_pearson_garch_1994_1995.pdf} 
+		\caption{KNN(5)-Pearson-Garch} 	
+		\label{}
+	\end{subfigure} 
+	\hfill	
+	\begin{subfigure}[b]{0.49 \textwidth}  %2
+		\centering 
+		\includegraphics[width=\textwidth, height=0.5\textwidth]{multivar_analysis/tranquil/KNN5_kendall_garch_1994_1995.pdf} 
+		\caption{KNN(5)-Kendall-Garch} 
+		\label{}
+	\end{subfigure} 
+	\hfill	
+	\begin{subfigure}[b]{0.49 \textwidth} %3
+		\centering 		
+		\includegraphics[width=\textwidth, height=0.5\textwidth]{multivar_analysis/tranquil/KNN100_pearson_garch_1994_1995.pdf} 
+		\caption{KNN(100)-Pearson-Garch} 
+		\label{}
+	\end{subfigure}
+	\hfill  
+	\begin{subfigure}[b]{0.49 \textwidth} %4
+		\centering 
+		\includegraphics[width=\textwidth, height=0.5\textwidth]{multivar_analysis/tranquil/KNN100_kendall_garch_1994_1995.pdf} 
+		\caption{KNN(100)-Kendall-Garch} 
+		\label{}
+	\end{subfigure}
+	\hfill
+	\begin{subfigure}[b]{0.49 \textwidth} %5
+		\centering 		
+		\includegraphics[width=\textwidth, height=0.5\textwidth]{multivar_analysis/tranquil/KNN_idw_pearson_garch_1994_1995.pdf} 
+		\caption{KNN(idw)-Pearson-Garch} 
+		\label{}
+	\end{subfigure}
+	\hfill  
+	\begin{subfigure}[b]{0.49 \textwidth} %6
+		\centering 
+		\includegraphics[width=\textwidth, height=0.5\textwidth]{multivar_analysis/tranquil/KNN_idw_kendall_garch_1994_1995.pdf} 
+		\caption{KNN(idw)-Kendall-Garch} 
+		\label{}
+	\end{subfigure}
+	\hfill	
+	\caption[Out-of-sample returns and Value-at-Risk estimates.]{Out-of-sample returns r$_t$ and Value-at-Risk estimates VaR$_{t,\alpha}$ for $\alpha \in \{0.95, 0.975, 0.99\}$ under tranquil market conditions.}
+	\label{fig:var_forecasts_tranquil}
+\end{figure}
+
+\clearpage
+
+
+
 \iffalse
-\begin{table}[H]
-\centering
-\captionsetup[subtable]{position=below}
-%\captionsetup[table]{position=below}
-\begin{tabular}{l  c  c  c c} 
-\toprule
-\multicolumn{1}{ c }{\textbf{Model}} &
-\multicolumn{1}{ r }{\textbf{I(0.90)}} &
-\multicolumn{1}{ r }{\textbf{I(0.95)}} &
-\multicolumn{1}{ r }{\textbf{I(0.975)}} &
-\multicolumn{1}{ r }{\textbf{I(0.99)}}   \\
-\midrule 
-
-
-%%% Multivariate Gaussian Assumption  %%%%%
-DCC\_mvnorm		&			\\
-KNN(5)\_pearson	&			\\
-KNN(5)\_kendall	&	 					\\
-KNN(idw)\_pearson	&	\\
-KNN(idw)\_kendall    &			\\
-RF(10)\_pearson	&				  \\ 
-RF(10)\_kendall	&						  \\ 
-RF(100)\_pearson	&					  \\
-RF(100)\_kendall	&							\\ [1ex]
-\bottomrule
-\end{tabular}
-\caption[Kupiec test at higher quantiles under Gaussian distributed marginal errors and tranquil market conditions.]{Kupiec test at higher quantiles under under Gaussian distributed marginal errors and tranquil market conditions. Bold face indicates rejection. Non-rejection regions: 37$<$I(0.90)$<$65, 15$<$I(0.95)$<$36, 6$<$I(0.975)$<$21 and 0$<$I(0.99)$<$11.}
-\label{tab:kupiec_test_norm_tranquil_table}
-\end{table}
-
-
 \begin{table}[H]
 \centering
 \captionsetup[subtable]{position=below}
@@ -2093,9 +2148,9 @@ RF(100)\_kendall	&							\\ [1ex]
 
 
 \subsection{Volatile Market Conditions: 2000-2001 Dot-com Bubble}
+
 \begin{landscape}
-%\begin{sidewaystable}[h]
-\begin{table}
+\begin{table}[h]
 \centering
 \captionsetup[subtable]{position=below}
 \begin{tabular}{l c c c  l l l l l l l l}
@@ -2104,28 +2159,28 @@ RF(100)\_kendall	&							\\ [1ex]
                                 & I(0.95)  & I(0.975)  & I(0.99) & \multicolumn{2}{c}{I(0.95)} & \multicolumn{2}{c}{I(0.975)} & \multicolumn{2}{c}{I(0.99)} \\ \cmidrule{2-10} 
                                 &             &           &                 & \multicolumn{1}{c}{{$\pi_{01}$}}       & \multicolumn{1}{c}{{$\pi_{11}$}}       & \multicolumn{1}{c}{{$\pi_{01}$}}        & \multicolumn{1}{c}{{$\pi_{11}$}}       & \multicolumn{1}{c}{{$\pi_{01}$}}       & \multicolumn{1}{c}{{$\pi_{11}$}}       \\  \midrule  
 DCC-GARCH					&28		&16		&9        	&0.0531              &0.1071              &0.0311               &0.0625              &0.0184              &0              \\
+DCC-GJR					        &          &           &         &                   &              &               &              &              &              \\ \midrule
 KNN(5)-Pearson-Garch            	&34	&\textbf{23}	&\textbf{16}                &\textbf{0.0581}        &\textbf{0.1765}           &0.0420           &0.0870          &0.0290          &0.0625              \\
-KNN(5)-Kendall-Garch           		&\textbf{53}	&\textbf{32}    &\textbf{20}	      &0.0984     &0.1538     &\textbf{0.0535}    &\textbf{0.1875}  	&0.0355      &0.1              \\
-KNN(idw)-Pearson-Garch        	&26		&15		&9           &0.0507     &0.0769           &0.0289              &0.0667              &0.0184              &0              \\
-KNN(idw)-Kendall-Garch          	&\textbf{42}	&\textbf{25}	&\textbf{15}           &0.0788              &0.119              &0.0485               &0.08          &0.0289           &0.0667              \\
-RF(10)-Pearson-Garch              &\textbf{37}	&18	&\textbf{10}                      &0.0693              &0.1081               &0.0312              &0.1111              &0.0204	&0              \\
-RF(10)-Kendall-Garch            	&\textbf{50}	&\textbf{33}	&\textbf{20}                &0.0956              &0.1224              &0.0601               &0.1212              &0.0355              &0.1              \\
-RF(100)-Pearson-Garch            &33	   &\textbf{21}	&\textbf{10}         &0.0601         &0.1212              &0.0356               &0.1429              &0.0204              &0              \\
-RF(100)-Kendall-Garch           	&\textbf{53}	&\textbf{32}	&\textbf{18}    	&0.1007	&0.1346	&0.0578	&0.1250	&0.0312	&0.1111              \\ \midrule
-DCC-GJR					        &          &           &         &                   &              &               &              &              &              \\
 KNN(5)-Pearson-GJR              	&34	&\textbf{24}	&\textbf{15}      &\textbf{0.0581}	&\textbf{0.0581}     &0.0442        &0.0833              &0.0269              &0.0667              \\
 KNN(5)-Kendall-GJR              	&\textbf{51}	&\textbf{32}	&\textbf{20}          &0.0958      &0.14    &\textbf{0.0535}	&\textbf{0.1875}         &0.0376              &0.05              \\
+KNN(5)-Kendall-Garch           	&\textbf{53}	&\textbf{32}    &\textbf{20}	      &0.0984     &0.1538     &\textbf{0.0535}    &\textbf{0.1875}  	&0.0355      &0.1              \\
+KNN(idw)-Pearson-Garch        	&26		&15		&9           &0.0507     &0.0769           &0.0289              &0.0667              &0.0184              &0              \\
 KNN(idw)-Pearson-GJR          	&27	&15	&9                 &0.053              &0.0741              &0.0289               &0.0667              &0.0184              &0              \\
-KNN(idw)-Kendall-GJR            		&\textbf{41}	&\textbf{23}	&\textbf{15}              &0.0764              &0.122              &0.0441               &0.087              &0.0289              &0.0667              \\
+KNN(idw)-Kendall-Garch          	&\textbf{42}	&\textbf{25}	&\textbf{15}           &0.0788              &0.119              &0.0485               &0.08          &0.0289           &0.0667              \\
+KNN(idw)-Kendall-GJR            	&\textbf{41}	&\textbf{23}	&\textbf{15}              &0.0764              &0.122              &0.0441               &0.087              &0.0289              &0.0667              \\ \midrule
+RF(10)-Pearson-Garch              &\textbf{37}	&18	&\textbf{10}                      &0.0693              &0.1081               &0.0312              &0.1111              &0.0204	&0              \\
 RF(10)-Pearson-GJR              	&\textbf{36}	&18	&\textbf{11}                &0.067              &0.1111          &0.0312               &0.1111      &0.0225           &0              \\
+RF(10)-Kendall-Garch            	&\textbf{50}	&\textbf{33}	&\textbf{20}                &0.0956              &0.1224              &0.0601               &0.1212              &0.0355              &0.1              \\
 RF(10)-Kendall-GJR              	&\textbf{49}	&\textbf{32}	&\textbf{19}            &0.0931              &0.125              &0.0578               &0.125         &0.0375              &0.0526              \\
+RF(100)-Pearson-Garch            &33	   &\textbf{21}	&\textbf{10}         &0.0601         &0.1212              &0.0356               &0.1429              &0.0204              &              \\
 RF(100)-Pearson-GJR          	&31		&\textbf{21}	&\textbf{10}           &0.0556              &0.129          &0.0356               &0.1429              &0.0204           &0              \\
-RF(100)-Kendall-GJR             	&\textbf{53}	&\textbf{32}	&\textbf{18}         &0.1007        &0.1346              &0.0578               &0.125             &0.0312          &0.1111             \\  [1ex]            
+RF(100)-Kendall-GJR             	&\textbf{53}	&\textbf{32}	&\textbf{18}         &0.1007        &0.1346              &0.0578               &0.125             &0.0312          &0.1111             \\            
+RF(100)-Kendall-Garch           	&\textbf{53}	&\textbf{32}	&\textbf{18}    	&0.1007	&0.1346	&0.0578	&0.1250	&0.0312	&0.1111              \\ [1ex]  
+
 \bottomrule  
 \end{tabular}
-\caption[Backtesting results under volatile market conditions.]{This table presents the results of unconditional coverage (Kupiec test) and independence (Christoffersen markov test) at higher quantiles of the loss distribution under volatile market conditions. Bold face indicates rejection. Non-rejection regions for the Kupiec test: 37$<$I(0.90)$<$65, 15$<$I(0.95)$<$36, 6$<$I(0.975)$<$21 and 0$<$I(0.99)$<$10.}
+\caption[Backtesting results under volatile market conditions.]{This table presents the results of unconditional coverage (Kupiec test) and independence (Christoffersen markov test) at higher quantiles of the loss distribution under volatile market conditions. Bold face indicates rejection. Non-rejection regions for the Kupiec test: 15$<$I(0.95)$<$36, 6$<$I(0.975)$<$21 and 0$<$I(0.99)$<$10.}
 \label{tab:kupiec_test_norm_tranquil_table}
-%\end{sidewaystable}
 \end{table}
 \end{landscape}
 
