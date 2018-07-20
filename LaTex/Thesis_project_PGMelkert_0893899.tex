@@ -302,14 +302,12 @@ consistent nonparametric models." \\
 \fi
 
 
-
-
 \section{Problem Statement}
 The following properties of correlation make the modeling and forecasting of (systems of) correlation(s) inherently complex:
 
 \begin{enumerate}
 	\item Correlation is not directly observable.
-	\item Correlation between financial variables is time-varying, that is, conditional on information available at time $t$.
+	\item Correlation between financial variables is time-varying, that is, conditional on the information available at time $t-1$.
 	\item Curse of dimensionality: the number of pairwise correlation grows $O(k^2)$ in the number of assets $k$. 
 	\item Conditional correlation matrix requires to satisfy positive definiteness.
 	\item Any imposition of arbitrary assumptions on the distribution and functional form of the conditional correlation matrix is highly questionable.  
@@ -1938,7 +1936,7 @@ In summary, we can conclude that the GJR-GARCH(1,1) model with a skewed Student'
 
 
 \section{Empirical Results} \label{sec:results}
-Model adequacy is verified under tranquil market conditions (mid-1990's) and volatile market conditions (the Dot-com bubble) by considering the following backtest periods; (1) an out-of-sample period from January 1994 to December 1995 for 504 observations corresponding to tranquil market conditions with an initial in-sample period from March 1987 tot December 1993 for 1720 observations; (2) an out-of-sample period from January 2000 to December 2001 for 500 observations corresponding to volatile market conditions with an initial in-sample period from March 1987 tot December 1999 for 3235 observations. \\
+Model adequacy is verified in tranquil market conditions (mid-1990's) and volatile market conditions (the Dot-com bubble) by considering the following backtest periods; (1) an out-of-sample period from January 1994 to December 1995 for 504 observations corresponding to tranquil market conditions with an initial in-sample period from March 1987 tot December 1993 for 1720 observations; (2) an out-of-sample period from January 2000 to December 2001 for 500 observations corresponding to volatile market conditions with an initial in-sample period from March 1987 tot December 1999 for 3235 observations. \\
 
 \noindent  
 Our empirical application proceeds as follows. Using daily log returns of the 30 constituents included in the Dow Jones Industrial Average index for the in-sample estimation period, we 
@@ -1958,7 +1956,7 @@ Our empirical application proceeds as follows. Using daily log returns of the 30
 One-step-ahead out-of-sample forecasts are obtained for the entire out-of-sample period. Conditional volatility and conditional correlation model parameters are re-estimated with the most recent information available, that is, conditional on the information available at time $t-1$. The result is a set of Value-at-Risk forecasts that corresponds in size to the length of out-of-sample period. \\
 
 \noindent
-To recall, there are two different classes of risk models evaluated: first, a fully parametric benchmark is applied to the returns data, the dynamic conditional correlation (DCC) model of \citep{ref:Engle2002}, which is limited in the sense that it only considers Gaussian marginals. The second class consists of the proposed semiparametric model where conditional correlations are estimated using nonparametric k-nearest neighbor (KNN) and random forest (RF) regressors.   \\
+To recall, there are two different classes of risk models evaluated: first, a fully parametric benchmark is applied to the returns data, the dynamic conditional correlation (DCC) model of \citep{ref:Engle2002}, which is restrictive in that it only considers Gaussian marginals and imposes a functional form on the conditional correlation matrix . The second class consists of the proposed semiparametric model where conditional correlations are estimated using nonparametric k-nearest neighbor (KNN) and random forest (RF) regressors.   \\
 
 
 \bigskip
@@ -1970,11 +1968,6 @@ To recall, there are two different classes of risk models evaluated: first, a fu
 \noindent
 \textbf{When commenting on the test results, do this from a perspective of rejecting the corresponding null hypothesis and whether the models underestimate risk or are overly conservative. And the practical implications from a regulatory perspective and a hedge fun/ bank perspective: a high-level capital reserve or low-level capital reserve. When commenting on figures with VaR functions talk about underestimation/ overestimation of sudden change in volatilities. Comment structure: First comment on test statistics depicted in tables (Coverage and Independence), then comment on figures containing, returns and VaR estimates of different models under the same VaR level.} \\
 
-\iffalse
-\noindent
-Comment structure: First comment on test statistics depicted in tables (Coverage and Independence), then comment on figures containing, returns and VaR estimates of different models under the same VaR level. " The
-different rf/knn models do not show any significant differences in their VaR estimates, so we only show the ex. random forest or pearson model.  A significant difference can be detected between the random forest and DCC model." \iffalse edoc.ub.uni-muenchen.de/17921/1/Grziska_Martin.pdf page 74 \fi  \\
-\fi
 
 \iffalse
 \noindent
@@ -1985,26 +1978,22 @@ different rf/knn models do not show any significant differences in their VaR est
 \iffalse
 http://lagrange.math.siu.edu/Olive/pphdrpred.pdf : for computing VaR as sample quantiles (high density regions) of multivariate Gaussian distribution.  
 \fi
-Preliminary general conclusion: \\
-\noindent
-In tranquil market conditions, Kendall consistently results in more exceedances but within acceptance regions than its pearson counterpart. Also: GJR consistently results in more exceedances than garch counterparts. This may result in underestimation of risk in a more volatile period. \\
+
+Table \ref{tab:var_backtest_tranquil_table} presents an overview of the VaR backtest results in tranquil market conditions for a long position in an equally weighted portfolio comprising the 30 constituents of the DJIA. The backtest results exhibit some general patterns that hold for all three VaR confidence levels considered; (1) semiparametric models show less conservative behavior compared with the DCC model; (2) semiparametric models with Kendall approximations of actual correlation exhibit a higher number of VaR exceedances than their Pearson counterpart; (3) semiparametric models with GJR specification with skewed student t distributed errors for the conditional volatility exhibit a higher number of VaR exceedances than their GARCH counterpart; (4) the likelihood of a VaR exceedance does not depend greatly on whether a VaR exceedance occurred on the previous day. \\
+  
+\noindent  
+The backtest results indicate that all models except the KNN(5)-Kendall-GJR model are adequate at estimating the 99\% VaR; the null hypothesis of the unconditional coverage and independence tests are not rejected at the 5\% significance level. For the 99\% VaR, the DCC and KNN(idw)-Pearson exhibit 2 exceedances whereas the other semiparametric models exhibit 3 to 10 exceedances (against an expectation of 5.4 exceedances). The KNN(idw)-Kendall model appears to be the most adequate risk model for the 99\% VaR with 6 exceedances, closely followed by the RF(10)-Pearson-GJR and RF(100)-Pearson-GJR risk models with 4 exceedances. 
+
+The backtest results indicate that all models except the KNN(idw)-Pearson-Garch model are adequate at estimating the 97.5\% VaR; the null hypothesis of the unconditional coverage and independence tests are not rejected at the 5\% significance level. For the 97.5\% VaR, the DCC and KNN(idw)-Pearson-Garch exhibit 7 exceedances whereas the other semiparametric models range from 9 (RF(100)-Pearson-Garch) to 17 (KNN(5)-Kendall-GJR) exceedances whereas 12.6 VaR exceedances are expected. The KNN(5)-Pearson-GJR model appears to be the most adequate risk model for the 99\% VaR with 13 exceedances, closely followed by the RF(10)-Kendall and RF(100)-Kendall risk models with 12 exceedances. 
+
+The final VaR considered is the 95\% VaR with 25.2 expected exceedances. The backtest results differ slightly from the 97.5\% and 99\% VaR backtest results. This time, the null hypothesis of the unconditional coverage test is rejected for the DCC, KNN(idw) and RF(100)-Pearson models because they overestimate the true risk considerably with 11 to 13 exceedances. In contrast, KNN(5), RF(10) and RF(100)-Kendall report a number of VaR exceedances between 17 and 27 and the null hypothesis of the unconditional coverage test is not rejected at the 5\% significance level. The KNN(5)-Pearson-GJR model is the only model that rejects the independence test at the 5\% significance level implying VaR exceedances are not independently distributed in this risk model. The KNN(5)-Kendall-Garch model appears to be the most adequate risk model for the 95\% VaR with 25 exceedances, closely followed by the KNN(5)-Kendall-GJR risk model with 27 exceedances.  \\
 
 \noindent
-Plots: very little difference between garch and gjr (gjr forecasts tend to be a little bit smoother). Significant difference between pearson and kendall wrt to smoothness var forecasts. Kendall results in less volatilie VaR forecasts (explained by less volatile correlation forecasts due to insensitivity to outliers). \\
+Figure \ref{fig:var_forecasts_tranquil} depicts the 95\%, 97.5\% and 99\% VaR estimates of the equally weighted portfolio in tranquil market conditions. The figure depicts the differences between VaR estimates obtained from the fully parametric DCC model and our semiparametric model using NN and RF regressors. The different specifications for the conditional variance model, GARCH and GJR, show very little differences in their VaR estimates (GJR estimates tend to be a little bit smoother); thus, only the semiparametric models with GARCH specification for the conditional variance are shown. Our statement that semiparametric models with Kendall approximations of actual correlation exhibit a higher number of VaR exceedances than their Pearson counterpart is supported by figure \ref{fig:var_forecasts_tranquil}; estimated VaR levels under Kendall exhibit slightly less volatile behavior and a positive vertical shift compared with their Pearson counterparts. 
 
+The conservative nature of the DCC and KNN(idw)-Pearson risk models result into very prudent measures of risk in tranquil market conditions. This is supported by the almost constant estimated VaR levels in figures \ref{fig:KNN(idw)-Pearson-Garch}, ref{fig:KNN(idw)-Kendall-Garch}, \ref{fig:DCC-Garch}, and \ref{fig:DCC-GJR}. A significant difference can be observed between these risk model specifications and the KNN(5), RF(10) and RF(100) risk models. From visual inspection, it can be observed that these semiparametric models more actively, although a bit slow, capture sudden changes in volatility compared with the DCC and KNN(idw)-Pearson risk models. Furthermore, figures \ref{fig:KNN(100)-Pearson-Garch} and \ref{fig:KNN(idw)-Pearson-Garch} support our findings from the simulation experiment in Chapter \ref{ch:simulation_study}; an increase in the number of neighbors yields a decrease in the variance of the correlation estimates, which results in smoother estimated VaR levels. Analogously, an increase in the number of decision trees in the random forest results in smoother estimated VaR levels (see figures \ref{fig:RF(10)-Pearson-Garch} and \ref{fig:RF(100)-Pearson-Garch}).    
 
-\begin{itemize}
-	\item Kendall consistently results in more exceedances but within acceptance regions than its 	pearson counterpart.
-	\item GJR consistently results in more exceedances than garch counterparts. 
-\end{itemize}
-
-\noindent
-Table \ref{tab:kupiec_test_norm_tranquil_table} presents an overview of the VaR backtest results under tranquil market conditions for a long position in an equally weighted portfolio comprising the 30 constituents of the DJIA. The backtest results indicate that 
-
-The backtest results indicate that all models except the KNN(5)-Kendall-GJR model are adequate in estimating the 99\% VaR; the models are not rejected by Kupiec and Christoffersen tests at the 5\% level of significance. For the 99\% VaR, the       
-
-
-
+   
  
 \begin{landscape}
 \begin{table}[h]
@@ -2024,7 +2013,7 @@ KNN(5)-Kendall-GJR              	&27		&17		&\textbf{11}                   &0.050
 KNN(idw)-Pearson-Garch          &\textbf{11}	&\textbf{6}		&2                     &0.0203              &0.0909              &0.0121               &0              &0.004              &0              \\
 KNN(idw)-Pearson-GJR         	&\textbf{11}	&7	&2                   &0.0203             &0.0909              &0.0121               &0.1429              &0.004              &0              \\
 KNN(idw)-Kendall-Garch          	&\textbf{12}	&10	&6                      &0.0224              &0.0833              &0.0183               &0.1              &0.0121             &0              \\
-KNN(idw)-Kendall-GJR          	&\textbf{13}	&11	&2                     &0.0245             &0.0769              &0.0203               &0.0909              &0.0121            &0              \\  \midrule 
+KNN(idw)-Kendall-GJR          	&\textbf{13}	&11	&6                     &0.0245             &0.0769              &0.0203               &0.0909              &0.0121            &0              \\  \midrule 
 RF(10)-Pearson-Garch            	&17		&10		&3                      &0.0309              &0.1176             &0.0183               &0.1              &0.006              &0              \\
 RF(10)-Pearson-GJR             	&17		&11		&4                    &0.0309             &0.1176              &0.0203               &0.0909              &0.008              &0              \\
 RF(10)-Kendall-Garch            	&18	&12	&8        &0.0803                           &0.0556              &0.0224               &0.0833              &0.0141              &0.125             \\
@@ -2035,119 +2024,125 @@ RF(100)-Kendall-Garch           	&17		&12		&8          	&0.0329          &0.0588
 RF(100)-Kendall-GJR             	&20		&12		&10                       &0.0393              &0.05              &0.0224       &0.0833              &0.0183         &0.1             \\  [1ex]            
 \bottomrule  
 \end{tabular}
-\caption[Backtesting results under tranquil market conditions.]{This table presents the results of unconditional coverage (Kupiec test) and independence (Christoffersen markov test) at higher quantiles of the loss distribution under tranquil market conditions. Bold face indicates rejection. Non-rejection regions for the Kupiec test: 15$<$I(0.95)$<$36, 6$<$I(0.975)$<$21 and 0$<$I(0.99)$<$11.}
-\label{tab:kupiec_test_norm_tranquil_table}
+\caption[Backtesting results in tranquil market conditions.]{This table presents test results of unconditional coverage (VaR Exceedances) and independence (Transition Probabilities) at higher quantiles of the loss distribution in tranquil market conditions. Bold face indicates rejection. Non-rejection regions for the unconditional coverage test: 15$<$I(0.95)$<$36, 6$<$I(0.975)$<$21 and 0$<$I(0.99)$<$11.}
+\label{tab:var_backtest_tranquil_table}
 \end{table}
 \end{landscape}
 
 
-%%%% VaR figures Tranquil Market Conditions %%%%%
-\begin{figure}[H]  % [h] parameter makes sure figures are located at 'this' location.
+%%%% VaR figures Tranquil Market Conditions  %%%%%
+\begin{landscape}
+\begin{figure} % [h] parameter makes sure figures are located at 'this' location.
 	\centering
-	\begin{subfigure}[b]{0.49 \textwidth} %7
-		\centering 		
-		\includegraphics[width=\textwidth, height=0.5\textwidth]{multivar_analysis/tranquil/DCC_garch_mvnorm_1994_1995.pdf} 
-		\caption{DCC-Garch} 
-		\label{}
-	\end{subfigure}
-	\hfill  
-	\begin{subfigure}[b]{0.49 \textwidth} %8
+	\begin{subfigure}[b]{0.33 \textwidth} %1
 		\centering 
-		\includegraphics[width=\textwidth, height=0.5\textwidth]{multivar_analysis/tranquil/DCC_gjr_mvnorm_1994_1995.pdf} 
-		\caption{DCC-GJR} 
-		\label{}
-	\end{subfigure}
-	\begin{subfigure}[b]{0.49 \textwidth} %1
-		\centering 
-		\includegraphics[width=\textwidth, height=0.5\textwidth]{multivar_analysis/tranquil/KNN5_pearson_garch_1994_1995.pdf} 
+		\includegraphics[width=1.4\textwidth, height=0.7\textwidth]{multivar_analysis/tranquil/KNN5_pearson_garch_1994_1995.pdf} 
 		\caption{KNN(5)-Pearson-Garch} 	
-		\label{}
+		\label{fig:KNN(5)-Pearson-Garch}
 	\end{subfigure} 
 	\hfill	
-	\begin{subfigure}[b]{0.49 \textwidth}  %2
-		\centering 
-		\includegraphics[width=\textwidth, height=0.5\textwidth]{multivar_analysis/tranquil/KNN5_kendall_garch_1994_1995.pdf} 
-		\caption{KNN(5)-Kendall-Garch} 
-		\label{}
-	\end{subfigure} 
-	\hfill	
-	\begin{subfigure}[b]{0.49 \textwidth} %3
+	\begin{subfigure}[b]{0.33 \textwidth} %3
 		\centering 		
-		\includegraphics[width=\textwidth, height=0.5\textwidth]{multivar_analysis/tranquil/KNN100_pearson_garch_1994_1995.pdf} 
+		\includegraphics[width=1.4\textwidth, height=0.7\textwidth]{multivar_analysis/tranquil/KNN100_pearson_garch_1994_1995.pdf} 
 		\caption{KNN(100)-Pearson-Garch} 
-		\label{}
+		\label{fig:KNN(100)-Pearson-Garch}
 	\end{subfigure}
-	\hfill  
-	\begin{subfigure}[b]{0.49 \textwidth} %4
+	\hfill 
+	\begin{subfigure}[b]{0.33 \textwidth} %5
+		\centering 		
+		\includegraphics[width=1.4\textwidth, height=0.7\textwidth]{multivar_analysis/tranquil/KNN_idw_pearson_garch_1994_1995.pdf} 
+		\caption{KNN(idw)-Pearson-Garch} 
+		\label{fig:KNN(idw)-Pearson-Garch}
+	\end{subfigure}
+	\hfill   
+	\begin{subfigure}[b]{0.33 \textwidth}  %2
 		\centering 
-		\includegraphics[width=\textwidth, height=0.5\textwidth]{multivar_analysis/tranquil/KNN100_kendall_garch_1994_1995.pdf} 
+		\includegraphics[width=1.4\textwidth, height=0.7\textwidth]{multivar_analysis/tranquil/KNN5_kendall_garch_1994_1995.pdf} 
+		\caption{KNN(5)-Kendall-Garch} 
+		\label{fig:KNN(5)-Kendall-Garch}
+	\end{subfigure} 
+	\hfill	
+	\begin{subfigure}[b]{0.33 \textwidth} %4
+		\centering 
+		\includegraphics[width=1.4\textwidth, height=0.7\textwidth]{multivar_analysis/tranquil/KNN100_kendall_garch_1994_1995.pdf} 
 		\caption{KNN(100)-Kendall-Garch} 
-		\label{}
+		\label{fig:KNN(100)-Kendall-Garch}
 	\end{subfigure}
 	\hfill
-	\begin{subfigure}[b]{0.49 \textwidth} %5
+	\begin{subfigure}[b]{0.33 \textwidth} %6
+		\centering 
+		\includegraphics[width=1.4\textwidth, height=0.7\textwidth]{multivar_analysis/tranquil/KNN_idw_kendall_garch_1994_1995.pdf} 
+		\caption{KNN(idw)-Kendall-Garch} 
+		\label{fig:KNN(idw)-Kendall-Garch}
+	\end{subfigure}
+	\hfill
+	\begin{subfigure}[b]{0.33 \textwidth} %7
+		\centering 
+		\includegraphics[width=1.4\textwidth, height=0.7\textwidth]{multivar_analysis/tranquil/RF10_pearson_garch_1994_1995.pdf} 
+		\caption{RF(10)-Pearson-Garch} 	
+		\label{fig:RF(10)-Pearson-Garch}
+	\end{subfigure} 
+	\hfill
+	\begin{subfigure}[b]{0.33 \textwidth}  %8
+		\centering 
+		\includegraphics[width=1.4\textwidth, height=0.7\textwidth]{multivar_analysis/tranquil/RF10_kendall_garch_1994_1995.pdf} 
+		\caption{RF(10)-Kendall-Garch} 
+		\label{fig:RF(10)-Kendall-Garch}
+	\end{subfigure} 
+	\hfill
+	\begin{subfigure}[b]{0.33 \textwidth} %11
 		\centering 		
-		\includegraphics[width=\textwidth, height=0.5\textwidth]{multivar_analysis/tranquil/KNN_idw_pearson_garch_1994_1995.pdf} 
-		\caption{KNN(idw)-Pearson-Garch} 
-		\label{}
+		\includegraphics[width=1.4\textwidth, height=0.7\textwidth]{multivar_analysis/tranquil/DCC_garch_mvnorm_1994_1995.pdf} 
+		\caption{DCC-Garch} 
+		\label{fig:DCC-Garch}
+	\end{subfigure}	
+	\begin{subfigure}[b]{0.33 \textwidth} %9
+		\centering 		
+		\includegraphics[width=1.4\textwidth, height=0.7\textwidth]{multivar_analysis/tranquil/RF100_pearson_garch_1994_1995.pdf} 
+		\caption{RF(100)-Pearson-Garch} 
+		\label{fig:RF(100)-Pearson-Garch}
 	\end{subfigure}
 	\hfill  
-	\begin{subfigure}[b]{0.49 \textwidth} %6
+	\begin{subfigure}[b]{0.33 \textwidth} %10
 		\centering 
-		\includegraphics[width=\textwidth, height=0.5\textwidth]{multivar_analysis/tranquil/KNN_idw_kendall_garch_1994_1995.pdf} 
-		\caption{KNN(idw)-Kendall-Garch} 
-		\label{}
+		\includegraphics[width=1.4\textwidth, height=0.7\textwidth]{multivar_analysis/tranquil/RF100_kendall_garch_1994_1995.pdf} 
+		\caption{RF(100)-Kendall-Garch} 
+		\label{fig:RF(100)-Kendall-Garch}
 	\end{subfigure}
-	\hfill	
-	\caption[Out-of-sample returns and Value-at-Risk estimates.]{Out-of-sample returns r$_t$ and Value-at-Risk estimates VaR$_{t,\alpha}$ for $\alpha \in \{0.95, 0.975, 0.99\}$ under tranquil market conditions.}
+	\hfill
+	\begin{subfigure}[b]{0.33 \textwidth} %11
+		\centering 		
+		\includegraphics[width=1.4\textwidth, height=0.7\textwidth]{multivar_analysis/tranquil/DCC_gjr_mvnorm_1994_1995.pdf} 
+		\caption{DCC-GJR} 
+		\label{fig:DCC-GJR}
+	\end{subfigure}	
+	\caption[Out-of-sample returns and Value-at-Risk estimates in tranquil market conditions.]{Out-of-sample returns r$_t$ and Value-at-Risk estimates VaR$_{t,\alpha}$ for $\alpha \in \{0.95, 0.975, 0.99\}$ in tranquil market conditions.}
 	\label{fig:var_forecasts_tranquil}
 \end{figure}
-
+\end{landscape}
 \clearpage
 
 
 
-\iffalse
-\begin{table}[H]
-\centering
-\captionsetup[subtable]{position=below}
-\begin{tabular}{lllllllll}
-\toprule
-\multicolumn{1}{c}{\textbf{Model}} & 
-\multicolumn{1}{c}{\boldmath$\pi_{ij}$} & 
-\multicolumn{1}{l}{{\textbf{0.90}}} &  
-\multicolumn{1}{l}{{\textbf{0.95}}} & 
-\multicolumn{1}{l}{{\textbf{0.975}}} & 
-\multicolumn{1}{l}{{\textbf{0.99}}} \\ 
-\midrule 
-\multirow{2}{*}{DCC\_mvnorm}         & \boldmath$\pi_{01}$   &	    \\
-                                   		      & \boldmath$\pi_{11}$   & 	     \\ \midrule 
-\multirow{2}{*}{KNN(5)\_pearson}   & \boldmath$\pi_{01}$   &	   \\
-                                   		      & \boldmath$\pi_{11}$   &	    \\ \midrule 
-\multirow{2}{*}{KNN(5)\_kendall}   & \boldmath$\pi_{01}$   &	   \\
-                                   		      & \boldmath$\pi_{11}$   &	    \\ \midrule 		      
-\multirow{2}{*}{KNN(idw)\_pearson} & \boldmath$\pi_{01}$  &	    \\
-                                   		      & \boldmath$\pi_{11}$    &		 \\ \midrule 
-\multirow{2}{*}{KNN(idw)\_kendall} & \boldmath$\pi_{01}$  &	     \\
-                                   		      & \boldmath$\pi_{11}$    &	  \\ \midrule 
-\multirow{2}{*}{RF(10)\_pearson}    &  \boldmath$\pi_{01}$   &     	&		&		&     \\
-                                   		      & \boldmath$\pi_{11}$    &      	&		&		&     \\ \midrule 
-\multirow{2}{*}{RF(10)\_kendall}    &  \boldmath$\pi_{01}$   &     	&		&		&     \\
-                                   		      & \boldmath$\pi_{11}$    &      	&		&		&     \\ \midrule 
-\multirow{2}{*}{RF(100)\_pearson}  &  \boldmath$\pi_{01}$   &      	&		&		&     \\
-                                   		      & \boldmath$\pi_{11}$    &      	&		&		&    \\ \midrule 
-\multirow{2}{*}{RF(100)\_kendall}   &  \boldmath$\pi_{01}$   &      	&		&		&    \\
-                                                        & \boldmath$\pi_{11}$    &      	&		&		&   \\ [1ex]
-                                                        \bottomrule
-\end{tabular}
-\caption[Christoffersen Markov test at higher quantiles under Gaussian distributed marginal errors and tranquil market conditions.]{Christoffersen Markov test at higher quantiles under Gaussian distributed marginal errors and tranquil market conditions.}
-\label{tab:christoffersen_test_norm_tranquil_table}
-\end{table}
-\fi
+\noindent
+"We will now sum up the results discussed above and find the best risk model for each
+of the VaR confidence levels."
+
+\begin{itemize}
+	\item The gjr with skewed student t error assumption does not improve over VaR estimation. It seems that VaR derived from the Gaussian models seems adequate enough for the given portfolio and market period to capture fat-taileness.
+	\item In comparison with the DCC risk model, the semiparametric risk models show less conservative behavior.    
+\end{itemize}
+
 
 
 
 \subsection{Volatile Market Conditions: 2000-2001 Dot-com Bubble}
+Table \ref{tab:var_backtest_vol_table} presents an overview of the VaR backtest results in volatile market conditions for a long position in an equally weighted portfolio comprising the 30 constituents of the DJIA. The backtest results exhibit some general patterns that hold for all three VaR confidence levels considered; (1) semiparametric models show less conservative behavior compared with the DCC model; (2) semiparametric models with Kendall approximations of actual correlation severely underestimate true risk ; (3) the likelihood of a VaR exceedance does not depend greatly on whether a VaR exceedance occurred on the previous day. \\
+
+\noindent
+"The backtest results indicate that all models except the KNN(5)-Kendall-GJR model are adequate at estimating the 99\% VaR; the null hypothesis of the unconditional coverage and independence tests are not rejected at the 5\% significance level. For the 99\% VaR, the DCC and KNN(idw)- Pearson exhibit 2 exceedances whereas the other semiparametric models exhibit 3 to 10 exceedances (against an expectation of 5.4 exceedances)."
+
+"The final VaR considered is the 95\% VaR with 25.2 expected exceedances. This time, the null hypothesis of the unconditional coverage test is rejected for the DCC, KNN(idw) and RF(100)-Pearson mod- els because they overestimate the true risk considerably with 11 to 13 exceedances. In contrast, KNN(5), RF(10) and RF(100)-Kendall report a number of VaR exceedances between 17 and 27 and the null hypothesis of the unconditional coverage test is not rejected at the 5\% significance level. The KNN(5)-Pearson-GJR model is the only model that rejects the independence test at the 5\% significance level implying VaR exceedances are not independently distributed in this risk model."
 
 \begin{landscape}
 \begin{table}[h]
@@ -2162,8 +2157,8 @@ DCC-GARCH					&28		&16		&9        	&0.0531              &0.1071              &0.
 DCC-GJR					        &          &           &         &                   &              &               &              &              &              \\ \midrule
 KNN(5)-Pearson-Garch            	&34	&\textbf{23}	&\textbf{16}                &\textbf{0.0581}        &\textbf{0.1765}           &0.0420           &0.0870          &0.0290          &0.0625              \\
 KNN(5)-Pearson-GJR              	&34	&\textbf{24}	&\textbf{15}      &\textbf{0.0581}	&\textbf{0.0581}     &0.0442        &0.0833              &0.0269              &0.0667              \\
-KNN(5)-Kendall-GJR              	&\textbf{51}	&\textbf{32}	&\textbf{20}          &0.0958      &0.14    &\textbf{0.0535}	&\textbf{0.1875}         &0.0376              &0.05              \\
 KNN(5)-Kendall-Garch           	&\textbf{53}	&\textbf{32}    &\textbf{20}	      &0.0984     &0.1538     &\textbf{0.0535}    &\textbf{0.1875}  	&0.0355      &0.1              \\
+KNN(5)-Kendall-GJR              	&\textbf{51}	&\textbf{32}	&\textbf{20}          &0.0958      &0.14    &\textbf{0.0535}	&\textbf{0.1875}         &0.0376              &0.05              \\
 KNN(idw)-Pearson-Garch        	&26		&15		&9           &0.0507     &0.0769           &0.0289              &0.0667              &0.0184              &0              \\
 KNN(idw)-Pearson-GJR          	&27	&15	&9                 &0.053              &0.0741              &0.0289               &0.0667              &0.0184              &0              \\
 KNN(idw)-Kendall-Garch          	&\textbf{42}	&\textbf{25}	&\textbf{15}           &0.0788              &0.119              &0.0485               &0.08          &0.0289           &0.0667              \\
@@ -2174,17 +2169,109 @@ RF(10)-Kendall-Garch            	&\textbf{50}	&\textbf{33}	&\textbf{20}         
 RF(10)-Kendall-GJR              	&\textbf{49}	&\textbf{32}	&\textbf{19}            &0.0931              &0.125              &0.0578               &0.125         &0.0375              &0.0526              \\
 RF(100)-Pearson-Garch            &33	   &\textbf{21}	&\textbf{10}         &0.0601         &0.1212              &0.0356               &0.1429              &0.0204              &              \\
 RF(100)-Pearson-GJR          	&31		&\textbf{21}	&\textbf{10}           &0.0556              &0.129          &0.0356               &0.1429              &0.0204           &0              \\
-RF(100)-Kendall-GJR             	&\textbf{53}	&\textbf{32}	&\textbf{18}         &0.1007        &0.1346              &0.0578               &0.125             &0.0312          &0.1111             \\            
-RF(100)-Kendall-Garch           	&\textbf{53}	&\textbf{32}	&\textbf{18}    	&0.1007	&0.1346	&0.0578	&0.1250	&0.0312	&0.1111              \\ [1ex]  
-
+RF(100)-Kendall-Garch           	&\textbf{53}	&\textbf{32}	&\textbf{18}    	&0.1007	&0.1346	&0.0578	&0.1250	&0.0312	&0.1111              \\   
+RF(100)-Kendall-GJR             	&\textbf{53}	&\textbf{32}	&\textbf{18}         &0.1007        &0.1346              &0.0578               &0.125             &0.0312          &0.1111             \\     [1ex]       
 \bottomrule  
 \end{tabular}
-\caption[Backtesting results under volatile market conditions.]{This table presents the results of unconditional coverage (Kupiec test) and independence (Christoffersen markov test) at higher quantiles of the loss distribution under volatile market conditions. Bold face indicates rejection. Non-rejection regions for the Kupiec test: 15$<$I(0.95)$<$36, 6$<$I(0.975)$<$21 and 0$<$I(0.99)$<$10.}
-\label{tab:kupiec_test_norm_tranquil_table}
+\caption[Backtesting results in volatile market conditions.]{This table presents test results of unconditional coverage (VaR Exceedances) and independence (Transition Probabilities) at higher quantiles of the loss distribution in volatile market conditions. Bold face indicates rejection. Non-rejection regions for the unconditional coverage test: 15$<$I(0.95)$<$36, 6$<$I(0.975)$<$21 and 0$<$I(0.99)$<$10.}
+\label{tab:var_backtest_vol_table}
 \end{table}
 \end{landscape}
 
 
+%%%% VaR figures Tranquil Market Conditions  %%%%%
+\begin{landscape}
+\begin{figure} % [h] parameter makes sure figures are located at 'this' location.
+	\centering
+	\begin{subfigure}[b]{0.33 \textwidth} %1
+		\centering 
+		\includegraphics[width=1.4\textwidth, height=0.7\textwidth]{multivar_analysis/volatile/KNN5_pearson_garch_2000_2001.pdf} 
+		\caption{KNN(5)-Pearson-Garch} 	
+		\label{fig:KNN(5)-Pearson-Garch_vol}
+	\end{subfigure} 
+	\hfill	
+	\begin{subfigure}[b]{0.33 \textwidth} %3
+		\centering 		
+		\includegraphics[width=1.4\textwidth, height=0.7\textwidth]{multivar_analysis/volatile/KNN100_pearson_garch_2000_2001.pdf} 
+		\caption{KNN(100)-Pearson-Garch} 
+		\label{fig:KNN(100)-Pearson-Garch_vol}
+	\end{subfigure}
+	\hfill 
+	\begin{subfigure}[b]{0.33 \textwidth} %5
+		\centering 		
+		\includegraphics[width=1.4\textwidth, height=0.7\textwidth]{multivar_analysis/volatile/KNN_idw_pearson_garch_2000_2001.pdf} 
+		\caption{KNN(idw)-Pearson-Garch} 
+		\label{fig:KNN(idw)-Pearson-Garch_vol}
+	\end{subfigure}
+	\hfill   
+	\begin{subfigure}[b]{0.33 \textwidth}  %2
+		\centering 
+		\includegraphics[width=1.4\textwidth, height=0.7\textwidth]{multivar_analysis/volatile/KNN5_kendall_garch_2000_2001.pdf} 
+		\caption{KNN(5)-Kendall-Garch} 
+		\label{fig:KNN(5)-Kendall-Garch_vol}
+	\end{subfigure} 
+	\hfill	
+	\begin{subfigure}[b]{0.33 \textwidth} %4
+		\centering 
+		\includegraphics[width=1.4\textwidth, height=0.7\textwidth]{multivar_analysis/volatile/KNN100_kendall_garch_2000_2001.pdf} 
+		\caption{KNN(100)-Kendall-Garch} 
+		\label{fig:KNN(100)-Kendall-Garch_vol}
+	\end{subfigure}
+	\hfill
+	\begin{subfigure}[b]{0.33 \textwidth} %6
+		\centering 
+		\includegraphics[width=1.4\textwidth, height=0.7\textwidth]{multivar_analysis/volatile/KNN_idw_kendall_garch_2000_2001.pdf} 
+		\caption{KNN(idw)-Kendall-Garch} 
+		\label{fig:KNN(idw)-Kendall-Garch_vol}
+	\end{subfigure}
+	\hfill
+	\begin{subfigure}[b]{0.33 \textwidth} %7
+		\centering 
+		\includegraphics[width=1.4\textwidth, height=0.7\textwidth]{multivar_analysis/volatile/RF10_pearson_garch_2000_2001.pdf} 
+		\caption{RF(10)-Pearson-Garch} 	
+		\label{fig:RF(10)-Pearson-Garch_vol}
+	\end{subfigure} 
+	\hfill
+	\begin{subfigure}[b]{0.33 \textwidth}  %8
+		\centering 
+		\includegraphics[width=1.4\textwidth, height=0.7\textwidth]{multivar_analysis/volatile/RF10_kendall_garch_2000_2001.pdf} 
+		\caption{RF(10)-Kendall-Garch} 
+		\label{RF(10)-Kendall-Garch_vol}
+	\end{subfigure} 
+	\hfill
+	\begin{subfigure}[b]{0.33 \textwidth} %11
+		\centering 		
+		\includegraphics[width=1.4\textwidth, height=0.7\textwidth]{multivar_analysis/volatile/DCC_garch_mvnorm_2000_2001.pdf} 
+		\caption{DCC-Garch} 
+		\label{fig:DCC-Garch_vol}
+	\end{subfigure}	
+	\hfill
+	\begin{subfigure}[b]{0.33 \textwidth} %9
+		\centering 		
+		\includegraphics[width=1.4\textwidth, height=0.7\textwidth]{multivar_analysis/volatile/RF100_pearson_garch_2000_2001.pdf} 
+		\caption{RF(100)-Pearson-Garch} 
+		\label{fig:RF(100)-Pearson-Garch_vol}
+	\end{subfigure}
+	\hfill  
+	\begin{subfigure}[b]{0.33 \textwidth} %10
+		\centering 
+		\includegraphics[width=1.4\textwidth, height=0.7\textwidth]{multivar_analysis/volatile/RF100_kendall_garch_2000_2001.pdf} 
+		\caption{RF(100)-Kendall-Garch} 
+		\label{fig:RF(100)-Kendall-Garch_vol}
+	\end{subfigure}
+	\hfill
+	\iffalse
+	\begin{subfigure}[b]{0.33 \textwidth} %11
+		\centering 		
+		\includegraphics[width=1.4\textwidth, height=0.7\textwidth]{multivar_analysis/volatile/DCC_gjr_mvnorm_2000_2001.pdf} 
+		\caption{DCC-GJR} 
+		\label{fig:DCC-GJR_vol}
+	\end{subfigure}	\fi
+	\caption[Out-of-sample returns and Value-at-Risk estimates in tranquil market conditions.]{Out-of-sample returns r$_t$ and Value-at-Risk estimates VaR$_{t,\alpha}$ for $\alpha \in \{0.95, 0.975, 0.99\}$ in volatile market conditions.}
+	\label{fig:var_forecasts_volatile}
+\end{figure}
+\end{landscape}
+\clearpage
 
 
 
@@ -2195,15 +2282,36 @@ RF(100)-Kendall-Garch           	&\textbf{53}	&\textbf{32}	&\textbf{18}    	&0.1
 
 
 \section{Conclusions Empirical Results} \label{sec:conclusions_emp}
-Our learning algorithms have demonstrated the ability to perform well in times of market stress, such as the 2000-2001 Dot-com bubble, as well as in more tranquil market conditions with low volatility, such as the mid-1990's (1994-1995). \\
+"The task of finding the best risk model is a difficult one. The four different models classes
+display different characteristics for different portfolios and VaR confidence levels. The miscellaneous copula models deliver more or less the same VaR estimates across the different
+portfolios and VaR confidence levels. In contrast, the MVGARCH produces a diverging performance the majority of the time. Of further interest is that the MVGARCH model for the
+10\% confidence level VaR has fewer violations than the copula models for all portfolios. For
+the 5\% confidence level the evidence is mixed, however, with the MVGARCH model and copula models alternating with regards to which produces more VaR violations. For the VaR(1/1) the MVGARCH shows at least as many VaR violations as the copula models and sometimes produces more. In the case of the developed stock portfolio this is beneficial because it is closer to the expected number of violations, but this is not the case with regards to the emerging market stocks." \\
+
+\noindent
+"Even looking at the table where the entire backtesting period is broken down into three
+sub-periods it is not possible to detect constant behavior in the respective models, meaning it
+would be a challenging task for a risk manager to determine favorite. The only clear result
+is that the HS and DN methods perform poorly compared to the sophisticated parametric
+models for three out of four portfolios: only for the developed bond portfolio do they give
+a better performance. The Delta-Normal method performs particularly poorly dramatically
+underestimating the 1\% confidence level VaR. Any risk manager using this method should pay
+great attention to this. It can be concluded that it would be worth investing in the development
+of a sophisticated parametric model. Until now we have compared the different risk models." \\
+
+\noindent
+\textbf{If different risk models have the same number of VaR violations and perform identically on the VaR tests a conservative risk manager might choose the risk model with the smallest VaR exceedance. On the other hand: Banks have to deposit capital for risky positions. When a risk model overestimates the true risks the bank has to build to much accruals, decreasing their profits. When the risk model underestimates the risk too much capital is allocated to risky positions and that might hurt the profits, too. Thus in both cases a conservative risk manager might prefer a risk model where |min(ert+1)| is smaller compared to other risk models.}
 
 \iffalse
+Our learning algorithms have demonstrated the ability to perform well in times of market stress, such as the 2000-2001 Dot-com bubble, as well as in more tranquil market conditions with low volatility, such as the mid-1990's (1994-1995). \\
+
+
 "We find that over the dot-com bubble-burst and aftermath period the set of superior models is composed of rather sophisticated models such as DCC and orthogonal, both with leverage effect in the conditional variances of returns and principal components respectively. Over calm periods, a simple assumption like constant conditional correlation and symmetry in the conditional variances cannot be rejected. Finally, over the 2007?2008 financial crisis, accounting for non-stationarity in the conditional variance process significantly improves models? forecasting performances."
 \fi
 
 
 
-\chapter{Conclusion and Future Research} \label{ch:conclusion}
+\chapter{Conclusions and Future Research} \label{ch:conclusion}
 Motivated by the growing potential of machine learning, a new semiparametric multivariate volatility model is proposed, which combines parametric univariate Generalized Auto Regressive Conditional Heteroskedasticity specifications for the individual conditional volatilities with nonparametric machine learning regressors for the conditional correlations. Our proposed model is flexible and remains easy to estimate in high dimensional systems being premised on successful concepts from scientific work on dynamic modeling of high dimensional systems of correlations.
 
 \bigskip
@@ -2216,9 +2324,10 @@ high turbulence in the markets, and it can be seen as an appropriate option in t
 market risk. In future work, it may be interesting to use an optimization model that considers, at the
 same level, market returns and risk estimates, and relate the multivariate GARCH to the EVT
 models, in order to obtain additional information to international investors on their investment
-alternatives, taking into account the opportunities offered by emerging and developed markets.
+alternatives, taking into account the opportunities offered by emerging and developed markets. \\
 
 \noindent
+"The explained methodology and obtained results are not limited to this specific risk management problem and could be expanded into various other topics in applied finance and risk management." \textbf{Propose portfolio optimization where conditional covariance matirx serves as input. Think of multi-period forecasting of conditional covariance.}
 
 \iffalse
 Conclusions: \\
@@ -2325,8 +2434,8 @@ $\beta_i$             &     & 0.7906		&0.5927	&0.7519	&0.8132	&0.8853	&0.9262   
 
 
 
-\chapter{Value-at-Risk Forecasts on Lower Quantiles}
-This appendix presents results on the Value-at-Risk ( VaR) forecasting performance of our semiparametric multivariate volatility model using proposed learning algorithms and the dynamic conditional correlation model \citep{ref:Engle2002} on the lower quantiles of the loss distribution. Performance on the lower quantiles (less than 90\%) of the loss distribution is theoretically relevant to evaluate the fitting/forecasting of the models.   
+\chapter{Value-at-Risk Estimates on Lower Quantiles}
+This appendix presents results on the Value-at-Risk (VaR) forecasting performance of our semiparametric multivariate volatility model using proposed learning algorithms and the dynamic conditional correlation model \citep{ref:Engle2002} on the lower quantiles of the loss distribution. Performance on the lower quantiles (less than 90\%) of the loss distribution is theoretically relevant to evaluate the fitting/forecasting of the models.   
 
 \section{Tranquil Market Conditions: Mid-1990's}
 \iffalse
@@ -2400,7 +2509,7 @@ RF(100)\_kendall	&500		&486		&473		&454		&407		&296		&191		&85						\\ [1ex]
                                                         & \boldmath$\pi_{11}$    &      	&		&		&    &&&& \\ [1ex]
                                                         \bottomrule
 \end{tabular}
-\caption[Christoffersen Markov test at lower quantiles under Gaussian distributed marginal errors and tranquil market conditions.]{Christoffersen Markov test at lower quantiles with Gaussian distributed marginal errors under tranquil market conditions.}
+\caption[Christoffersen Markov test at lower quantiles under Gaussian distributed marginal errors and tranquil market conditions.]{Christoffersen Markov test at lower quantiles with Gaussian distributed marginal errors in tranquil market conditions.}
 \label{tab:christoffersen_test_norm_lower_q_tranquil}
 \end{table}
 

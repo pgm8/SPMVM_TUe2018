@@ -22,7 +22,8 @@
 \contentsline {figure}{\numberline {3.18}{\ignorespaces Comparison MSE for RF(n\_estimators=10) with proxy correlation, Pearson and Kendall Moving Window bootstrap estimates.\relax }}{43}{figure.caption.28}
 \addvspace {10\p@ }
 \contentsline {figure}{\numberline {4.1}{\ignorespaces Log return of equally weighted Dow Jones constituents from March 1987 to December 2001.\relax }}{50}{figure.caption.29}
-\contentsline {figure}{\numberline {4.2}{\ignorespaces Out-of-sample returns and Value-at-Risk estimates.}}{57}{figure.caption.33}
+\contentsline {figure}{\numberline {4.2}{\ignorespaces Out-of-sample returns and Value-at-Risk estimates in tranquil market conditions.}}{58}{figure.caption.33}
+\contentsline {figure}{\numberline {4.3}{\ignorespaces Out-of-sample returns and Value-at-Risk estimates in tranquil market conditions.}}{61}{figure.caption.35}
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }

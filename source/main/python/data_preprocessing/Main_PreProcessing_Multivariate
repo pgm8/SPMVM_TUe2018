@@ -122,7 +122,7 @@ def main():
     n_corr = int((n*(n-1)) / 2)
     T = 504   # length of out-of-sample test set tranquil market conditions 1994-1995
     #T = 500    # length of out-of-sample test set volatile market conditions 2000-2001
-    proxy_type = ['pearson']
+    proxy_type = ['kendall']
     n_neighbors = [100]
     n_estimators = [10]     # [10, 100]
 
@@ -130,8 +130,8 @@ def main():
         data = mm.load_data('multivariate_analysis/%s/data/dataset_DJI30_%s_%i_1987_2001.pkl'
                             % (proxy_type, proxy_type, dt))
         data.drop(columns='Date', inplace=True)
-        data = data[1:(2220-dt)]  # 31/3/1987 - 29/12/1995
-        #data = data                # 31/3/1987 - 12/31/1999
+        #data = data[1:(2220-dt)]  # 31/3/1987 - 29/12/1995
+        data = data                # 31/3/1987 - 12/31/1999
         headers = list(data.columns.values[:n_corr])
         rho_estimates = pd.DataFrame(columns=headers)
         t_train_init = data.shape[0] - T
@@ -150,9 +150,9 @@ def main():
             df = pd.DataFrame(rho_estimate, columns=headers)
             rho_estimates = pd.merge(rho_estimates, df, how='outer')
 
-        mm.save_data('multivariate_analysis/%s/%s_cor_estimates/cor_knn%i_%s_%i_DJI30_1994_1995.pkl' %
+        mm.save_data('multivariate_analysis/%s/%s_cor_estimates/cor_knn%i_%s_%i_DJI30_2000_2001.pkl' %
                      (proxy_type, proxy_type, n_neighbors, proxy_type, dt), rho_estimates)
-        mm.transform_pickle_to_csv('multivariate_analysis/%s/%s_cor_estimates/cor_knn%i_%s_%i_DJI30_1994_1995.pkl' %
+        mm.transform_pickle_to_csv('multivariate_analysis/%s/%s_cor_estimates/cor_knn%i_%s_%i_DJI30_2000_2001.pkl' %
                                    (proxy_type, proxy_type, n_neighbors, proxy_type, dt))
 
 
@@ -217,7 +217,6 @@ def main():
     ###                                                    Value-at-Risk Figures                                   ###
     ##################################################################################################################
 
-
     def var_plot(r, q, fig_name=None, period='volatile'):
         var_true = r.reset_index(drop=True, inplace=False)
         var_forecast_95 = q.loc[:, '0.95']
@@ -234,7 +233,7 @@ def main():
         plt.ylabel('percentage return', fontsize=fontsize)
         if period is 'volatile':
             dates_x = [0, 63, 126, 189, 252, 314, 379, 436]
-            dates_label = ['Jan-00', 'Apr-00', 'Jul-00', 'Oct-00', 'Jan-01', 'Apr-01', 'Jul-01', 'Oct-01']
+            dates_label = ['Jan00', 'Apr00', 'Jul00', 'Oct00', 'Jan01', 'Apr01', 'Jul01', 'Oct01']
             plt.xlim(0, 500)
             plt.ylim(-8, 8)
             plt.yticks(np.arange(-8, 9, 2), fontsize=fontsize)
@@ -266,20 +265,13 @@ def main():
     w = [1 / n] * n
     VaR_true_tranquile = data_DJIA_tranquil.tail(T_tranquil).dot(w)
     VaR_true_volatile = data_DJIA.tail(T_volatile).dot(w)
-    period = 'tranquil'
+    period = 'volatile'
+    VaR_true = VaR_true_volatile
     files = [i for i in os.listdir(os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))),
                                                 'resources/Data/multivariate_analysis/VaR/%s/' % period)) if
              os.path.isfile(os.path.join(os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))),
                                                       'resources/Data/multivariate_analysis/VaR/%s/' % period),
                                          i)) and i.startswith('var')]
-    if period is 'tranquil':
-        var_true = VaR_true_volatile
-    else:
-        var_true = VaR_true_volatile
-    var_true = VaR_true_tranquile
-
-    VaR_true = VaR_true_tranquile
-
 
     for filename in files:
        filename_fig = re.search('var_(.+?).csv', filename).group(1)  # Extract figure name from filename
