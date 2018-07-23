@@ -36,7 +36,7 @@
 \contentsline {section}{\numberline {3.4}Conclusions Simulation Results}{44}{section.3.4}
 \contentsline {chapter}{\numberline {4}Systems of Correlations in Quantitative Financial Risk Management}{46}{chapter.4}
 \contentsline {section}{\numberline {4.1}Value-at-Risk Theory}{46}{section.4.1}
-\contentsline {section}{\numberline {4.2}Backtesting Methodology}{47}{section.4.2}
+\contentsline {section}{\numberline {4.2}Backtesting Methodology}{48}{section.4.2}
 \contentsline {section}{\numberline {4.3}Data and Descriptive Statistics}{49}{section.4.3}
 \contentsline {subsection}{\numberline {4.3.1}Summary Statistics}{50}{subsection.4.3.1}
 \contentsline {subsection}{\numberline {4.3.2}Conditional Variance Model}{51}{subsection.4.3.2}
@@ -49,3 +49,4 @@
 \contentsline {chapter}{\numberline {B}Value-at-Risk Estimates on Lower Quantiles}{70}{appendix.B}
 \contentsline {section}{\numberline {B.1}Tranquil Market Conditions: Mid-1990's}{70}{section.B.1}
 \contentsline {section}{\numberline {B.2}Volatile Market Conditions: 2000-2001 Dot-com Bubble}{70}{section.B.2}
+\contentsline {chapter}{\numberline {C}Delta-Normal Method in Volatile Market Conditions}{71}{appendix.C}

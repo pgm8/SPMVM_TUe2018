@@ -1727,7 +1727,17 @@ One definition of Value-at-Risk ( VaR) is the maximum loss which is not exceeded
 \end{align}
 
 \noindent
-where $F_L(l) = P(L \le l)$ denotes the distribution function  of the corresponding loss distribution. \\
+where $\alpha \in (0,1)$ and $F_L(l) = P(L \le l)$ denotes the distribution function of the corresponding loss distribution. \\
+
+\noindent
+\textbf{Insert some text mentioning drawbacks VaR and introduce Conditional VaR, CVaR.}
+
+\begin{align}
+	CVaR_{\alpha} = \mathbb{E} [L | L > VaR_{\alpha}]
+\end{align}
+
+\noindent
+In other words, CVaR is the expected loss given that VaR is exceeded. \\
 
 \noindent
 VaR is determined after definition of the portfolio return distribution, where portfolio return $p_t = w' r_t$. It is noted that the validation of the portfolio risk using backtesting measures is not straightforward without further assumptions on $a_t$, the distribution of errors driving the volatility process. In this paper, the multivariate Gaussian distribution is considered for the distribution of $a_t$. In any case, the first two moments of the conditional portfolio return are given by
@@ -1745,23 +1755,27 @@ If the conditional distribution of each asset return is assumed Gaussian, then t
 \end{align}
 
 \noindent 
-The portfolio VaR under delta-normal assumption for one day horizon at $\alpha$ confidence level is then given by
+The portfolio (C)VaR under delta-normal assumption for one day horizon at $\alpha$ confidence level is then given by
 
 \begin{align}
-	VaR_t(\alpha) &= \mu_{p,t} + \sigma_{p,t} \Phi^{-1}(\alpha)  \label{eq:var_parametric}
+	VaR_t(\alpha) &= \mu_{p,t} + \sigma_{p,t} \ \Phi^{-1}(\alpha)  \label{eq:var_parametric_norm} \\
+	CVaR_t(\alpha) &= \mu_{p,t} + \sigma_{p,t} \ \frac{\phi(\Phi^{-1}(\alpha))}{1-\alpha} \label{eq:cvar_parametric_norm}
 \end{align}
 
-
 \noindent 
-where $\Phi$ denotes the cumulative distribution function of standard Gaussian distribution. \\
+where $\phi$ denotes the density and $\Phi$ the distribution function of the standard Gaussian distribution. \\
 
-\iffalse
-\noindent
-\textbf{Elaborate little bit how VaR is calculated: under assumption of unimodal symmetric distributions computing multivariate quantiles coincides with finding the level hypersurface satisfying the hyperellipsoid equation: $x^T H_t^{-1} x = \chi^2(\alpha)$}. \\
-\fi
+\begin{align}
+	VaR_t(\alpha) &= \mu_{p,t} + \sigma_{p,t} \ \sqrt{\frac{v-2}{v}} \ t_v^{-1}(\alpha) \label{eq:var_parametric_std} \\
+	CVaR_t(\alpha) &= \mu_{p,t} + \sigma_{p,t} \ \sqrt{\frac{v-2}{v}} \ \frac{g_v(t_v^{-1}(\alpha))}{1-\alpha} \ \Big(\frac{v+(t_v^{-1} (\alpha))^2}{v-1} \label{eq:cvar_parametric_std}\Big)
+\end{align}
 
 \noindent
-In the backtesting analysis, VaR is computed at different quantiles. For simplicity, but without loss of generality, the unconditional mean is used as the conditional mean filtration given that the dynamic dependence in the conditional means of portfolio returns are generally weak and not significantly affecting VaR results. The VaR for a long position in an equally weighted portfolio is considered as a number of papers \citep{ref:Plyakha2012} suggest that equally weighted portfolio strategies consistently outperform other optimization strategies. Moreover, the focus in this part of the analysis is on the empirical evaluation of different models for modeling and forecasting of the conditional covariance matrix instead of finding optimal portfolio weights or any form of risk minimization.    \\
+where $g_v$ denotes the density and $t_v$ the distribution function of the standard Student t distribution. \\
+
+
+\noindent
+In the backtesting analysis, VaR is computed at different quantiles whereas CVaR is computed at the 0.99 quantile. For simplicity, but without loss of generality, the unconditional mean is used as the conditional mean filtration given that the dynamic dependence in the conditional means of portfolio returns are generally weak and not significantly affecting VaR results. The VaR for a long position in an equally weighted portfolio is considered as a number of papers \citep{ref:Plyakha2012} suggest that equally weighted portfolio strategies consistently outperform other optimization strategies. Moreover, the focus in this part of the analysis is on the empirical evaluation of different models for modeling and forecasting of the conditional covariance matrix instead of finding optimal portfolio weights or any form of risk minimization.    \\
 
 
 \iffalse
@@ -2010,6 +2024,8 @@ KNN(5)-Pearson-Garch            	&17          &11           &7                  
 KNN(5)-Pearson-GJR              	&19		&13		&7         	&\textbf{0.0331}	&\textbf{0.1579}	&0.0245           &0.0769              &0.0121              &0.1429              \\
 KNN(5)-Kendall-Garch            	&25	&15	&10                       &0.046              &0.12              &0.0287               &0.0667              &0.0183              &0.1              \\
 KNN(5)-Kendall-GJR              	&27		&17		&\textbf{11}                   &0.0504              &0.1111              &0.0309               &0.1176              &0.0203              &0.0909              \\
+KNN(100)-Kendall-Garch          &17		&12		&7                     &0.0329              &0.0588              &0.0224               &0.0833              &0.0121              &0.1429              \\
+KNN(100)-Kendall-GJR             &18		&12		&7                     &0.0330              &0.1111              &0.0224               &0.0833              &0.0121              &0.1429              \\
 KNN(idw)-Pearson-Garch          &\textbf{11}	&\textbf{6}		&2                     &0.0203              &0.0909              &0.0121               &0              &0.004              &0              \\
 KNN(idw)-Pearson-GJR         	&\textbf{11}	&7	&2                   &0.0203             &0.0909              &0.0121               &0.1429              &0.004              &0              \\
 KNN(idw)-Kendall-Garch          	&\textbf{12}	&10	&6                      &0.0224              &0.0833              &0.0183               &0.1              &0.0121             &0              \\
@@ -2043,9 +2059,9 @@ RF(100)-Kendall-GJR             	&20		&12		&10                       &0.0393    
 	\hfill	
 	\begin{subfigure}[b]{0.33 \textwidth} %3
 		\centering 		
-		\includegraphics[width=1.4\textwidth, height=0.7\textwidth]{multivar_analysis/tranquil/KNN100_pearson_garch_1994_1995.pdf} 
-		\caption{KNN(100)-Pearson-Garch} 
-		\label{fig:KNN(100)-Pearson-Garch}
+		\includegraphics[width=1.4\textwidth, height=0.7\textwidth]{multivar_analysis/tranquil/KNN100_kendall_garch_1994_1995.pdf} 
+		\caption{KNN(100)-Kendall-Garch} 
+		\label{fig:KNN(100)-Kendall-Garch}
 	\end{subfigure}
 	\hfill 
 	\begin{subfigure}[b]{0.33 \textwidth} %5
@@ -2061,12 +2077,12 @@ RF(100)-Kendall-GJR             	&20		&12		&10                       &0.0393    
 		\caption{KNN(5)-Kendall-Garch} 
 		\label{fig:KNN(5)-Kendall-Garch}
 	\end{subfigure} 
-	\hfill	
+	\hfill
 	\begin{subfigure}[b]{0.33 \textwidth} %4
 		\centering 
-		\includegraphics[width=1.4\textwidth, height=0.7\textwidth]{multivar_analysis/tranquil/KNN100_kendall_garch_1994_1995.pdf} 
-		\caption{KNN(100)-Kendall-Garch} 
-		\label{fig:KNN(100)-Kendall-Garch}
+		\includegraphics[width=1.4\textwidth, height=0.7\textwidth]{multivar_analysis/tranquil/KNN100_kendall_gjr_1994_1995.pdf} 
+		\caption{KNN(100)-Kendall-GJR} 
+		\label{fig:KNN(100)-Kendall-GJR}
 	\end{subfigure}
 	\hfill
 	\begin{subfigure}[b]{0.33 \textwidth} %6
@@ -2129,7 +2145,7 @@ RF(100)-Kendall-GJR             	&20		&12		&10                       &0.0393    
 of the VaR confidence levels."
 
 \begin{itemize}
-	\item The gjr with skewed student t error assumption does not improve over VaR estimation. It seems that VaR derived from the Gaussian models seems adequate enough for the given portfolio and market period to capture fat-taileness.
+	\item The gjr with skewed student t error assumption does not improve over VaR estimation. It seems that VaR derived from the Gaussian models seems adequate enough for the given portfolio and market period to capture the leptokurtic behavior. 
 	\item In comparison with the DCC risk model, the semiparametric risk models show less conservative behavior.    
 \end{itemize}
 
@@ -2153,33 +2169,37 @@ Table \ref{tab:var_backtest_vol_table} presents an overview of the VaR backtest 
 \multicolumn{1}{c}{{\underline{Model}}} & \multicolumn{3}{c}{{\underline{VaR Exceedances}}} & \multicolumn{6}{c}{{\underline{Transition Probabilities}}}                                                                     \\
                                 & I(0.95)  & I(0.975)  & I(0.99) & \multicolumn{2}{c}{I(0.95)} & \multicolumn{2}{c}{I(0.975)} & \multicolumn{2}{c}{I(0.99)} \\ \cmidrule{2-10} 
                                 &             &           &                 & \multicolumn{1}{c}{{$\pi_{01}$}}       & \multicolumn{1}{c}{{$\pi_{11}$}}       & \multicolumn{1}{c}{{$\pi_{01}$}}        & \multicolumn{1}{c}{{$\pi_{11}$}}       & \multicolumn{1}{c}{{$\pi_{01}$}}       & \multicolumn{1}{c}{{$\pi_{11}$}}       \\  \midrule  
-DCC-GARCH					&28		&16		&9        	&0.0531              &0.1071              &0.0311               &0.0625              &0.0184              &0              \\
-DCC-GJR					        &          &           &         &                   &              &               &              &              &              \\ \midrule
-KNN(5)-Pearson-Garch            	&34	&\textbf{23}	&\textbf{16}                &\textbf{0.0581}        &\textbf{0.1765}           &0.0420           &0.0870          &0.0290          &0.0625              \\
-KNN(5)-Pearson-GJR              	&34	&\textbf{24}	&\textbf{15}      &\textbf{0.0581}	&\textbf{0.0581}     &0.0442        &0.0833              &0.0269              &0.0667              \\
-KNN(5)-Kendall-Garch           	&\textbf{53}	&\textbf{32}    &\textbf{20}	      &0.0984     &0.1538     &\textbf{0.0535}    &\textbf{0.1875}  	&0.0355      &0.1              \\
-KNN(5)-Kendall-GJR              	&\textbf{51}	&\textbf{32}	&\textbf{20}          &0.0958      &0.14    &\textbf{0.0535}	&\textbf{0.1875}         &0.0376              &0.05              \\
-KNN(idw)-Pearson-Garch        	&26		&15		&9           &0.0507     &0.0769           &0.0289              &0.0667              &0.0184              &0              \\
-KNN(idw)-Pearson-GJR          	&27	&15	&9                 &0.053              &0.0741              &0.0289               &0.0667              &0.0184              &0              \\
-KNN(idw)-Kendall-Garch          	&\textbf{42}	&\textbf{25}	&\textbf{15}           &0.0788              &0.119              &0.0485               &0.08          &0.0289           &0.0667              \\
-KNN(idw)-Kendall-GJR            	&\textbf{41}	&\textbf{23}	&\textbf{15}              &0.0764              &0.122              &0.0441               &0.087              &0.0289              &0.0667              \\ \midrule
-RF(10)-Pearson-Garch              &\textbf{37}	&18	&\textbf{10}                      &0.0693              &0.1081               &0.0312              &0.1111              &0.0204	&0              \\
-RF(10)-Pearson-GJR              	&\textbf{36}	&18	&\textbf{11}                &0.067              &0.1111          &0.0312               &0.1111      &0.0225           &0              \\
-RF(10)-Kendall-Garch            	&\textbf{50}	&\textbf{33}	&\textbf{20}                &0.0956              &0.1224              &0.0601               &0.1212              &0.0355              &0.1              \\
-RF(10)-Kendall-GJR              	&\textbf{49}	&\textbf{32}	&\textbf{19}            &0.0931              &0.125              &0.0578               &0.125         &0.0375              &0.0526              \\
-RF(100)-Pearson-Garch            &33	   &\textbf{21}	&\textbf{10}         &0.0601         &0.1212              &0.0356               &0.1429              &0.0204              &              \\
-RF(100)-Pearson-GJR          	&31		&\textbf{21}	&\textbf{10}           &0.0556              &0.129          &0.0356               &0.1429              &0.0204           &0              \\
-RF(100)-Kendall-Garch           	&\textbf{53}	&\textbf{32}	&\textbf{18}    	&0.1007	&0.1346	&0.0578	&0.1250	&0.0312	&0.1111              \\   
-RF(100)-Kendall-GJR             	&\textbf{53}	&\textbf{32}	&\textbf{18}         &0.1007        &0.1346              &0.0578               &0.125             &0.0312          &0.1111             \\     [1ex]       
+DCC-GARCH				&33		&16		&5        	&0.0601              &0.1212              &0.0311               &0.0625              &0.0101              &0              \\
+DCC-GJR					&31		&14		&5         &0.0577                   &0.0968              &0.0289               &0              &0.0101              &0              \\ \midrule
+KNN(5)-Pearson-Garch            	&\textbf{39}	&\textbf{22}	&\textbf{12}           &0.0696        &0.1538           &0.0398           &0.0909          &0.0205          &0.0833              \\
+KNN(5)-Pearson-GJR              	&\textbf{38}	&\textbf{21}	&9      &0.0672		&0.1579     &0.0397        &0.0476              &0.0184              &0              \\
+KNN(5)-Kendall-Garch           	&\textbf{58}	&\textbf{32}    &\textbf{17}	      &0.1063     &0.1754     &\textbf{0.0535}    &\textbf{0.1875}  	&0.0311      &0.0588              \\
+KNN(5)-Kendall-GJR              	&\textbf{55}	&\textbf{32}	&\textbf{17}          &0.1011      &0.1667    &\textbf{0.0535}	&\textbf{0.1875}         &0.0311              &0.0588              \\
+KNN(100)-Pearson-Garch         &29			&18			&6          &0.0511      &0.1379    &0.0312	&0.1111         &0.0122              &0              \\
+KNN(100)-Pearson-GJR            &29			&17			&5          &0.0511      &0.1379    &0.0311	&0.0588         &0.0101              &0              \\
+KNN(idw)-Pearson-Garch        	&30		&15		&7           &0.0507     &0.0769           &0.0289              &0.0667              &0.0142              &0              \\
+KNN(idw)-Pearson-GJR          	&28		&15		&6                 &0.0552              &0.0714              &0.0289               &0.0667              &0.0122              &0              \\
+KNN(idw)-Kendall-Garch          	&\textbf{43}	&\textbf{21}	&\textbf{10}           &0.0811              &0.1163              &0.0397               &0.0952          &0.0204           &0              \\
+KNN(idw)-Kendall-GJR            	&\textbf{42}	&\textbf{21}	&9              &0.0788              &0.1190              &0.0397               &0.0952              &0.0184              &0              \\ \midrule
+RF(10)-Pearson-Garch              &\textbf{39}	&18	&9                      &0.0739              &0.1026               &0.0312              &0.1111              &0.0184		&0              \\
+RF(10)-Pearson-GJR              	&\textbf{38}	&18	&8                &0.0716              &0.1053          &0.0312               &0.1111      &0.0163           &0              \\
+RF(10)-Kendall-Garch            	&\textbf{54}	&\textbf{28}	&\textbf{15}                &0.1031              &0.1031              &0.0510               &0.1071              &0.031              &0              \\
+RF(10)-Kendall-GJR              	&\textbf{53}	&\textbf{29}	&\textbf{16}            &0.1007              &0.1346              &0.0532               &0.0532         &0.0331              &0              \\
+RF(100)-Pearson-Garch            &\textbf{37}	&\textbf{20}	&6         &0.0671         &0.1351              &\textbf{0.0334}       &\textbf{0.15}       &0.0122              &0              \\
+RF(100)-Pearson-GJR          	&\textbf{36}	&\textbf{20}	&6           &0.0648              &0.1389          &\textbf{0.0334}   	&\textbf{0.15}              &0.0334           &0              \\
+RF(100)-Kendall-Garch           	&\textbf{55}	&\textbf{30}	&\textbf{15}    	&0.1034	&0.1481	&0.0554	&0.1	&0.031	&0              \\   
+RF(100)-Kendall-GJR             	&\textbf{55}	&\textbf{29}	&\textbf{15}         &0.1034        &0.1481              &0.0532               &0.1034             &0.1034          &0             \\     [1ex]       
 \bottomrule  
 \end{tabular}
-\caption[Backtesting results in volatile market conditions.]{This table presents test results of unconditional coverage (VaR Exceedances) and independence (Transition Probabilities) at higher quantiles of the loss distribution in volatile market conditions. Bold face indicates rejection. Non-rejection regions for the unconditional coverage test: 15$<$I(0.95)$<$36, 6$<$I(0.975)$<$21 and 0$<$I(0.99)$<$10.}
+\caption[Backtesting results in volatile market conditions.]{This table presents test results of unconditional coverage (VaR Exceedances) and independence (Transition Probabilities) at higher quantiles of the loss distribution in volatile market conditions. Bold face indicates rejection. Non-rejection regions for the unconditional coverage test: 15$<$I(0.95)$<$36, 6$<$I(0.975)$<$20 and 0$<$I(0.99)$<$10.}
 \label{tab:var_backtest_vol_table}
 \end{table}
 \end{landscape}
 
 
-%%%% VaR figures Tranquil Market Conditions  %%%%%
+
+
+%%%% VaR figures Volatile Market Conditions  %%%%%
 \begin{landscape}
 \begin{figure} % [h] parameter makes sure figures are located at 'this' location.
 	\centering
@@ -2213,9 +2233,9 @@ RF(100)-Kendall-GJR             	&\textbf{53}	&\textbf{32}	&\textbf{18}         
 	\hfill	
 	\begin{subfigure}[b]{0.33 \textwidth} %4
 		\centering 
-		\includegraphics[width=1.4\textwidth, height=0.7\textwidth]{multivar_analysis/volatile/KNN100_kendall_garch_2000_2001.pdf} 
-		\caption{KNN(100)-Kendall-Garch} 
-		\label{fig:KNN(100)-Kendall-Garch_vol}
+		\includegraphics[width=1.4\textwidth, height=0.7\textwidth]{multivar_analysis/volatile/KNN100_pearson_gjr_2000_2001.pdf} 
+		\caption{KNN(100)-Pearson-GJR} 
+		\label{fig:KNN(100)-Pearson-GJR_vol}
 	\end{subfigure}
 	\hfill
 	\begin{subfigure}[b]{0.33 \textwidth} %6
@@ -2431,8 +2451,6 @@ $\beta_i$             &     & 0.7906		&0.5927	&0.7519	&0.8132	&0.8853	&0.9262   
 \caption[Summary statistics of GJR-GARCH Gaussian model specification for the conditional variance in tranquil market conditions.]{Summary statistics of the estimated ARMA(3,1)-GARCH(1,1) model with Gaussian marginal distribution on daily log returns of 30 constituents included in the Dow Jones Industrial Average index for the period March 1987 to December 1993 for 1720 observations. The columns present the mean and quantiles from the cross-sectional distribution of the parameters listed in the rows. Goodness-of-fit test results are shown in the bottom of the table. The first and second row present the number of rejections (at the 0.05 level) across 30 assets from Ljung-Box and weighted portmanteau tests for autocorrelation up to the tenth lag for standardized residuals and squared standardized residuals. The bottom row shows the number of rejections across 30 assets from Kolmogorov-Smirnov test of the Gaussian distribution fit to the standardized residuals.} 
 \label{tab:stat_dist_garch_norm_tranquil_table}
 \end{table}
-
-
 
 \chapter{Value-at-Risk Estimates on Lower Quantiles}
 This appendix presents results on the Value-at-Risk (VaR) forecasting performance of our semiparametric multivariate volatility model using proposed learning algorithms and the dynamic conditional correlation model \citep{ref:Engle2002} on the lower quantiles of the loss distribution. Performance on the lower quantiles (less than 90\%) of the loss distribution is theoretically relevant to evaluate the fitting/forecasting of the models.   
@@ -2740,6 +2758,40 @@ RF(100)\_kendall	   &\textbf{488}	&483		&472		&445		&395		&306		&213		&\textbf{1
 \end{table}
 \fi
 
+\chapter{Delta-Normal Method in Volatile Market Conditions}
+\begin{landscape}
+\begin{table}[h]
+\centering
+\captionsetup[subtable]{position=below}
+\begin{tabular}{l c c c  l l l l l l l l}
+\toprule
+\multicolumn{1}{c}{{\underline{Model}}} & \multicolumn{3}{c}{{\underline{VaR Exceedances}}} & \multicolumn{6}{c}{{\underline{Transition Probabilities}}}                                                                     \\
+                                & I(0.95)  & I(0.975)  & I(0.99) & \multicolumn{2}{c}{I(0.95)} & \multicolumn{2}{c}{I(0.975)} & \multicolumn{2}{c}{I(0.99)} \\ \cmidrule{2-10} 
+                                &             &           &                 & \multicolumn{1}{c}{{$\pi_{01}$}}       & \multicolumn{1}{c}{{$\pi_{11}$}}       & \multicolumn{1}{c}{{$\pi_{01}$}}        & \multicolumn{1}{c}{{$\pi_{11}$}}       & \multicolumn{1}{c}{{$\pi_{01}$}}       & \multicolumn{1}{c}{{$\pi_{11}$}}       \\  \midrule  
+DCC-GARCH					&28		&16		&9        	&0.0531              &0.1071              &0.0311               &0.0625              &0.0184              &0              \\
+DCC-GJR					        &29		&17		&8         &0.0532                   &0.1034              &0.0311               &0.1176              &0.0163              &0              \\ \midrule
+KNN(5)-Pearson-Garch            	&34	&\textbf{23}	&\textbf{16}                &\textbf{0.0581}        &\textbf{0.1765}           &0.0420           &0.0870          &0.0290          &0.0625              \\
+KNN(5)-Pearson-GJR              	&34	&\textbf{24}	&\textbf{15}      &\textbf{0.0581}	&\textbf{0.0581}     &0.0442        &0.0833              &0.0269              &0.0667              \\
+KNN(5)-Kendall-Garch           	&\textbf{53}	&\textbf{32}    &\textbf{20}	      &0.0984     &0.1538     &\textbf{0.0535}    &\textbf{0.1875}  	&0.0355      &0.1              \\
+KNN(5)-Kendall-GJR              	&\textbf{51}	&\textbf{32}	&\textbf{20}          &0.0958      &0.14    &\textbf{0.0535}	&\textbf{0.1875}         &0.0376              &0.05              \\
+KNN(idw)-Pearson-Garch        	&26		&15		&9           &0.0507     &0.0769           &0.0289              &0.0667              &0.0184              &0              \\
+KNN(idw)-Pearson-GJR          	&27	&15	&9                 &0.053              &0.0741              &0.0289               &0.0667              &0.0184              &0              \\
+KNN(idw)-Kendall-Garch          	&\textbf{42}	&\textbf{25}	&\textbf{15}           &0.0788              &0.119              &0.0485               &0.08          &0.0289           &0.0667              \\
+KNN(idw)-Kendall-GJR            	&\textbf{41}	&\textbf{23}	&\textbf{15}              &0.0764              &0.122              &0.0441               &0.087              &0.0289              &0.0667              \\ \midrule
+RF(10)-Pearson-Garch              &\textbf{37}	&18	&\textbf{10}                      &0.0693              &0.1081               &0.0312              &0.1111              &0.0204	&0              \\
+RF(10)-Pearson-GJR              	&\textbf{36}	&18	&\textbf{11}                &0.067              &0.1111          &0.0312               &0.1111      &0.0225           &0              \\
+RF(10)-Kendall-Garch            	&\textbf{50}	&\textbf{33}	&\textbf{20}                &0.0956              &0.1224              &0.0601               &0.1212              &0.0355              &0.1              \\
+RF(10)-Kendall-GJR              	&\textbf{49}	&\textbf{32}	&\textbf{19}            &0.0931              &0.125              &0.0578               &0.125         &0.0375              &0.0526              \\
+RF(100)-Pearson-Garch            &33	   &\textbf{21}	&\textbf{10}         &0.0601         &0.1212              &0.0356               &0.1429              &0.0204              &              \\
+RF(100)-Pearson-GJR          	&31		&\textbf{21}	&\textbf{10}           &0.0556              &0.129          &0.0356               &0.1429              &0.0204           &0              \\
+RF(100)-Kendall-Garch           	&\textbf{53}	&\textbf{32}	&\textbf{18}    	&0.1007	&0.1346	&0.0578	&0.1250	&0.0312	&0.1111              \\   
+RF(100)-Kendall-GJR             	&\textbf{53}	&\textbf{32}	&\textbf{18}         &0.1007        &0.1346              &0.0578               &0.125             &0.0312          &0.1111             \\     [1ex]       
+\bottomrule  
+\end{tabular}
+\caption[Backtesting results in volatile market conditions.]{This table presents test results of unconditional coverage (VaR Exceedances) and independence (Transition Probabilities) at higher quantiles of the loss distribution in volatile market conditions. Bold face indicates rejection. Non-rejection regions for the unconditional coverage test: 15$<$I(0.95)$<$36, 6$<$I(0.975)$<$20 and 0$<$I(0.99)$<$10.}
+\label{tab:var_backtest_vol_table}
+\end{table}
+\end{landscape}
 
 
 

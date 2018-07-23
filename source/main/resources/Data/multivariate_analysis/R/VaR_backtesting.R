@@ -20,7 +20,7 @@ set.seed(42)  # 42:The answer to life, the universe and everything.
 ######                               Tranquil Market Conditions                              #######
 ####################################################################################################
 # Data sample import 
-data <- read.csv("DJI30_returns_1987_2001.csv", row.names=1, header=T)[1:224] # Data sample: 17/3/1987-29/12/1995 intial in sample period: 1720 observations
+data <- read.csv("DJI30_returns_1987_2001.csv", row.names=1, header=T)[1:2224,] # Data sample: 17/3/1987-29/12/1995 intial in sample period: 1720 observations
 data$Date <- NULL
 
 T <- 504  # Out-of-sample test sample: 3/1/1994-29/12/1995
@@ -42,16 +42,15 @@ colnames(dccGarch_mvnorm_tranquil$R_t_file) <- c(colnames(col_names))[1:(N*(N-1)
 colnames(dccGarch_gjr_tranquil$R_t_file) <- c(colnames(col_names))[1:(N*(N-1)/2)]
 write.csv(uniGarch_gjr_tranquil$D_t_file, file="volatilities_norm_DJI30_1994_1995.csv")
 write.csv(dccGarch_mvnorm_tranquil$R_t_file, file="cor_DCC_mvnorm_DJI30_1994_1995.csv")
-write.csv(dccGarch_gjr_tranquil$D_t_file, file="volatilities_gjr_DJI30_1994_1995.csv")
-write.csv(dccGarch_gjr_tranquil$R_t_file, file="cor_DCC_gjr_DJI30_1994_1995.csv")
+write.csv(dccGarch_gjr_tranquil$D_t_file, file="volatilities_gjr_norm_DJI30_1994_1995.csv")
+write.csv(dccGarch_gjr_tranquil$R_t_file, file="cor_DCC_gjr_mvnorm_DJI30_1994_1995.csv")
 
-####    Value-at-Risk Estimation   ###   
-alpha <- c(0.99, 0.975, 0.95, 0.9, 0.8, 0.6, 0.4, 0.2, 0.1, 0.05, 0.025, 0.01)
-mu_portfolio_loss <- w%*%colMeans(data)  # Expected portfolio return (assumed constant through sample mean)
 
 ## Load conditional correlations and volatilities data
 vol_data_tranquil_garch<- read.csv(file="volatilities_garch_norm_DJI30_1994_1995.csv", row.names=1)
-vol_data_tranquil_gjr<- read.csv(file="volatilities_gjr_sstd_DJI30_1994_1995.csv", row.names=1)
+vol_data_tranquil_gjr_sstd <- read.csv(file="volatilities_gjr_sstd_DJI30_1994_1995.csv", row.names=1)
+vol_data_tranquil_gjr_norm <- read.csv(file="volatilities_gjr_norm_DJI30_1994_1995.csv", row.names=1)
+
 cor_DCC_garch_tranquil <- read.csv(file="cor_DCC_garch_mvnorm_DJI30_1994_1995.csv", row.names=1)
 cor_DCC_gjr_tranquil <- read.csv(file="cor_DCC_gjr_mvnorm_DJI30_1994_1995.csv", row.names=1)
 # Nearest neighbor
@@ -59,6 +58,11 @@ cor_KNN5_pearson_tranquil <- read.csv(file="pearson/pearson_cor_estimates/cor_kn
 cor_KNN5_kendall_tranquil <- read.csv(file="kendall/kendall_cor_estimates/cor_knn5_kendall_10_DJI30_1994_1995.csv", row.names=1)
 cor_KNN_idw_pearson_tranquil <- read.csv(file="pearson/pearson_cor_estimates/cor_knn_idw_pearson_10_DJI30_1994_1995.csv", row.names=1)
 cor_KNN_idw_kendall_tranquil <- read.csv(file="kendall/kendall_cor_estimates/cor_knn_idw_kendall_10_DJI30_1994_1995.csv", row.names=1)
+cor_KNN100_pearson_tranquil <- read.csv(file="pearson/pearson_cor_estimates/cor_knn100_pearson_10_DJI30_1994_1995.csv", row.names=1)
+cor_KNN100_kendall_tranquil <- read.csv(file="kendall/kendall_cor_estimates/cor_knn100_kendall_10_DJI30_1994_1995.csv", row.names=1)
+#cor_KNN300_pearson_tranquil <- read.csv(file="pearson/pearson_cor_estimates/cor_knn300_pearson_10_DJI30_1994_1995.csv", row.names=1)
+#cor_KNN300_kendall_tranquil <- read.csv(file="kendall/kendall_cor_estimates/cor_knn300_kendall_10_DJI30_1994_1995.csv", row.names=1)
+
 # Random forest
 cor_RF10_pearson_tranquil <- read.csv(file="pearson/pearson_cor_estimates/cor_rf10_pearson_10_DJI30_1994_1995.csv", row.names=1)
 cor_RF10_kendall_tranquil <- read.csv(file="kendall/kendall_cor_estimates/cor_rf10_kendall_10_DJI30_1994_1995.csv", row.names=1)
@@ -66,56 +70,50 @@ cor_RF100_pearson_tranquil <- read.csv(file="pearson/pearson_cor_estimates/cor_r
 cor_RF100_kendall_tranquil <- read.csv(file="kendall/kendall_cor_estimates/cor_rf100_kendall_10_DJI30_1994_1995.csv", row.names=1)
 
 
-## Compute portfolio Value-at-Risk
+#####    Value-at-Risk Estimation   ##### 
+alpha <- c(0.99, 0.975, 0.95, 0.9, 0.8, 0.6, 0.4, 0.2, 0.1, 0.05, 0.025, 0.01)
+mu_portfolio_loss <- w%*%colMeans(data)  # Expected portfolio return (assumed constant through sample mean)
+## Compute true Value-at-Risk
 VaR_true <- as.matrix(tail(data, T))%*%w  #  Out-of-sample realized returns for a long position in an equally weighted portfolio
-# Garch-Normal 
-VaR_DCC_tranquil_garch <- portfolio_VaR(vol_data_tranquil_garch, cor_DCC_garch_tranquil, mu_portfolio_loss, alpha, file="VaR/tranquil/var_DCC_garch_mvnorm_1994_1995.csv", T, w)
-VaR_KNN5_pearson_tranquil_garch <- portfolio_VaR(vol_data_tranquil_garch, cor_KNN5_pearson_tranquil, mu_portfolio_loss, alpha, file="VaR/tranquil/var_KNN5_pearson_garch_1994_1995.csv", T, w)
-VaR_KNN5_kendall_tranquil_garch <- portfolio_VaR(vol_data_tranquil_garch, cor_KNN5_kendall_tranquil, mu_portfolio_loss, alpha, file="VaR/tranquil/var_KNN5_kendall_garch_1994_1995.csv", T, w)
-VaR_KNN_idw_pearson_tranquil_garch<- portfolio_VaR(vol_data_tranquil_garch, cor_KNN_idw_pearson_tranquil, mu_portfolio_loss, alpha, file="VaR/tranquil/var_KNN_idw_pearson_garch_1994_1995.csv", T, w)
-VaR_KNN_idw_kendall_tranquil_garch <- portfolio_VaR(vol_data_tranquil_garch, cor_KNN_idw_kendall_tranquil, mu_portfolio_loss, alpha, file="VaR/tranquil/var_KNN_idw_kendall_garch_1994_1995.csv", T, w)
-VaR_RF10_pearson_tranquil_garch <- portfolio_VaR(vol_data_tranquil_garch, cor_RF10_pearson_tranquil, mu_portfolio_loss, alpha, file="VaR/tranquil/var_RF10_pearson_garch_1994_1995.csv", T, w)
-VaR_RF10_kendall_tranquil_garch <- portfolio_VaR(vol_data_tranquil_garch, cor_RF10_kendall_tranquil, mu_portfolio_loss, alpha, file="VaR/tranquil/var_RF10_kendall_garch_1994_1995.csv", T, w)
-VaR_RF100_pearson_tranquil_garch <- portfolio_VaR(vol_data_tranquil_garch, cor_RF100_pearson_tranquil, mu_portfolio_loss, alpha, file="VaR/tranquil/var_RF100_pearson_garch_1994_1995.csv", T, w)
-VaR_RF100_kendall_tranquil_garch <- portfolio_VaR(vol_data_tranquil_garch, cor_RF100_kendall_tranquil, mu_portfolio_loss, alpha, file="VaR/tranquil/var_RF100_kendall_garch_1994_1995.csv",  T, w)
-# GJR-SSTD (GJR-Norm for DCC)
-VaR_DCC_tranquil_gjr <- portfolio_VaR(vol_data_tranquil_garch, cor_DCC_gjr_tranquil, mu_portfolio_loss, alpha, file="VaR/tranquil/var_DCC_gjr_mvnorm_1994_1995.csv", T, w) 
-VaR_KNN5_pearson_tranquil_gjr <- portfolio_VaR(vol_data_tranquil_gjr, cor_KNN5_pearson_tranquil, mu_portfolio_loss, alpha, file="VaR/tranquil/var_KNN5_pearson_gjr_1994_1995.csv", T, w)
-VaR_KNN5_kendall_tranquil_gjr <- portfolio_VaR(vol_data_tranquil_gjr, cor_KNN5_kendall_tranquil,mu_portfolio_loss, alpha, file="VaR/tranquil/var_KNN5_kendall_gjr_1994_1995.csv", T, w)
-VaR_KNN_idw_pearson_tranquil_gjr <- portfolio_VaR(vol_data_tranquil_gjr, cor_KNN_idw_pearson_tranquil,mu_portfolio_loss, alpha, file="VaR/tranquil/var_KNN_idw_pearson_gjr_1994_1995.csv", T, w)
-VaR_KNN_idw_kendall_tranquil_gjr <- portfolio_VaR(vol_data_tranquil_gjr, cor_KNN_idw_kendall_tranquil,mu_portfolio_loss, alpha, file="VaR/tranquil/var_KNN_idw_kendall_gjr_1994_1995.csv", T, w)
-VaR_RF10_pearson_tranquil_gjr <- portfolio_VaR(vol_data_tranquil_gjr, cor_RF10_pearson_tranquil, mu_portfolio_loss, alpha, file="VaR/tranquil/var_RF10_pearson_gjr_1994_1995.csv", T, w)
-VaR_RF10_kendall_tranquil_gjr <- portfolio_VaR(vol_data_tranquil_gjr, cor_RF10_kendall_tranquil, mu_portfolio_loss, alpha, file="VaR/tranquil/var_RF10_kendall_gjr_1994_1995.csv", T, w)
-VaR_RF100_pearson_tranquil_gjr <- portfolio_VaR(vol_data_tranquil_gjr, cor_RF100_pearson_tranquil, mu_portfolio_loss, alpha, T, file="VaR/tranquil/var_RF100_pearson_gjr_1994_1995.csv", w)
-VaR_RF100_kendall_tranquil_gjr <- portfolio_VaR(vol_data_tranquil_gjr, cor_RF100_kendall_tranquil, mu_portfolio_loss, alpha, T, file="VaR/tranquil/var_RF100_kendall_gjr_1994_1995.csv", w)
+# Create matrix for 99% CVaR for different risk models 
+row_names = c('DCC_garch', 'DCC_gjr', 'KNN5_pearson_garch', 'KNN5_pearson_gjr', 'KNN5_kendall_garch', 'KNN5_kendall_gjr', 'KNN100_kendall_garch', 'KNN100_kendall_gjr', 
+              'KNN_idw_pearson_garch', 'KNN_idw_pearson_gjr', 'KNN_idw_kendall_garch', 'KNN_idw_kendall_gjr', 'RF10_pearson_garch', 'RF10_pearson_gjr', 'RF10_kendall_garch', 
+              'RF10_kendall_gjr', 'RF100_pearson_garch', 'RF100_pearson_gjr', 'RF100_kendall_garch', 'RF100_kendall_gjr')
+cvar_mat_99 <- matrix(data=NaN, nrow=length(row_names), ncol=T)
+rownames(cvar_mat_99) <- row_names
+
+# Compute portfolio Value-at-Risk
+cvar_mat_99["DCC_garch", ] <- portfolio_VaR(vol_data_tranquil_garch, cor_DCC_garch_tranquil , mu_portfolio_loss, alpha, file=paste("VaR/tranquil/var_DCC_garch_mvnorm_1994_1995.csv"), T, w)$cvar
+cvar_mat_99["DCC_gjr", ] <- portfolio_VaR(vol_data_tranquil_gjr_norm, cor_DCC_gjr_tranquil, mu_portfolio_loss, alpha, file=paste("VaR/tranquil/var_DCC_gjr_mvnorm_1994_1995.csv"), T, w)$cvar
+filenames = c('KNN5_pearson', 'KNN5_kendall', 'KNN100_kendall', 'KNN_idw_pearson', 'KNN_idw_kendall', 'RF10_pearson', 'RF10_kendall', 'RF100_pearson', 'RF100_kendall') 
+for (filename in filenames) {
+  cor_data <- eval(parse(text=paste("cor_", filename, "_tranquil", sep="")))
+  cvar_mat_99[paste(filename,"_garch", sep=""), ] <- portfolio_VaR(vol_data_tranquil_garch, cor_data, mu_portfolio_loss, alpha, file=paste("VaR/tranquil/var_",filename,"_garch_1994_1995.csv", sep=""), T, w)$cvar
+  cvar_mat_99[paste(filename,"_gjr", sep=""), ] <- portfolio_VaR(vol_data_tranquil_gjr_sstd, cor_data, mu_portfolio_loss, alpha, file=paste("VaR/tranquil/var_",filename,"_gjr_1994_1995.csv", sep=""), T, w)$cvar
+}
+write.table(cvar_mat_99, file="CVaR/tranquil/cvar_forecast_1994_1995.csv", sep=",", col.names=FALSE) 
+
 
 ## Backtest portfolio Value-at-Risk
-# Garch-Normal 
-backtest_DCC_tranquil_garch <- uc_ind_test(VaR_est=VaR_DCC_tranquil_garch, cl=alpha, file="backtest/tranquil/backtest_DCC_garch_mvnorm_1994_1995.csv")
-backtest_KNN5_pearson_tranquil_garch <- uc_ind_test(VaR_est=VaR_KNN5_pearson_tranquil_garch, cl=alpha, file="backtest/tranquil/backtest_KNN5_pearson_garch_1994_1995.csv")
-backtest_KNN5_kendall_tranquil_garch <- uc_ind_test(VaR_est=VaR_KNN5_kendall_tranquil_garch, cl=alpha, file="backtest/tranquil/backtest_KNN5_kendall_garch_1994_1995.csv") 
-backtest_KNN_idw_pearson_tranquil_garch <- uc_ind_test(VaR_est=VaR_KNN_idw_pearson_tranquil_garch, cl=alpha, file="backtest/tranquil/backtest_KNN_idw_pearson_garch_1994_1995.csv")
-backtest_KNN_idw_kendall_tranquil_garch <- uc_ind_test(VaR_est=VaR_KNN_idw_kendall_tranquil_garch, cl=alpha, file="backtest/tranquil/backtest_KNN_idw_kendall_garch_1994_1995.csv") 
-backtest_RF10_pearson_tranquil_garch <- uc_ind_test(VaR_est=VaR_RF10_pearson_tranquil_garch, cl=alpha,  file="backtest/tranquil/backtest_RF10_pearson_garch_1994_1995.csv")
-backtest_RF10_kendall_tranquil_garch <- uc_ind_test(VaR_est=VaR_RF10_kendall_tranquil_garch, cl=alpha, file="backtest/tranquil/backtest_RF10_kendall_garch_1994_1995.csv") 
-backtest_RF100_pearson_tranquil_garch <- uc_ind_test(VaR_est=VaR_RF100_pearson_tranquil_garch, cl=alpha, file="backtest/tranquil/backtest_RF100_pearson_garch_1994_1995.csv")
-backtest_RF100_kendall_tranquil_garch <- uc_ind_test(VaR_est=VaR_RF100_kendall_tranquil_garch, cl=alpha, file="backtest/tranquil/backtest_RF100_kendall_garch_1994_1995.csv") 
-# GJR-SSTD (GJR-Norm for DCC)
-backtest_DCC_gjr_tranquil_mvt <- uc_ind_test(VaR_est=VaR_DCC_tranquil_gjr, cl=alpha,  file="backtest/tranquil/backtest_DCC_gjr_mvnorm_1994_1995.csv") 
-backtest_KNN5_pearson_tranquil_gjr <- uc_ind_test(VaR_est=VaR_KNN5_pearson_tranquil_gjr, cl=alpha, file="backtest/tranquil/backtest_KNN5_pearson_gjr_1994_1995.csv") 
-backtest_KNN5_kendall_tranquil_gjr <- uc_ind_test(VaR_est=VaR_KNN5_kendall_tranquil_gjr, cl=alpha, file="backtest/tranquil/backtest_KNN5_kendall_gjr_1994_1995.csv") 
-backtest_KNN_idw_pearson_tranquil_gjr <- uc_ind_test(VaR_est=VaR_KNN_idw_pearson_tranquil_gjr, cl=alpha, file="backtest/tranquil/backtest_KNN_idw_pearson_gjr_1994_1995.csv") 
-backtest_KNN_idw_kendall_tranquil_gjr <- uc_ind_test(VaR_est=VaR_KNN_idw_kendall_tranquil_gjr, cl=alpha, file="backtest/tranquil/backtest_KNN_idw_kendall_gjr_1994_1995.csv") 
-backtest_RF10_pearson_tranquil_gjr <- uc_ind_test(VaR_est=VaR_RF10_pearson_tranquil_gjr, cl=alpha, file="backtest/tranquil/backtest_RF10_pearson_gjr_1994_1995.csv") 
-backtest_RF10_kendall_tranquil_gjr <- uc_ind_test(VaR_est=VaR_RF10_kendall_tranquil_gjr, cl=alpha, file="backtest/tranquil/backtest_RF10_kendall_gjr_1994_1995.csv") 
-backtest_RF100_pearson_tranquil_gjr <- uc_ind_test(VaR_est=VaR_RF100_pearson_tranquil_gjr, cl=alpha, file="backtest/tranquil/backtest_RF100_pearson_gjr_1994_1995.csv") 
-backtest_RF100_kendall_tranquil_gjr <- uc_ind_test(VaR_est=VaR_RF100_kendall_tranquil_gjr, cl=alpha,  file="backtest/tranquil/backtest_RF100_kendall_gjr_1994_1995.csv")
+rownames(VaR_true) <- 1:T
+var_files <- list.files(path="VaR/tranquil/")
+for (var_file in var_files) {
+  VaR_est = read.table(paste("VaR/tranquil/", var_file, sep=""), sep=",", skip=1)
+  VaR_est[1] = NULL
+  colnames(VaR_est) <- 1-alpha
+  result <- uc_ind_test(VaR_est=VaR_est, cl=alpha, file=paste("backtest/tranquil/backtest_", var_file, sep=""))
+  
+}
+
+## Backtest portfolio Conditional Value-at-Risk
+cvar_mat = read.table('CVaR/tranquil/cvar_forecast_1994_1995.csv', sep=",", row.names = 1)
+colnames(cvar_mat) <- 1:T
+result <- cvar_analysis(cvar_matrix=cvar_mat, var_true=c(VaR_true), var_files=var_files, file='CVaR/tranquil/backtest_cvar_1994_1995.csv')
 
 # Non-rejection regions tranwuil market conditions
 for (a in alpha){
   print(sprintf("CI %f: [%i,%i]",a, regions_uc_test(T=T, alpha=a)$lb, regions_uc_test(T=T, alpha=a)$ub))
 }
-
 
 
 
@@ -135,35 +133,34 @@ t <- c((nrow(data)-T):(nrow(data)-1))
 
 ## Dynamic Conditional Correlation model with various error distributions
 dccGarch_mvnorm_vol <- dcc_garch_modeling(data=a_t, t=t, distribution.model="sstd", distribution="mvnorm")
-dccGarch_gjr_vol <-  dcc_garch_modeling(data=a_t, t=t, distribution.model="norm", distribution="gjr") 
+dccGarch_gjr_vol <-  dcc_garch_modeling(data=a_t, t=t, distribution.model="norm", distribution="mvnorm") 
 # Write matrices containing time-varying volatilies and correlations to csv file
 # Add column names to file containing conditional correlations
 col_names <- read.csv(file="pearson/pearson_cor_estimates/cor_knn5_pearson_10_DJI30_1994_1995.csv", row.names=1)
 colnames(dccGarch_mvnorm_vol$R_t_file) <- c(colnames(col_names))[1:(N*(N-1)/2)]
 colnames(dccGarch_gjr_vol$R_t_file) <- c(colnames(col_names))[1:(N*(N-1)/2)]
 write.csv(dccGarch_mvnorm_vol$D_t_file, file="volatilities_sstd_DJI30_2000_2001.csv")
-write.csv(dccGarch_mvnorm_vol$R_t_file, file="cor_DCC_mvnorm_DJI30_2000_2001.csv")
-write.csv(dccGarch_gjr_vol$D_t_file, file="volatilities_norm_gjr_DJI30_2000_2001.csv")
-write.csv(dccGarch_gjr_vol$R_t_file, file="cor_DCC_norm_gjr_DJI30_2000_2001.csv")
-
-####    Value-at-Risk Estimation   ###   
-alpha <- c(0.99, 0.975, 0.95, 0.9, 0.8, 0.6, 0.4, 0.2, 0.1, 0.05, 0.025, 0.01)
-mu_portfolio_loss <- w%*%colMeans(data)  # Expected portfolio return (assumed constant through sample mean)
+write.csv(dccGarch_mvnorm_vol$R_t_file, file="cor_DCC_gjr_mvnorm_DJI30_2000_2001.csv")
+write.csv(dccGarch_gjr_vol$D_t_file, file="volatilities_gjr_norm_DJI30_2000_2001.csv")
+write.csv(dccGarch_gjr_vol$R_t_file, file="cor_DCC_gjr_mvnorm_DJI30_2000_2001.csv")
 
 ## Load conditional correlations and volatilities data
 vol_data_volatile_garch<- read.csv(file="volatilities_garch_norm_DJI30_2000_2001.csv", row.names=1)
-vol_data_volatile_gjr<- read.csv(file="volatilities_gjr_sstd_DJI30_2000_2001.csv", row.names=1)
+vol_data_volatile_gjr_sstd <- read.csv(file="volatilities_gjr_sstd_DJI30_2000_2001.csv", row.names=1)
+vol_data_volatile_gjr_norm <- read.csv(file="volatilities_gjr_norm_DJI30_2000_2001.csv", row.names=1)
+
 cor_DCC_garch_volatile <- read.csv(file="cor_DCC_garch_mvnorm_DJI30_2000_2001.csv", row.names=1)
-cor_DCCgarch_vol_gjr <- read.csv(file="cor_DCC_norm_gjr_DJI30_2000_2001.csv", row.names=1)
+cor_DCCgarch_vol_gjr <- read.csv(file="cor_DCC_gjr_mvnorm_DJI30_2000_2001.csv", row.names=1)
+
 # Nearest neighbor
 cor_KNN5_pearson_volatile <- read.csv(file="pearson/pearson_cor_estimates/cor_knn5_pearson_10_DJI30_2000_2001.csv", row.names=1)
 cor_KNN5_kendall_volatile <- read.csv(file="kendall/kendall_cor_estimates/cor_knn5_kendall_10_DJI30_2000_2001.csv", row.names=1)
+cor_KNN100_pearson_volatile <- read.csv(file="pearson/pearson_cor_estimates/cor_knn100_pearson_10_DJI30_2000_2001.csv", row.names=1)
 cor_KNN_idw_pearson_volatile <- read.csv(file="pearson/pearson_cor_estimates/cor_knn_idw_pearson_10_DJI30_2000_2001.csv", row.names=1)
 cor_KNN_idw_kendall_volatile <- read.csv(file="kendall/kendall_cor_estimates/cor_knn_idw_kendall_10_DJI30_2000_2001.csv", row.names=1)
-
-# Alt KNN_pearson_garch_gjr
-cor_KNN300_pearson_volatile <- read.csv(file="pearson/pearson_cor_estimates/cor_knn300_pearson_10_DJI30_2000_2001.csv", row.names=1)
-cor_KNN500_pearson_volatile <- read.csv(file="pearson/pearson_cor_estimates/cor_knn500_pearson_10_DJI30_2000_2001.csv", row.names=1)
+#cor_KNN100_kendall_volatile <- read.csv(file="kendall/kendall_cor_estimates/cor_knn100_kendall_10_DJI30_2000_2001.csv", row.names=1)
+#cor_KNN300_pearson_volatile <- read.csv(file="pearson/pearson_cor_estimates/cor_knn300_pearson_10_DJI30_2000_2001.csv", row.names=1)
+#cor_KNN500_pearson_volatile <- read.csv(file="pearson/pearson_cor_estimates/cor_knn500_pearson_10_DJI30_2000_2001.csv", row.names=1)
 
 # Random forest
 cor_RF10_pearson_volatile <- read.csv(file="pearson/pearson_cor_estimates/cor_rf10_pearson_10_DJI30_2000_2001.csv", row.names=1)
@@ -172,75 +169,49 @@ cor_RF100_pearson_volatile <- read.csv(file="pearson/pearson_cor_estimates/cor_r
 cor_RF100_kendall_volatile <- read.csv(file="kendall/kendall_cor_estimates/cor_rf100_kendall_10_DJI30_2000_2001.csv", row.names=1)
 
 
-## Compute portfolio Value-at-Risk
+#####    Value-at-Risk Estimation   ##### 
+alpha <- c(0.99, 0.975, 0.95, 0.9, 0.8, 0.6, 0.4, 0.2, 0.1, 0.05, 0.025, 0.01)
+mu_portfolio_loss <- w%*%colMeans(data)  # Expected portfolio return (assumed constant through sample mean)
+## Compute true Value-at-Risk
 VaR_true <- as.matrix(tail(data, T))%*%w  #  Out-of-sample realized returns for a long position in an equally weighted portfolio
-# Garch-Normal 
-VaR_DCC_volatile_garch <- portfolio_VaR(vol_data_volatile_garch, cor_DCC_garch_volatile, mu_portfolio_loss, alpha, file="VaR/volatile/var_DCC_garch_mvnorm_2000_2001.csv", T, w)
-VaR_KNN5_pearson_volatile_garch <- portfolio_VaR(vol_data_volatile_garch, cor_KNN5_pearson_volatile, mu_portfolio_loss, alpha, file="VaR/volatile/var_KNN5_pearson_garch_2000_2001.csv", T, w)
-VaR_KNN5_kendall_volatile_garch <- portfolio_VaR(vol_data_volatile_garch, cor_KNN5_kendall_volatile, mu_portfolio_loss, alpha, file="VaR/volatile/var_KNN5_kendall_garch_2000_2001.csv", T, w)
-VaR_KNN_idw_pearson_volatile_garch<- portfolio_VaR(vol_data_volatile_garch, cor_KNN_idw_pearson_volatile, mu_portfolio_loss, alpha, file="VaR/volatile/var_KNN_idw_pearson_garch_2000_2001.csv", T, w)
-VaR_KNN_idw_kendall_volatile_garch <- portfolio_VaR(vol_data_volatile_garch, cor_KNN_idw_kendall_volatile, mu_portfolio_loss, alpha, file="VaR/volatile/var_KNN_idw_kendall_garch_2000_2001.csv", T, w)
-# Alt VaR KNN_pearson_garch
-VaR_KNN300_pearson_volatile_garch <- portfolio_VaR(vol_data_volatile_garch, cor_KNN300_pearson_volatile, mu_portfolio_loss, alpha, file="VaR/volatile/var_KNN300_pearson_garch_2000_2001.csv", T, w)
-VaR_KNN500_pearson_volatile_garch <- portfolio_VaR(vol_data_volatile_garch, cor_KNN500_pearson_volatile, mu_portfolio_loss, alpha, file="VaR/volatile/var_KNN500_pearson_garch_2000_2001.csv", T, w)
+# Create matrix for 99% CVaR for different risk models 
+row_names = c('DCC_garch', 'DCC_gjr', 'KNN5_pearson_garch', 'KNN5_pearson_gjr', 'KNN5_kendall_garch', 'KNN5_kendall_gjr', 'KNN100_pearson_garch', 'KNN100_pearson_gjr', 
+              'KNN_idw_pearson_garch', 'KNN_idw_pearson_gjr', 'KNN_idw_kendall_garch', 'KNN_idw_kendall_gjr', 'RF10_pearson_garch', 'RF10_pearson_gjr', 'RF10_kendall_garch', 
+              'RF10_kendall_gjr', 'RF100_pearson_garch', 'RF100_pearson_gjr', 'RF100_kendall_garch', 'RF100_kendall_gjr')
+cvar_mat_99 <- matrix(data=NaN, nrow=length(row_names), ncol=T)
+rownames(cvar_mat_99) <- row_names
 
-VaR_RF10_pearson_volatile_garch <- portfolio_VaR(vol_data_volatile_garch, cor_RF10_pearson_volatile, mu_portfolio_loss, alpha, file="VaR/volatile/var_RF10_pearson_garch_2000_2001.csv", T, w)
-VaR_RF10_kendall_volatile_garch <- portfolio_VaR(vol_data_volatile_garch, cor_RF10_kendall_volatile, mu_portfolio_loss, alpha, file="VaR/volatile/var_RF10_kendall_garch_2000_2001.csv", T, w)
-VaR_RF100_pearson_volatile_garch <- portfolio_VaR(vol_data_volatile_garch, cor_RF100_pearson_volatile, mu_portfolio_loss, alpha, file="VaR/volatile/var_RF100_pearson_garch_2000_2001.csv", T, w)
-VaR_RF100_kendall_volatile_garch <- portfolio_VaR(vol_data_volatile_garch, cor_RF100_kendall_volatile, mu_portfolio_loss, alpha, file="VaR/volatile/var_RF100_kendall_garch_2000_2001.csv",  T, w)
-# GJR-SSTD (GJR-Norm for DCC)
-VaR_DCC_volatile_gjr <- portfolio_VaR(vol_data_volatile_garch, cor_DCC_gjr_volatile, mu_portfolio_loss, alpha, file="VaR/volatile/var_DCC_gjr_mvnorm_2000_2001.csv", T, w) 
-VaR_KNN5_pearson_volatile_gjr <- portfolio_VaR(vol_data_volatile_gjr, cor_KNN5_pearson_volatile, mu_portfolio_loss, alpha, file="VaR/volatile/var_KNN5_pearson_gjr_2000_2001.csv", T, w)
-VaR_KNN5_kendall_volatile_gjr <- portfolio_VaR(vol_data_volatile_gjr, cor_KNN5_kendall_volatile,mu_portfolio_loss, alpha, file="VaR/volatile/var_KNN5_kendall_gjr_2000_2001.csv", T, w)
-VaR_KNN_idw_pearson_volatile_gjr <- portfolio_VaR(vol_data_volatile_gjr, cor_KNN_idw_pearson_volatile,mu_portfolio_loss, alpha, file="VaR/volatile/var_KNN_idw_pearson_gjr_2000_2001.csv", T, w)
-VaR_KNN_idw_kendall_volatile_gjr <- portfolio_VaR(vol_data_volatile_gjr, cor_KNN_idw_kendall_volatile,mu_portfolio_loss, alpha, file="VaR/volatile/var_KNN_idw_kendall_gjr_2000_2001.csv", T, w)
-# Alt VaR KNN_pearson_gjr
-VaR_KNN300_pearson_volatile_gjr <- portfolio_VaR(vol_data_volatile_gjr, cor_KNN300_pearson_volatile, mu_portfolio_loss, alpha, file="VaR/volatile/var_KNN300_pearson_gjr_2000_2001.csv", T, w)
-VaR_KNN500_kendall_volatile_gjr <- portfolio_VaR(vol_data_volatile_gjr, cor_KNN500_pearson_volatile, mu_portfolio_loss, alpha, file="VaR/volatile/var_KNN500_pearson_gjr_2000_2001.csv", T, w)
+# Compute portfolio Value-at-Risk
+cvar_mat_99["DCC_garch", ] <- portfolio_VaR(vol_data_volatile_garch, cor_DCC_garch_volatile , mu_portfolio_loss, alpha, file=paste("VaR/volatile/var_DCC_garch_mvnorm_2000_2001.csv"), T, w)$cvar
+cvar_mat_99["DCC_gjr", ] <- portfolio_VaR(vol_data_volatile_gjr_norm, cor_DCCgarch_vol_gjr, mu_portfolio_loss, alpha, file=paste("VaR/volatile/var_DCC_gjr_mvnorm_2000_2001.csv"), T, w)$cvar
 
 
-VaR_RF10_pearson_volatile_gjr <- portfolio_VaR(vol_data_volatile_gjr, cor_RF10_pearson_volatile, mu_portfolio_loss, alpha, file="VaR/volatile/var_RF10_pearson_gjr_2000_2001.csv", T, w)
-VaR_RF10_kendall_volatile_gjr <- portfolio_VaR(vol_data_volatile_gjr, cor_RF10_kendall_volatile, mu_portfolio_loss, alpha, file="VaR/volatile/var_RF10_kendall_gjr_2000_2001.csv", T, w)
-VaR_RF100_pearson_volatile_gjr <- portfolio_VaR(vol_data_volatile_gjr, cor_RF100_pearson_volatile, mu_portfolio_loss, alpha, T, file="VaR/volatile/var_RF100_pearson_gjr_2000_2001.csv", w)
-VaR_RF100_kendall_volatile_gjr <- portfolio_VaR(vol_data_volatile_gjr, cor_RF100_kendall_volatile, mu_portfolio_loss, alpha, T, file="VaR/volatile/var_RF100_kendall_gjr_2000_2001.csv", w)
+filenames = c('KNN5_pearson', 'KNN5_kendall', 'KNN100_pearson', 'KNN_idw_pearson', 'KNN_idw_kendall', 'RF10_pearson', 'RF10_kendall', 'RF100_pearson', 'RF100_kendall') 
+for (filename in filenames) {
+  cor_data <- eval(parse(text=paste("cor_", filename, "_volatile", sep="")))
+  cvar_mat_99[paste(filename,"_garch", sep=""), ] <- portfolio_VaR(vol_data_volatile_garch, cor_data, mu_portfolio_loss, alpha, file=paste("VaR/volatile/var_",filename,"_garch_2000_2001.csv", sep=""), T, w)$cvar
+  cvar_mat_99[paste(filename,"_gjr", sep=""), ] <- portfolio_VaR(vol_data_volatile_gjr_sstd, cor_data, mu_portfolio_loss, alpha, file=paste("VaR/volatile/var_",filename,"_gjr_2000_2001.csv", sep=""), T, w)$cvar
+}
+write.table(cvar_mat_99, file="CVaR/volatile/cvar_forecast_2000_2001.csv", sep=",", col.names=FALSE) 
 
-## Backtest portfolio Value-at-Risk
-# Garch-Normal 
-backtest_DCC_volatile_garch <- uc_ind_test(VaR_est=VaR_DCC_volatile_garch, cl=alpha, file="backtest/volatile/backtest_DCC_garch_mvnorm_2000_2001.csv")
-backtest_KNN5_pearson_volatile_garch <- uc_ind_test(VaR_est=VaR_KNN5_pearson_volatile_garch, cl=alpha, file="backtest/volatile/backtest_KNN5_pearson_garch_2000_2001.csv")
-backtest_KNN5_kendall_volatile_garch <- uc_ind_test(VaR_est=VaR_KNN5_kendall_volatile_garch, cl=alpha, file="backtest/volatile/backtest_KNN5_kendall_garch_2000_2001.csv") 
-backtest_KNN_idw_pearson_volatile_garch <- uc_ind_test(VaR_est=VaR_KNN_idw_pearson_volatile_garch, cl=alpha, file="backtest/volatile/backtest_KNN_idw_pearson_garch_2000_2001.csv")
-backtest_KNN_idw_kendall_volatile_garch <- uc_ind_test(VaR_est=VaR_KNN_idw_kendall_volatile_garch, cl=alpha, file="backtest/volatile/backtest_KNN_idw_kendall_garch_2000_2001.csv") 
-# Alt VaR KNN_pearson_garch
-backtest_KNN300_pearson_volatile_garch <- uc_ind_test(VaR_est=VaR_KNN300_pearson_volatile_garch, cl=alpha, file="backtest/volatile/backtest_KNN300_pearson_garch_2000_2001.csv")
-backtest_KNN500_pearson_volatile_garch <- uc_ind_test(VaR_est=VaR_KNN500_pearson_volatile_garch, cl=alpha, file="backtest/volatile/backtest_KNN500_pearson_garch_2000_2001.csv")
+## Backtest portfolio Value-at-Risk and Conditional Value-at-Risk
+var_files <- list.files(path="VaR/volatile/")
+for (var_file in var_files) {
+  VaR_est = read.table(paste("VaR/volatile/", var_file, sep=""), sep=",", skip=1)
+  VaR_est[1] = NULL
+  colnames(VaR_est) <- 1-alpha
+  result <- uc_ind_test(VaR_est=VaR_est, cl=alpha, file=paste("backtest/volatile/backtest_", var_file, sep=""))
+}
 
-backtest_RF10_pearson_volatile_garch <- uc_ind_test(VaR_est=VaR_RF10_pearson_volatile_garch, cl=alpha,  file="backtest/volatile/backtest_RF10_pearson_garch_2000_2001.csv")
-backtest_RF10_kendall_volatile_garch <- uc_ind_test(VaR_est=VaR_RF10_kendall_volatile_garch, cl=alpha, file="backtest/volatile/backtest_RF10_kendall_garch_2000_2001.csv") 
-backtest_RF100_pearson_volatile_garch <- uc_ind_test(VaR_est=VaR_RF100_pearson_volatile_garch, cl=alpha, file="backtest/volatile/backtest_RF100_pearson_garch_2000_2001.csv")
-backtest_RF100_kendall_volatile_garch <- uc_ind_test(VaR_est=VaR_RF100_kendall_volatile_garch, cl=alpha, file="backtest/volatile/backtest_RF100_kendall_garch_2000_2001.csv") 
-# GJR-SSTD (GJR-Norm for DCC)
-backtest_DCC_gjr_volatile_mvt <- uc_ind_test(VaR_est=VaR_DCC_volatile_gjr, cl=alpha,  file="backtest/volatile/backtest_DCC_gjr_mvnorm_2000_2001.csv") 
-backtest_KNN5_pearson_volatile_gjr <- uc_ind_test(VaR_est=VaR_KNN5_pearson_volatile_gjr, cl=alpha, file="backtest/volatile/backtest_KNN5_pearson_gjr_2000_2001.csv") 
-backtest_KNN5_kendall_volatile_gjr <- uc_ind_test(VaR_est=VaR_KNN5_kendall_volatile_gjr, cl=alpha, file="backtest/volatile/backtest_KNN5_kendall_gjr_2000_2001.csv") 
-backtest_KNN_idw_pearson_volatile_gjr <- uc_ind_test(VaR_est=VaR_KNN_idw_pearson_volatile_gjr, cl=alpha, file="backtest/volatile/backtest_KNN_idw_pearson_gjr_2000_2001.csv") 
-backtest_KNN_idw_kendall_volatile_gjr <- uc_ind_test(VaR_est=VaR_KNN_idw_kendall_volatile_gjr, cl=alpha, file="backtest/volatile/backtest_KNN_idw_kendall_gjr_2000_2001.csv") 
-# Alt VaR KNN_pearson_gjr
-backtest_KNN300_pearson_volatile_gjr <- uc_ind_test(VaR_est=VaR_KNN300_pearson_volatile_gjr, cl=alpha, file="backtest/volatile/backtest_KNN300_pearson_gjr_2000_2001.csv") 
-backtest_KNN500_pearson_volatile_gjr <- uc_ind_test(VaR_est=VaR_KNN500_pearson_volatile_gjr, cl=alpha, file="backtest/volatile/backtest_KNN500_pearson_gjr_2000_2001.csv") 
-
-backtest_RF10_pearson_volatile_gjr <- uc_ind_test(VaR_est=VaR_RF10_pearson_volatile_gjr, cl=alpha, file="backtest/volatile/backtest_RF10_pearson_gjr_2000_2001.csv") 
-backtest_RF10_kendall_volatile_gjr <- uc_ind_test(VaR_est=VaR_RF10_kendall_volatile_gjr, cl=alpha, file="backtest/volatile/backtest_RF10_kendall_gjr_2000_2001.csv") 
-backtest_RF100_pearson_volatile_gjr <- uc_ind_test(VaR_est=VaR_RF100_pearson_volatile_gjr, cl=alpha, file="backtest/volatile/backtest_RF100_pearson_gjr_2000_2001.csv") 
-backtest_RF100_kendall_volatile_gjr <- uc_ind_test(VaR_est=VaR_RF100_kendall_volatile_gjr, cl=alpha,  file="backtest/volatile/backtest_RF100_kendall_gjr_2000_2001.csv")
+## Backtest portfolio Conditional Value-at-Risk
+cvar_mat = read.table('CVaR/volatile/cvar_forecast_2000_2001.csv', sep=",", row.names = 1)
+colnames(cvar_mat) <- 1:T
+result <- cvar_analysis(cvar_matrix=cvar_mat, var_true=c(VaR_true), period='volatile', var_files=var_files, file='CVaR/volatile/backtest_cvar_2000_2001.csv')
 
 # Non-rejection regions volatile market conditions
 for (a in alpha){
   print(sprintf("CI %f: [%i,%i]",a, regions_uc_test(T=T, alpha=a)$lb, regions_uc_test(T=T, alpha=a)$ub))
 }
-
-
-
 
 
 

@@ -18,3 +18,5 @@
 \contentsline {table}{\numberline {A.2}{\ignorespaces Summary statistics of GJR-GARCH skewed Student's t model specification for the conditional variance in tranquil market conditions.}}{69}{table.caption.38}
 \contentsline {table}{\numberline {A.3}{\ignorespaces Summary statistics of GJR-GARCH Gaussian model specification for the conditional variance in tranquil market conditions.}}{69}{table.caption.39}
 \addvspace {10\p@ }
+\addvspace {10\p@ }
+\contentsline {table}{\numberline {C.1}{\ignorespaces Backtesting results in volatile market conditions.}}{72}{table.caption.40}
