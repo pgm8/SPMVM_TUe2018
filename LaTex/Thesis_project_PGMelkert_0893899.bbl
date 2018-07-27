@@ -1,9 +1,15 @@
-\begin{thebibliography}{51}
+\begin{thebibliography}{54}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
   \providecommand{\doi}[1]{doi: #1}\else
   \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[Aas(2004)]{ref:Aas2004}
+K.~Aas.
+\newblock Modelling the dependence structure of financial assets: A survey of
+  four copulas.
+\newblock Research report samba/22/04, Norwegian Computing Center, 2004.
 
 \bibitem[Alexander and Chiumba(1997)]{ref:Alexander1997}
 C.~Alexander and A.~Chiumba.
@@ -137,6 +143,12 @@ Robert~F. Engle, Victor~K. Ng, and Michael Rothschild.
 \newblock \emph{Journal of Econometrics}, 45\penalty0 (1):\penalty0 213--237,
   1990.
 
+\bibitem[Fern{\'a}ndez and Steel(1998)]{ref:Fernandez1998}
+Carmen Fern{\'a}ndez and Mark F.~J. Steel.
+\newblock Carmen fern{\~a}{!'}ndez and mark f. j. steel.
+\newblock \emph{Journal of the American Statistical Association}, 93\penalty0
+  (441):\penalty0 359--371, 1998.
+
 \bibitem[Fisher and Gallagher(2012)]{ref:Fisher2012}
 Thomas~J. Fisher and Colin~M. Gallagher.
 \newblock New weighted portmanteau statistics for time series goodness of fit
@@ -168,12 +180,6 @@ Christian~M. Hafner, Dick van Dijk, and Philip~Hans Franses.
 \newblock Semi-parametric modelling of correlation dynamics.
 \newblock In \emph{Econometric Analysis of Financial and Economic Time Series},
   pages 59--103. Emerald Group Publishing Limited, 2006.
-
-\bibitem[Hansen(1994)]{ref:Hansen1994}
-Bruce~E. Hansen.
-\newblock Autoregressive conditional density estimation.
-\newblock \emph{International Economic Review}, 35\penalty0 (3):\penalty0
-  705--730, 1994.
 
 \bibitem[Hastie et~al.(2009)Hastie, Tibshirani, and Friedman]{ref:Hastie2009}
 Trevor Hastie, Robert Tibshirani, and Jerome Friedman.
@@ -256,10 +262,23 @@ Gilles Louppe.
 \newblock \emph{Understanding random forests: From theory to practice}.
 \newblock PhD thesis, University of Li{\`e}ge, July 2014.
 
+\bibitem[McNeil and Frey(2000)]{ref:McNeil2000}
+Alexander~J. McNeil and R{\"u}diger Frey.
+\newblock Estimation of tail-related risk measures for heteroscedastic
+  financial time series: an extreme value approach.
+\newblock \emph{Journal of Empirical Finance}, 7\penalty0 (3):\penalty0
+  271--300, 2000.
+
 \bibitem[McNeil et~al.(2015)McNeil, Frey, and Embrechts]{ref:QRM2015}
 Alexander~J. McNeil, R{\"u}diger Frey, and Paul Embrechts.
 \newblock \emph{Quantative Risk Management: Concepts, Techniques and Tools}.
 \newblock Princeton University Press, 2015.
+
+\bibitem[Muja and Lowe(2014)]{ref:Muja2014}
+M.~Muja and D.~G. Lowe.
+\newblock Scalable nearest neighbor algorithms for high dimensional data.
+\newblock \emph{IEEE Transactions on Pattern Analysis \& Machine Intelligence},
+  36\penalty0 (11):\penalty0 2227--2240, 2014.
 
 \bibitem[Patton(2006)]{ref:Patton2006}
 Andrew~J. Patton.
@@ -267,15 +286,11 @@ Andrew~J. Patton.
 \newblock \emph{International Economic Review}, 47\penalty0 (2):\penalty0
   527--556, 2006.
 
-\bibitem[Pedregosa et~al.(2011)Pedregosa, Varoquaux, Gramfort, Michel, Thirion,
-  Grisel, Blondel, Prettenhofer, Weiss, Dubourg, Vanderplas, Passos,
-  Cournapeau, Brucher, Perrot, and Duchesnay]{ref:Pedregosa2011}
-F.~Pedregosa, G.~Varoquaux, A.~Gramfort, V.~Michel, B.~Thirion, O.~Grisel,
-  M.~Blondel, P.~Prettenhofer, R.~Weiss, V.~Dubourg, J.~Vanderplas, A.~Passos,
-  D.~Cournapeau, M.~Brucher, M.~Perrot, and E.~Duchesnay.
-\newblock Scikit-learn: Machine learning in python.
-\newblock \emph{Journal of Machine Learning Research}, 12:\penalty0 2825--2830,
-  2011.
+\bibitem[Philippe et~al.(2001)Philippe, Freddy, Jean-Marc, and
+  David]{ref:Artzner2001}
+Artzner Philippe, Delbaen Freddy, Eber Jean-Marc, and Heath David.
+\newblock Coherent measures of risk.
+\newblock \emph{Mathematical Finance}, 9\penalty0 (3):\penalty0 203--228, 2001.
 
 \bibitem[Plyakha et~al.(2012)Plyakha, Uppal, and Vilkov]{ref:Plyakha2012}
 Yuliya Plyakha, Raman Uppal, and Grigory Vilkov.
