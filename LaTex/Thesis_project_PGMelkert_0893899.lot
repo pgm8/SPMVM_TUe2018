@@ -3,23 +3,23 @@
 \addvspace {10\p@ }
 \contentsline {table}{\numberline {2.1}{\ignorespaces Random Forest: a combination of Bagging and the Random Subspace Method.\relax }}{16}{table.caption.6}
 \addvspace {10\p@ }
-\contentsline {table}{\numberline {3.1}{\ignorespaces MSE decomposition as a function of the number of neighbors (k) for KNN with proxy covariates and true correlation.\relax }}{27}{table.caption.12}
-\contentsline {table}{\numberline {3.2}{\ignorespaces MSE decomposition as a function of the number trees for RF estimator with proxy covariates and true correlation.\relax }}{32}{table.caption.18}
-\contentsline {table}{\numberline {3.3}{\ignorespaces MSE decomposition as a function of the number of neighbors (k) for KNN with approximations for both covariates and response variable.\relax }}{36}{table.caption.22}
+\contentsline {table}{\numberline {3.1}{\ignorespaces MSE decomposition as a function of the number of neighbors (k) for KNN with proxy covariates and true correlation.\relax }}{28}{table.caption.12}
+\contentsline {table}{\numberline {3.2}{\ignorespaces MSE decomposition as a function of the number trees for RF estimator with proxy covariates and true correlation.\relax }}{33}{table.caption.18}
+\contentsline {table}{\numberline {3.3}{\ignorespaces MSE decomposition as a function of the number of neighbors (k) for KNN with approximations for both covariates and response variable.\relax }}{37}{table.caption.22}
 \contentsline {table}{\numberline {3.4}{\ignorespaces MSE decomposition as a function of the number of estimators (trees) for RF with approximations for both covariates and response variable.\relax }}{42}{table.caption.27}
 \addvspace {10\p@ }
-\contentsline {table}{\numberline {4.1}{\ignorespaces Summary statistics of GJR-GARCH skewed Student's t model specification for the conditional variance in volatile market conditions.}}{50}{table.caption.30}
-\contentsline {table}{\numberline {4.2}{\ignorespaces Backtesting results in tranquil market conditions.}}{55}{table.caption.31}
-\contentsline {table}{\numberline {4.3}{\ignorespaces Backtesting results in volatile market conditions.}}{60}{table.caption.33}
+\contentsline {table}{\numberline {4.1}{\ignorespaces Summary statistics of GJR-GARCH skewed Student's t model specification for the conditional variance in volatile market conditions.}}{52}{table.caption.30}
+\contentsline {table}{\numberline {4.2}{\ignorespaces Backtesting results in tranquil market conditions.}}{56}{table.caption.31}
+\contentsline {table}{\numberline {4.3}{\ignorespaces Backtesting results in volatile market conditions.}}{61}{table.caption.33}
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {table}{\numberline {A.1}{\ignorespaces Descriptive statistics of Dow Jones Industrial Average daily log returns.}}{71}{table.caption.36}
+\contentsline {table}{\numberline {A.1}{\ignorespaces Descriptive statistics of Dow Jones Industrial Average daily log returns.}}{72}{table.caption.36}
 \addvspace {10\p@ }
-\contentsline {table}{\numberline {B.1}{\ignorespaces Summary statistics of GJR-GARCH Gaussian model specification for the conditional variance in volatile market conditions.}}{72}{table.caption.37}
-\contentsline {table}{\numberline {B.2}{\ignorespaces Summary statistics of GJR-GARCH skewed Student's t model specification for the conditional variance in tranquil market conditions.}}{73}{table.caption.38}
-\contentsline {table}{\numberline {B.3}{\ignorespaces Summary statistics of GJR-GARCH Gaussian model specification for the conditional variance in tranquil market conditions.}}{73}{table.caption.39}
+\contentsline {table}{\numberline {B.1}{\ignorespaces Summary statistics of GJR-GARCH Gaussian model specification for the conditional variance in volatile market conditions.}}{73}{table.caption.37}
+\contentsline {table}{\numberline {B.2}{\ignorespaces Summary statistics of GJR-GARCH skewed Student's t model specification for the conditional variance in tranquil market conditions.}}{74}{table.caption.38}
+\contentsline {table}{\numberline {B.3}{\ignorespaces Summary statistics of GJR-GARCH Gaussian model specification for the conditional variance in tranquil market conditions.}}{74}{table.caption.39}
 \addvspace {10\p@ }
-\contentsline {table}{\numberline {C.1}{\ignorespaces Backtesting results on lower quantiles in tranquil market conditions.}}{75}{table.caption.40}
-\contentsline {table}{\numberline {C.2}{\ignorespaces Backtesting results on lower quantiles in volatile market conditions.}}{76}{table.caption.41}
+\contentsline {table}{\numberline {C.1}{\ignorespaces Backtesting results on lower quantiles in tranquil market conditions.}}{76}{table.caption.40}
+\contentsline {table}{\numberline {C.2}{\ignorespaces Backtesting results on lower quantiles in volatile market conditions.}}{77}{table.caption.41}
 \addvspace {10\p@ }
-\contentsline {table}{\numberline {D.1}{\ignorespaces Backtesting results in volatile market conditions under Delta-Normal method.}}{78}{table.caption.42}
+\contentsline {table}{\numberline {D.1}{\ignorespaces Backtesting results in volatile market conditions under Delta-Normal method.}}{79}{table.caption.42}

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2016.5.22)  28 JUL 2018 00:07
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2016.5.22)  28 JUL 2018 14:45
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -947,32 +947,32 @@ Underfull \hbox (badness 10000) in paragraph at lines 114--116
 
 ] [1] [2
 
-]
-No file Thesis_project_PGMelkert_0893899.toc.
-\tf@toc=\write4
-\openout4 = `Thesis_project_PGMelkert_0893899.toc'.
-
-[3
-
-
-] (./Thesis_project_PGMelkert_0893899.lof
-LaTeX Font Info:    Try loading font information for U+msa on input line 5.
+] (./Thesis_project_PGMelkert_0893899.toc
+LaTeX Font Info:    Try loading font information for U+msa on input line 2.
 
 (/usr/local/texlive/2016/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 5.
+LaTeX Font Info:    Try loading font information for U+msb on input line 2.
 
 (/usr/local/texlive/2016/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
-) [4
+) [3
 
 
 ])
+\tf@toc=\write4
+\openout4 = `Thesis_project_PGMelkert_0893899.toc'.
+
+ [4]
+(./Thesis_project_PGMelkert_0893899.lof)
 \tf@lof=\write5
 \openout5 = `Thesis_project_PGMelkert_0893899.lof'.
 
- [5]
+ [5
+
+
+]
 (./Thesis_project_PGMelkert_0893899.lot)
 \tf@lot=\write6
 \openout6 = `Thesis_project_PGMelkert_0893899.lot'.
@@ -985,17 +985,17 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 ]
 Chapter 1.
 
-Underfull \hbox (badness 10000) in paragraph at lines 236--237
+Underfull \hbox (badness 10000) in paragraph at lines 233--234
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 242--244
+Underfull \hbox (badness 10000) in paragraph at lines 239--241
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 249--251
+Underfull \hbox (badness 10000) in paragraph at lines 246--248
 
  []
 
@@ -1003,11 +1003,16 @@ pdfTeX warning (ext4): destination with the same identifier (name{page.1}) has
 been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.256 \noindent
+l.253 \noindent
                 [1
 
 
 ]
+Underfull \hbox (badness 10000) in paragraph at lines 253--255
+
+ []
+
+
 Underfull \hbox (badness 10000) in paragraph at lines 256--258
 
  []
@@ -1017,96 +1022,96 @@ Underfull \hbox (badness 10000) in paragraph at lines 259--261
 
  []
 
-
-Underfull \hbox (badness 10000) in paragraph at lines 263--265
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 266--268
-
- []
-
 [2]
-Underfull \hbox (badness 10000) in paragraph at lines 269--271
+Underfull \hbox (badness 10000) in paragraph at lines 264--266
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 272--274
-
- []
-
-[3]
-Underfull \hbox (badness 10000) in paragraph at lines 289--291
+Underfull \hbox (badness 10000) in paragraph at lines 267--269
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 294--295
+Underfull \hbox (badness 10000) in paragraph at lines 270--272
+
+ []
+
+[3
+
+]
+Underfull \hbox (badness 10000) in paragraph at lines 287--289
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 305--306
+Underfull \hbox (badness 10000) in paragraph at lines 292--293
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 303--304
 
  []
 
 [4
 
 ]
-Underfull \hbox (badness 10000) in paragraph at lines 307--309
+Underfull \hbox (badness 10000) in paragraph at lines 305--307
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 310--312
+Underfull \hbox (badness 10000) in paragraph at lines 308--310
 
  []
 
 [5]
-Underfull \hbox (badness 10000) in paragraph at lines 314--316
+Underfull \hbox (badness 10000) in paragraph at lines 311--313
 
  []
 
-[6
-
-]
+[6]
 Chapter 2.
 
-Underfull \hbox (badness 10000) in paragraph at lines 328--329
+Underfull \hbox (badness 10000) in paragraph at lines 325--326
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 330--332
+Underfull \hbox (badness 10000) in paragraph at lines 327--329
 
  []
 
 [7
 
 ]
-Underfull \hbox (badness 10000) in paragraph at lines 340--342
+Underfull \hbox (badness 10000) in paragraph at lines 337--339
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 353--355
+Underfull \hbox (badness 10000) in paragraph at lines 350--352
 
  []
 
 [8]
-Underfull \hbox (badness 10000) in paragraph at lines 364--366
+Underfull \hbox (badness 10000) in paragraph at lines 361--363
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 379--381
+Underfull \hbox (badness 10000) in paragraph at lines 376--378
 
  []
 
 [9]
-Underfull \hbox (badness 10000) in paragraph at lines 396--398
+Underfull \hbox (badness 10000) in paragraph at lines 393--395
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 404--406
 
  []
 
@@ -1115,896 +1120,896 @@ Underfull \hbox (badness 10000) in paragraph at lines 407--409
 
  []
 
-
-Underfull \hbox (badness 10000) in paragraph at lines 410--412
-
- []
-
 [10]
-Underfull \hbox (badness 10000) in paragraph at lines 430--432
+Underfull \hbox (badness 10000) in paragraph at lines 427--429
 
  []
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `math shift' on input line 457.
+(hyperref)                removing `math shift' on input line 454.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `\tau' on input line 457.
+(hyperref)                removing `\tau' on input line 454.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `math shift' on input line 457.
+(hyperref)                removing `math shift' on input line 454.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 461--463
+
+ []
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 464--466
 
  []
 
-
+[11]
 Underfull \hbox (badness 10000) in paragraph at lines 467--469
 
  []
 
-[11]
-Underfull \hbox (badness 10000) in paragraph at lines 470--472
+
+Underfull \hbox (badness 10000) in paragraph at lines 471--472
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 474--475
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 476--478
+Underfull \hbox (badness 10000) in paragraph at lines 473--475
 
  []
 
 [12]
-Underfull \hbox (badness 10000) in paragraph at lines 486--488
+Underfull \hbox (badness 10000) in paragraph at lines 483--485
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 489--491
+Underfull \hbox (badness 10000) in paragraph at lines 486--488
 
  []
 
 [13]
 Package hyperref Info: bookmark level for unknown algorithm defaults to 0 on in
-put line 520.
+put line 517.
 
-Underfull \hbox (badness 10000) in paragraph at lines 525--526
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 540--541
+Underfull \hbox (badness 10000) in paragraph at lines 522--523
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 542--544
+Underfull \hbox (badness 10000) in paragraph at lines 537--538
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 539--541
 
  []
 
 [14]
-Underfull \hbox (badness 10000) in paragraph at lines 567--568
+Underfull \hbox (badness 10000) in paragraph at lines 564--565
 
  []
 
 [15]
-Underfull \hbox (badness 10000) in paragraph at lines 569--571
+Underfull \hbox (badness 10000) in paragraph at lines 566--568
 
  []
 
 [16]
-Underfull \hbox (badness 10000) in paragraph at lines 679--680
+Underfull \hbox (badness 10000) in paragraph at lines 673--675
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 681--682
 
  []
 
 [17]
-Underfull \hbox (badness 10000) in paragraph at lines 696--698
+Underfull \hbox (badness 10000) in paragraph at lines 698--700
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 699--701
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 710--712
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 713--715
+Underfull \hbox (badness 10000) in paragraph at lines 701--703
 
  []
 
 [18]
-Underfull \hbox (badness 10000) in paragraph at lines 732--734
+Underfull \hbox (badness 10000) in paragraph at lines 712--714
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 735--737
+Underfull \hbox (badness 10000) in paragraph at lines 715--717
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 748--749
-
- []
-
-[19]
-Underfull \hbox (badness 10000) in paragraph at lines 750--752
+Underfull \hbox (badness 10000) in paragraph at lines 734--736
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 767--769
+Underfull \hbox (badness 10000) in paragraph at lines 737--739
 
  []
 
-[20]
+[19] [20]
+Underfull \hbox (badness 10000) in paragraph at lines 752--753
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 754--756
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 771--773
+
+ []
+
+[21
+
+]
 Chapter 3.
 
-Underfull \hbox (badness 10000) in paragraph at lines 782--783
+Underfull \hbox (badness 10000) in paragraph at lines 786--787
 
  []
 
 
-<figures/simulation_assetpaths_with_stochastic_correlations.png, id=765, 828.21
+<figures/simulation_assetpaths_with_stochastic_correlations.png, id=826, 828.21
 42pt x 352.6776pt>
 File: figures/simulation_assetpaths_with_stochastic_correlations.png Graphic fi
 le (type png)
 
 <use figures/simulation_assetpaths_with_stochastic_correlations.png>
 Package pdftex.def Info: figures/simulation_assetpaths_with_stochastic_correlat
-ions.png used on input line 802.
+ions.png used on input line 806.
 (pdftex.def)             Requested size: 496.93236pt x 211.60818pt.
 
-Overfull \hbox (27.1773pt too wide) in paragraph at lines 802--803
+Overfull \hbox (27.1773pt too wide) in paragraph at lines 806--807
  [][] 
  []
 
-[21
+[22
 
 ]
-Underfull \hbox (badness 10000) in paragraph at lines 807--809
+Underfull \hbox (badness 10000) in paragraph at lines 811--813
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 814--815
+Underfull \hbox (badness 10000) in paragraph at lines 818--819
 
  []
 
-[22 <./figures/simulation_assetpaths_with_stochastic_correlations.png>]
-<figures/mse_pearson_kendall.png, id=786, 462.528pt x 346.896pt>
+[23 <./figures/simulation_assetpaths_with_stochastic_correlations.png>]
+<figures/mse_pearson_kendall.png, id=849, 462.528pt x 346.896pt>
 File: figures/mse_pearson_kendall.png Graphic file (type png)
 
 <use figures/mse_pearson_kendall.png>
-Package pdftex.def Info: figures/mse_pearson_kendall.png used on input line 824
+Package pdftex.def Info: figures/mse_pearson_kendall.png used on input line 830
 .
 (pdftex.def)             Requested size: 230.18361pt x 115.09004pt.
 
-<figures/det_pearson_kendall.png, id=787, 462.528pt x 346.896pt>
+<figures/det_pearson_kendall.png, id=850, 462.528pt x 346.896pt>
 File: figures/det_pearson_kendall.png Graphic file (type png)
 
 <use figures/det_pearson_kendall.png>
-Package pdftex.def Info: figures/det_pearson_kendall.png used on input line 830
+Package pdftex.def Info: figures/det_pearson_kendall.png used on input line 836
 .
 (pdftex.def)             Requested size: 230.18361pt x 115.09004pt.
 
-Underfull \hbox (badness 10000) in paragraph at lines 841--843
+Underfull \hbox (badness 10000) in paragraph at lines 847--849
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 844--846
+Underfull \hbox (badness 10000) in paragraph at lines 850--852
 
  []
 
-<figures/pearson_21_estimates_bootstrap.png, id=798, 462.528pt x 346.896pt>
+<figures/pearson_21_estimates_bootstrap.png, id=861, 462.528pt x 346.896pt>
 File: figures/pearson_21_estimates_bootstrap.png Graphic file (type png)
 
 <use figures/pearson_21_estimates_bootstrap.png>
 Package pdftex.def Info: figures/pearson_21_estimates_bootstrap.png used on inp
-ut line 851.
+ut line 857.
 (pdftex.def)             Requested size: 230.18361pt x 115.09004pt.
 
-<figures/kendall_21_estimates_bootstrap.png, id=799, 462.528pt x 346.896pt>
+<figures/kendall_21_estimates_bootstrap.png, id=862, 462.528pt x 346.896pt>
 File: figures/kendall_21_estimates_bootstrap.png Graphic file (type png)
 
 <use figures/kendall_21_estimates_bootstrap.png>
 Package pdftex.def Info: figures/kendall_21_estimates_bootstrap.png used on inp
-ut line 858.
+ut line 864.
 (pdftex.def)             Requested size: 230.18361pt x 115.09004pt.
 
-<figures/decom_mse_pearson.png, id=800, 462.528pt x 346.896pt>
+<figures/decom_mse_pearson.png, id=863, 462.528pt x 346.896pt>
 File: figures/decom_mse_pearson.png Graphic file (type png)
 
 <use figures/decom_mse_pearson.png>
-Package pdftex.def Info: figures/decom_mse_pearson.png used on input line 865.
+Package pdftex.def Info: figures/decom_mse_pearson.png used on input line 871.
 (pdftex.def)             Requested size: 230.18361pt x 115.09004pt.
 
-<figures/decom_mse_kendall.png, id=801, 462.528pt x 346.896pt>
+<figures/decom_mse_kendall.png, id=864, 462.528pt x 346.896pt>
 File: figures/decom_mse_kendall.png Graphic file (type png)
 
 <use figures/decom_mse_kendall.png>
-Package pdftex.def Info: figures/decom_mse_kendall.png used on input line 872.
+Package pdftex.def Info: figures/decom_mse_kendall.png used on input line 878.
 (pdftex.def)             Requested size: 230.18361pt x 115.09004pt.
- [23 <./figures/mse_pearson_kendall.png> <./figures/det_pearson_kendall.png>]
-Underfull \hbox (badness 10000) in paragraph at lines 883--884
+ [24
+
+ <./figures/mse_pearson_kendall.png> <./figures/det_pearson_kendall.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 889--890
 
  []
 
-[24 <./figures/pearson_21_estimates_bootstrap.png> <./figures/kendall_21_estima
+[25 <./figures/pearson_21_estimates_bootstrap.png> <./figures/kendall_21_estima
 tes_bootstrap.png> <./figures/decom_mse_pearson.png> <./figures/decom_mse_kenda
 ll.png>]
-<figures/mse_knn5_pearson_kendall_true.png, id=822, 462.528pt x 346.896pt>
+<figures/mse_knn5_pearson_kendall_true.png, id=885, 462.528pt x 346.896pt>
 File: figures/mse_knn5_pearson_kendall_true.png Graphic file (type png)
 
 <use figures/mse_knn5_pearson_kendall_true.png>
 Package pdftex.def Info: figures/mse_knn5_pearson_kendall_true.png used on inpu
-t line 894.
+t line 900.
 (pdftex.def)             Requested size: 230.18361pt x 115.09004pt.
 
-<figures/det_knn5_pearson_kendall_true.png, id=823, 462.528pt x 346.896pt>
+<figures/det_knn5_pearson_kendall_true.png, id=886, 462.528pt x 346.896pt>
 File: figures/det_knn5_pearson_kendall_true.png Graphic file (type png)
 
 <use figures/det_knn5_pearson_kendall_true.png>
 Package pdftex.def Info: figures/det_knn5_pearson_kendall_true.png used on inpu
-t line 901.
+t line 907.
 (pdftex.def)             Requested size: 230.18361pt x 115.09004pt.
 
-Underfull \hbox (badness 10000) in paragraph at lines 910--912
+Underfull \hbox (badness 10000) in paragraph at lines 916--918
 
  []
 
 
-<figures/knn_pearson_21_estimates_bootstrap_true.png, id=830, 462.528pt x 346.8
+<figures/knn_pearson_21_estimates_bootstrap_true.png, id=893, 462.528pt x 346.8
 96pt>
 File: figures/knn_pearson_21_estimates_bootstrap_true.png Graphic file (type pn
 g)
  <use figures/knn_pearson_21_estimates_bootstrap_true.png>
 Package pdftex.def Info: figures/knn_pearson_21_estimates_bootstrap_true.png us
-ed on input line 920.
+ed on input line 926.
 (pdftex.def)             Requested size: 230.18361pt x 115.09004pt.
 
-<figures/knn_kendall_21_estimates_bootstrap_true.png, id=831, 462.528pt x 346.8
+<figures/knn_kendall_21_estimates_bootstrap_true.png, id=894, 462.528pt x 346.8
 96pt>
 File: figures/knn_kendall_21_estimates_bootstrap_true.png Graphic file (type pn
 g)
  <use figures/knn_kendall_21_estimates_bootstrap_true.png>
 Package pdftex.def Info: figures/knn_kendall_21_estimates_bootstrap_true.png us
-ed on input line 927.
+ed on input line 933.
 (pdftex.def)             Requested size: 230.18361pt x 115.09004pt.
 
-<figures/decom_mse_knn5_pearson_true.png, id=832, 462.528pt x 346.896pt>
+<figures/decom_mse_knn5_pearson_true.png, id=895, 462.528pt x 346.896pt>
 File: figures/decom_mse_knn5_pearson_true.png Graphic file (type png)
 
 <use figures/decom_mse_knn5_pearson_true.png>
 Package pdftex.def Info: figures/decom_mse_knn5_pearson_true.png used on input 
-line 934.
+line 940.
 (pdftex.def)             Requested size: 230.18361pt x 115.09004pt.
 
-<figures/decom_mse_knn5_kendall_true.png, id=833, 462.528pt x 346.896pt>
+<figures/decom_mse_knn5_kendall_true.png, id=896, 462.528pt x 346.896pt>
 File: figures/decom_mse_knn5_kendall_true.png Graphic file (type png)
 
 <use figures/decom_mse_knn5_kendall_true.png>
 Package pdftex.def Info: figures/decom_mse_knn5_kendall_true.png used on input 
-line 941.
+line 947.
 (pdftex.def)             Requested size: 230.18361pt x 115.09004pt.
- [25 <./figures/mse_knn5_pearson_kendall_true.png> <./figures/det_knn5_pearson_
+ [26 <./figures/mse_knn5_pearson_kendall_true.png> <./figures/det_knn5_pearson_
 kendall_true.png>]
-Underfull \hbox (badness 10000) in paragraph at lines 950--951
+Underfull \hbox (badness 10000) in paragraph at lines 956--957
 
  []
 
-[26 <./figures/knn_pearson_21_estimates_bootstrap_true.png> <./figures/knn_kend
+[27 <./figures/knn_pearson_21_estimates_bootstrap_true.png> <./figures/knn_kend
 all_21_estimates_bootstrap_true.png> <./figures/decom_mse_knn5_pearson_true.png
 > <./figures/decom_mse_knn5_kendall_true.png>]
-<figures/sens_analysis_mse_knn_pearson_true.png, id=859, 462.528pt x 346.896pt>
+<figures/sens_analysis_mse_knn_pearson_true.png, id=921, 462.528pt x 346.896pt>
 File: figures/sens_analysis_mse_knn_pearson_true.png Graphic file (type png)
 <use figures/sens_analysis_mse_knn_pearson_true.png>
 Package pdftex.def Info: figures/sens_analysis_mse_knn_pearson_true.png used on
- input line 1022.
+ input line 1028.
 (pdftex.def)             Requested size: 230.18361pt x 115.09004pt.
 
-<figures/sens_analysis_mse_knn_kendall_true.png, id=860, 462.528pt x 346.896pt>
+<figures/sens_analysis_mse_knn_kendall_true.png, id=922, 462.528pt x 346.896pt>
 File: figures/sens_analysis_mse_knn_kendall_true.png Graphic file (type png)
 <use figures/sens_analysis_mse_knn_kendall_true.png>
 Package pdftex.def Info: figures/sens_analysis_mse_knn_kendall_true.png used on
- input line 1029.
+ input line 1035.
 (pdftex.def)             Requested size: 230.18361pt x 115.09004pt.
-
-Underfull \hbox (badness 10000) in paragraph at lines 1037--1039
-
- []
-
-[27 <./figures/sens_analysis_mse_knn_pearson_true.png> <./figures/sens_analysis
-_mse_knn_kendall_true.png>]
-Underfull \hbox (badness 10000) in paragraph at lines 1040--1042
+ [28 <./figures/sens_analysis_mse_knn_pearson_true.png> <./figures/sens_analysi
+s_mse_knn_kendall_true.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 1045--1047
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1043--1045
+Underfull \hbox (badness 10000) in paragraph at lines 1048--1050
 
  []
 
 
-<figures/knn_pearson_21_len_train_estimates_bootstrap_true.png, id=880, 462.528
+Underfull \hbox (badness 10000) in paragraph at lines 1051--1053
+
+ []
+
+
+<figures/knn_pearson_21_len_train_estimates_bootstrap_true.png, id=943, 462.528
 pt x 346.896pt>
 File: figures/knn_pearson_21_len_train_estimates_bootstrap_true.png Graphic fil
 e (type png)
 
 <use figures/knn_pearson_21_len_train_estimates_bootstrap_true.png>
 Package pdftex.def Info: figures/knn_pearson_21_len_train_estimates_bootstrap_t
-rue.png used on input line 1050.
+rue.png used on input line 1058.
 (pdftex.def)             Requested size: 230.18361pt x 115.09004pt.
 
-<figures/knn_pearson_21_IDW_estimates_bootstrap_true.png, id=881, 462.528pt x 3
+<figures/knn_pearson_21_IDW_estimates_bootstrap_true.png, id=944, 462.528pt x 3
 46.896pt>
 File: figures/knn_pearson_21_IDW_estimates_bootstrap_true.png Graphic file (typ
 e png)
  <use figures/knn_pearson_21_IDW_estimates_bootstrap_true.png>
 Package pdftex.def Info: figures/knn_pearson_21_IDW_estimates_bootstrap_true.pn
-g used on input line 1057.
+g used on input line 1065.
 (pdftex.def)             Requested size: 230.18361pt x 115.09004pt.
 
-<figures/decom_mse_knn_len_train_pearson_true.png, id=882, 462.528pt x 346.896p
+<figures/decom_mse_knn_len_train_pearson_true.png, id=945, 462.528pt x 346.896p
 t>
 File: figures/decom_mse_knn_len_train_pearson_true.png Graphic file (type png)
  <use figures/decom_mse_knn_len_train_pearson_true.png>
 Package pdftex.def Info: figures/decom_mse_knn_len_train_pearson_true.png used 
-on input line 1063.
+on input line 1071.
 (pdftex.def)             Requested size: 230.18361pt x 115.09004pt.
 
-<figures/decom_mse_knn_IDW_pearson_true.png, id=883, 462.528pt x 346.896pt>
+<figures/decom_mse_knn_IDW_pearson_true.png, id=946, 462.528pt x 346.896pt>
 File: figures/decom_mse_knn_IDW_pearson_true.png Graphic file (type png)
 
 <use figures/decom_mse_knn_IDW_pearson_true.png>
 Package pdftex.def Info: figures/decom_mse_knn_IDW_pearson_true.png used on inp
-ut line 1070.
+ut line 1078.
 (pdftex.def)             Requested size: 230.18361pt x 115.09004pt.
- [28]
-Underfull \hbox (badness 10000) in paragraph at lines 1079--1081
+ [29
+
+]
+Underfull \hbox (badness 10000) in paragraph at lines 1087--1089
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1083--1085
+Underfull \hbox (badness 10000) in paragraph at lines 1090--1092
 
  []
 
-[29 <./figures/knn_pearson_21_len_train_estimates_bootstrap_true.png> <./figure
-s/knn_pearson_21_IDW_estimates_bootstrap_true.png> <./figures/decom_mse_knn_len
-_train_pearson_true.png> <./figures/decom_mse_knn_IDW_pearson_true.png>]
-<figures/mse_knn5_idw_pearson_kendall_true.png, id=903, 462.528pt x 346.896pt>
+
+<figures/mse_knn5_idw_pearson_kendall_true.png, id=956, 462.528pt x 346.896pt>
 File: figures/mse_knn5_idw_pearson_kendall_true.png Graphic file (type png)
 
 <use figures/mse_knn5_idw_pearson_kendall_true.png>
 Package pdftex.def Info: figures/mse_knn5_idw_pearson_kendall_true.png used on 
-input line 1091.
+input line 1098.
 (pdftex.def)             Requested size: 230.18361pt x 115.09004pt.
 
-<figures/det_knn_IDW_pearson_kendall_true.png, id=904, 462.528pt x 346.896pt>
+<figures/det_knn_IDW_pearson_kendall_true.png, id=957, 462.528pt x 346.896pt>
 File: figures/det_knn_IDW_pearson_kendall_true.png Graphic file (type png)
 
 <use figures/det_knn_IDW_pearson_kendall_true.png>
 Package pdftex.def Info: figures/det_knn_IDW_pearson_kendall_true.png used on i
-nput line 1098.
+nput line 1105.
 (pdftex.def)             Requested size: 230.18361pt x 115.09004pt.
-
-<figures/mse_rf10_pearson_kendall_true.png, id=906, 462.528pt x 346.896pt>
+ [30 <./figures/knn_pearson_21_len_train_estimates_bootstrap_true.png> <./figur
+es/knn_pearson_21_IDW_estimates_bootstrap_true.png> <./figures/decom_mse_knn_le
+n_train_pearson_true.png> <./figures/decom_mse_knn_IDW_pearson_true.png>]
+<figures/mse_rf10_pearson_kendall_true.png, id=968, 462.528pt x 346.896pt>
 File: figures/mse_rf10_pearson_kendall_true.png Graphic file (type png)
 
 <use figures/mse_rf10_pearson_kendall_true.png>
 Package pdftex.def Info: figures/mse_rf10_pearson_kendall_true.png used on inpu
-t line 1115.
+t line 1122.
 (pdftex.def)             Requested size: 230.18361pt x 115.09004pt.
 
-<figures/det_rf10_pearson_kendall_true.png, id=907, 462.528pt x 346.896pt>
+<figures/det_rf10_pearson_kendall_true.png, id=969, 462.528pt x 346.896pt>
 File: figures/det_rf10_pearson_kendall_true.png Graphic file (type png)
 
 <use figures/det_rf10_pearson_kendall_true.png>
 Package pdftex.def Info: figures/det_rf10_pearson_kendall_true.png used on inpu
-t line 1122.
+t line 1129.
 (pdftex.def)             Requested size: 230.18361pt x 115.09004pt.
-
-Underfull \hbox (badness 10000) in paragraph at lines 1130--1132
-
- []
-
-[30 <./figures/mse_knn5_idw_pearson_kendall_true.png> <./figures/det_knn_IDW_pe
-arson_kendall_true.png> <./figures/mse_rf10_pearson_kendall_true.png> <./figure
-s/det_rf10_pearson_kendall_true.png>]
-Underfull \hbox (badness 10000) in paragraph at lines 1134--1136
+ [31 <./figures/mse_knn5_idw_pearson_kendall_true.png> <./figures/det_knn_IDW_p
+earson_kendall_true.png> <./figures/mse_rf10_pearson_kendall_true.png> <./figur
+es/det_rf10_pearson_kendall_true.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 1138--1140
 
  []
 
 
-<figures/rf_pearson_21_estimates_bootstrap_true.png, id=924, 462.528pt x 346.89
+Underfull \hbox (badness 10000) in paragraph at lines 1142--1144
+
+ []
+
+
+<figures/rf_pearson_21_estimates_bootstrap_true.png, id=984, 462.528pt x 346.89
 6pt>
 File: figures/rf_pearson_21_estimates_bootstrap_true.png Graphic file (type png
 )
  <use figures/rf_pearson_21_estimates_bootstrap_true.png>
 Package pdftex.def Info: figures/rf_pearson_21_estimates_bootstrap_true.png use
-d on input line 1145.
+d on input line 1150.
 (pdftex.def)             Requested size: 230.18361pt x 115.09004pt.
 
-<figures/rf_kendall_21_estimates_bootstrap_true.png, id=925, 462.528pt x 346.89
+<figures/rf_kendall_21_estimates_bootstrap_true.png, id=985, 462.528pt x 346.89
 6pt>
 File: figures/rf_kendall_21_estimates_bootstrap_true.png Graphic file (type png
 )
  <use figures/rf_kendall_21_estimates_bootstrap_true.png>
 Package pdftex.def Info: figures/rf_kendall_21_estimates_bootstrap_true.png use
-d on input line 1152.
+d on input line 1157.
 (pdftex.def)             Requested size: 230.18361pt x 115.09004pt.
 
-<figures/decom_mse_rf10_pearson_true.png, id=926, 462.528pt x 346.896pt>
+<figures/decom_mse_rf10_pearson_true.png, id=986, 462.528pt x 346.896pt>
 File: figures/decom_mse_rf10_pearson_true.png Graphic file (type png)
 
 <use figures/decom_mse_rf10_pearson_true.png>
 Package pdftex.def Info: figures/decom_mse_rf10_pearson_true.png used on input 
-line 1159.
+line 1164.
 (pdftex.def)             Requested size: 230.18361pt x 115.09004pt.
 
-<figures/decom_mse_rf10_kendall_true.png, id=927, 462.528pt x 346.896pt>
+<figures/decom_mse_rf10_kendall_true.png, id=987, 462.528pt x 346.896pt>
 File: figures/decom_mse_rf10_kendall_true.png Graphic file (type png)
 
 <use figures/decom_mse_rf10_kendall_true.png>
 Package pdftex.def Info: figures/decom_mse_rf10_kendall_true.png used on input 
-line 1166.
+line 1171.
 (pdftex.def)             Requested size: 230.18361pt x 115.09004pt.
 
-Underfull \hbox (badness 10000) in paragraph at lines 1175--1176
+Underfull \hbox (badness 10000) in paragraph at lines 1183--1184
 
  []
 
-[31 <./figures/rf_pearson_21_estimates_bootstrap_true.png> <./figures/rf_kendal
-l_21_estimates_bootstrap_true.png> <./figures/decom_mse_rf10_pearson_true.png> 
-<./figures/decom_mse_rf10_kendall_true.png>]
-Underfull \hbox (badness 10000) in paragraph at lines 1177--1179
+[32
+
+ <./figures/rf_pearson_21_estimates_bootstrap_true.png> <./figures/rf_kendall_2
+1_estimates_bootstrap_true.png> <./figures/decom_mse_rf10_pearson_true.png> <./
+figures/decom_mse_rf10_kendall_true.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 1185--1187
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1233--1235
+Underfull \hbox (badness 10000) in paragraph at lines 1241--1243
 
  []
 
-[32]
-<figures/mse_rf10_pearson_kendall_comp_true.png, id=948, 462.528pt x 346.896pt>
+
+<figures/mse_rf10_pearson_kendall_comp_true.png, id=1005, 462.528pt x 346.896pt
+>
 File: figures/mse_rf10_pearson_kendall_comp_true.png Graphic file (type png)
-<use figures/mse_rf10_pearson_kendall_comp_true.png>
+ <use figures/mse_rf10_pearson_kendall_comp_true.png>
 Package pdftex.def Info: figures/mse_rf10_pearson_kendall_comp_true.png used on
- input line 1241.
+ input line 1249.
 (pdftex.def)             Requested size: 230.18361pt x 115.09004pt.
-
-Underfull \hbox (badness 10000) in paragraph at lines 1253--1254
+ [33]
+Underfull \hbox (badness 10000) in paragraph at lines 1261--1262
 
  []
 
-<figures/mse_knn5_pearson_kendall_proxy.png, id=957, 462.528pt x 346.896pt>
+<figures/mse_knn5_pearson_kendall_proxy.png, id=1019, 462.528pt x 346.896pt>
 File: figures/mse_knn5_pearson_kendall_proxy.png Graphic file (type png)
 
 <use figures/mse_knn5_pearson_kendall_proxy.png>
 Package pdftex.def Info: figures/mse_knn5_pearson_kendall_proxy.png used on inp
-ut line 1263.
+ut line 1271.
 (pdftex.def)             Requested size: 230.18361pt x 115.09004pt.
 
-<figures/det_knn5_pearson_kendall_proxy.png, id=958, 462.528pt x 346.896pt>
+<figures/det_knn5_pearson_kendall_proxy.png, id=1020, 462.528pt x 346.896pt>
 File: figures/det_knn5_pearson_kendall_proxy.png Graphic file (type png)
 
 <use figures/det_knn5_pearson_kendall_proxy.png>
 Package pdftex.def Info: figures/det_knn5_pearson_kendall_proxy.png used on inp
-ut line 1270.
+ut line 1278.
 (pdftex.def)             Requested size: 230.18361pt x 115.09004pt.
- [33 <./figures/mse_rf10_pearson_kendall_comp_true.png>]
-Underfull \hbox (badness 10000) in paragraph at lines 1278--1281
+ [34 <./figures/mse_rf10_pearson_kendall_comp_true.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 1286--1289
 
  []
 
 
-<figures/knn_pearson_21_estimates_bootstrap_proxy.png, id=978, 462.528pt x 346.
-896pt>
+<figures/knn_pearson_21_estimates_bootstrap_proxy.png, id=1041, 462.528pt x 346
+.896pt>
 File: figures/knn_pearson_21_estimates_bootstrap_proxy.png Graphic file (type p
 ng)
  <use figures/knn_pearson_21_estimates_bootstrap_proxy.png>
 Package pdftex.def Info: figures/knn_pearson_21_estimates_bootstrap_proxy.png u
-sed on input line 1290.
+sed on input line 1298.
 (pdftex.def)             Requested size: 230.18361pt x 115.09004pt.
 
-<figures/knn_kendall_21_estimates_bootstrap_proxy.png, id=979, 462.528pt x 346.
-896pt>
+<figures/knn_kendall_21_estimates_bootstrap_proxy.png, id=1042, 462.528pt x 346
+.896pt>
 File: figures/knn_kendall_21_estimates_bootstrap_proxy.png Graphic file (type p
 ng)
  <use figures/knn_kendall_21_estimates_bootstrap_proxy.png>
 Package pdftex.def Info: figures/knn_kendall_21_estimates_bootstrap_proxy.png u
-sed on input line 1297.
+sed on input line 1305.
 (pdftex.def)             Requested size: 230.18361pt x 115.09004pt.
 
-<figures/decom_mse_knn_pearson_proxy.png, id=980, 462.528pt x 346.896pt>
+<figures/decom_mse_knn_pearson_proxy.png, id=1043, 462.528pt x 346.896pt>
 File: figures/decom_mse_knn_pearson_proxy.png Graphic file (type png)
 
 <use figures/decom_mse_knn_pearson_proxy.png>
 Package pdftex.def Info: figures/decom_mse_knn_pearson_proxy.png used on input 
-line 1304.
+line 1312.
 (pdftex.def)             Requested size: 230.18361pt x 115.09004pt.
 
-<figures/decom_mse_knn_kendall_proxy.png, id=981, 462.528pt x 346.896pt>
+<figures/decom_mse_knn_kendall_proxy.png, id=1044, 462.528pt x 346.896pt>
 File: figures/decom_mse_knn_kendall_proxy.png Graphic file (type png)
 
 <use figures/decom_mse_knn_kendall_proxy.png>
 Package pdftex.def Info: figures/decom_mse_knn_kendall_proxy.png used on input 
-line 1311.
+line 1319.
 (pdftex.def)             Requested size: 230.18361pt x 115.09004pt.
- [34 <./figures/mse_knn5_pearson_kendall_proxy.png> <./figures/det_knn5_pearson
-_kendall_proxy.png>] [35 <./figures/knn_pearson_21_estimates_bootstrap_proxy.pn
+ [35 <./figures/mse_knn5_pearson_kendall_proxy.png> <./figures/det_knn5_pearson
+_kendall_proxy.png>] [36 <./figures/knn_pearson_21_estimates_bootstrap_proxy.pn
 g> <./figures/knn_kendall_21_estimates_bootstrap_proxy.png> <./figures/decom_ms
 e_knn_pearson_proxy.png> <./figures/decom_mse_knn_kendall_proxy.png>]
-Underfull \hbox (badness 10000) in paragraph at lines 1386--1388
+Underfull \hbox (badness 10000) in paragraph at lines 1394--1396
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1389--1391
+Underfull \hbox (badness 10000) in paragraph at lines 1397--1399
 
  []
 
 
-<figures/knn_pearson_21_IDW_estimates_bootstrap_proxy.png, id=1012, 462.528pt x
+<figures/knn_pearson_21_IDW_estimates_bootstrap_proxy.png, id=1073, 462.528pt x
  346.896pt>
 File: figures/knn_pearson_21_IDW_estimates_bootstrap_proxy.png Graphic file (ty
 pe png)
  <use figures/knn_pearson_21_IDW_estimates_bootstrap_proxy.png>
 Package pdftex.def Info: figures/knn_pearson_21_IDW_estimates_bootstrap_proxy.p
-ng used on input line 1399.
+ng used on input line 1407.
 (pdftex.def)             Requested size: 230.18361pt x 115.09004pt.
 
-<figures/knn_kendall_21_IDW_estimates_bootstrap_proxy.png, id=1013, 462.528pt x
+<figures/knn_kendall_21_IDW_estimates_bootstrap_proxy.png, id=1074, 462.528pt x
  346.896pt>
 File: figures/knn_kendall_21_IDW_estimates_bootstrap_proxy.png Graphic file (ty
 pe png)
  <use figures/knn_kendall_21_IDW_estimates_bootstrap_proxy.png>
 Package pdftex.def Info: figures/knn_kendall_21_IDW_estimates_bootstrap_proxy.p
-ng used on input line 1406.
+ng used on input line 1414.
 (pdftex.def)             Requested size: 230.18361pt x 115.09004pt.
 
-<figures/decom_mse_knn_IDW_pearson_proxy.png, id=1014, 462.528pt x 346.896pt>
+<figures/decom_mse_knn_IDW_pearson_proxy.png, id=1075, 462.528pt x 346.896pt>
 File: figures/decom_mse_knn_IDW_pearson_proxy.png Graphic file (type png)
 
 <use figures/decom_mse_knn_IDW_pearson_proxy.png>
 Package pdftex.def Info: figures/decom_mse_knn_IDW_pearson_proxy.png used on in
-put line 1413.
+put line 1421.
 (pdftex.def)             Requested size: 230.18361pt x 115.09004pt.
 
-<figures/decom_mse_knn_IDW_kendall_proxy.png, id=1015, 462.528pt x 346.896pt>
+<figures/decom_mse_knn_IDW_kendall_proxy.png, id=1076, 462.528pt x 346.896pt>
 File: figures/decom_mse_knn_IDW_kendall_proxy.png Graphic file (type png)
 
 <use figures/decom_mse_knn_IDW_kendall_proxy.png>
 Package pdftex.def Info: figures/decom_mse_knn_IDW_kendall_proxy.png used on in
-put line 1420.
+put line 1428.
 (pdftex.def)             Requested size: 230.18361pt x 115.09004pt.
- [36]
-Underfull \hbox (badness 10000) in paragraph at lines 1429--1431
+ [37]
+Underfull \hbox (badness 10000) in paragraph at lines 1437--1439
 
  []
 
-[37 <./figures/knn_pearson_21_IDW_estimates_bootstrap_proxy.png> <./figures/knn
+[38 <./figures/knn_pearson_21_IDW_estimates_bootstrap_proxy.png> <./figures/knn
 _kendall_21_IDW_estimates_bootstrap_proxy.png> <./figures/decom_mse_knn_IDW_pea
 rson_proxy.png> <./figures/decom_mse_knn_IDW_kendall_proxy.png>]
-Underfull \hbox (badness 10000) in paragraph at lines 1432--1434
+Underfull \hbox (badness 10000) in paragraph at lines 1440--1442
 
  []
 
 
-<figures/mse_knn5_IDW_pearson_kendall_proxy.png, id=1038, 462.528pt x 346.896pt
+<figures/mse_knn5_IDW_pearson_kendall_proxy.png, id=1099, 462.528pt x 346.896pt
 >
 File: figures/mse_knn5_IDW_pearson_kendall_proxy.png Graphic file (type png)
  <use figures/mse_knn5_IDW_pearson_kendall_proxy.png>
 Package pdftex.def Info: figures/mse_knn5_IDW_pearson_kendall_proxy.png used on
- input line 1441.
+ input line 1449.
 (pdftex.def)             Requested size: 230.18361pt x 115.09004pt.
 
-<figures/det_knn_IDW_len_train_pearson_kendall_proxy.png, id=1039, 462.528pt x 
+<figures/det_knn_IDW_len_train_pearson_kendall_proxy.png, id=1100, 462.528pt x 
 346.896pt>
 File: figures/det_knn_IDW_len_train_pearson_kendall_proxy.png Graphic file (typ
 e png)
  <use figures/det_knn_IDW_len_train_pearson_kendall_proxy.png>
 Package pdftex.def Info: figures/det_knn_IDW_len_train_pearson_kendall_proxy.pn
-g used on input line 1448.
+g used on input line 1456.
 (pdftex.def)             Requested size: 230.18361pt x 115.09004pt.
 
-Underfull \hbox (badness 3291) in paragraph at lines 1449--1449
+Underfull \hbox (badness 3291) in paragraph at lines 1457--1457
 []\OT1/cmr/m/n/10 (b) |Min-imum de-term-in-ants for KNN(idw) and
  []
 
-[38]
-<figures/mse_rf10_pearson_kendall_proxy.png, id=1048, 462.528pt x 346.896pt>
+[39 <./figures/mse_knn5_IDW_pearson_kendall_proxy.png> <./figures/det_knn_IDW_l
+en_train_pearson_kendall_proxy.png>]
+<figures/mse_rf10_pearson_kendall_proxy.png, id=1111, 462.528pt x 346.896pt>
 File: figures/mse_rf10_pearson_kendall_proxy.png Graphic file (type png)
 
 <use figures/mse_rf10_pearson_kendall_proxy.png>
 Package pdftex.def Info: figures/mse_rf10_pearson_kendall_proxy.png used on inp
-ut line 1466.
+ut line 1474.
 (pdftex.def)             Requested size: 230.18361pt x 115.09004pt.
 
-<figures/det_rf10_pearson_kendall_proxy.png, id=1049, 462.528pt x 346.896pt>
+<figures/det_rf10_pearson_kendall_proxy.png, id=1112, 462.528pt x 346.896pt>
 File: figures/det_rf10_pearson_kendall_proxy.png Graphic file (type png)
 
 <use figures/det_rf10_pearson_kendall_proxy.png>
 Package pdftex.def Info: figures/det_rf10_pearson_kendall_proxy.png used on inp
-ut line 1473.
+ut line 1481.
 (pdftex.def)             Requested size: 230.18361pt x 115.09004pt.
 
-Underfull \hbox (badness 10000) in paragraph at lines 1481--1483
-
- []
-
-[39 <./figures/mse_knn5_IDW_pearson_kendall_proxy.png> <./figures/det_knn_IDW_l
-en_train_pearson_kendall_proxy.png> <./figures/mse_rf10_pearson_kendall_proxy.p
-ng> <./figures/det_rf10_pearson_kendall_proxy.png>]
-Underfull \hbox (badness 10000) in paragraph at lines 1484--1486
+Underfull \hbox (badness 10000) in paragraph at lines 1489--1491
 
  []
 
 
-<figures/rf_pearson_21_estimates_bootstrap_proxy.png, id=1075, 462.528pt x 346.
+Underfull \hbox (badness 10000) in paragraph at lines 1492--1494
+
+ []
+
+[40 <./figures/mse_rf10_pearson_kendall_proxy.png> <./figures/det_rf10_pearson_
+kendall_proxy.png>]
+<figures/rf_pearson_21_estimates_bootstrap_proxy.png, id=1138, 462.528pt x 346.
 896pt>
 File: figures/rf_pearson_21_estimates_bootstrap_proxy.png Graphic file (type pn
 g)
  <use figures/rf_pearson_21_estimates_bootstrap_proxy.png>
 Package pdftex.def Info: figures/rf_pearson_21_estimates_bootstrap_proxy.png us
-ed on input line 1496.
+ed on input line 1504.
 (pdftex.def)             Requested size: 230.18361pt x 115.09004pt.
 
-<figures/rf_kendall_21_estimates_bootstrap_proxy.png, id=1076, 462.528pt x 346.
+<figures/rf_kendall_21_estimates_bootstrap_proxy.png, id=1139, 462.528pt x 346.
 896pt>
 File: figures/rf_kendall_21_estimates_bootstrap_proxy.png Graphic file (type pn
 g)
  <use figures/rf_kendall_21_estimates_bootstrap_proxy.png>
 Package pdftex.def Info: figures/rf_kendall_21_estimates_bootstrap_proxy.png us
-ed on input line 1503.
+ed on input line 1511.
 (pdftex.def)             Requested size: 230.18361pt x 115.09004pt.
 
-<figures/decom_mse_rf10_pearson_proxy.png, id=1077, 462.528pt x 346.896pt>
+<figures/decom_mse_rf10_pearson_proxy.png, id=1140, 462.528pt x 346.896pt>
 File: figures/decom_mse_rf10_pearson_proxy.png Graphic file (type png)
 
 <use figures/decom_mse_rf10_pearson_proxy.png>
 Package pdftex.def Info: figures/decom_mse_rf10_pearson_proxy.png used on input
- line 1510.
+ line 1518.
 (pdftex.def)             Requested size: 230.18361pt x 115.09004pt.
 
-<figures/decom_mse_rf10_kendall_proxy.png, id=1078, 462.528pt x 346.896pt>
+<figures/decom_mse_rf10_kendall_proxy.png, id=1141, 462.528pt x 346.896pt>
 File: figures/decom_mse_rf10_kendall_proxy.png Graphic file (type png)
 
 <use figures/decom_mse_rf10_kendall_proxy.png>
 Package pdftex.def Info: figures/decom_mse_rf10_kendall_proxy.png used on input
- line 1517.
+ line 1525.
 (pdftex.def)             Requested size: 230.18361pt x 115.09004pt.
- [40]
-Underfull \hbox (badness 10000) in paragraph at lines 1526--1528
 
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 1529--1531
+Underfull \hbox (badness 10000) in paragraph at lines 1534--1536
 
  []
 
 [41 <./figures/rf_pearson_21_estimates_bootstrap_proxy.png> <./figures/rf_kenda
 ll_21_estimates_bootstrap_proxy.png> <./figures/decom_mse_rf10_pearson_proxy.pn
 g> <./figures/decom_mse_rf10_kendall_proxy.png>]
-Underfull \hbox (badness 10000) in paragraph at lines 1585--1587
+Underfull \hbox (badness 10000) in paragraph at lines 1537--1539
 
  []
 
 
-<figures/mse_rf10_pearson_kendall_comp_proxy.png, id=1100, 462.528pt x 346.896p
+Underfull \hbox (badness 10000) in paragraph at lines 1593--1595
+
+ []
+
+
+<figures/mse_rf10_pearson_kendall_comp_proxy.png, id=1157, 462.528pt x 346.896p
 t>
 File: figures/mse_rf10_pearson_kendall_comp_proxy.png Graphic file (type png)
  <use figures/mse_rf10_pearson_kendall_comp_proxy.png>
 Package pdftex.def Info: figures/mse_rf10_pearson_kendall_comp_proxy.png used o
-n input line 1593.
+n input line 1601.
 (pdftex.def)             Requested size: 230.18361pt x 115.09004pt.
- [42 <./figures/mse_rf10_pearson_kendall_comp_proxy.png>]
-Underfull \hbox (badness 10000) in paragraph at lines 1615--1616
+ [42] [43 <./figures/mse_rf10_pearson_kendall_comp_proxy.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 1619--1620
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1617--1619
+Underfull \hbox (badness 10000) in paragraph at lines 1621--1623
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1620--1622
+Underfull \hbox (badness 10000) in paragraph at lines 1624--1626
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1623--1625
-
- []
-
-[43
-
-]
-Chapter 4.
-
-Underfull \hbox (badness 10000) in paragraph at lines 1653--1654
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 1655--1657
+Underfull \hbox (badness 10000) in paragraph at lines 1627--1629
 
  []
 
 [44
 
 ]
-Underfull \hbox (badness 10000) in paragraph at lines 1666--1668
+Chapter 4.
+
+Underfull \hbox (badness 10000) in paragraph at lines 1657--1658
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1676--1678
+Underfull \hbox (badness 10000) in paragraph at lines 1659--1661
+
+ []
+
+[45
+
+]
+Underfull \hbox (badness 10000) in paragraph at lines 1671--1673
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1702--1704
+Underfull \hbox (badness 10000) in paragraph at lines 1681--1683
 
  []
 
-[45]
-Underfull \hbox (badness 10000) in paragraph at lines 1720--1722
+[46
 
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 1723--1725
+]
+Underfull \hbox (badness 10000) in paragraph at lines 1707--1709
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1754--1755
-
- []
-
-[46]
-Underfull \hbox (badness 10000) in paragraph at lines 1763--1765
+Underfull \hbox (badness 10000) in paragraph at lines 1725--1727
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1773--1775
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 1776--1778
+Underfull \hbox (badness 10000) in paragraph at lines 1728--1730
 
  []
 
 [47]
-Underfull \hbox (badness 10000) in paragraph at lines 1786--1788
+Underfull \hbox (badness 10000) in paragraph at lines 1760--1761
 
  []
 
 
-<figures/multivar_analysis/log_returns_DJ_constituents.png, id=1185, 828.2142pt
+Underfull \hbox (badness 10000) in paragraph at lines 1769--1771
+
+ []
+
+[48
+
+]
+Underfull \hbox (badness 10000) in paragraph at lines 1779--1781
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1782--1784
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1792--1794
+
+ []
+
+[49]
+<figures/multivar_analysis/log_returns_DJ_constituents.png, id=1253, 828.2142pt
  x 415.5525pt>
 File: figures/multivar_analysis/log_returns_DJ_constituents.png Graphic file (t
 ype png)
  <use figures/multivar_analysis/log_returns_DJ_constituents.png>
 Package pdftex.def Info: figures/multivar_analysis/log_returns_DJ_constituents.
-png used on input line 1798.
+png used on input line 1804.
 (pdftex.def)             Requested size: 496.93236pt x 249.33342pt.
 
-Overfull \hbox (27.1773pt too wide) in paragraph at lines 1798--1799
+Overfull \hbox (27.1773pt too wide) in paragraph at lines 1804--1805
  [][] 
  []
 
-[48] [49 <./figures/multivar_analysis/log_returns_DJ_constituents.png>]
-Underfull \hbox (badness 10000) in paragraph at lines 1849--1851
-
- []
-
-[50]
-Underfull \hbox (badness 10000) in paragraph at lines 1857--1858
-
- []
-
-[51]
-Underfull \hbox (badness 10000) in paragraph at lines 1873--1875
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 1876--1878
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 1880--1881
+[50 <./figures/multivar_analysis/log_returns_DJ_constituents.png>] [51]
+Underfull \hbox (badness 10000) in paragraph at lines 1855--1857
 
  []
 
 [52]
-Underfull \hbox (badness 10000) in paragraph at lines 1882--1884
+Underfull \hbox (badness 10000) in paragraph at lines 1864--1865
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1885--1887
+Underfull \hbox (badness 10000) in paragraph at lines 1880--1882
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1888--1890
+Underfull \hbox (badness 10000) in paragraph at lines 1883--1885
+
+ []
+
+[53
+
+]
+Underfull \hbox (badness 10000) in paragraph at lines 1887--1888
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1891--1893
+Underfull \hbox (badness 10000) in paragraph at lines 1889--1891
 
  []
 
-[53] [54]
-Overfull \hbox (65.47269pt too wide) in paragraph at lines 1898--1926
+
+Underfull \hbox (badness 10000) in paragraph at lines 1892--1894
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1895--1897
+
+ []
+
+[54]
+Underfull \hbox (badness 10000) in paragraph at lines 1898--1900
+
+ []
+
+[55]
+Overfull \hbox (65.47269pt too wide) in paragraph at lines 1905--1933
  [][] 
  []
 
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-[55]
-Underfull \hbox (badness 10000) in paragraph at lines 1931--1933
+[56]
+Underfull \hbox (badness 10000) in paragraph at lines 1938--1940
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1934--1936
+Underfull \hbox (badness 10000) in paragraph at lines 1941--1943
 
  []
 
-[56
+[57
 
 
 ]
-<figures/multivar_analysis/tranquil/KNN5_pearson_garch_1994_1995.pdf, id=1287, 
+<figures/multivar_analysis/tranquil/KNN5_pearson_garch_1994_1995.pdf, id=1349, 
 462.52798pt x 346.89601pt>
 File: figures/multivar_analysis/tranquil/KNN5_pearson_garch_1994_1995.pdf Graph
 ic file (type pdf)
 
 <use figures/multivar_analysis/tranquil/KNN5_pearson_garch_1994_1995.pdf>
 Package pdftex.def Info: figures/multivar_analysis/tranquil/KNN5_pearson_garch_
-1994_1995.pdf used on input line 1947.
-(pdftex.def)             Requested size: 217.02823pt x 108.51059pt.
-
-Overfull \hbox (62.00821pt too wide) in paragraph at lines 1947--1948
- [][] 
- []
-
-
-<figures/multivar_analysis/tranquil/KNN100_kendall_garch_1994_1995.pdf, id=1288
-, 462.52798pt x 346.89601pt>
-File: figures/multivar_analysis/tranquil/KNN100_kendall_garch_1994_1995.pdf Gra
-phic file (type pdf)
-
-<use figures/multivar_analysis/tranquil/KNN100_kendall_garch_1994_1995.pdf>
-Package pdftex.def Info: figures/multivar_analysis/tranquil/KNN100_kendall_garc
-h_1994_1995.pdf used on input line 1954.
+1994_1995.pdf used on input line 1954.
 (pdftex.def)             Requested size: 217.02823pt x 108.51059pt.
 
 Overfull \hbox (62.00821pt too wide) in paragraph at lines 1954--1955
@@ -2012,14 +2017,14 @@ Overfull \hbox (62.00821pt too wide) in paragraph at lines 1954--1955
  []
 
 
-<figures/multivar_analysis/tranquil/KNN_idw_pearson_garch_1994_1995.pdf, id=128
-9, 462.52798pt x 346.89601pt>
-File: figures/multivar_analysis/tranquil/KNN_idw_pearson_garch_1994_1995.pdf Gr
-aphic file (type pdf)
+<figures/multivar_analysis/tranquil/KNN100_kendall_garch_1994_1995.pdf, id=1350
+, 462.52798pt x 346.89601pt>
+File: figures/multivar_analysis/tranquil/KNN100_kendall_garch_1994_1995.pdf Gra
+phic file (type pdf)
 
-<use figures/multivar_analysis/tranquil/KNN_idw_pearson_garch_1994_1995.pdf>
-Package pdftex.def Info: figures/multivar_analysis/tranquil/KNN_idw_pearson_gar
-ch_1994_1995.pdf used on input line 1961.
+<use figures/multivar_analysis/tranquil/KNN100_kendall_garch_1994_1995.pdf>
+Package pdftex.def Info: figures/multivar_analysis/tranquil/KNN100_kendall_garc
+h_1994_1995.pdf used on input line 1961.
 (pdftex.def)             Requested size: 217.02823pt x 108.51059pt.
 
 Overfull \hbox (62.00821pt too wide) in paragraph at lines 1961--1962
@@ -2027,14 +2032,14 @@ Overfull \hbox (62.00821pt too wide) in paragraph at lines 1961--1962
  []
 
 
-<figures/multivar_analysis/tranquil/KNN5_kendall_garch_1994_1995.pdf, id=1290, 
-462.52798pt x 346.89601pt>
-File: figures/multivar_analysis/tranquil/KNN5_kendall_garch_1994_1995.pdf Graph
-ic file (type pdf)
+<figures/multivar_analysis/tranquil/KNN_idw_pearson_garch_1994_1995.pdf, id=135
+1, 462.52798pt x 346.89601pt>
+File: figures/multivar_analysis/tranquil/KNN_idw_pearson_garch_1994_1995.pdf Gr
+aphic file (type pdf)
 
-<use figures/multivar_analysis/tranquil/KNN5_kendall_garch_1994_1995.pdf>
-Package pdftex.def Info: figures/multivar_analysis/tranquil/KNN5_kendall_garch_
-1994_1995.pdf used on input line 1968.
+<use figures/multivar_analysis/tranquil/KNN_idw_pearson_garch_1994_1995.pdf>
+Package pdftex.def Info: figures/multivar_analysis/tranquil/KNN_idw_pearson_gar
+ch_1994_1995.pdf used on input line 1968.
 (pdftex.def)             Requested size: 217.02823pt x 108.51059pt.
 
 Overfull \hbox (62.00821pt too wide) in paragraph at lines 1968--1969
@@ -2042,13 +2047,13 @@ Overfull \hbox (62.00821pt too wide) in paragraph at lines 1968--1969
  []
 
 
-<figures/multivar_analysis/tranquil/KNN100_kendall_gjr_1994_1995.pdf, id=1291, 
+<figures/multivar_analysis/tranquil/KNN5_kendall_garch_1994_1995.pdf, id=1352, 
 462.52798pt x 346.89601pt>
-File: figures/multivar_analysis/tranquil/KNN100_kendall_gjr_1994_1995.pdf Graph
+File: figures/multivar_analysis/tranquil/KNN5_kendall_garch_1994_1995.pdf Graph
 ic file (type pdf)
 
-<use figures/multivar_analysis/tranquil/KNN100_kendall_gjr_1994_1995.pdf>
-Package pdftex.def Info: figures/multivar_analysis/tranquil/KNN100_kendall_gjr_
+<use figures/multivar_analysis/tranquil/KNN5_kendall_garch_1994_1995.pdf>
+Package pdftex.def Info: figures/multivar_analysis/tranquil/KNN5_kendall_garch_
 1994_1995.pdf used on input line 1975.
 (pdftex.def)             Requested size: 217.02823pt x 108.51059pt.
 
@@ -2057,14 +2062,14 @@ Overfull \hbox (62.00821pt too wide) in paragraph at lines 1975--1976
  []
 
 
-<figures/multivar_analysis/tranquil/KNN_idw_kendall_garch_1994_1995.pdf, id=129
-2, 462.52798pt x 346.89601pt>
-File: figures/multivar_analysis/tranquil/KNN_idw_kendall_garch_1994_1995.pdf Gr
-aphic file (type pdf)
+<figures/multivar_analysis/tranquil/KNN100_kendall_gjr_1994_1995.pdf, id=1353, 
+462.52798pt x 346.89601pt>
+File: figures/multivar_analysis/tranquil/KNN100_kendall_gjr_1994_1995.pdf Graph
+ic file (type pdf)
 
-<use figures/multivar_analysis/tranquil/KNN_idw_kendall_garch_1994_1995.pdf>
-Package pdftex.def Info: figures/multivar_analysis/tranquil/KNN_idw_kendall_gar
-ch_1994_1995.pdf used on input line 1982.
+<use figures/multivar_analysis/tranquil/KNN100_kendall_gjr_1994_1995.pdf>
+Package pdftex.def Info: figures/multivar_analysis/tranquil/KNN100_kendall_gjr_
+1994_1995.pdf used on input line 1982.
 (pdftex.def)             Requested size: 217.02823pt x 108.51059pt.
 
 Overfull \hbox (62.00821pt too wide) in paragraph at lines 1982--1983
@@ -2072,14 +2077,14 @@ Overfull \hbox (62.00821pt too wide) in paragraph at lines 1982--1983
  []
 
 
-<figures/multivar_analysis/tranquil/RF10_pearson_garch_1994_1995.pdf, id=1293, 
-462.52798pt x 346.89601pt>
-File: figures/multivar_analysis/tranquil/RF10_pearson_garch_1994_1995.pdf Graph
-ic file (type pdf)
+<figures/multivar_analysis/tranquil/KNN_idw_kendall_garch_1994_1995.pdf, id=135
+4, 462.52798pt x 346.89601pt>
+File: figures/multivar_analysis/tranquil/KNN_idw_kendall_garch_1994_1995.pdf Gr
+aphic file (type pdf)
 
-<use figures/multivar_analysis/tranquil/RF10_pearson_garch_1994_1995.pdf>
-Package pdftex.def Info: figures/multivar_analysis/tranquil/RF10_pearson_garch_
-1994_1995.pdf used on input line 1989.
+<use figures/multivar_analysis/tranquil/KNN_idw_kendall_garch_1994_1995.pdf>
+Package pdftex.def Info: figures/multivar_analysis/tranquil/KNN_idw_kendall_gar
+ch_1994_1995.pdf used on input line 1989.
 (pdftex.def)             Requested size: 217.02823pt x 108.51059pt.
 
 Overfull \hbox (62.00821pt too wide) in paragraph at lines 1989--1990
@@ -2087,13 +2092,13 @@ Overfull \hbox (62.00821pt too wide) in paragraph at lines 1989--1990
  []
 
 
-<figures/multivar_analysis/tranquil/RF10_kendall_garch_1994_1995.pdf, id=1294, 
+<figures/multivar_analysis/tranquil/RF10_pearson_garch_1994_1995.pdf, id=1355, 
 462.52798pt x 346.89601pt>
-File: figures/multivar_analysis/tranquil/RF10_kendall_garch_1994_1995.pdf Graph
+File: figures/multivar_analysis/tranquil/RF10_pearson_garch_1994_1995.pdf Graph
 ic file (type pdf)
 
-<use figures/multivar_analysis/tranquil/RF10_kendall_garch_1994_1995.pdf>
-Package pdftex.def Info: figures/multivar_analysis/tranquil/RF10_kendall_garch_
+<use figures/multivar_analysis/tranquil/RF10_pearson_garch_1994_1995.pdf>
+Package pdftex.def Info: figures/multivar_analysis/tranquil/RF10_pearson_garch_
 1994_1995.pdf used on input line 1996.
 (pdftex.def)             Requested size: 217.02823pt x 108.51059pt.
 
@@ -2102,14 +2107,14 @@ Overfull \hbox (62.00821pt too wide) in paragraph at lines 1996--1997
  []
 
 
-<figures/multivar_analysis/tranquil/DCC_garch_mvnorm_1994_1995.pdf, id=1295, 46
-2.52798pt x 346.89601pt>
-File: figures/multivar_analysis/tranquil/DCC_garch_mvnorm_1994_1995.pdf Graphic
- file (type pdf)
+<figures/multivar_analysis/tranquil/RF10_kendall_garch_1994_1995.pdf, id=1356, 
+462.52798pt x 346.89601pt>
+File: figures/multivar_analysis/tranquil/RF10_kendall_garch_1994_1995.pdf Graph
+ic file (type pdf)
 
-<use figures/multivar_analysis/tranquil/DCC_garch_mvnorm_1994_1995.pdf>
-Package pdftex.def Info: figures/multivar_analysis/tranquil/DCC_garch_mvnorm_19
-94_1995.pdf used on input line 2003.
+<use figures/multivar_analysis/tranquil/RF10_kendall_garch_1994_1995.pdf>
+Package pdftex.def Info: figures/multivar_analysis/tranquil/RF10_kendall_garch_
+1994_1995.pdf used on input line 2003.
 (pdftex.def)             Requested size: 217.02823pt x 108.51059pt.
 
 Overfull \hbox (62.00821pt too wide) in paragraph at lines 2003--2004
@@ -2117,28 +2122,28 @@ Overfull \hbox (62.00821pt too wide) in paragraph at lines 2003--2004
  []
 
 
-<figures/multivar_analysis/tranquil/RF100_pearson_garch_1994_1995.pdf, id=1296,
+<figures/multivar_analysis/tranquil/DCC_garch_mvnorm_1994_1995.pdf, id=1357, 46
+2.52798pt x 346.89601pt>
+File: figures/multivar_analysis/tranquil/DCC_garch_mvnorm_1994_1995.pdf Graphic
+ file (type pdf)
+
+<use figures/multivar_analysis/tranquil/DCC_garch_mvnorm_1994_1995.pdf>
+Package pdftex.def Info: figures/multivar_analysis/tranquil/DCC_garch_mvnorm_19
+94_1995.pdf used on input line 2010.
+(pdftex.def)             Requested size: 217.02823pt x 108.51059pt.
+
+Overfull \hbox (62.00821pt too wide) in paragraph at lines 2010--2011
+ [][] 
+ []
+
+
+<figures/multivar_analysis/tranquil/RF100_pearson_garch_1994_1995.pdf, id=1358,
  462.52798pt x 346.89601pt>
 File: figures/multivar_analysis/tranquil/RF100_pearson_garch_1994_1995.pdf Grap
 hic file (type pdf)
 
 <use figures/multivar_analysis/tranquil/RF100_pearson_garch_1994_1995.pdf>
 Package pdftex.def Info: figures/multivar_analysis/tranquil/RF100_pearson_garch
-_1994_1995.pdf used on input line 2009.
-(pdftex.def)             Requested size: 217.02823pt x 108.51059pt.
-
-Overfull \hbox (62.00821pt too wide) in paragraph at lines 2009--2010
- [][] 
- []
-
-
-<figures/multivar_analysis/tranquil/RF100_kendall_garch_1994_1995.pdf, id=1297,
- 462.52798pt x 346.89601pt>
-File: figures/multivar_analysis/tranquil/RF100_kendall_garch_1994_1995.pdf Grap
-hic file (type pdf)
-
-<use figures/multivar_analysis/tranquil/RF100_kendall_garch_1994_1995.pdf>
-Package pdftex.def Info: figures/multivar_analysis/tranquil/RF100_kendall_garch
 _1994_1995.pdf used on input line 2016.
 (pdftex.def)             Requested size: 217.02823pt x 108.51059pt.
 
@@ -2147,14 +2152,14 @@ Overfull \hbox (62.00821pt too wide) in paragraph at lines 2016--2017
  []
 
 
-<figures/multivar_analysis/tranquil/DCC_gjr_mvnorm_1994_1995.pdf, id=1298, 462.
-52798pt x 346.89601pt>
-File: figures/multivar_analysis/tranquil/DCC_gjr_mvnorm_1994_1995.pdf Graphic f
-ile (type pdf)
+<figures/multivar_analysis/tranquil/RF100_kendall_garch_1994_1995.pdf, id=1359,
+ 462.52798pt x 346.89601pt>
+File: figures/multivar_analysis/tranquil/RF100_kendall_garch_1994_1995.pdf Grap
+hic file (type pdf)
 
-<use figures/multivar_analysis/tranquil/DCC_gjr_mvnorm_1994_1995.pdf>
-Package pdftex.def Info: figures/multivar_analysis/tranquil/DCC_gjr_mvnorm_1994
-_1995.pdf used on input line 2023.
+<use figures/multivar_analysis/tranquil/RF100_kendall_garch_1994_1995.pdf>
+Package pdftex.def Info: figures/multivar_analysis/tranquil/RF100_kendall_garch
+_1994_1995.pdf used on input line 2023.
 (pdftex.def)             Requested size: 217.02823pt x 108.51059pt.
 
 Overfull \hbox (62.00821pt too wide) in paragraph at lines 2023--2024
@@ -2162,9 +2167,24 @@ Overfull \hbox (62.00821pt too wide) in paragraph at lines 2023--2024
  []
 
 
-LaTeX Warning: Float too large for page by 62.8873pt on input line 2029.
+<figures/multivar_analysis/tranquil/DCC_gjr_mvnorm_1994_1995.pdf, id=1360, 462.
+52798pt x 346.89601pt>
+File: figures/multivar_analysis/tranquil/DCC_gjr_mvnorm_1994_1995.pdf Graphic f
+ile (type pdf)
 
-[57 <./figures/multivar_analysis/tranquil/KNN5_pearson_garch_1994_1995.pdf> <./
+<use figures/multivar_analysis/tranquil/DCC_gjr_mvnorm_1994_1995.pdf>
+Package pdftex.def Info: figures/multivar_analysis/tranquil/DCC_gjr_mvnorm_1994
+_1995.pdf used on input line 2030.
+(pdftex.def)             Requested size: 217.02823pt x 108.51059pt.
+
+Overfull \hbox (62.00821pt too wide) in paragraph at lines 2030--2031
+ [][] 
+ []
+
+
+LaTeX Warning: Float too large for page by 62.8873pt on input line 2036.
+
+[58 <./figures/multivar_analysis/tranquil/KNN5_pearson_garch_1994_1995.pdf> <./
 figures/multivar_analysis/tranquil/KNN100_kendall_garch_1994_1995.pdf
 
 pdfTeX warning: /Library/TeX/texbin/pdflatex (file ./figures/multivar_analysis/
@@ -2221,74 +2241,59 @@ pdfTeX warning: /Library/TeX/texbin/pdflatex (file ./figures/multivar_analysis/
 tranquil/DCC_gjr_mvnorm_1994_1995.pdf): PDF inclusion: multiple pdfs with page 
 group included in a single page
 >]
-Underfull \hbox (badness 10000) in paragraph at lines 2038--2039
+Underfull \hbox (badness 10000) in paragraph at lines 2045--2046
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 2040--2042
+Underfull \hbox (badness 10000) in paragraph at lines 2047--2049
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 2043--2045
+Underfull \hbox (badness 10000) in paragraph at lines 2050--2052
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 2046--2048
+Underfull \hbox (badness 10000) in paragraph at lines 2053--2055
 
  []
 
-[58
+[59
 
 
 
-] [59]
-Overfull \hbox (65.47269pt too wide) in paragraph at lines 2056--2083
+] [60]
+Overfull \hbox (65.47269pt too wide) in paragraph at lines 2063--2090
  [][] 
  []
 
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-[60]
-Underfull \hbox (badness 10000) in paragraph at lines 2089--2091
+[61]
+Underfull \hbox (badness 10000) in paragraph at lines 2096--2098
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 2092--2094
+Underfull \hbox (badness 10000) in paragraph at lines 2099--2101
 
  []
 
-[61
+[62
 
 
 ]
-<figures/multivar_analysis/volatile/KNN5_pearson_garch_2000_2001.pdf, id=1781, 
+<figures/multivar_analysis/volatile/KNN5_pearson_garch_2000_2001.pdf, id=1843, 
 462.52798pt x 346.89601pt>
 File: figures/multivar_analysis/volatile/KNN5_pearson_garch_2000_2001.pdf Graph
 ic file (type pdf)
 
 <use figures/multivar_analysis/volatile/KNN5_pearson_garch_2000_2001.pdf>
 Package pdftex.def Info: figures/multivar_analysis/volatile/KNN5_pearson_garch_
-2000_2001.pdf used on input line 2105.
-(pdftex.def)             Requested size: 217.02823pt x 108.51059pt.
-
-Overfull \hbox (62.00821pt too wide) in paragraph at lines 2105--2106
- [][] 
- []
-
-
-<figures/multivar_analysis/volatile/KNN100_pearson_garch_2000_2001.pdf, id=1782
-, 462.52798pt x 346.89601pt>
-File: figures/multivar_analysis/volatile/KNN100_pearson_garch_2000_2001.pdf Gra
-phic file (type pdf)
-
-<use figures/multivar_analysis/volatile/KNN100_pearson_garch_2000_2001.pdf>
-Package pdftex.def Info: figures/multivar_analysis/volatile/KNN100_pearson_garc
-h_2000_2001.pdf used on input line 2112.
+2000_2001.pdf used on input line 2112.
 (pdftex.def)             Requested size: 217.02823pt x 108.51059pt.
 
 Overfull \hbox (62.00821pt too wide) in paragraph at lines 2112--2113
@@ -2296,14 +2301,14 @@ Overfull \hbox (62.00821pt too wide) in paragraph at lines 2112--2113
  []
 
 
-<figures/multivar_analysis/volatile/KNN_idw_pearson_garch_2000_2001.pdf, id=178
-3, 462.52798pt x 346.89601pt>
-File: figures/multivar_analysis/volatile/KNN_idw_pearson_garch_2000_2001.pdf Gr
-aphic file (type pdf)
+<figures/multivar_analysis/volatile/KNN100_pearson_garch_2000_2001.pdf, id=1844
+, 462.52798pt x 346.89601pt>
+File: figures/multivar_analysis/volatile/KNN100_pearson_garch_2000_2001.pdf Gra
+phic file (type pdf)
 
-<use figures/multivar_analysis/volatile/KNN_idw_pearson_garch_2000_2001.pdf>
-Package pdftex.def Info: figures/multivar_analysis/volatile/KNN_idw_pearson_gar
-ch_2000_2001.pdf used on input line 2119.
+<use figures/multivar_analysis/volatile/KNN100_pearson_garch_2000_2001.pdf>
+Package pdftex.def Info: figures/multivar_analysis/volatile/KNN100_pearson_garc
+h_2000_2001.pdf used on input line 2119.
 (pdftex.def)             Requested size: 217.02823pt x 108.51059pt.
 
 Overfull \hbox (62.00821pt too wide) in paragraph at lines 2119--2120
@@ -2311,14 +2316,14 @@ Overfull \hbox (62.00821pt too wide) in paragraph at lines 2119--2120
  []
 
 
-<figures/multivar_analysis/volatile/KNN5_kendall_garch_2000_2001.pdf, id=1784, 
-462.52798pt x 346.89601pt>
-File: figures/multivar_analysis/volatile/KNN5_kendall_garch_2000_2001.pdf Graph
-ic file (type pdf)
+<figures/multivar_analysis/volatile/KNN_idw_pearson_garch_2000_2001.pdf, id=184
+5, 462.52798pt x 346.89601pt>
+File: figures/multivar_analysis/volatile/KNN_idw_pearson_garch_2000_2001.pdf Gr
+aphic file (type pdf)
 
-<use figures/multivar_analysis/volatile/KNN5_kendall_garch_2000_2001.pdf>
-Package pdftex.def Info: figures/multivar_analysis/volatile/KNN5_kendall_garch_
-2000_2001.pdf used on input line 2126.
+<use figures/multivar_analysis/volatile/KNN_idw_pearson_garch_2000_2001.pdf>
+Package pdftex.def Info: figures/multivar_analysis/volatile/KNN_idw_pearson_gar
+ch_2000_2001.pdf used on input line 2126.
 (pdftex.def)             Requested size: 217.02823pt x 108.51059pt.
 
 Overfull \hbox (62.00821pt too wide) in paragraph at lines 2126--2127
@@ -2326,13 +2331,13 @@ Overfull \hbox (62.00821pt too wide) in paragraph at lines 2126--2127
  []
 
 
-<figures/multivar_analysis/volatile/KNN100_pearson_gjr_2000_2001.pdf, id=1785, 
+<figures/multivar_analysis/volatile/KNN5_kendall_garch_2000_2001.pdf, id=1846, 
 462.52798pt x 346.89601pt>
-File: figures/multivar_analysis/volatile/KNN100_pearson_gjr_2000_2001.pdf Graph
+File: figures/multivar_analysis/volatile/KNN5_kendall_garch_2000_2001.pdf Graph
 ic file (type pdf)
 
-<use figures/multivar_analysis/volatile/KNN100_pearson_gjr_2000_2001.pdf>
-Package pdftex.def Info: figures/multivar_analysis/volatile/KNN100_pearson_gjr_
+<use figures/multivar_analysis/volatile/KNN5_kendall_garch_2000_2001.pdf>
+Package pdftex.def Info: figures/multivar_analysis/volatile/KNN5_kendall_garch_
 2000_2001.pdf used on input line 2133.
 (pdftex.def)             Requested size: 217.02823pt x 108.51059pt.
 
@@ -2341,14 +2346,14 @@ Overfull \hbox (62.00821pt too wide) in paragraph at lines 2133--2134
  []
 
 
-<figures/multivar_analysis/volatile/KNN_idw_kendall_garch_2000_2001.pdf, id=178
-6, 462.52798pt x 346.89601pt>
-File: figures/multivar_analysis/volatile/KNN_idw_kendall_garch_2000_2001.pdf Gr
-aphic file (type pdf)
+<figures/multivar_analysis/volatile/KNN100_pearson_gjr_2000_2001.pdf, id=1847, 
+462.52798pt x 346.89601pt>
+File: figures/multivar_analysis/volatile/KNN100_pearson_gjr_2000_2001.pdf Graph
+ic file (type pdf)
 
-<use figures/multivar_analysis/volatile/KNN_idw_kendall_garch_2000_2001.pdf>
-Package pdftex.def Info: figures/multivar_analysis/volatile/KNN_idw_kendall_gar
-ch_2000_2001.pdf used on input line 2140.
+<use figures/multivar_analysis/volatile/KNN100_pearson_gjr_2000_2001.pdf>
+Package pdftex.def Info: figures/multivar_analysis/volatile/KNN100_pearson_gjr_
+2000_2001.pdf used on input line 2140.
 (pdftex.def)             Requested size: 217.02823pt x 108.51059pt.
 
 Overfull \hbox (62.00821pt too wide) in paragraph at lines 2140--2141
@@ -2356,14 +2361,14 @@ Overfull \hbox (62.00821pt too wide) in paragraph at lines 2140--2141
  []
 
 
-<figures/multivar_analysis/volatile/RF10_pearson_garch_2000_2001.pdf, id=1787, 
-462.52798pt x 346.89601pt>
-File: figures/multivar_analysis/volatile/RF10_pearson_garch_2000_2001.pdf Graph
-ic file (type pdf)
+<figures/multivar_analysis/volatile/KNN_idw_kendall_garch_2000_2001.pdf, id=184
+8, 462.52798pt x 346.89601pt>
+File: figures/multivar_analysis/volatile/KNN_idw_kendall_garch_2000_2001.pdf Gr
+aphic file (type pdf)
 
-<use figures/multivar_analysis/volatile/RF10_pearson_garch_2000_2001.pdf>
-Package pdftex.def Info: figures/multivar_analysis/volatile/RF10_pearson_garch_
-2000_2001.pdf used on input line 2147.
+<use figures/multivar_analysis/volatile/KNN_idw_kendall_garch_2000_2001.pdf>
+Package pdftex.def Info: figures/multivar_analysis/volatile/KNN_idw_kendall_gar
+ch_2000_2001.pdf used on input line 2147.
 (pdftex.def)             Requested size: 217.02823pt x 108.51059pt.
 
 Overfull \hbox (62.00821pt too wide) in paragraph at lines 2147--2148
@@ -2371,13 +2376,13 @@ Overfull \hbox (62.00821pt too wide) in paragraph at lines 2147--2148
  []
 
 
-<figures/multivar_analysis/volatile/RF10_kendall_garch_2000_2001.pdf, id=1788, 
+<figures/multivar_analysis/volatile/RF10_pearson_garch_2000_2001.pdf, id=1849, 
 462.52798pt x 346.89601pt>
-File: figures/multivar_analysis/volatile/RF10_kendall_garch_2000_2001.pdf Graph
+File: figures/multivar_analysis/volatile/RF10_pearson_garch_2000_2001.pdf Graph
 ic file (type pdf)
 
-<use figures/multivar_analysis/volatile/RF10_kendall_garch_2000_2001.pdf>
-Package pdftex.def Info: figures/multivar_analysis/volatile/RF10_kendall_garch_
+<use figures/multivar_analysis/volatile/RF10_pearson_garch_2000_2001.pdf>
+Package pdftex.def Info: figures/multivar_analysis/volatile/RF10_pearson_garch_
 2000_2001.pdf used on input line 2154.
 (pdftex.def)             Requested size: 217.02823pt x 108.51059pt.
 
@@ -2386,14 +2391,14 @@ Overfull \hbox (62.00821pt too wide) in paragraph at lines 2154--2155
  []
 
 
-<figures/multivar_analysis/volatile/DCC_garch_mvnorm_2000_2001.pdf, id=1789, 46
-2.52798pt x 346.89601pt>
-File: figures/multivar_analysis/volatile/DCC_garch_mvnorm_2000_2001.pdf Graphic
- file (type pdf)
+<figures/multivar_analysis/volatile/RF10_kendall_garch_2000_2001.pdf, id=1850, 
+462.52798pt x 346.89601pt>
+File: figures/multivar_analysis/volatile/RF10_kendall_garch_2000_2001.pdf Graph
+ic file (type pdf)
 
-<use figures/multivar_analysis/volatile/DCC_garch_mvnorm_2000_2001.pdf>
-Package pdftex.def Info: figures/multivar_analysis/volatile/DCC_garch_mvnorm_20
-00_2001.pdf used on input line 2161.
+<use figures/multivar_analysis/volatile/RF10_kendall_garch_2000_2001.pdf>
+Package pdftex.def Info: figures/multivar_analysis/volatile/RF10_kendall_garch_
+2000_2001.pdf used on input line 2161.
 (pdftex.def)             Requested size: 217.02823pt x 108.51059pt.
 
 Overfull \hbox (62.00821pt too wide) in paragraph at lines 2161--2162
@@ -2401,14 +2406,14 @@ Overfull \hbox (62.00821pt too wide) in paragraph at lines 2161--2162
  []
 
 
-<figures/multivar_analysis/volatile/RF100_pearson_garch_2000_2001.pdf, id=1790,
- 462.52798pt x 346.89601pt>
-File: figures/multivar_analysis/volatile/RF100_pearson_garch_2000_2001.pdf Grap
-hic file (type pdf)
+<figures/multivar_analysis/volatile/DCC_garch_mvnorm_2000_2001.pdf, id=1851, 46
+2.52798pt x 346.89601pt>
+File: figures/multivar_analysis/volatile/DCC_garch_mvnorm_2000_2001.pdf Graphic
+ file (type pdf)
 
-<use figures/multivar_analysis/volatile/RF100_pearson_garch_2000_2001.pdf>
-Package pdftex.def Info: figures/multivar_analysis/volatile/RF100_pearson_garch
-_2000_2001.pdf used on input line 2168.
+<use figures/multivar_analysis/volatile/DCC_garch_mvnorm_2000_2001.pdf>
+Package pdftex.def Info: figures/multivar_analysis/volatile/DCC_garch_mvnorm_20
+00_2001.pdf used on input line 2168.
 (pdftex.def)             Requested size: 217.02823pt x 108.51059pt.
 
 Overfull \hbox (62.00821pt too wide) in paragraph at lines 2168--2169
@@ -2416,13 +2421,13 @@ Overfull \hbox (62.00821pt too wide) in paragraph at lines 2168--2169
  []
 
 
-<figures/multivar_analysis/volatile/RF100_kendall_garch_2000_2001.pdf, id=1791,
+<figures/multivar_analysis/volatile/RF100_pearson_garch_2000_2001.pdf, id=1852,
  462.52798pt x 346.89601pt>
-File: figures/multivar_analysis/volatile/RF100_kendall_garch_2000_2001.pdf Grap
+File: figures/multivar_analysis/volatile/RF100_pearson_garch_2000_2001.pdf Grap
 hic file (type pdf)
 
-<use figures/multivar_analysis/volatile/RF100_kendall_garch_2000_2001.pdf>
-Package pdftex.def Info: figures/multivar_analysis/volatile/RF100_kendall_garch
+<use figures/multivar_analysis/volatile/RF100_pearson_garch_2000_2001.pdf>
+Package pdftex.def Info: figures/multivar_analysis/volatile/RF100_pearson_garch
 _2000_2001.pdf used on input line 2175.
 (pdftex.def)             Requested size: 217.02823pt x 108.51059pt.
 
@@ -2431,14 +2436,14 @@ Overfull \hbox (62.00821pt too wide) in paragraph at lines 2175--2176
  []
 
 
-<figures/multivar_analysis/volatile/DCC_gjr_mvnorm_2000_2001.pdf, id=1792, 462.
-52798pt x 346.89601pt>
-File: figures/multivar_analysis/volatile/DCC_gjr_mvnorm_2000_2001.pdf Graphic f
-ile (type pdf)
+<figures/multivar_analysis/volatile/RF100_kendall_garch_2000_2001.pdf, id=1853,
+ 462.52798pt x 346.89601pt>
+File: figures/multivar_analysis/volatile/RF100_kendall_garch_2000_2001.pdf Grap
+hic file (type pdf)
 
-<use figures/multivar_analysis/volatile/DCC_gjr_mvnorm_2000_2001.pdf>
-Package pdftex.def Info: figures/multivar_analysis/volatile/DCC_gjr_mvnorm_2000
-_2001.pdf used on input line 2182.
+<use figures/multivar_analysis/volatile/RF100_kendall_garch_2000_2001.pdf>
+Package pdftex.def Info: figures/multivar_analysis/volatile/RF100_kendall_garch
+_2000_2001.pdf used on input line 2182.
 (pdftex.def)             Requested size: 217.02823pt x 108.51059pt.
 
 Overfull \hbox (62.00821pt too wide) in paragraph at lines 2182--2183
@@ -2446,9 +2451,24 @@ Overfull \hbox (62.00821pt too wide) in paragraph at lines 2182--2183
  []
 
 
-LaTeX Warning: Float too large for page by 62.8873pt on input line 2188.
+<figures/multivar_analysis/volatile/DCC_gjr_mvnorm_2000_2001.pdf, id=1854, 462.
+52798pt x 346.89601pt>
+File: figures/multivar_analysis/volatile/DCC_gjr_mvnorm_2000_2001.pdf Graphic f
+ile (type pdf)
 
-[62 <./figures/multivar_analysis/volatile/KNN5_pearson_garch_2000_2001.pdf> <./
+<use figures/multivar_analysis/volatile/DCC_gjr_mvnorm_2000_2001.pdf>
+Package pdftex.def Info: figures/multivar_analysis/volatile/DCC_gjr_mvnorm_2000
+_2001.pdf used on input line 2189.
+(pdftex.def)             Requested size: 217.02823pt x 108.51059pt.
+
+Overfull \hbox (62.00821pt too wide) in paragraph at lines 2189--2190
+ [][] 
+ []
+
+
+LaTeX Warning: Float too large for page by 62.8873pt on input line 2195.
+
+[63 <./figures/multivar_analysis/volatile/KNN5_pearson_garch_2000_2001.pdf> <./
 figures/multivar_analysis/volatile/KNN100_pearson_garch_2000_2001.pdf
 
 pdfTeX warning: /Library/TeX/texbin/pdflatex (file ./figures/multivar_analysis/
@@ -2505,127 +2525,121 @@ pdfTeX warning: /Library/TeX/texbin/pdflatex (file ./figures/multivar_analysis/
 volatile/DCC_gjr_mvnorm_2000_2001.pdf): PDF inclusion: multiple pdfs with page 
 group included in a single page
 >]
-Underfull \hbox (badness 10000) in paragraph at lines 2201--2203
+Underfull \hbox (badness 10000) in paragraph at lines 2208--2210
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 2204--2206
+Underfull \hbox (badness 10000) in paragraph at lines 2211--2213
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 2207--2209
+Underfull \hbox (badness 10000) in paragraph at lines 2214--2216
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 2210--2212
+Underfull \hbox (badness 10000) in paragraph at lines 2217--2219
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 2213--2215
+Underfull \hbox (badness 10000) in paragraph at lines 2220--2222
 
  []
 
-[63
+[64
 
 
 
 ]
-Underfull \hbox (badness 10000) in paragraph at lines 2216--2218
+Underfull \hbox (badness 10000) in paragraph at lines 2223--2225
 
  []
 
-[64]
+[65]
 Chapter 5.
 
-Underfull \hbox (badness 10000) in paragraph at lines 2225--2226
+Underfull \hbox (badness 10000) in paragraph at lines 2232--2233
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 2227--2229
+Underfull \hbox (badness 10000) in paragraph at lines 2234--2236
 
  []
 
-(./Thesis_project_PGMelkert_0893899.bbl [65
+(./Thesis_project_PGMelkert_0893899.bbl [66
 
-] [66
+] [67
 
-] [67] [68]) [69]
+] [68] [69]) [70]
 Appendix A.
-[70
+[71
 
 ]
 Overfull \vbox (8.54752pt too high) has occurred while \output is active []
 
 
-[71]
+[72]
 Appendix B.
-[72
+[73
 
-] [73]
+] [74]
 Appendix C.
-[74
-
-]
-Overfull \hbox (47.51088pt too wide) in paragraph at lines 2410--2446
- [][] 
- []
-
 [75
 
 ]
-Overfull \hbox (35.55688pt too wide) in paragraph at lines 2458--2493
+Overfull \hbox (47.51088pt too wide) in paragraph at lines 2417--2453
  [][] 
  []
 
 [76
 
+]
+Overfull \hbox (35.55688pt too wide) in paragraph at lines 2465--2500
+ [][] 
+ []
+
+[77
+
 
 ]
 Appendix D.
-[77
+[78
 
 
 ]
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-[78]
+[79]
 
-Package caption Warning: Unused \captionsetup[subtable] on input line 1828.
+Package caption Warning: Unused \captionsetup[subtable] on input line 1834.
 See the caption package documentation for explanation.
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 2538.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 2538.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 2545.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 2545.
 (./Thesis_project_PGMelkert_0893899.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 2538.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 2538.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 2545.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 2545.
 
 Package rerunfilecheck Info: File `Thesis_project_PGMelkert_0893899.out' has no
 t changed.
 (rerunfilecheck)             Checksum: 3D5C693F765F524869B7E3A3562DC2A4;4230.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 2538.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 2545.
  ) 
 Here is how much of TeX's memory you used:
- 19763 strings out of 493014
- 348770 string characters out of 6133351
- 548219 words of memory out of 5000000
- 22663 multiletter control sequences out of 15000+600000
+ 19788 strings out of 493014
+ 349335 string characters out of 6133351
+ 546875 words of memory out of 5000000
+ 22681 multiletter control sequences out of 15000+600000
  22776 words of font info for 84 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  41i,20n,43p,10478b,575s stack positions out of 5000i,500n,10000p,200000b,80000s
-pdfTeX warning (dest): name{Hfootnote.9} has been referenced but does not exi
+pdfTeX warning (dest): name{Hfootnote.7} has been referenced but does not exi
 st, replaced by a fixed one
-
-pdfTeX warning (dest): name{Hfootnote.8} has been referenced but does not exist
-, replaced by a fixed one
-
-pdfTeX warning (dest): name{Hfootnote.7} has been referenced but does not exist
-, replaced by a fixed one
 
 pdfTeX warning (dest): name{Hfootnote.6} has been referenced but does not exist
 , replaced by a fixed one
@@ -2665,11 +2679,11 @@ e/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/local/texlive/2
 exmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/local/texlive/2016/te
 xmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/local/texlive/2016/tex
 mf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on Thesis_project_PGMelkert_0893899.pdf (87 pages, 6504724 bytes
+Output written on Thesis_project_PGMelkert_0893899.pdf (88 pages, 6513775 bytes
 ).
 PDF statistics:
- 2461 PDF objects out of 2487 (max. 8388607)
- 1527 compressed objects within 16 object streams
- 308 named destinations out of 1000 (max. 500000)
+ 2523 PDF objects out of 2984 (max. 8388607)
+ 1588 compressed objects within 16 object streams
+ 313 named destinations out of 1000 (max. 500000)
  761 words of extra memory for PDF output out of 10000 (max. 10000000)
 
