@@ -21,6 +21,7 @@
 \usepackage{rotating}
 \usepackage{pdflscape}
 
+
 \usepackage{booktabs}
 
 % Header and Footer Stuff
@@ -62,6 +63,19 @@
   \renewcommand\thequestion{\arabic{question}} 
   \stepcounter{question} 
 } 
+
+\usepackage{pdflscape}
+\usepackage{everypage}
+\newcommand{\Lpagenumber}{\ifdim\textwidth=\linewidth\else\bgroup
+  \dimendef\margin=0 %use \margin instead of \dimen0
+  \ifodd\value{page}\margin=\oddsidemargin
+  \else\margin=\evensidemargin
+  \fi
+  \raisebox{\dimexpr -\topmargin-\headheight-\headsep-0.5\linewidth}[0pt][0pt]{%
+    \rlap{\hspace{\dimexpr \margin+\textheight+\footskip}%
+    \llap{\rotatebox{90}{\thepage}}}}%
+\egroup\fi}
+\AddEverypageHook{\Lpagenumber}%
 
 
 \begin{document}
@@ -219,7 +233,9 @@ Essentially, all models are wrong, but some are useful. - \cite{ref:Box1987}
 \vspace*{\fill}
 
 
-\cleardoublepage 
+\clearpage
+
+\newpage\null\thispagestyle{empty}\newpage
 
 
 % Main body stuff
@@ -312,7 +328,7 @@ Chapter \ref{ch:simulation_study} examines the accuracy of k-nearest neighbor an
 We then extend the empirical evaluation of correlation estimates using machine learning to a multivariate setting in chapter \ref{chap:multivariate_analysis}. The focus of analysis is \textit{systems of correlations} in a quantitative financial risk management context rather than \textit{individual correlations}. The proposed semiparametric multivariate volatility model is applied to the 30 constituents included in the Dow Jones Industrial Average index and performance is verified in terms of an economic loss function, the Value-at-Risk (VaR) and Conditional Value-at-Risk, in both tranquil market conditions (mid-1990's) and volatile market conditions (2000-2001 Dot-com bubble). Unconditional coverage and independence tests provide evidence that our semiparametric multivariate volatility model is able to capture interesting conditional properties in correlations and that it is competitive with a fully parametric counterpart, the dynamic conditional correlation (DCC) model of \cite{ref:Engle2002}. The backtest results exhibit general patterns for the 95\%, 97.5\%, and 99\% VaR confidence levels in both market conditions; (1) semiparametric risk model specifications show less conservative behavior compared with the DCC risk model; (2) semiparametric risk model specifications with Kendall approximations of true correlation exhibit a higher number of VaR exceedances than their Pearson counterpart; (3) an increase in the number of neighbors in the nearest neighbor estimator and an increase in the number of decision trees in the random forest estimator result in increased smoothness of estimated VaR levels; (4) the likelihood of a VaR exceedance does not depend greatly on whether a VaR exceedance occurred on the previous day. \\   
 
 \noindent
-Finally, chapter \ref{ch:conclusion} contains a general conclusion of this paper as well as interesting directions for future research. The adequate performance of our semiparametric multivariate volatility model is not limited to the specific case of downside market risk assesment and may be extended to other topics in the field financial econometrics. For future research, it may be interesting to apply proposed semiparametric multivariate volatility model for estimation of the conditional variance-covariance matrix in the context of a multi-stage portfolio optimization problem; it would be interesting to examine proposed semiparametric model's ability to capture multi-stage conditional properties in correlations and volatilities.
+Finally, chapter \ref{ch:conclusion} contains a general conclusion of this paper as well as interesting directions for future research. The adequate performance of our semiparametric multivariate volatility model is not limited to the specific case of downside market risk assesment and may be extended to other topics in the field of financial econometrics. For future research, it may be interesting to apply proposed semiparametric multivariate volatility model for estimation of the conditional variance-covariance matrix in the context of a multi-stage portfolio optimization problem; it would be interesting to examine proposed semiparametric model's ability to capture multi-stage conditional properties in correlations and volatilities.
 
 
 \chapter{Methodology} \label{ch:methodology}
@@ -786,7 +802,7 @@ unlike many estimation problems in nonparametric analysis, our semiparametric mo
 In this chapter, using simulation, out-of-sample performance of conditional correlations estimated by proposed learning estimators and conventional moving windows is compared in terms of a statistical loss function, the mean squared error. Our discussion on bias-variance decomposition of the mean squared error from section \ref{sec:mse_decompose} allows us to provide initial insight whether k-nearest neighbor and random forest learning estimators are adequate in estimation of conditional correlation between financial returns. Section \ref{sec:MW} presents out-of-sample results of Pearson and Kendall sample correlation estimates using moving windows under different choices of window length. Section \ref{sec:true_correlation} present results of k-nearest neighbor (KNN) and random forest (RF) estimators when the set of covariates are approximations of true correlation and the response variable is specified by true correlation. Next, section \ref{sec:proxy_correlation} present results of KNN and RF estimators when both the set of covariates and response variable are approximations of true correlation. Finally, Section \ref{sec:conclusions_sim} concludes the chapter. \\  
 
 \noindent
-Our simulation example is as follows. We simulate $T = 1500$ observations $y_t= (y_{1,t}, y_{2,t})'$ for  $t \in \{1, \dots,T\}$ from a model with highly persistent time-varying correlations following an auto-regressive process defined in \eqref{eq:correlation_simulation}. The learning model parameters are then learned on an initial training data set defined by the first 1000 observations. Next, one-step-ahead out-of-sample correlation estimates are obtained under an expanding and rolling window for the NN and RF estimators, respectively, for the last 500 observations. 
+Our simulation example is as follows. We simulate $T = 1500$ observations $y_t= (y_{1,t}, y_{2,t})'$ for  $t \in \{1, \dots,T\}$ from a model with highly persistent time-varying correlations following an auto-regressive process defined in \eqref{eq:correlation_simulation}. The learning model parameters are then learned on an initial training data set defined by the first 1000 observations. Next, one-step-ahead out-of-sample correlation estimates are obtained under an expanding and rolling window for the KNN and RF estimators, respectively, for the last 500 observations. 
 
 \begin{align}
 	\begin{array}{rcl}
@@ -1898,6 +1914,7 @@ The final VaR considered is the 95\% VaR with 25.2 expected exceedances. The bac
 \noindent
 The minimum exceedance residual, min($er_t$), for the 99\% VaR is negative for all risk models. This implies that no risk model under consideration ensures that CVaR is never exceeded in the backtest period. Similarly, the mean exceedance residual, mean($er_t$), is also negative for all risk models. This implies that, on average, all risk models under consideration tend to underestimate true CVaR, that is, they tend to underestimate, on average, the actual portfolio loss $L_t$ given that the loss $L_t$ exceeds VaR$_t$. In terms of min($er_t$) and mean($er_t$), the KNN(idw)-Pearson-Garch model and KNN(100)-Kendall-Garch model, respectively, deem the most adequate risk models for the 99\% CVaR.   \\
     
+\pagestyle{empty}
 \begin{landscape}
 \begin{table}[h]
 \centering
@@ -1934,6 +1951,7 @@ RF(100)-Kendall-GJR             	&20		&12		&10                       &0.0393    
 \label{tab:var_backtest_tranquil_table}
 \end{table}
 \end{landscape}
+\pagestyle{fancy}
 
 \noindent
 Figure \ref{fig:var_forecasts_tranquil} depicts the 95\%, 97.5\% and 99\% VaR estimates of a long position in an equally weighted portfolio in tranquil market conditions; in particular, the differences between VaR estimates obtained from the fully parametric DCC model and our semiparametric multivariate volatility model using NN and RF learning estimators are presented. Figure \ref{fig:var_forecasts_tranquil} corroborates our statement that semiparametric multivariate volatility models with Kendall approximations of true correlation exhibit a higher number of VaR exceedances than their Pearson counterpart; estimated VaR levels under Kendall exhibit slightly less volatile behavior and a positive vertical shift compared with their Pearson counterparts.  \\
@@ -1944,90 +1962,92 @@ Conditional correlation estimates obtained from the DCC risk model only change v
 \noindent
 In summary, the KNN(idw)-Kendall model is the most adequate risk model for the 99\% VaR with 6 exceedances against an expectation of 5.4 exceedances. For the 97.5\% VaR, the KNN(5)-Pearson-GJR model appears to be the most adequate risk model for the 97.5\% VaR with 13 exceedances, closely followed by the KNN(100)-Kendall, RF(10)-Kendall and RF(100)-Kendall risk models with 12 exceedances whereas 12.6 VaR exceedances are expected. Of particular note is that we have an indication that KNN(100)-Kendall is an adequate risk model across more than only the higher quantiles of the loss distribution in terms of estimating VaR in tranquil market conditions; the null hypothesis of the unconditional coverage and independence test is not rejected at the 5\% significance level for the KNN(100)-Kendall risk model across the entire loss distribution. The KNN(5)-Kendall-Garch model appears to be the most adequate risk model for the 95\% VaR with 25 exceedances against 25.2 expected exceedances. In terms of min($er_t$) and mean($er_t$), the KNN(idw)-Pearson-Garch model and KNN(100)-Kendall-Garch model, respectively, are the most adequate risk models for the 99\% CVaR. 
 
+\clearpage
 
 %%%% VaR figures Tranquil Market Conditions  %%%%%
 \begin{landscape}
-\begin{figure} % [h] parameter makes sure figures are located at 'this' location.
+\pagestyle{empty}
+\begin{figure}[H] % [h] parameter makes sure figures are located at 'this' location.
 	\centering
 	\begin{subfigure}[b]{0.33 \textwidth} %1
 		\centering 
-		\includegraphics[width=1.4\textwidth, height=0.7\textwidth]{multivar_analysis/tranquil/KNN5_pearson_garch_1994_1995.pdf} 
+		\includegraphics[width=1.2\textwidth, height=0.6\textwidth]{multivar_analysis/tranquil/KNN5_pearson_garch_1994_1995.pdf} 
 		\caption{KNN(5)-Pearson-Garch} 	
 		\label{fig:KNN(5)-Pearson-Garch}
 	\end{subfigure} 
 	\hfill	
 	\begin{subfigure}[b]{0.33 \textwidth} %3
 		\centering 		
-		\includegraphics[width=1.4\textwidth, height=0.7\textwidth]{multivar_analysis/tranquil/KNN100_kendall_garch_1994_1995.pdf} 
+		\includegraphics[width=1.2\textwidth, height=0.6\textwidth]{multivar_analysis/tranquil/KNN100_kendall_garch_1994_1995.pdf} 
 		\caption{KNN(100)-Kendall-Garch} 
 		\label{fig:KNN(100)-Kendall-Garch}
 	\end{subfigure}
 	\hfill 
 	\begin{subfigure}[b]{0.33 \textwidth} %5
 		\centering 		
-		\includegraphics[width=1.4\textwidth, height=0.7\textwidth]{multivar_analysis/tranquil/KNN_idw_pearson_garch_1994_1995.pdf} 
+		\includegraphics[width=1.2\textwidth, height=0.6\textwidth]{multivar_analysis/tranquil/KNN_idw_pearson_garch_1994_1995.pdf} 
 		\caption{KNN(idw)-Pearson-Garch} 
 		\label{fig:KNN(idw)-Pearson-Garch}
 	\end{subfigure}
 	\hfill   
 	\begin{subfigure}[b]{0.33 \textwidth}  %2
 		\centering 
-		\includegraphics[width=1.4\textwidth, height=0.7\textwidth]{multivar_analysis/tranquil/KNN5_kendall_garch_1994_1995.pdf} 
+		\includegraphics[width=1.2\textwidth, height=0.6\textwidth]{multivar_analysis/tranquil/KNN5_kendall_garch_1994_1995.pdf} 
 		\caption{KNN(5)-Kendall-Garch} 
 		\label{fig:KNN(5)-Kendall-Garch}
 	\end{subfigure} 
 	\hfill
 	\begin{subfigure}[b]{0.33 \textwidth} %4
 		\centering 
-		\includegraphics[width=1.4\textwidth, height=0.7\textwidth]{multivar_analysis/tranquil/KNN100_kendall_gjr_1994_1995.pdf} 
+		\includegraphics[width=1.2\textwidth, height=0.6\textwidth]{multivar_analysis/tranquil/KNN100_kendall_gjr_1994_1995.pdf} 
 		\caption{KNN(100)-Kendall-GJR} 
 		\label{fig:KNN(100)-Kendall-GJR}
 	\end{subfigure}
 	\hfill
 	\begin{subfigure}[b]{0.33 \textwidth} %6
 		\centering 
-		\includegraphics[width=1.4\textwidth, height=0.7\textwidth]{multivar_analysis/tranquil/KNN_idw_kendall_garch_1994_1995.pdf} 
+		\includegraphics[width=1.2\textwidth, height=0.6\textwidth]{multivar_analysis/tranquil/KNN_idw_kendall_garch_1994_1995.pdf} 
 		\caption{KNN(idw)-Kendall-Garch} 
 		\label{fig:KNN(idw)-Kendall-Garch}
 	\end{subfigure}
 	\hfill
 	\begin{subfigure}[b]{0.33 \textwidth} %7
 		\centering 
-		\includegraphics[width=1.4\textwidth, height=0.7\textwidth]{multivar_analysis/tranquil/RF10_pearson_garch_1994_1995.pdf} 
+		\includegraphics[width=1.2\textwidth, height=0.6\textwidth]{multivar_analysis/tranquil/RF10_pearson_garch_1994_1995.pdf} 
 		\caption{RF(10)-Pearson-Garch} 	
 		\label{fig:RF(10)-Pearson-Garch}
 	\end{subfigure} 
 	\hfill
 	\begin{subfigure}[b]{0.33 \textwidth}  %8
 		\centering 
-		\includegraphics[width=1.4\textwidth, height=0.7\textwidth]{multivar_analysis/tranquil/RF10_kendall_garch_1994_1995.pdf} 
+		\includegraphics[width=1.2\textwidth, height=0.6\textwidth]{multivar_analysis/tranquil/RF10_kendall_garch_1994_1995.pdf} 
 		\caption{RF(10)-Kendall-Garch} 
 		\label{fig:RF(10)-Kendall-Garch}
 	\end{subfigure} 
 	\hfill
 	\begin{subfigure}[b]{0.33 \textwidth} %11
 		\centering 		
-		\includegraphics[width=1.4\textwidth, height=0.7\textwidth]{multivar_analysis/tranquil/DCC_garch_mvnorm_1994_1995.pdf} 
+		\includegraphics[width=1.2\textwidth, height=0.6\textwidth]{multivar_analysis/tranquil/DCC_garch_mvnorm_1994_1995.pdf} 
 		\caption{DCC-Garch} 
 		\label{fig:DCC-Garch}
 	\end{subfigure}	
 	\begin{subfigure}[b]{0.33 \textwidth} %9
 		\centering 		
-		\includegraphics[width=1.4\textwidth, height=0.7\textwidth]{multivar_analysis/tranquil/RF100_pearson_garch_1994_1995.pdf} 
+		\includegraphics[width=1.2\textwidth, height=0.6\textwidth]{multivar_analysis/tranquil/RF100_pearson_garch_1994_1995.pdf} 
 		\caption{RF(100)-Pearson-Garch} 
 		\label{fig:RF(100)-Pearson-Garch}
 	\end{subfigure}
 	\hfill  
 	\begin{subfigure}[b]{0.33 \textwidth} %10
 		\centering 
-		\includegraphics[width=1.4\textwidth, height=0.7\textwidth]{multivar_analysis/tranquil/RF100_kendall_garch_1994_1995.pdf} 
+		\includegraphics[width=1.2\textwidth, height=0.6\textwidth]{multivar_analysis/tranquil/RF100_kendall_garch_1994_1995.pdf} 
 		\caption{RF(100)-Kendall-Garch} 
 		\label{fig:RF(100)-Kendall-Garch}
 	\end{subfigure}
 	\hfill
 	\begin{subfigure}[b]{0.33 \textwidth} %11
 		\centering 		
-		\includegraphics[width=1.4\textwidth, height=0.7\textwidth]{multivar_analysis/tranquil/DCC_gjr_mvnorm_1994_1995.pdf} 
+		\includegraphics[width=1.2\textwidth, height=0.6\textwidth]{multivar_analysis/tranquil/DCC_gjr_mvnorm_1994_1995.pdf} 
 		\caption{DCC-GJR} 
 		\label{fig:DCC-GJR}
 	\end{subfigure}	
@@ -2035,6 +2055,7 @@ In summary, the KNN(idw)-Kendall model is the most adequate risk model for the 9
 	\label{fig:var_forecasts_tranquil}
 \end{figure}
 \end{landscape}
+\pagestyle{fancy}
 \clearpage
 
 
@@ -2056,6 +2077,7 @@ The final VaR considered is the 95\% VaR with 25 expected exceedances. We observ
 \noindent
 The minimum exceedance residual, min($er_t$), for the 99\% VaR is negative for all risk models and corresponds to the suffered losses as a consequence of the September 11 attacks in 2001. This implies that no risk model under consideration ensures that CVaR is never exceeded in the backtest period. Similarly, the mean exceedance residual, mean($er_t$), is also negative for all risk models. This implies that, on average, all risk models under consideration tend to underestimate true CVaR, that is, they tend to underestimate, on average, the actual portfolio loss $L_t$ given that the loss $L_t$ exceeds VaR$_t$. In terms of min($er_t$) and mean($er_t$), the KNN(100)-Pearson-Garch model and KNN(idw)-Pearson-Garch model, respectively, deem the most adequate risk models for the 99\% CVaR.   
 
+\pagestyle{empty}
 \begin{landscape}
 \begin{table}[h]
 \centering
@@ -2091,6 +2113,7 @@ RF(100)-Kendall-GJR             	&\textbf{55}	&\textbf{29}	&\textbf{15}         
 \label{tab:var_backtest_vol_table}
 \end{table}
 \end{landscape}
+\pagestyle{fancy}
 
 
 \noindent
@@ -2105,88 +2128,89 @@ In summary, the most adequate risk models for the 99\% VaR are the DCC and KNN(1
 
 %%%% VaR figures Volatile Market Conditions  %%%%%
 \begin{landscape}
-\begin{figure} % [h] parameter makes sure figures are located at 'this' location.
+\pagestyle{empty}
+\begin{figure}[H] % [h] parameter makes sure figures are located at 'this' location.
 	\centering
 	\begin{subfigure}[b]{0.33 \textwidth} %1
 		\centering 
-		\includegraphics[width=1.4\textwidth, height=0.7\textwidth]{multivar_analysis/volatile/KNN5_pearson_garch_2000_2001.pdf} 
+		\includegraphics[width=1.2\textwidth, height=0.6\textwidth]{multivar_analysis/volatile/KNN5_pearson_garch_2000_2001.pdf} 
 		\caption{KNN(5)-Pearson-Garch} 	
 		\label{fig:KNN(5)-Pearson-Garch_vol}
 	\end{subfigure} 
 	\hfill	
 	\begin{subfigure}[b]{0.33 \textwidth} %3
 		\centering 		
-		\includegraphics[width=1.4\textwidth, height=0.7\textwidth]{multivar_analysis/volatile/KNN100_pearson_garch_2000_2001.pdf} 
+		\includegraphics[width=1.2\textwidth, height=0.6\textwidth]{multivar_analysis/volatile/KNN100_pearson_garch_2000_2001.pdf} 
 		\caption{KNN(100)-Pearson-Garch} 
 		\label{fig:KNN(100)-Pearson-Garch_vol}
 	\end{subfigure}
 	\hfill 
 	\begin{subfigure}[b]{0.33 \textwidth} %5
 		\centering 		
-		\includegraphics[width=1.4\textwidth, height=0.7\textwidth]{multivar_analysis/volatile/KNN_idw_pearson_garch_2000_2001.pdf} 
+		\includegraphics[width=1.2\textwidth, height=0.6\textwidth]{multivar_analysis/volatile/KNN_idw_pearson_garch_2000_2001.pdf} 
 		\caption{KNN(idw)-Pearson-Garch} 
 		\label{fig:KNN(idw)-Pearson-Garch_vol}
 	\end{subfigure}
 	\hfill   
 	\begin{subfigure}[b]{0.33 \textwidth}  %2
 		\centering 
-		\includegraphics[width=1.4\textwidth, height=0.7\textwidth]{multivar_analysis/volatile/KNN5_kendall_garch_2000_2001.pdf} 
+		\includegraphics[width=1.2\textwidth, height=0.6\textwidth]{multivar_analysis/volatile/KNN5_kendall_garch_2000_2001.pdf} 
 		\caption{KNN(5)-Kendall-Garch} 
 		\label{fig:KNN(5)-Kendall-Garch_vol}
 	\end{subfigure} 
 	\hfill	
 	\begin{subfigure}[b]{0.33 \textwidth} %4
 		\centering 
-		\includegraphics[width=1.4\textwidth, height=0.7\textwidth]{multivar_analysis/volatile/KNN100_pearson_gjr_2000_2001.pdf} 
+		\includegraphics[width=1.2\textwidth, height=0.6\textwidth]{multivar_analysis/volatile/KNN100_pearson_gjr_2000_2001.pdf} 
 		\caption{KNN(100)-Pearson-GJR} 
 		\label{fig:KNN(100)-Pearson-GJR_vol}
 	\end{subfigure}
 	\hfill
 	\begin{subfigure}[b]{0.33 \textwidth} %6
 		\centering 
-		\includegraphics[width=1.4\textwidth, height=0.7\textwidth]{multivar_analysis/volatile/KNN_idw_kendall_garch_2000_2001.pdf} 
+		\includegraphics[width=1.2\textwidth, height=0.6\textwidth]{multivar_analysis/volatile/KNN_idw_kendall_garch_2000_2001.pdf} 
 		\caption{KNN(idw)-Kendall-Garch} 
 		\label{fig:KNN(idw)-Kendall-Garch_vol}
 	\end{subfigure}
 	\hfill
 	\begin{subfigure}[b]{0.33 \textwidth} %7
 		\centering 
-		\includegraphics[width=1.4\textwidth, height=0.7\textwidth]{multivar_analysis/volatile/RF10_pearson_garch_2000_2001.pdf} 
+		\includegraphics[width=1.2\textwidth, height=0.6\textwidth]{multivar_analysis/volatile/RF10_pearson_garch_2000_2001.pdf} 
 		\caption{RF(10)-Pearson-Garch} 	
 		\label{fig:RF(10)-Pearson-Garch_vol}
 	\end{subfigure} 
 	\hfill
 	\begin{subfigure}[b]{0.33 \textwidth}  %8
 		\centering 
-		\includegraphics[width=1.4\textwidth, height=0.7\textwidth]{multivar_analysis/volatile/RF10_kendall_garch_2000_2001.pdf} 
+		\includegraphics[width=1.2\textwidth, height=0.6\textwidth]{multivar_analysis/volatile/RF10_kendall_garch_2000_2001.pdf} 
 		\caption{RF(10)-Kendall-Garch} 
 		\label{RF(10)-Kendall-Garch_vol}
 	\end{subfigure} 
 	\hfill
 	\begin{subfigure}[b]{0.33 \textwidth} %11
 		\centering 		
-		\includegraphics[width=1.4\textwidth, height=0.7\textwidth]{multivar_analysis/volatile/DCC_garch_mvnorm_2000_2001.pdf} 
+		\includegraphics[width=1.2\textwidth, height=0.6\textwidth]{multivar_analysis/volatile/DCC_garch_mvnorm_2000_2001.pdf} 
 		\caption{DCC-Garch} 
 		\label{fig:DCC-Garch_vol}
 	\end{subfigure}	
 	\hfill
 	\begin{subfigure}[b]{0.33 \textwidth} %9
 		\centering 		
-		\includegraphics[width=1.4\textwidth, height=0.7\textwidth]{multivar_analysis/volatile/RF100_pearson_garch_2000_2001.pdf} 
+		\includegraphics[width=1.2\textwidth, height=0.6\textwidth]{multivar_analysis/volatile/RF100_pearson_garch_2000_2001.pdf} 
 		\caption{RF(100)-Pearson-Garch} 
 		\label{fig:RF(100)-Pearson-Garch_vol}
 	\end{subfigure}
 	\hfill  
 	\begin{subfigure}[b]{0.33 \textwidth} %10
 		\centering 
-		\includegraphics[width=1.4\textwidth, height=0.7\textwidth]{multivar_analysis/volatile/RF100_kendall_garch_2000_2001.pdf} 
+		\includegraphics[width=1.2\textwidth, height=0.6\textwidth]{multivar_analysis/volatile/RF100_kendall_garch_2000_2001.pdf} 
 		\caption{RF(100)-Kendall-Garch} 
 		\label{fig:RF(100)-Kendall-Garch_vol}
 	\end{subfigure}
 	\hfill
 	\begin{subfigure}[b]{0.33 \textwidth} %11
 		\centering 		
-		\includegraphics[width=1.4\textwidth, height=0.7\textwidth]{multivar_analysis/volatile/DCC_gjr_mvnorm_2000_2001.pdf} 
+		\includegraphics[width=1.2\textwidth, height=0.6\textwidth]{multivar_analysis/volatile/DCC_gjr_mvnorm_2000_2001.pdf} 
 		\caption{DCC-GJR} 
 		\label{fig:DCC-GJR_vol}
 	\end{subfigure}	
@@ -2194,6 +2218,7 @@ In summary, the most adequate risk models for the 99\% VaR are the DCC and KNN(1
 	\label{fig:var_forecasts_volatile}
 \end{figure}
 \end{landscape}
+\pagestyle{fancy}
 \clearpage
 
 
@@ -2235,48 +2260,8 @@ The aim of this paper was to develop a new semiparametric model for the conditio
 The proposed semiparametric multivariate volatility model was applied to the 30 constituents included in the Dow Jones Industrial Average index and performance was verified in terms of  economic loss functions Value-at-Risk and Conditional Value-at-Risk. It has been demonstrated that the model is able to capture interesting conditional properties in correlations and that it is competitive with a fully parametric counterpart, both in tranquil market conditions such as the mid-1990's and volatile market conditions during the 2000-2001 Dot-com bubble. This work has therefore provided initial insights in the successful use of k-nearest neighbor and random forest learning estimators for estimation of conditional correlation between financial returns. Proposed semiparametric multivariate volatility model may hence be considered in the context of downside market risk assesment. \\
 
 \noindent 
-The adequate results of proposed semiparametric multivariate volatility model are however not limited to the specific case of downside market risk assessment and may be extended to other topics in the field financial econometrics. For future research, it may be interesting to apply proposed semiparametric multivariate volatility model for estimation of the conditional variance-covariance matrix in the context of a multi-stage portfolio optimization problem. It would be interesting to examine proposed semiparametric model's ability to capture multi-stage conditional properties in correlations and volatilities.    
+The adequate results of proposed semiparametric multivariate volatility model are however not limited to the specific case of downside market risk assessment and may be extended to other topics in the field of financial econometrics. For future research, it may be interesting to apply proposed semiparametric multivariate volatility model for estimation of the conditional variance-covariance matrix in the context of a multi-stage portfolio optimization problem. It would be interesting to examine proposed semiparametric model's ability to capture multi-stage conditional properties in correlations and volatilities.    
 
-
-
-\iffalse
-\bigskip
-In this paper, two nonparametric learning algorithms, nearest neighbor and random forest, are used to point estimate conditional correlations directly and independently of conditional volatilities. These learning methods have a clear advantage over multivariate GARCH models in that any imposition of arbitrary (potentially misspecified) assumptions on the distribution and functional form of the conditional correlation matrix is avoided; the conditional correlations are only assumed to depend on lagged sample correlations obtained using moving window estimation. Moreover, due to a parsimonious model specification, our semiparametric model for the conditional covariance matrix does not suffer from the curse of dimensionality to the same extent as early-stage multivariate GARCH models and many fully nonparametric models. Lack of imposed structure, however, does not guarantee that the obtained conditional correlation matrix is positive definite, which is verified with obtained correlation coefficients.    
-
-\bigskip
-"The results show that the methodology proposed in this paper can accommodate the
-high turbulence in the markets, and it can be seen as an appropriate option in the management of
-market risk. In future work, it may be interesting to use an optimization model that considers, at the
-same level, market returns and risk estimates, and relate the multivariate GARCH to the EVT
-models, in order to obtain additional information to international investors on their investment
-alternatives, taking into account the opportunities offered by emerging and developed markets. \\
-
-\noindent
-"The explained methodology and obtained results are not limited to this specific risk management problem and could be expanded into various other topics in applied finance and risk management." \textbf{Propose portfolio optimization where conditional covariance matirx serves as input. Think of multi-period forecasting of conditional covariance.}
-\fi
-
-\iffalse
-Conclusions: \\
-% Nice structure for the conclusions: https://www.tandfonline.com/doi/pdf/10.1080/07350015.2016.1177535?needAccess=true
-In this paper, we examined the performance of a new semiparametric multivariate volatility model using nearest neighbor and random forest estimators of conditional correlation. The semiparametric model performs quite well when compared with standard parametric DCC-type models in terms of Value-at-Risk forecasting accuracy. \\
-\iffalse
-
-
-In summary, this paper proposes a new approach to modeling the distribution of financial returns that generalizes the univariate SNP distributions to a multivariate framework which guarantees the positivity of the density for all values of its parameters. Furthermore, the proposed model avoids the known ?dimensionality curse? of the multivariate context, by means implementing the DCC methodology. An empirical application to asset portfolio returns shows that, overall, the SNP-DCC model provides a better in-sample fit and out-of-sample performance for full density forecasting than the (Gaussian)-DCC.
-\fi
-
-\noindent
-Future research: \\
-\noindent
-"In statistics and machine learning, ensemble methods use multiple learning algorithms to obtain better predictive performance than could be obtained from any of the constituent learning algorithms alone." Let's say DCC and some learning algorithm make up the set of superior models in MCS approach. Then it might be interesting to have a look at combining predictions from these superior models, i.e. ensemble learning.  \\
-
-\noindent
-Another interesting direction for further research is comparison of applications of learning algorithms with conditional copula models in the context of quantitative financial risk management. \\
-
-\noindent
-KNN algorithm suffers from curse of dimensionality as it is mostly implemented by an approximate nearest neighbor search algorithm like a kd-tree. Usually every approximate search algorithm in high dimensional space will suffer from curse of dimensionality. KNN will not suffer from curse of dimensionality if you use a brute force search algorithm though. But this is not practical for large datasets, which in case of 30 assets is not a problem. An interesting direction for further research could be to see what qualifies as high dimensional asset universe and brute force search is not an option anymore. Following that, it would be interesting to look into the performance of KNN regression ensembles that do not suffer from the curse of dimensionality.  \\
-
-\fi
 
 \bibliographystyle{plainnat}
 \bibliography{refThesis}
@@ -2408,9 +2393,9 @@ $\beta_i$             &     & 0.7906		&0.5927	&0.7519	&0.8132	&0.8853	&0.9262   
 
 \chapter{Value-at-Risk Estimates on Lower Quantiles} \label{ap:var}
 
-
+\pagestyle{empty}
 \begin{landscape}
-\begin{table}[H]
+\begin{table}[h]
 \centering
 \captionsetup[subtable]{position=below}
 %\captionsetup[table]{position=below}
@@ -2457,8 +2442,9 @@ RF(100)-Kendall-GJR  &499(0.10)	&485(1.49)	&470(\textbf{4.93})		&452(0.47)		&406
 
 
 %%%   VOLATILE MARKET CONDITIONS 
+\pagestyle{empty}
 \begin{landscape}
-\begin{table}[H]
+\begin{table}[h]
 \centering
 \captionsetup[subtable]{position=below}
 %\captionsetup[table]{position=below}
@@ -2504,6 +2490,7 @@ RF(100)-Kendall-GJR  	&\textbf{490}(1.75)		&484(0.39)	&471(0.06)	&\textbf{434}(0
 
 
 \chapter{Delta-Normal Method in Volatile Market Conditions}
+\pagestyle{empty}
 \begin{landscape}
 \begin{table}[h]
 \centering
