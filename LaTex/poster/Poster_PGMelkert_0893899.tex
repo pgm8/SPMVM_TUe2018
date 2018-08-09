@@ -19,17 +19,12 @@ The Netherlands
 \begin{slidetop}
 \slidetitle[Paul Melkert]{Conditional Correlation Modeling using Machine Learning and Multivariate GARCH}
 \begin{multicols}{2}
-\section*{Conditional variance-covariance modeling}
-
-We consider a $k$-dimensional log return series, $r_t = (r_{1,t}, \dots, r_{k,t})'$ such that
-
+A new semiparametric multivariate volatility model is proposed, which integrates parametric univariate GARCH specifications for the conditional volatilities with nonparametric machine learning estimators for the conditional correlations. Consider a $k$-dimensional financial log return series $r_t = (r_{1,t}, \dots, r_{k,t})'$:
 \begin{align} 
 	r_t = H^{1/2}_t z_t, \label{eq:returns_model} \nonumber
 \end{align}
+where conditional variance-covariances of log returns $r_t$ is denoted by a $k\times k$ positive definite matrix $H_t$, $H_t^{1/2}$ its Cholesky decomposition, and $z_t$ denotes a $k \times 1$ vector of i.i.d. standard normal random variables. We consider a reparameterization of $H_t$, i.e. $H_{t}=D_{t}R_{t}D_{t}$, where $D_t$ is a diagonal matrix with conditional volatility of each marginal log return series on its diagonal and matrix $R_t$ includes all pairwise correlations $\rho_{i,j,t}$:
 
-where conditional variance-covariances of returns $r_t$ is denoted by a $k\times k$ positive definite matrix $H_t$, with $H_t^{1/2}$ its Cholesky decomposition, and $z_t$ denotes a $k \times 1$ vector of independent and identically distributed random variables with mean zero and unit variance. We consider a reparameterization of $H_t$, i.e. $H_{t}=D_{t}R_{t}D_{t}$, where $D_t$ is a diagonal matrix with conditional volatility of each marginal return series on its diagonal and matrix $R_t$ includes all pairwise correlations $\rho_{i,j,t}$, with $\rho_{i,j,t} = \rho_{j,i,t}$:
- 
- 
 \begin{align} \label{eq:covariance_decomposition} 
 	\scalebox{0.78}{
 		\begin{pmatrix} h_{1,1,t}^{1/2} &&0 \\ &\ddots \\ 0 &&h_{k,k,t}^{1/2} \end{pmatrix} 
@@ -37,49 +32,23 @@ where conditional variance-covariances of returns $r_t$ is denoted by a $k\times
 		\begin{pmatrix} h_{1,1,t}^{1/2} &&0 \\ &\ddots \\ 0 &&h_{k,k,t}^{1/2} \end{pmatrix}, \nonumber
 		}
 \end{align}
+Diagonal elements of matrix $D_t$ are modeled parametrically using GARCH(1,1) and GJR-GARCH(1,1) specifications and conditional correlation matrix $R_t$ is estimated in a nonparametric manner using machine learning algorithms k-nearest neighbor (KNN) and random forest (RF) of Breiman~\cite{BR2001}. A parsimonious learner model specification, with the covariate space constructed using Pearson and Kendall sample correlations from moving windows, ensures that the model remains flexible and easy to estimate in high dimensional systems. Proposed semiparametric multivariate volatility model is applied to the 30 constituents included in the Dow Jones Industrial Average index and model adequacy is verified in terms of a common downside market risk measure Value-at-Risk (VaR):
 
-Diagonal elements of matrix $D_t$ are modeled parametrically using GARCH(1,1) and GJR-GARCH(1,1) specifications, whereas the conditional correlation matrix $R_t$ is estimated in a nonparametric manner using nonparametric machine learning algorithms k-nearest neighbor and random forest.
+\begin{align}
+	VaR_{\alpha} = inf\{l \in \mathbb{R}:P(L>l) \le 1-\alpha\}, \nonumber
+\end{align}
 
- 
-
-\bigskip
-\iffalse
-We consider a wireless link shared by a number of flows. The system operates in a time-slotted fashion, and in each time slot exactly one flow can be scheduled for transmission. The feasible transmission rates for the flows vary over time as a result of fading. In each time slot, a random number of new flows enter the system. Each such flow generates a finite amount of traffic, and exits the system once all its traffic has been processed, see Figure~\ref{fig:overview}.
-
+where $\alpha \in (0,1)$ and $F_L(l) = P(L \le l),$ denotes the distribution function of corresponding loss distribution. A failure test of unconditional coverage (Kupiec) and an independence test (Christoffersen) are considered to statistically evaluate proposed model against a parametric conditionally heteroscedastic class of models, the dynamic conditional correlation model of Engke~\cite{EN2002}, and to detect any misspecification of the risk model. It is demonstrated that proposed model is able to capture interesting conditional properties in correlations and that it shows competitive performance with the DCC model, both in tranquil market conditions (mid-1990's) and volatile market conditions (2000-2001 Dot-com bubble); the likelihood of a VaR exceedance does not depend greatly on whether a VaR exceedance occurred on the previous day. Moreover, the null hypothesis that the total number of VaR exceedances equals the expected number of VaR exceedances, given independence, is satisfied for a variety of model specifications. This can also be seen in Figure~\ref{fig:graph}, which shows the backtest results for unconditional coverage (Kupiec test).
 \begin{center}
-\includegraphics[width=0.6\linewidth]{System_overview}
-\figcaption{Overview of the system. \label{fig:overview}}
-\end{center}
-\fi
-
-The system is a variant of the model considered in Tassiulas and Ephremides~\cite{TE93}\, where it is assumed that the number of flows stays fixed over time, and all flows have a continuous influx of traffic. It can be shown that in this case, so-called {\em MaxWeight} scheduling provides maximum stability, i.e. it achieves stability whenever feasible to do so at all. When using this scheduling rule, in each slot the server selects the flow as follows:
-
-\bigskip 
-
-where $R_i$ denotes the transmission rate, and $Q_i$ denotes the backlog of flow $i$. This is different from MaxRate scheduling for example, where only the transmission rate is used to select the flow to be served.
-
-However, MaxWeight scheduling fails when applied to the dynamic setting under consideration. In contrast to the standard scenario with a fixed number of flows, the instability no longer manifests itself in the form of a few flows with large backlogs, but rather as an excessive number of flows with relatively small backlogs. Because the strategy takes backlog into account, it will give priority to newly arrived flows, so it does not benefit from the service rate variation - the phenomenon that allows the selection of the highest of multiple transmission rates - as it would have when treating all flows equally.
-
-In contrast we consider a strategy close to MaxRate scheduling, and show that this does provide maximum stability. This is done through the Foster-Lyapunov criterion, using the following Lyapunov function:
-
-\bigskip 
-
-where $N_i$ is the number of flows with a backlog of $i$~bits, $B$ denotes the number of bits for each flow, and $R^{\max}$ the maximum feasible transmission rate.
-
-The difference can also be seen in Figure~\ref{fig:graph}, which shows the evolution of the system over time under both strategies.
-
-\begin{center}
-\includegraphics[width=\linewidth]{graph_unstable2}
-\figcaption{Number of bits in the system plotted against time for MaxWeight and MaxRate scheduling.\label{fig:graph}}
+\includegraphics[scale=0.55]{kupiec_test}
+\figcaption{Test results of unconditional coverage (Kupiec test) at higher quantiles of the loss distribution in tranquil and volatile market conditions. Bold face indicates rejection.\label{fig:graph}}
 \end{center}
 
 \begin{thebibliography}{99}
-\bibitem{TE93}
-L. Tassiulas, A. Ephremides (1993).
-Dynamic server allocation to parallel queues with randomly varying
-connectivity.
-{\it IEEE Trans.\ Inf.\ Theory} {\bf 30},
-466--478.
+\bibitem{BR2001}
+Leo Breiman. Random forests. Machine Learning, 45(1):5-32, 2001.
+\bibitem{EN2002}
+Robert Engle. Dynamic conditional correlation: A simple class of multivariate generalized autore- gressive conditional heteroskedasticity models. Journal of Business \& Economic Statistics, 20 (3):339-350, 2002.
 \end{thebibliography}
 \end{multicols}
 \end{slidetop}

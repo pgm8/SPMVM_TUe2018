@@ -42,10 +42,10 @@
 \contentsline {subsection}{\numberline {4.3.2}Conditional Variance Model}{51}{subsection.4.3.2}
 \contentsline {section}{\numberline {4.4}Empirical Results}{53}{section.4.4}
 \contentsline {subsection}{\numberline {4.4.1}Tranquil Market Conditions: Mid-1990's}{54}{subsection.4.4.1}
-\contentsline {subsection}{\numberline {4.4.2}Volatile Market Conditions: 2000-2001 Dot-com Bubble}{60}{subsection.4.4.2}
-\contentsline {section}{\numberline {4.5}Conclusions Empirical Results}{66}{section.4.5}
-\contentsline {chapter}{\numberline {5}Conclusions and Future Research}{68}{chapter.5}
-\contentsline {chapter}{\numberline {A}Descriptive Statistics DJIA}{73}{appendix.A}
-\contentsline {chapter}{\numberline {B}Cross-sectional Distribution Data of Conditional Variance Models}{75}{appendix.B}
-\contentsline {chapter}{\numberline {C}Value-at-Risk Estimates on Lower Quantiles}{77}{appendix.C}
-\contentsline {chapter}{\numberline {D}Delta-Normal Method in Volatile Market Conditions}{80}{appendix.D}
+\contentsline {subsection}{\numberline {4.4.2}Volatile Market Conditions: 2000-2001 Dot-com Bubble}{59}{subsection.4.4.2}
+\contentsline {section}{\numberline {4.5}Conclusions Empirical Results}{64}{section.4.5}
+\contentsline {chapter}{\numberline {5}Conclusions and Future Research}{66}{chapter.5}
+\contentsline {chapter}{\numberline {A}Descriptive Statistics DJIA}{71}{appendix.A}
+\contentsline {chapter}{\numberline {B}Cross-sectional Distribution Data of Conditional Variance Models}{73}{appendix.B}
+\contentsline {chapter}{\numberline {C}Value-at-Risk Estimates on Lower Quantiles}{75}{appendix.C}
+\contentsline {chapter}{\numberline {D}Delta-Normal Method in Volatile Market Conditions}{78}{appendix.D}

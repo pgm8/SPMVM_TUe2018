@@ -97,6 +97,7 @@ write.table(cvar_mat_99, file="CVaR/tranquil/cvar_forecast_1994_1995.csv", sep="
 ## Backtest portfolio Value-at-Risk
 rownames(VaR_true) <- 1:T
 var_files <- list.files(path="VaR/tranquil/")
+var_files <- c('var_knn100_pearson_garch_1994_1995.csv', 'var_knn100_pearson_gjr_1994_1995.csv')
 for (var_file in var_files) {
   VaR_est = read.table(paste("VaR/tranquil/", var_file, sep=""), sep=",", skip=1)
   VaR_est[1] = NULL
