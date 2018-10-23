@@ -20,11 +20,9 @@ np.random.seed(42)
 
 
 def main():
-
     preprocesser = PreProcessor()
     mm = ModuleManager()
     ta = TechnicalAnalyzer()
-
 
     ##################################################################################################################
     ###                         Dow Jones Industrial Averages 30 Constituents log returns                          ###
@@ -106,9 +104,9 @@ def main():
         result = pd.concat([dates, dataset], axis=1, join='inner')
         result.dropna(axis=0, inplace=True)
         result.reset_index(drop=True, inplace=True)
-        mm.save_data('multivariate_analysis/%s/data/dataset_DJI30_%s_%i_1987_2001_alt.pkl'
+        mm.save_data('multivariate_analysis/%s/data/dataset_DJI30_%s_%i_1987_2001.pkl'
                      % (proxy_type, proxy_type, dt), result)
-        mm.transform_pickle_to_csv('multivariate_analysis/%s/data/dataset_DJI30_%s_%i_1987_2001_alt.pkl'
+        mm.transform_pickle_to_csv('multivariate_analysis/%s/data/dataset_DJI30_%s_%i_1987_2001.pkl' 
                      % (proxy_type, proxy_type, dt))
     """
     ##################################################################################################################
@@ -135,9 +133,8 @@ def main():
         headers = list(data.columns.values[:n_corr])
         rho_estimates = pd.DataFrame(columns=headers)
         t_train_init = data.shape[0] - T
-     
         for j, t in enumerate(range(t_train_init, data.shape[0])):  #  j={0:503/ 0:499}
-            print((n_neighbors, proxy_type, j, t))
+            print((n_estimators, proxy_type, j, t))
             sample = np.asarray(data.iloc[j:t, :])  # True rolling window is [j:t, :]
             x_test = np.asarray(data.iloc[t, :n_corr+2])  # This is in fact x_t+1
             X = np.asarray(sample[:, :n_corr+2])  # covariate matrix (vectorize data for speed up)
@@ -154,8 +151,6 @@ def main():
                      (proxy_type, proxy_type, n_neighbors, proxy_type, dt), rho_estimates)
         mm.transform_pickle_to_csv('multivariate_analysis/%s/%s_cor_estimates/cor_knn%i_%s_%i_DJI30_2000_2001.pkl' %
                                    (proxy_type, proxy_type, n_neighbors, proxy_type, dt))
-
-
     """
     """
     mm.save_data('multivariate_analysis/%s/%s_cor_estimates/cor_rf%i_%s_%i_DJI30_2000_2001.pkl' %
@@ -276,15 +271,6 @@ def main():
        filename_fig = re.search('var_(.+?).csv', filename).group(1)  # Extract figure name from filename
        var_forecast = mm.load_csv('multivariate_analysis/VaR/%s/%s' % (period, filename))
        var_plot(r=VaR_true, q=var_forecast, fig_name=filename_fig, period=period)
-
-
-
-
-
-
-
-
-
 
 
 
