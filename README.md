@@ -9,5 +9,5 @@ Python code for the development of a semiparametric model for the conditional co
 * Numpy
 * Pandas
 * Matplotlib
-* [Scikit-learn] (http://scikit-learn.org/stable/)
+* [Scikit-learn](http://scikit-learn.org/stable/)
 
