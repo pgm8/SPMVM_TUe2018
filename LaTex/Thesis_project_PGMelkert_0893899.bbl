@@ -1,9 +1,34 @@
-\begin{thebibliography}{18}
+\begin{thebibliography}{60}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
   \providecommand{\doi}[1]{doi: #1}\else
   \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[Aas(2004)]{ref:Aas2004}
+K.~Aas.
+\newblock Modelling the dependence structure of financial assets: A survey of
+  four copulas.
+\newblock Research report samba/22/04, Norwegian Computing Center, 2004.
+
+\bibitem[Alexander and Chiumba(1997)]{ref:Alexander1997}
+C.~Alexander and A.~Chiumba.
+\newblock Multivariate orthogonal factor garch.
+\newblock \emph{University of Sussex, Discussion Papers in Mathematics}, 1997.
+
+\bibitem[Ausin and Lopes(2010)]{ref:Ausin2010}
+M.~Concepcion Ausin and Hedibert~F. Lopes.
+\newblock Time-varying joint distribution through copulas.
+\newblock \emph{Computational Statistics \& Data Analysis}, 54\penalty0
+  (11):\penalty0 2383--2399, 2010.
+
+\bibitem[Ba{\c{s}}t{\"u}rk and Almeida(2016)]{ref:Basturk2016_1}
+Nalan Ba{\c{s}}t{\"u}rk and Rui~Jorge Almeida.
+\newblock Time varying correlation estimation using probabilistic fuzzy
+  systems.
+\newblock In \emph{Information Processing and Management of Uncertainty in
+  Knowledge-Based Systems}, pages 752--763. Springer International Publishing,
+  2016.
 
 \bibitem[Ba{\c{s}}t{\"u}rk et~al.(2016)Ba{\c{s}}t{\"u}rk, Almeida, Golan, and
   Kaymak]{ref:Basturk2016}
@@ -19,11 +44,36 @@ Luc Bauwens, S{\'e}bastien Laurent, and Jeroen V.~K. Rombouts.
 \newblock \emph{Journal of Applied Econometrics}, 21\penalty0 (1):\penalty0
   79--109, 2006.
 
+\bibitem[Bollerslev(1986)]{ref:Bollerslev1986}
+Tim Bollerslev.
+\newblock Generalized autoregressive conditional heteroskedasticity.
+\newblock \emph{Journal of Econometrics}, 31\penalty0 (3):\penalty0 307--327,
+  1986.
+
+\bibitem[Bollerslev(1990)]{ref:Bollerslev1990}
+Tim Bollerslev.
+\newblock Modelling the coherence in short-run nominal exchange rates: A
+  multivariate generalized arch model.
+\newblock \emph{The Review of Economics and Statistics}, 72\penalty0
+  (3):\penalty0 498--505, 1990.
+
+\bibitem[Bollerslev et~al.(1988)Bollerslev, Engle, and
+  Wooldridge]{ref:Bollerslev1988}
+Tim Bollerslev, Robert~F. Engle, and Jeffrey~M. Wooldridge.
+\newblock A capital asset pricing model with time-varying covariances.
+\newblock \emph{Journal of Political Economy}, 96\penalty0 (1):\penalty0
+  116--131, 1988.
+
+\bibitem[Box and Draper(1987)]{ref:Box1987}
+G.~E.~P. Box and N.R. Draper.
+\newblock \emph{Empirical model-building and response surfaces}.
+\newblock Wiley series in probability and mathematical statistics. Oxford,
+  England: John Wiley and Sons, 1987.
+
 \bibitem[Breiman(1996)]{ref:Breiman1996}
 Leo Breiman.
 \newblock Bagging predictors.
-\newblock \emph{Machine Learning}, 24\penalty0 (2):\penalty0 123--140, Aug
-  1996.
+\newblock \emph{Machine Learning}, 24\penalty0 (2):\penalty0 123--140, 1996.
 
 \bibitem[Breiman(2001)]{ref:Breiman2001}
 Leo Breiman.
@@ -43,10 +93,29 @@ Sean~D. Campbell.
 \newblock Finance and Economics Discussion Series 2005-21, Board of Governors
   of the Federal Reserve System (U.S.), 2005.
 
+\bibitem[Chen and Fan(2006)]{ref:Chen2006}
+Xiaohong Chen and Yanqin Fan.
+\newblock Estimation and model selection of semiparametric copula-based
+  multivariate dynamic models under copula misspecification.
+\newblock \emph{Journal of Econometrics}, 135\penalty0 (1):\penalty0 125--154,
+  2006.
+
 \bibitem[Christoffersen(1998)]{ref:Christoffersen1998}
 Peter~F Christoffersen.
 \newblock Evaluating interval forecasts.
 \newblock \emph{International economic review}, pages 841--862, 1998.
+
+\bibitem[Ding and Engle(2001)]{ref:Ding2001}
+Zhuanxin Ding and Robert~F. Engle.
+\newblock Large scale conditional covariance matrix modeling, estimation and
+  testing.
+\newblock \emph{NYU Working Paper No. S-DRP-01-07}, 29, 2001.
+
+\bibitem[Do et~al.(2010)Do, Lenca, Lallich, and Pham]{ref:Do2010}
+Thanh-Nghi Do, Philippe Lenca, St{\'e}phane Lallich, and Nguyen-Khang Pham.
+\newblock \emph{Classifying Very-High-Dimensional Data with Random Forests of
+  Oblique Decision Trees}, pages 39--55.
+\newblock Springer Berlin Heidelberg, 2010.
 
 \bibitem[Engle(2002)]{ref:Engle2002}
 Robert Engle.
@@ -62,11 +131,71 @@ Robert Engle and Kevin Sheppard.
 \newblock NBER Working Papers 8554, National Bureau of Economic Research, Inc,
   2001.
 
+\bibitem[Engle and Kroner(1995)]{ref:Engle1995}
+Robert~F. Engle and Kenneth~F. Kroner.
+\newblock Multivariate simultaneous generalized arch.
+\newblock \emph{Econometric Theory}, 11\penalty0 (1):\penalty0 122--150, 1995.
+
+\bibitem[Engle and Sheppard(2008)]{ref:Engle2008}
+Robert~F. Engle and Kevin Sheppard.
+\newblock Evaluating the specification of covariance models for large
+  portfolios.
+\newblock working paper, 2008.
+
+\bibitem[Engle et~al.(1990)Engle, Ng, and Rothschild]{ref:Engle1990}
+Robert~F. Engle, Victor~K. Ng, and Michael Rothschild.
+\newblock Asset pricing with a factor-arch covariance structure: Empirical
+  estimates for treasury bills.
+\newblock \emph{Journal of Econometrics}, 45\penalty0 (1):\penalty0 213--237,
+  1990.
+
+\bibitem[Fern{\'a}ndez and Steel(1998)]{ref:Fernandez1998}
+Carmen Fern{\'a}ndez and Mark F.~J. Steel.
+\newblock Carmen fern{\~a}{!'}ndez and mark f. j. steel.
+\newblock \emph{Journal of the American Statistical Association}, 93\penalty0
+  (441):\penalty0 359--371, 1998.
+
+\bibitem[Fisher and Gallagher(2012)]{ref:Fisher2012}
+Thomas~J. Fisher and Colin~M. Gallagher.
+\newblock New weighted portmanteau statistics for time series goodness of fit
+  testing.
+\newblock \emph{Journal of the American Statistical Association}, 107\penalty0
+  (498):\penalty0 777--787, 2012.
+
+\bibitem[Ghalanos(2015)]{ref:Ghalanos2015}
+Alexios Ghalanos.
+\newblock \emph{rmgarch: Multivariate GARCH models}, r package version 1.3-0
+  edition, 2015.
+
+\bibitem[Ghalanos(2018)]{ref:Ghalanos2018}
+Alexios Ghalanos.
+\newblock \emph{rugarch: Univariate GARCH models}, r package version 1.4-0.
+  edition, 2018.
+
+\bibitem[Glosten et~al.(1993)Glosten, Jagannathan, , and
+  Runkle]{ref:Glosten1993}
+L.~R. Glosten, R.~Jagannathan, , and D.~E. Runkle.
+\newblock On the relation between the expected value and the volatility of the
+  nominal excess return on stocks.
+\newblock \emph{Journal of Finance}, 48\penalty0 (5):\penalty0 1779--1801,
+  1993.
+
 \bibitem[Goodrich et~al.(2015)Goodrich, Tamassia, and
   Goldwasser]{ref:Goodrich2015}
 Michael~T Goodrich, Roberto Tamassia, and Michael~H Goldwasser.
 \newblock \emph{Data Structures and Algorithms in Java}.
 \newblock Wiley, 6 edition, 2015.
+
+\bibitem[Hafner and Rombouts(2007)]{ref:Hafner2007}
+Christian~M. Hafner and Jeroen~V.K. Rombouts.
+\newblock Semiparametric multivariate volatility models.
+\newblock \emph{Econometric Theory}, 23\penalty0 (2):\penalty0 251--280, 2007.
+
+\bibitem[Hafner et~al.(2006)Hafner, van Dijk, and Franses]{ref:Hafner2006}
+Christian~M. Hafner, Dick van Dijk, and Philip~Hans Franses.
+\newblock Semi-parametric modelling of correlation dynamics.
+\newblock In \emph{Econometric Analysis of Financial and Economic Time Series},
+  pages 59--103. Emerald Group Publishing Limited, 2006.
 
 \bibitem[Hastie et~al.(2009)Hastie, Tibshirani, and Friedman]{ref:Hastie2009}
 Trevor Hastie, Robert Tibshirani, and Jerome Friedman.
@@ -80,21 +209,120 @@ Tin~Kam Ho.
 \newblock \emph{IEEE Transactions on Pattern Analysis and Machine
   Intelligence}, 20\penalty0 (8):\penalty0 832--844, 1998.
 
+\bibitem[Jarque and Bera(1980)]{ref:Jarque1980}
+Carlos~M. Jarque and Anil~K. Bera.
+\newblock Efficient tests for normality, homoscedasticity and serial
+  independence of regression residuals.
+\newblock \emph{Economics Letters}, 6\penalty0 (3):\penalty0 255--259, 1980.
+
+\bibitem[Jensen and Maheu(2013)]{ref:Jensen2013}
+Mark~J. Jensen and John~M. Maheu.
+\newblock Bayesian semiparametric multivariate garch modeling.
+\newblock \emph{Journal of Econometrics}, 176\penalty0 (1):\penalty0 3--17,
+  2013.
+
+\bibitem[Jondeau and Rockinger(2006)]{ref:Jondeau2006}
+Eric Jondeau and Michael Rockinger.
+\newblock The copula-garch model of conditional dependencies: An international
+  stock market application.
+\newblock \emph{Journal of International Money and Finance}, 25\penalty0
+  (5):\penalty0 827--853, 2006.
+
+\bibitem[Kendall(1948)]{ref:Kendall1948}
+M.~G. Kendall.
+\newblock Rank correlation methods.
+\newblock \emph{Charles Griffin \& Company Limited}, 1948.
+
 \bibitem[Kupiec(1995)]{ref:Kupiec1995}
 Paul~H Kupiec.
 \newblock Techniques for verifying the accuracy of risk measurement models.
 \newblock \emph{The journal of Derivatives}, 3\penalty0 (2):\penalty0 73--84,
   1995.
 
+\bibitem[Lanne and Saikkonen(2007)]{ref:Lanne2007}
+Markku Lanne and Pentti Saikkonen.
+\newblock A multivariate generalized orthogonal factor garch model.
+\newblock \emph{Journal of Business \& Economic Statistics}, 25\penalty0
+  (1):\penalty0 61--75, 2007.
+
+\bibitem[Laurent et~al.(2012)Laurent, Rombouts, and Violante]{ref:Laurent2012}
+S{\'e}bastien Laurent, Jeroen V.~K. Rombouts, and Francesco Violante.
+\newblock On the forecasting accuracy of multivariate garch models.
+\newblock \emph{Journal of Applied Econometrics}, 27\penalty0 (6):\penalty0
+  934--955, 2012.
+
+\bibitem[Li and Racine(2006)]{ref:Li2006}
+Qi~Li and Jeffrey~Scott Racine.
+\newblock \emph{Nonparametric Econometrics: Theory and Practice}.
+\newblock Number 8355 in Economics Books. Princeton University Press, 2006.
+
+\bibitem[Ljung and Box(1978)]{ref:Ljung1978}
+G.~M. Ljung and G.~E.~P. Box.
+\newblock On a measure of lack of fit in time series models.
+\newblock \emph{Biometrika}, 65\penalty0 (2):\penalty0 297--303, 1978.
+
+\bibitem[Long and Ullah(2005)]{ref:Long2005}
+X.~Long and A.~Ullah.
+\newblock Nonparametric and semiparametric multivariate garch model.
+\newblock unpublished, 2005.
+
+\bibitem[Long et~al.(2011)Long, Su, and Ullah]{ref:Long2011}
+Xiangdong Long, Liangjun Su, and Aman Ullah.
+\newblock Estimation and forecasting of dynamic conditional covariance: A
+  semiparametric multivariate model.
+\newblock \emph{Journal of Business \& Economic Statistics}, 29\penalty0
+  (1):\penalty0 109--125, 2011.
+
 \bibitem[Louppe(2014)]{ref:Louppe2014}
 Gilles Louppe.
 \newblock \emph{Understanding random forests: From theory to practice}.
 \newblock PhD thesis, University of Li{\`e}ge, July 2014.
 
+\bibitem[McNeil and Frey(2000)]{ref:McNeil2000}
+Alexander~J. McNeil and R{\"u}diger Frey.
+\newblock Estimation of tail-related risk measures for heteroscedastic
+  financial time series: an extreme value approach.
+\newblock \emph{Journal of Empirical Finance}, 7\penalty0 (3):\penalty0
+  271--300, 2000.
+
 \bibitem[McNeil et~al.(2015)McNeil, Frey, and Embrechts]{ref:QRM2015}
 Alexander~J. McNeil, R{\"u}diger Frey, and Paul Embrechts.
 \newblock \emph{Quantative Risk Management: Concepts, Techniques and Tools}.
 \newblock Princeton University Press, 2015.
+
+\bibitem[Muja and Lowe(2014)]{ref:Muja2014}
+M.~Muja and D.~G. Lowe.
+\newblock Scalable nearest neighbor algorithms for high dimensional data.
+\newblock \emph{IEEE Transactions on Pattern Analysis \& Machine Intelligence},
+  36\penalty0 (11):\penalty0 2227--2240, 2014.
+
+\bibitem[Oh and Patton(2017)]{ref:Oh2017}
+Dong~Hwan Oh and Andrew~J. Patton.
+\newblock Modeling dependence in high dimensions with factor copulas.
+\newblock \emph{Journal of Business \& Economic Statistics}, 35\penalty0
+  (1):\penalty0 139--154, 2017.
+
+\bibitem[Patton(2006)]{ref:Patton2006}
+Andrew~J. Patton.
+\newblock Modelling asymmetric exchange rate dependence.
+\newblock \emph{International Economic Review}, 47\penalty0 (2):\penalty0
+  527--556, 2006.
+
+\bibitem[Pedregosa et~al.(2011)Pedregosa, Varoquaux, Gramfort, Michel, Thirion,
+  Grisel, Blondel, Prettenhofer, Weiss, Dubourg, Vanderplas, Passos,
+  Cournapeau, Brucher, Perrot, and Duchesnay]{ref:Pedregosa2011}
+F.~Pedregosa, G.~Varoquaux, A.~Gramfort, V.~Michel, B.~Thirion, O.~Grisel,
+  M.~Blondel, P.~Prettenhofer, R.~Weiss, V.~Dubourg, J.~Vanderplas, A.~Passos,
+  D.~Cournapeau, M.~Brucher, M.~Perrot, and E.~Duchesnay.
+\newblock Scikit-learn: Machine learning in python.
+\newblock \emph{Journal of Machine Learning Research}, 12:\penalty0 2825--2830,
+  2011.
+
+\bibitem[Philippe et~al.(2001)Philippe, Freddy, Jean-Marc, and
+  David]{ref:Artzner2001}
+Artzner Philippe, Delbaen Freddy, Eber Jean-Marc, and Heath David.
+\newblock Coherent measures of risk.
+\newblock \emph{Mathematical Finance}, 9\penalty0 (3):\penalty0 203--228, 2001.
 
 \bibitem[Plyakha et~al.(2012)Plyakha, Uppal, and Vilkov]{ref:Plyakha2012}
 Yuliya Plyakha, Raman Uppal, and Grigory Vilkov.
@@ -113,5 +341,38 @@ Donald Shepard.
 \newblock A two-dimensional interpolation function for irregularly-spaced data.
 \newblock In \emph{Proceedings of the 1968 23rd ACM National Conference}, ACM
   '68, pages 517--524, New York, NY, USA, 1968. ACM.
+
+\bibitem[Tse and Tsui(2002)]{ref:Tse2002}
+Y.~K. Tse and Albert Tsui.
+\newblock A multivariate generalized autoregressive conditional
+  heteroscedasticity model with time-varying correlations.
+\newblock \emph{Journal of Business \& Economic Statistics}, 20\penalty0
+  (3):\penalty0 351--62, 2002.
+
+\bibitem[van~der Weide(2002)]{ref:Weide2002}
+Roy van~der Weide.
+\newblock Go-garch: a multivariate generalized orthogonal garch model.
+\newblock \emph{Journal of Applied Econometrics}, 17\penalty0 (5):\penalty0
+  549--564, 2002.
+
+\bibitem[Virbickait{\.e} et~al.(2016)Virbickait{\.e}, Aus{\'\i}n, and
+  Galeano]{ref:Virbickait2016}
+Audron{\.e} Virbickait{\.e}, M.~Concepci{\'o}n Aus{\'\i}n, and Pedro Galeano.
+\newblock A bayesian non-parametric approach to asymmetric dynamic conditional
+  correlation model with application to portfolio selection.
+\newblock \emph{Computational Statistics \& Data Analysis}, 100, 2016.
+
+\bibitem[Wang(2011)]{ref:Wang2011}
+X.~Wang.
+\newblock A fast exact k-nearest neighbors algorithm for high dimensional
+  search using k-means clustering and triangle inequality.
+\newblock In \emph{The 2011 International Joint Conference on Neural Networks},
+  pages 1293--1299, 2011.
+
+\bibitem[Wright and Ziegler(2017)]{ref:Wright2017}
+Marvin~N. Wright and Andreas Ziegler.
+\newblock ranger: A fast implementation of random forests for high dimensional
+  data in c++ and r.
+\newblock \emph{Journal of Statistical Software}, 77\penalty0 (1), 2017.
 
 \end{thebibliography}

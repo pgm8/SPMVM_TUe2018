@@ -85,7 +85,7 @@ class PreProcessor(object):
         return cholesky_factor
 
     def determinant_LU_factorization(self, corr_vec, n):
-        """Method for determining the determinant of a given matrix. Determinants are computed using using
+        """Method for determining the determinant of a given matrix. Determinants are computed using
         LU factorization.
         :param corr_vec: time-varying correlation vector
         :param n: dimension correlation matrix

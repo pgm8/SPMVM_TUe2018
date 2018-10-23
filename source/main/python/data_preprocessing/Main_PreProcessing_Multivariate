@@ -1,15 +1,19 @@
 
 import numpy as np
 import pandas as pd
+from scipy.stats import jarque_bera as jb
 from PreProcessor import PreProcessor
 from ModuleManager import ModuleManager
 from TechnicalAnalyzer import TechnicalAnalyzer
 
 import matplotlib.pyplot as plt
+import datetime as dt
 import os
+import re
 
 from sklearn.neighbors import KNeighborsRegressor
 from sklearn.ensemble import RandomForestRegressor
+
 
 #  Set seed for pseudorandom number generator. This allows us to reproduce the results from our script.
 np.random.seed(42)
@@ -36,21 +40,50 @@ def main():
     data_stat = mm.load_data('multivariate_analysis/DJI30_returns_1987_2001.pkl')
     data_stat.drop(columns='Date', inplace=True)
     data_stat.reset_index(drop=True, inplace=True)
+    """
+    """
+    n = 30  # Number of assets under consideration
+    w = [1/n] * n
+    portfolio_w = data_stat.dot(w)
+    plt.figure(1)
+    plt.plot(portfolio_w, label='Average Log Return Dow Jones Constituents', linewidth=0.4, color="black")
+    plt.xlabel('date')
+    plt.ylabel('percentage return')
+    plt.legend(fontsize='small', loc='upper center', bbox_to_anchor=(0.5, 1.1), ncol=1, fancybox=True,
+               edgecolor='black')
+    plt.xlim(0, 3734)
+    plt.ylim(-10, 10)
+    dates_x = [202, 455, 707, 960, 1213, 1467, 1741, 1972, 2224, 2478, 2731, 2983, 3275, 3487]
+    dates_label = ['1988', '1989', '1990', '1991', '1992', '1993', '1994', '1995', '1996', '1997', '1998', '1999',
+                   '2000', '2001']
+    plt.yticks(np.arange(-24, 12, 2))
+    plt.xticks(dates_x, dates_label, rotation=45)
+    plt.show()
+    """
+    """
     # Initialise dataframe
     df_stats = pd.DataFrame(data={'Asset': list(data_stat)})
     df_stats.set_index('Asset', inplace=True)
     # Mean
     df_stats['Mean'] = data_stat.mean(axis=0)
     # St. Error
-    df_stats['St. error'] = data_stat.sem(axis=0)
+    #df_stats['St. error'] = data_stat.sem(axis=0)
+    # Standard deviation
+    df_stats['Std dev'] = data_stat.std(axis=0)
     # Skewness
     df_stats['Skewness'] = data_stat.skew(axis=0)
     # Excess Kurtosis
-    df_stats['Excess kurtosis'] = data_stat.kurtosis(axis=0)
+    df_stats['Kurtosis'] = data_stat.kurtosis(axis=0)
     # Minimum
     df_stats['Minimum'] = data_stat.min(axis=0)
     # Maximum
     df_stats['Maximum'] = data_stat.max(axis=0)
+    # Jarque-Bera test for normality
+    n = 30
+    jb_stats = np.full(n, np.nan)
+    for idx, column in enumerate(data_stat):
+        jb_stats[idx] = int(round(jb(data_stat[column])[0]))
+    df_stats['JB'] = jb_stats
     mm.save_data('multivariate_analysis/DJI30_returns_stats_1987_2001.pkl', df_stats)
     mm.transform_pickle_to_csv('multivariate_analysis/DJI30_returns_stats_1987_2001.pkl')
     """
@@ -61,7 +94,7 @@ def main():
     # Dataframe with DJI 30 constituents
     """"
     dt = 10
-    proxy_type = ['pearson, ''kendall']
+    proxy_type = ['pearson', 'kendall']
     data = mm.load_data('multivariate_analysis/DJI30_returns_1987_2001.pkl')
     dates = data['Date']
     dates.reset_index(drop=True, inplace=True)
@@ -85,25 +118,21 @@ def main():
     dt = 10
     n = 30  # Number of assets under consideration
     n_corr = int((n*(n-1)) / 2)
-    #T = 504   # length of out-of-sample test set tranquil market conditions 1994-1995
-    T = 500    # length of out-of-sample test set volatile market conditions 2000-2001
-    proxy_type = ['pearson', 'kendall']
-    n_neighbors = 5
+    T = 504   # length of out-of-sample test set tranquil market conditions 1994-1995
+    #T = 500    # length of out-of-sample test set volatile market conditions 2000-2001
+    proxy_type = ['kendall']
+    n_neighbors = [100]
     n_estimators = [10]     # [10, 100]
 
-    for n_estimators, proxy_type in [(x, y) for x in n_estimators for y in proxy_type]:
+    for n_neighbors, proxy_type in [(x, y) for x in n_neighbors for y in proxy_type]:
         data = mm.load_data('multivariate_analysis/%s/data/dataset_DJI30_%s_%i_1987_2001.pkl'
                             % (proxy_type, proxy_type, dt))
-        mm.transform_pickle_to_csv('multivariate_analysis/%s/data/dataset_DJI30_%s_%i_1987_2001.pkl'
-                            % (proxy_type, proxy_type, dt))
-
         data.drop(columns='Date', inplace=True)
         #data = data[1:(2220-dt)]  # 31/3/1987 - 29/12/1995
-        #data = data                # 31/3/1987 - 12/31/1999
+        data = data                # 31/3/1987 - 12/31/1999
         headers = list(data.columns.values[:n_corr])
         rho_estimates = pd.DataFrame(columns=headers)
         t_train_init = data.shape[0] - T
-
         for j, t in enumerate(range(t_train_init, data.shape[0])):  #  j={0:503/ 0:499}
             print((n_estimators, proxy_type, j, t))
             sample = np.asarray(data.iloc[j:t, :])  # True rolling window is [j:t, :]
@@ -111,35 +140,31 @@ def main():
             X = np.asarray(sample[:, :n_corr+2])  # covariate matrix (vectorize data for speed up)
             y = np.asarray(sample[:, -n_corr:])  # response vector
             X_train, y_train = X[:t, :], y[:t]
-            #knn = KNeighborsRegressor(n_neighbors=len(X_train), weights='distance').fit(X_train, y_train)  # n_neighbors=len(X_train)
-            #rho_estimate = knn.predict(x_test.reshape(1, -1))
-            rf = RandomForestRegressor(n_estimators=n_estimators, max_features=int((X.shape[1]) / 3)).fit(X_train, y_train)
-            rho_estimate = rf.predict(x_test.reshape(1, -1))
+            knn = KNeighborsRegressor(n_neighbors=n_neighbors).fit(X_train, y_train)
+            rho_estimate = knn.predict(x_test.reshape(1, -1))
+            #rf = RandomForestRegressor(n_estimators=n_estimators, max_features=int((X.shape[1]) / 3)).fit(X_train, y_train)
+            #rho_estimate = rf.predict(x_test.reshape(1, -1))
             df = pd.DataFrame(rho_estimate, columns=headers)
             rho_estimates = pd.merge(rho_estimates, df, how='outer')
-    """
-    """
-        mm.save_data('multivariate_analysis/%s/%s_cor_estimates/cor_knn_idw_%s_%i_DJI30_%s.pkl' %
-                     (proxy_type, proxy_type, proxy_type, dt, period), rho_estimates)
-        mm.transform_pickle_to_csv('multivariate_analysis/%s/%s_cor_estimates/cor_knn_idw_%s_%i_DJI30_%s.pkl' %
-                                   (proxy_type, proxy_type, proxy_type, dt, period))
 
-        mm.save_data('multivariate_analysis/%s/%s_cor_estimates/cor_knn_idw_%s_%i_DJI30_2000_2001.pkl' %
-                     (proxy_type, proxy_type, proxy_type, dt), rho_estimates)
-        mm.transform_pickle_to_csv('multivariate_analysis/%s/%s_cor_estimates/cor_knn_idw_%s_%i_DJI30_2000_2001.pkl' %
-                                   (proxy_type, proxy_type, proxy_type, dt))
-
+        mm.save_data('multivariate_analysis/%s/%s_cor_estimates/cor_knn%i_%s_%i_DJI30_2000_2001.pkl' %
+                     (proxy_type, proxy_type, n_neighbors, proxy_type, dt), rho_estimates)
+        mm.transform_pickle_to_csv('multivariate_analysis/%s/%s_cor_estimates/cor_knn%i_%s_%i_DJI30_2000_2001.pkl' %
+                                   (proxy_type, proxy_type, n_neighbors, proxy_type, dt))
     """
     """
     mm.save_data('multivariate_analysis/%s/%s_cor_estimates/cor_rf%i_%s_%i_DJI30_2000_2001.pkl' %
                      (proxy_type, proxy_type, n_estimators, proxy_type, dt), rho_estimates)
-    mm.transform_pickle_to_csv('multivariate_analysis/%s/%s_cor_estimates/cor_rf%i_%s_%i_DJI30_2000_20001.pkl' %
+    mm.transform_pickle_to_csv('multivariate_analysis/%s/%s_cor_estimates/cor_rf%i_%s_%i_DJI30_2000_2001.pkl' %
                                    (proxy_type, proxy_type, n_estimators, proxy_type, dt))
     """
+    #mm.transform_pickle_to_csv('multivariate_analysis/pearson/pearson_cor_estimates/cor_rf100_pearson_10_DJI30_2000_2001.pkl')
+
     ##################################################################################################################
-    ###                                   Minimum Determinant Learning Algorithms                                       ###
+    ###                                   Minimum Determinant Learning Algorithms                                  ###
     ##################################################################################################################
     # Compute matrix determinants for all time t in stable period
+
     """
     n = 30  # Number of assets under consideration
     T = 253
@@ -182,6 +207,79 @@ def main():
     plt.ylim(-0.1, 1)
     plt.show()
     """
+
+    ##################################################################################################################
+    ###                                                    Value-at-Risk Figures                                   ###
+    ##################################################################################################################
+    def var_plot(r, q, fig_name=None, period='volatile'):
+        var_true = r.reset_index(drop=True, inplace=False)
+        var_forecast_95 = q.loc[:, '0.95']
+        var_forecast_975 = q.loc[:, '0.975']
+        var_forecast_99 = q.loc[:, '0.99']
+        # VaR
+        plt.plot(var_true, label='r$_{t}$', linewidth=0.4, color='black')
+        plt.plot(var_forecast_95, label='VaR$_{t,0.95}$', linewidth=0.6, color='#01ff07', linestyle='--')
+        plt.plot(var_forecast_975, label='VaR$_{t,0.975}$', linewidth=0.6, color='#0165fc', linestyle=':')
+        plt.plot(var_forecast_99, label='VaR$_{t,0.99}$', linewidth=0.6, color='#ff000d', linestyle='-.')
+        # Axes
+        fontsize = 8
+        #plt.xlabel('date', fontsize=7)
+        plt.ylabel('percentage return', fontsize=fontsize)
+        if period is 'volatile':
+            dates_x = [0, 63, 126, 189, 252, 314, 379, 436]
+            dates_label = ['Jan00', 'Apr00', 'Jul00', 'Oct00', 'Jan01', 'Apr01', 'Jul01', 'Oct01']
+            plt.xlim(0, 500)
+            plt.ylim(-8, 8)
+            plt.yticks(np.arange(-8, 9, 2), fontsize=fontsize)
+        elif period is 'tranquil':
+            dates_x = [0, 63, 125, 190, 252, 314, 378, 441]
+            dates_label = ['Jan94', 'Apr94', 'Jul94', 'Oct94', 'Jan95', 'Apr95', 'Jul95', 'Oct95']
+            plt.xlim(0, 504)
+            plt.ylim(-4, 4)
+            plt.yticks(np.arange(-4, 5, 1), fontsize=fontsize)
+        else:
+            print('Please specify a correct period definition: volatile or tranquil market conditions.')
+        plt.xticks(dates_x, dates_label, fontsize=fontsize)  # rotation=45
+        plt.legend(fontsize='small', loc='upper center', ncol=4, fancybox=True, edgecolor='black') # bbox_to_anchor=(0.5, 1.1),
+        if fig_name is None:
+            print('Please provide a figure name for saving purposes')
+        else:
+            # specify path to save the figure as pdf to ensure sufficient resolution
+            mm.save_fig(figure=plt, fig_name=period + '/' + fig_name + '.pdf')
+        plt.close()
+        return
+
+
+    data_DJIA = mm.load_data('multivariate_analysis/DJI30_returns_1987_2001.pkl')
+    data_DJIA.drop(columns='Date', inplace=True)
+    data_DJIA.reset_index(drop=True, inplace=True)
+    data_DJIA_tranquil = data_DJIA.iloc[0:2224]
+    T_tranquil, T_volatile = 504, 500  # out-of-sample length market periodvar_forecast.loc[:, '0.99']
+    n = 30  # Number of assets under consideration
+    w = [1 / n] * n
+    VaR_true_tranquile = data_DJIA_tranquil.tail(T_tranquil).dot(w)
+    VaR_true_volatile = data_DJIA.tail(T_volatile).dot(w)
+    period = 'volatile'
+    VaR_true = VaR_true_volatile
+    files = [i for i in os.listdir(os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))),
+                                                'resources/Data/multivariate_analysis/VaR/%s/' % period)) if
+             os.path.isfile(os.path.join(os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))),
+                                                      'resources/Data/multivariate_analysis/VaR/%s/' % period),
+                                         i)) and i.startswith('var')]
+
+    for filename in files:
+       filename_fig = re.search('var_(.+?).csv', filename).group(1)  # Extract figure name from filename
+       var_forecast = mm.load_csv('multivariate_analysis/VaR/%s/%s' % (period, filename))
+       var_plot(r=VaR_true, q=var_forecast, fig_name=filename_fig, period=period)
+
+
+
+
+
+
+
+
+
 
 
 ###############################

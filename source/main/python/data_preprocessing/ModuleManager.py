@@ -2,7 +2,7 @@ import os
 from pickle import dump
 from pickle import load
 from pandas import read_csv
-
+import matplotlib.pyplot as plt
 
 class ModuleManager(object):
     """ModuleManager class. The responsibility of the ModuleManager class is to load, transform and
@@ -26,7 +26,7 @@ class ModuleManager(object):
         :return: learner model"""
         with open(os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))),
                                'resources/Models/%s' % filename), 'rb') as f:
-            return load(f)
+            return load(f,)
 
     def save_data(self, filename, data):
         """Save a pickled object to the provided filename
@@ -48,8 +48,8 @@ class ModuleManager(object):
         """Method to load csv file and save pickled csv file.
         :param filename: filename containing dataset in csv format"""
         csv_file = read_csv(os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))),
-                                         ('resources/Data/%s' % filename)))
-        self.save_data(filename[:-4]+'_csv.pkl', csv_file)
+                                         ('resources/Data/%s' % filename)), index_col=0)
+        self.save_data(filename[:-3]+'pkl', csv_file)
 
     def transform_pickle_to_csv(self, filename):
         """Method to load a pickle object and save to csv file.
@@ -58,7 +58,18 @@ class ModuleManager(object):
         data_csv = self.load_data(filename)
         filename = filename[:-3]+'csv'
         path = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))),
-                           ('resources/Data/%s' % filename))
+                            ('resources/Data/%s' % filename))
         data_csv.to_csv(path)
+
+    def load_csv(self, filename):
+        return (read_csv(os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))),
+                                         ('resources/Data/%s' % filename)), index_col=0))
+
+    def save_fig(self, figure, fig_name):
+        path = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(__file__))))
+                                            ), ('LaTex/figures/multivar_analysis/%s' % fig_name))
+        figure.savefig(path, format='pdf')
+
+
 
 
