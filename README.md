@@ -5,15 +5,17 @@ Python code for the development of a semiparametric model for the conditional co
 
 # Contents
 
-## Chapter 1
+### Chapter 1
 
-## Chapter 2
 
-## Chapter 3
+### Chapter 2
 
-## Chapter 4
+### Chapter 3
+1. [Fig 3.1: Simulateddatawithtime-varyingcorrelation](https://raw.githubusercontent.com/pgm8/Master-thesis-industrial-engineering-TUe/LaTex/figures/simulation_assetpaths_with_stochastic_correlations.png)
 
-## Chapter 5
+### Chapter 4
+
+### Chapter 5
 
 # Dependency
 
