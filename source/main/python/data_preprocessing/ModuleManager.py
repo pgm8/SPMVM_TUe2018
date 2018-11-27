@@ -2,7 +2,7 @@ import os
 from pickle import dump
 from pickle import load
 from pandas import read_csv
-import matplotlib.pyplot as plt
+
 
 class ModuleManager(object):
     """ModuleManager class. The responsibility of the ModuleManager class is to load, transform and

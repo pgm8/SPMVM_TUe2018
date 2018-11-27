@@ -1,9 +1,0 @@
-\select@language {english}
-\contentsline {section}{Introduction}{3}{section*.1}
-\contentsline {section}{TU/e corporate identity}{4}{section*.1}
-\contentsline {section}{Pictures, movies and sounds}{11}{section*.6}
-\contentsline {section}{Pictures, movies and sounds}{12}{section*.7}
-\contentsline {section}{Slides and handouts}{13}{section*.8}
-\contentsline {section}{Revealing slides in multiple steps}{14}{section*.8}
-\contentsline {section}{Font Size}{15}{section*.8}
-\contentsline {section}{Official TU/e corporate identity}{16}{section*.8}
